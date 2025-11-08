@@ -1,0 +1,88 @@
+
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./LogInPages.css";
+import HeroBar from "../components/HeroBar";
+
+function LogInPage() {
+    const navigate = useNavigate();
+    const [role, setRole] = useState("");
+    const [site, setSite] = useState("");
+
+    const handleCancel = () => {
+        navigate('/');
+    };
+
+    return (
+        <>
+        <HeroBar />
+        <div className="login-container">
+            <form className="login-form">
+            {/* Welcome Text at the Top */}
+            <div className="form-header">
+                <h1>Welcome Back</h1>
+                <p>Please log in to continue</p>
+            </div>
+
+            {/* Username & Password */}
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" />
+
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" />
+
+            {/* Role Selection */}
+            <label htmlFor="role">Select Role</label>
+            <select
+                id="role"
+                name="role"
+                className="form-select"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+            >
+                <option value="">-- Please choose an option --</option>
+                <option value="contractor-supervisor">Contractor Supervisor</option>
+                <option value="visitor">Visitor</option>
+            </select>
+
+            {/* Conditional Site Dropdown */}
+            {role === "contractor-supervisor" && (
+                <>
+                <label htmlFor="site">Select Site</label>
+                <select
+                    id="site"
+                    name="site"
+                    className="form-select"
+                    value={site}
+                    onChange={(e) => setSite(e.target.value)}
+                >
+                    <option value="">-- Choose a Hub --</option>
+                    <option value="robe-valley">Robe Valley</option>
+                    <option value="greater-hope-downs">Greater Hope Downs</option>
+                    <option value="rest-of-east">Rest of East</option>
+                    <option value="rest-of-west">Rest of West</option>
+                </select>
+                </>
+            )}
+
+            {/* Options */}
+            <div className="form-options">
+                <label>
+                <input type="checkbox" name="remember" />
+                Remember Me
+                </label>
+                <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
+            </div>
+
+            {/* Buttons */}
+            <div className="form-buttons">
+                <button type="submit">Log In</button>
+                <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>
+            </div>
+            </form>
+        </div>
+        </>
+    );
+}
+
+export default LogInPage;
