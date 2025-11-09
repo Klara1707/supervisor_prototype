@@ -1,0 +1,88 @@
+    :root {
+    --brand: #cd2c2c;
+    --action: #90a955;
+    --white: white;
+    --base-light: #ecf39e;
+    --base-dark: #4f772d;
+    --black: #0a2342;
+    --font-default: "Delima SemiBold", sans-serif;
+    --space-small: 8px;
+    --space-medium: 16px;
+    --space-large: 32px;
+    --space-xl: 64px;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-default);
+    font-weight: normal;
+    line-height: 1.2;
+    margin: 0;
+    }
+
+
+.hero-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    background: linear-gradient(to right, orange, #cd2c2c);
+}
+
+.hero-image img {
+    width: 250px;
+    height: auto;
+    margin-right: 40px;
+    border-radius: 8px;
+}
+
+.hero-text {
+    flex: 1;
+    text-align: right;
+    padding-left: 40px;
+}
+
+.hero-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: right;
+    font-family: "Delima SemiBold", sans-serif;
+}
+
+.hero-text p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    text-align: right;
+}
+
+/* ✅ Mobile-friendly styles */
+@media (max-width: 768px) {
+    .hero-bar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-image img {
+        width: 150px;
+        margin: 0 0 20px 0;
+    }
+
+    .hero-text {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+        text-align: center;
+    }
+}
+
