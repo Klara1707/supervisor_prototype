@@ -1,0 +1,84 @@
+    :root {
+    --brand: #cd2c2c;
+    --action: #90a955;
+    --white: white;
+    --base-light: #ecf39e;
+    --base-dark: #4f772d;
+    --black: #0a2342;
+    --font-default: "Delima SemiBold", sans-serif;
+    --space-small: 8px;
+    --space-medium: 16px;
+    --space-large: 32px;
+    --space-xl: 64px;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-default);
+    font-weight: normal;
+    line-height: 1.2;
+    margin: 0;
+    }
+
+.nav-bar {
+    background: linear-gradient(to right, orange, #cd2c2c);
+    padding: 10px 20px;
+    display: flex;
+    gap: var(--space-large); /* More space between buttons */
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Delima SemiBold', sans-serif; /* Example font */
+}
+
+.nav-button {
+    background-color: #8d99ae;
+    text-decoration: none;
+    color: #ffffff; /* High contrast text */
+    color: var(--white);
+    padding: var(--space-small);
+    margin: 0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    width: 120px; /* Fixed width for equal size */
+    border-radius: var(--space-small);
+    font-size: clamp(0.875rem, 1vw, 1rem);
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0; /* Prevent shrinking */
+    font-family: 'Delima SemiBold', sans-serif; 
+}
+
+.nav-button:hover {
+    opacity: 0.85;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #ff7043;
+}
+
+
+.nav-links {
+    display: flex;
+    gap: var(--space-large); /* This will now space the buttons */
+    justify-content: center;
+    flex-wrap: wrap; /* Optional: allows wrapping on smaller screens */
+}
+
+.hamburger {
+    display: none;
+}
+
+    
+/* Responsive layout for small screens */
+    @media screen and (max-width: 600px) {
+.hamburger {
+        display: block;
+        margin-bottom: var(--space-small);
+    }
+    
+    .nav-links {
+        justify-content: center;
+        gap: var(--space-medium);
+    }
+}
+
+    
