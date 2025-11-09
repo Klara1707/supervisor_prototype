@@ -1,0 +1,221 @@
+    :root {
+    --brand: #cd2c2c;
+    --action: #90a955;
+    --white: white;
+    --base-light: #ecf39e;
+    --base-dark: #4caf50;
+    --black: #0a2342;
+    --font-default: "Delima SemiBold", sans-serif;
+    --space-small: 8px;
+    --space-medium: 16px;
+    --space-large: 32px;
+    --space-xl: 64px;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-default);
+    font-weight: normal;
+    line-height: 1.2;
+    margin: 0;
+    }
+
+    
+/* Container styling */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Section titles */
+    .requirements h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+    }
+
+    /* Training list container */
+    .container3 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    }
+
+    /* Individual training item */
+
+.container3 div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px; /* adds space between text and checkbox */
+    background-color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+
+.container3 h3 {
+  margin-top: 40px; /* or adjust to your preferred spacing */
+}
+
+    .container3 div:hover {
+    background-color: #eef6ff;
+    }
+
+
+
+    /* Progress bar container */
+    #myProgress {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    }
+
+    /* Progress bar fill */
+    #myBar {
+    height: 30px;
+    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    transition: width 0.4s ease;
+    }
+
+    /* Percentage text */
+    #percentage {
+    font-size: 1rem;
+    
+}
+
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 30px;
+    height: 20px; /* match checkbox height */
+    cursor: pointer;
+}
+
+
+.custom-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: #4caf50;
+}
+
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark::after {
+    display: block;
+}
+
+.custom-checkbox .checkmark::after {
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+
+input[type="checkbox"] {
+    accent-color: #4caf50; /* Green box */
+}
+
+.main-content {
+    max-width: 800px;
+    margin: 0 auto;
+    }
+
+    /* Button positioning */
+    .back-to-top {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: calc((100% - 800px) / 2 - 140px); /* 60px is button width + spacing */
+    z-index: 1000;
+    padding: 10px 15px;
+    background-color: #8d99ae;;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+
+    .back-to-top:hover {
+        background-color: orange;
+        }
+
+
+
+    .navigation-buttons {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    flex-wrap: wrap;
+    gap: 10px;
+    }
+
+    .navigation-buttons button {
+    padding: 10px 15px;
+    background-color: #8d99ae;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    }
+
+    .navigation-buttons button:hover {
+    background-color: #ff7043;
+    }
+
+
+    html {
+    scroll-behavior: smooth;
+    }
+
+    /* Responsive adjustment */
+    @media (max-width: 820px) {
+    .back-to-top {
+        right: 10px; /* fallback for small screens */
+    }
+}
+
+
+
+
+
