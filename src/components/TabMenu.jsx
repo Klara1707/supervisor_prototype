@@ -2,15 +2,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./TabMenu.css";
-import MandatoryList from './MandatoryList';
-import DrillingPop from './DrillingPop';
-import SafetyPop from './SafetyPop';
-import LeadershipPop from './LeadershipPop';
-import OperationsPop from './OperationsPop';
-import EarthworksPop from './EarthworksPop';
-import CostPop from './CostPop';
-import ContractorPop from './ContractorPop';
-import FieldPop from './FieldPop';
+import MandatoryList from "./MandatoryList";
+import DrillingPop from "./DrillingPop";
+import SafetyPop from "./SafetyPop";
+import LeadershipPop from "./LeadershipPop";
+import OperationsPop from "./OperationsPop";
+import EarthworksPop from "./EarthworksPop";
+import CostPop from "./CostPop";
+import ContractorPop from "./ContractorPop";
+import FieldPop from "./FieldPop";
 
 const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     return (
