@@ -1,7 +1,7 @@
-import "./Pop.css";
+import "./EarthworksPop.css";
 import { useState } from "react";
 
-const CostPop = ({ popupId, closePopup }) => {
+const EarthworksPop = ({ popupId, closePopup }) => {
     if (!popupId) return null;
 
     const [comment, setComment] = useState("");
@@ -15,8 +15,8 @@ const CostPop = ({ popupId, closePopup }) => {
     const [progressChecks, setProgressChecks] = useState(Array(checkboxItems.length).fill(false));
 
     const contentMap = {
-        cost1: {
-            title: "cost Popup 1 Content",
+        earthworks1: {
+            title: "earth Popup 1 Content",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -28,8 +28,8 @@ const CostPop = ({ popupId, closePopup }) => {
                 "Sign off", "comment section"
             ]
         },
-        cost2: {
-            title: "cost Popup 2 Content",
+        earthworks2: {
+            title: "earth Popup 2 Content",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -41,8 +41,8 @@ const CostPop = ({ popupId, closePopup }) => {
                 "Sign off", "comment section"
             ]
         },
-        cost3: {
-            title: "cost Popup 3 Content",
+        earthworks3: {
+            title: "earth Popup 3 Content",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -57,6 +57,7 @@ const CostPop = ({ popupId, closePopup }) => {
     };
 
     const { title, cells } = contentMap[popupId];
+
     return (
         <div className="popup-overlay">
             <div className="popup-content">
@@ -147,4 +148,4 @@ const CostPop = ({ popupId, closePopup }) => {
     );
 };
 
-export default CostPop;
+export default EarthworksPop;

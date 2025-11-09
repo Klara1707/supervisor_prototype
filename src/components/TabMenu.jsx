@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./TabMenu.css";
-import MandatoryList from "./MandatoryList";
+import MandatoryList from './MandatoryList';
 import DrillingPop from './DrillingPop';
 import SafetyPop from './SafetyPop';
 import LeadershipPop from './LeadershipPop';
