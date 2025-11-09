@@ -1,4 +1,4 @@
-import "./DrillingPop.css";
+import "./Pop.css";
 import { useState } from "react";
 
 const DrillingPop = ({ popupId, closePopup }) => {

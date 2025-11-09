@@ -1,4 +1,4 @@
-import "./EarthworksPop.css";
+import "./Pop.css";
 import { useState } from "react";
 
 const EarthworksPop = ({ popupId, closePopup }) => {
