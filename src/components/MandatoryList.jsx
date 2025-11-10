@@ -4,7 +4,7 @@ import "./MandatoryList.css";
 
 function MandatoryList() {
     const trainingList = [
-        "RTIO RD Earthworks",
+                "RTIO RD Earthworks",
         "RTIO RD Drilling",
         "RTIO Driver Safety System (DSS)",
         "RT Cyber Security Awareness",
@@ -67,6 +67,7 @@ function MandatoryList() {
         "RTIO MEQ Isolation Officer",
         "RTIO CRM CCC Pass Out",
         "RTIO CRM CCFV",
+        "RTIO Leader Psychosocial Risk Mngt",
         "RTIO WHS Legislation Examination SS",
         "RTIO EPSup Understand self to lead teams",
         "RTIO EPSup Exceptional communication",
@@ -80,11 +81,96 @@ function MandatoryList() {
         "RTIO Operate 4WD in Steep Terrain VOC",
     ];
 
-    const onlineItems = [/* same as before */];
-    const classroomItems = [/* same as before */];
-    const onJobItems = [/* same as before */];
-    const supervisorItems = [/* same as before */];
-    const vocItems = ["RTIO Operate 4WD in Steep Terrain VOC"];
+    const onlineItems = [
+        "RTIO RD Earthworks",
+        "RTIO RD Drilling",
+        "RTIO Driver Safety System (DSS)",
+        "RT Cyber Security Awareness",
+        "RTIO Functional Safety Awareness",
+        "RTIO L1 Basic Incident Investigation",
+        "RT MATE Bystander programme",
+        "RTIO IHMP Training for Team Members",
+        "RTIO Pit Permit Rules V19 Awareness",
+        "RTIO Pit Permit Rules V19 Driving",
+        "RTIO Pit Permit Rules V19 Engagement",
+        "RT Building Everyday Respect for All",
+        "RTIO Electrical Hazard Awareness SWBT",
+        "RTIO Cultural Awareness Noongar",
+        "RT Code of Conduct Online",
+        "RTIO MEQ Isolation Officer Theory",
+        "RTIO Mobility and Tablet Essentials",
+        "RT Code of Conduct Adaptive Learning",
+        "RTIO Airborne Contaminant Control",
+        "RTIO Introduction to Change Management",
+        "RTIO Fibrous Minerals Awareness",
+        "RTIO Mobile Equipment Spotter",
+        "RTIO Noise Awareness",
+        "RTIO Issue Hot Work Permit",
+        "RTIO Essentials",
+        "RTIO Snr Staff Environment Orientation",
+        "RTIO Individual Rail Access Road Permit",
+        "RTIO Heritage Awareness",
+        "RTIO Manual Handling Awareness",
+        "RTIO RD Weed Control",
+        "RTIO Geotechnical Awareness Basic",
+        "RTIO Geotechnical Awareness Advanced",
+        "RTIO Black Shale Awareness",
+        "RTIO Heat Stress Prevention Measures",
+        "RTIO IVMS Compliancy",
+        "RTIO Issue Excavation Permit",
+        "RTIO Contractor Management Awareness",
+        "RTIO Land Clearing",
+        "RTIO Mineral Waste Management Plan",
+        "RTIO Res Dev Field Induction",
+        "RTIO Cultural Awareness at Rio Tinto",
+        "RTIO Safe Transportation of Goods",
+        "RTIO Positive Radio Communication",
+        "RTIO Geotech Hazards for Natural Slopes",
+    ];
+
+    const classroomItems = [
+        "RTIO Contribute WHS Risk Management",
+        "RTIO Implement WHS Policies",
+        "RTIO Facilitate Effective Prestart",
+        "RTIO PM Code",
+        "RTIO Leader Psychosocial Risk Mngt",
+        "QSI Proficient",
+        "RTIO Sleep Health and Fatigue Education",
+        "RTIO Contractor Management Company Rep",
+        "RTIO Provide First Aid",
+        "RTIO Issue Working at Heights Permit",
+        "RT Load Distribution and Restraint Full",
+        "RTIO HPD Fit Test 2 Yearly",
+        "RTIO Operate and Maintain a 4WD",
+        "RTIO Essentials For Site",
+        "RTIO Lship Ess Injury Management",
+        "RTIO IWP Essentials and Lockholder",
+    ];
+
+    const onJobItems = [
+        "RTIO MEQ Isolation Officer",
+        "RTIO CRM CCC Pass Out",
+        "RTIO CRM CCFV",
+    ];
+
+    const supervisorItems = [
+        "RTIO Leader Psychosocial Risk Mngt",
+        "RTIO WHS Legislation Examination SS",
+        "RTIO EPSup Understand self to lead teams",
+        "RTIO EPSup Exceptional communication",
+        "RTIO EPSup Lead continuous improvement",
+        "RTIO EPSup Risk & project management",
+        "RTIO Supervisor Program Graduation",
+        "RTIO Supervisor LB1 Coaching",
+        "RTIO Supervisor LB2 Coaching",
+        "RTIO Supervisor LB3 Coaching",
+        "RTIO Supervisor LB4 Coaching",
+    ];
+
+        const vocItems = [
+        "RTIO Operate 4WD in Steep Terrain VOC",
+    ];
+
 
     const [checkedItems, setCheckedItems] = useState(Array(trainingList.length).fill(false));
     const [showButton, setShowButton] = useState(false);
@@ -143,33 +229,105 @@ function MandatoryList() {
                     </div>
                 </section>
 
-                {/* Training Sections */}
-                {[
-                    { id: "online-training", title: "Online Training", items: onlineItems },
-                    { id: "classroom-training", title: "Classroom Training", items: classroomItems },
-                    { id: "onjob-training", title: "On-the-Job Training", items: onJobItems },
-                    { id: "supervisor-training", title: "Supervisor Training", items: supervisorItems },
-                    { id: "voc-training", title: "VOC Sign Off", items: vocItems },
-                ].map(({ id, title, items }) => (
-                    <div className="container3" id={id} key={id}>
-                        <h3><strong>{title}</strong></h3>
-                        {trainingList.map((training, index) =>
-                            items.includes(training) ? (
-                                <div key={index}>
-                                    {training}
-                                    <label className="custom-checkbox">
-                                        <input
-                                            type="checkbox"
-                                            checked={checkedItems[index]}
-                                            onChange={() => handleCheckboxChange(index)}
-                                        />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                </div>
-                            ) : null
-                        )}
-                    </div>
-                ))}
+                {/* Online Training */}
+                <div className="container3" id="online-training">
+                    <h3><strong>Online Training</strong></h3>
+                    {trainingList.map((training, index) =>
+                        onlineItems.includes(training) ? (
+                            <div key={index}>
+                                {training}
+                                <label className="custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedItems[index]}
+                                        onChange={() => handleCheckboxChange(index)}
+                                    />
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                        ) : null
+                    )}
+                </div>
+
+                {/* Classroom Training */}
+                <div className="container3" id="classroom-training">
+                    <h3><strong>Classroom Training</strong></h3>
+                    {trainingList.map((training, index) =>
+                        classroomItems.includes(training) ? (
+                            <div key={index}>
+                                {training}
+                                <label className="custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedItems[index]}
+                                        onChange={() => handleCheckboxChange(index)}
+                                    />
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                        ) : null
+                    )}
+                </div>
+
+                {/* On-the-Job Training */}
+                <div className="container3" id="onjob-training">
+                    <h3><strong>On-the-Job Training</strong></h3>
+                    {trainingList.map((training, index) =>
+                        onJobItems.includes(training) ? (
+                            <div key={index}>
+                                {training}
+                                <label className="custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedItems[index]}
+                                        onChange={() => handleCheckboxChange(index)}
+                                    />
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                        ) : null
+                    )}
+                </div>
+
+                {/* Supervisor Training */}
+                <div className="container3" id="supervisor-training">
+                    <h3><strong>Supervisor Training</strong></h3>
+                    {trainingList.map((training, index) =>
+                        supervisorItems.includes(training) ? (
+                            <div key={index}>
+                                {training}
+                                <label className="custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedItems[index]}
+                                        onChange={() => handleCheckboxChange(index)}
+                                    />
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                        ) : null
+                    )}
+                </div>
+
+                {/* VOC Training */}
+                <div className="container3" id="voc-training">
+                    <h3><strong>VOC Sign Off</strong></h3>
+                    {trainingList.map((training, index) =>
+                        vocItems.includes(training) ? (
+                            <div key={index}>
+                                {training}
+                                <label className="custom-checkbox">
+                                    <input
+                                        type="checkbox"
+                                        checked={checkedItems[index]}
+                                        onChange={() => handleCheckboxChange(index)}
+                                    />
+                                    <span className="checkmark"></span>
+                                </label>
+                            </div>
+                        ) : null
+                    )}
+                </div>
             </section>
 
             {/* Back to Top Button */}
