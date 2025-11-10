@@ -62,127 +62,134 @@ const ContractorPop = ({ popupId, closePopup }) => {
 
     const { title, cells } = contentMap[popupId];
 
-    return (
-        <div className="popup-overlay">
+  return (
+    <div className="popup-overlay">
         <div className="popup-content">
-            <button className="close-button" onClick={closePopup} aria-label="Close popup">
+        <button className="close-button" onClick={closePopup} aria-label="Close popup">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
-                <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
-                <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
+            <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
+            <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
+            <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
             </svg>
-            </button>
+        </button>
 
-            <h2>{title}</h2>
+        <h2>{title}</h2>
 
-            <div className="progress-bar-container">
+        {/* Progress Bar */}
+        <div className="progress-bar-container">
             <div
-                className="progress-bar"
-                style={{
+            className="progress-bar"
+            style={{
                 width: `${(progressChecks.filter(Boolean).length / checkboxItems.length) * 100}%`
-                }}
+            }}
             >
-                <span className="progress-text">
+            <span className="progress-text">
                 {Math.round((progressChecks.filter(Boolean).length / checkboxItems.length) * 100)}%
-                </span>
+            </span>
             </div>
-            </div>
+        </div>
 
-            <div className="grid-container">
+        {/* Grid Container */}
+        <div className="grid-container">
             {cells.map((cellContent, index) => {
-                if (typeof cellContent === "object" && cellContent.type === "textWithCheckbox") {
+            if (typeof cellContent === "object" && cellContent.type === "textWithCheckbox") {
                 const checkboxIndex = checkboxItems.indexOf(cellContent.checkboxLabel);
                 return (
-                    <div key={index} className="grid-item">
+                <div key={index} className="grid-item">
                     <p>{cellContent.text}</p>
                     <label className="custom-checkbox">
-                        <span className="sr-only">{cellContent.checkboxLabel}</span>
-                        <input
+                    <span className="sr-only"></span>
+                    <input
                         type="checkbox"
                         checked={progressChecks[checkboxIndex]}
                         onChange={() => {
-                            const updatedChecks = [...progressChecks];
-                            updatedChecks[checkboxIndex] = !updatedChecks[checkboxIndex];
-                            setProgressChecks(updatedChecks);
+                        const updatedChecks = [...progressChecks];
+                        updatedChecks[checkboxIndex] = !updatedChecks[checkboxIndex];
+                        setProgressChecks(updatedChecks);
                         }}
-                        />
-                        <span className="checkmark"></span>
+                    />
+                    <span className="checkmark"></span>
                     </label>
-                    </div>
+                </div>
                 );
-                }
+            }
 
-                if (checkboxItems.includes(cellContent)) {
+
+            if (checkboxItems.includes(cellContent)) {
                 const checkboxIndex = checkboxItems.indexOf(cellContent);
                 return (
                     <div key={index} className="grid-item">
-                    <label className="custom-checkbox">
-                        <span className="sr-only">{cellContent}</span>
-                        <input
-                        type="checkbox"
-                        checked={progressChecks[checkboxIndex]}
-                        onChange={() => {
-                            const updatedChecks = [...progressChecks];
-                            updatedChecks[checkboxIndex] = !updatedChecks[checkboxIndex];
-                            setProgressChecks(updatedChecks);
-                        }}
-                        />
-                        <span className="checkmark"></span>
-                    </label>
+                        <label className="custom-checkbox">
+                            {/* Optional: keep for screen readers */}
+                            <span className="sr-only">Checkbox {checkboxIndex + 1}</span>
+                            <input
+                                type="checkbox"
+                                checked={progressChecks[checkboxIndex]}
+                                onChange={() => {
+                                    const updatedChecks = [...progressChecks];
+                                    updatedChecks[checkboxIndex] = !updatedChecks[checkboxIndex];
+                                    setProgressChecks(updatedChecks);
+                                }}
+                            />
+                            <span className="checkmark"></span>
+                        </label>
                     </div>
                 );
-                }
+            }
 
-                if (cellContent === "comment section") {
+
+            if (cellContent === "comment section") {
                 return (
-                    <div key={index} className="grid-item">
+                <div key={index} className="grid-item">
                     <label htmlFor={`comment-${index}`}>Comment:</label>
                     <textarea
-                        id={`comment-${index}`}
-                        placeholder="Enter your comment..."
-                        className="comment-box"
-                        rows={3}
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
+                    id={`comment-${index}`}
+                    placeholder="Enter your comment..."
+                    className="comment-box"
+                    rows={3}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                     />
-                    </div>
+                </div>
                 );
-                }
+            }
 
-                if (cellContent === "Sign off") {
+            if (cellContent === "Sign off") {
                 return (
-                    <div key={index} className="grid-item">
+                <div key={index} className="grid-item">
                     <label htmlFor={`signoff-date-${index}`}>Sign-off Date:</label>
                     <input
-                        type="date"
-                        id={`signoff-date-${index}`}
-                        className="signoff-date"
-                        value={signOffDate}
-                        onChange={(e) => setSignOffDate(e.target.value)}
+                    type="date"
+                    id={`signoff-date-${index}`}
+                    className="signoff-date"
+                    value={signOffDate}
+                    onChange={(e) => setSignOffDate(e.target.value)}
                     />
                     <label htmlFor={`signoff-name-${index}`}>Sign-off Name:</label>
                     <input
-                        type="text"
-                        id={`signoff-name-${index}`}
-                        className="signoff-name"
-                        placeholder="Enter your name"
-                        value={signOffName}
-                        onChange={(e) => setSignOffName(e.target.value)}
+                    type="text"
+                    id={`signoff-name-${index}`}
+                    className="signoff-name"
+                    placeholder="Enter your name"
+                    value={signOffName}
+                    onChange={(e) => setSignOffName(e.target.value)}
                     />
-                    </div>
-                );
-                }
-
-                return (
-                <div key={index} className="grid-item">
-                    {cellContent}
                 </div>
                 );
+            }
+
+            return (
+                <div key={index} className="grid-item">
+                {cellContent}
+                </div>
+            );
             })}
-            </div>
         </div>
         </div>
+    </div>
     );
+
+
 };
 
 export default ContractorPop;

@@ -473,7 +473,7 @@ return (
                 <div key={index} className="grid-item">
                     <p>{cellContent.text}</p>
                     <label className="custom-checkbox">
-                    <span className="sr-only">{cellContent.checkboxLabel}</span>
+                    <span className="sr-only"></span>
                     <input
                         type="checkbox"
                         checked={progressChecks[checkboxIndex]}
@@ -489,26 +489,29 @@ return (
                 );
             }
 
+
             if (checkboxItems.includes(cellContent)) {
                 const checkboxIndex = checkboxItems.indexOf(cellContent);
                 return (
-                <div key={index} className="grid-item">
-                    <label className="custom-checkbox">
-                    <span className="sr-only">{cellContent}</span>
-                    <input
-                        type="checkbox"
-                        checked={progressChecks[checkboxIndex]}
-                        onChange={() => {
-                        const updatedChecks = [...progressChecks];
-                        updatedChecks[checkboxIndex] = !updatedChecks[checkboxIndex];
-                        setProgressChecks(updatedChecks);
-                        }}
-                    />
-                    <span className="checkmark"></span>
-                    </label>
-                </div>
+                    <div key={index} className="grid-item">
+                        <label className="custom-checkbox">
+                            {/* Optional: keep for screen readers */}
+                            <span className="sr-only">Checkbox {checkboxIndex + 1}</span>
+                            <input
+                                type="checkbox"
+                                checked={progressChecks[checkboxIndex]}
+                                onChange={() => {
+                                    const updatedChecks = [...progressChecks];
+                                    updatedChecks[checkboxIndex] = !updatedChecks[checkboxIndex];
+                                    setProgressChecks(updatedChecks);
+                                }}
+                            />
+                            <span className="checkmark"></span>
+                        </label>
+                    </div>
                 );
             }
+
 
             if (cellContent === "comment section") {
                 return (
