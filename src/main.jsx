@@ -6,18 +6,23 @@ import HomePage from "./pages/HomePage.jsx";
 import LogInPages from "./pages/LogInPage.jsx";
 import './index.css';
 
-const router = createBrowserRouter([
-    {
+const router = createBrowserRouter(
+    [
+        {
         path: "/",
         children: [
-        { path: "/", element: <HomePage /> },
-        { path: "/login", element: <LogInPages /> },
+            { path: "/", element: <HomePage /> },
+            { path: "/login", element: <LogInPages /> },
         ],
-    },
-    ]);
+        },
+    ],
+    {
+        basename: "/supervisor_prototype",
+    }
+    );
 
     ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <RouterProvider router={router} basename="/supervisor_prototype/" />
+        <RouterProvider router={router} />
     </React.StrictMode>
 );

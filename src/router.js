@@ -1,17 +1,22 @@
 
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from 'react-router-dom';
 import HomePage from "./pages/HomePage";
 import LogInPage from "./pages/LogInPage";
 
-const router = createBrowserRouter([
-    {
+const router = createBrowserRouter(
+    [
+        {
         path: "/",
         element: <HomePage />,
-    },
-    {
+        },
+        {
         path: "/login",
         element: <LogInPage />,
-    },
-]);
+        },
+    ],
+    {
+        basename: "/supervisor_prototype",
+    }
+);
 
 export default router;

@@ -1,5 +1,6 @@
 {
   "name": "supervisor_prototype",
+  "homepage": "https://klara1707.github.io/supervisor_prototype/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
