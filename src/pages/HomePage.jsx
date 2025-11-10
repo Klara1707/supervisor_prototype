@@ -7,13 +7,13 @@ import NavBar from "../components/NavBar";
 function HomePage() {
     return (
         <>
-        <HeroBar />
-        <TabMenu />
-        <NavBar />
+            <HeroBar />
+            <TabMenu />
+            <NavBar />
 
-        <section className="copyright-bar">
-            <p>&copy; Klara van den Burg</p>
-        </section>
+            <section className="copyright-bar">
+                <p>&copy; Klara van den Burg</p>
+            </section>
         </>
     );
 }

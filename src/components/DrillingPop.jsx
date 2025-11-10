@@ -21,7 +21,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
 
     const contentMap = {
         drilling1: {
-            title: "Drilling Popup 1 Content",
+            title: "Drilling level 1",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -140,7 +140,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
             ]
         },
         drilling2: {
-            title: "Drilling Popup 2 Content",
+            title: "Drilling level 2",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -389,7 +389,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
         },
 
         drilling3: {
-            title: "Drilling Popup 3 Content",
+            title: "Drilling level 3 ",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",

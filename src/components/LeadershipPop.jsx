@@ -20,7 +20,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
 
     const contentMap = {
         leadership1: {
-            title: "leadership Popup 1 Content",
+            title: "Leadership level 1",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -128,7 +128,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
         
             
         leadership2: {
-            title: "Leadership Popup 2 Content",
+            title: "Leadership level 2",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -175,7 +175,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
             ]
         },
         leadership3: {
-            title: "Leadership Popup 3 Content",
+            title: "Leadership level 3",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",

@@ -20,7 +20,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
 
     const contentMap = {
         earthworks1: {
-            title: "earth Popup 1 Content",
+            title: "Earthworks level 1",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -33,7 +33,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
             ]
         },
         earthworks2: {
-            title: "earth Popup 2 Content",
+            title: "Earthworks level 2",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -46,7 +46,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
             ]
         },
         earthworks3: {
-            title: "earth Popup 3 Content",
+            title: "Earthworks level 3",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",

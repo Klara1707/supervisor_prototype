@@ -21,7 +21,7 @@ const FieldPop = ({ popupId, closePopup }) => {
 
     const contentMap = {
         field1: {
-            title: "field Popup 1 Content",
+            title: "Field supervisor level 1",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -34,7 +34,7 @@ const FieldPop = ({ popupId, closePopup }) => {
             ]
         },
         field2: {
-            title: "field Popup 2 Content",
+            title: "Field supervisor level 2",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -47,7 +47,7 @@ const FieldPop = ({ popupId, closePopup }) => {
             ]
         },
         field3: {
-            title: "field Popup 3 Content",
+            title: "Field supervisor level 3",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",

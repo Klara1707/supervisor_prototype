@@ -21,7 +21,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
 
     const contentMap = {
         operations1: {
-            title: "operations Popup 1 Content",
+            title: "Operations level 1",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -198,7 +198,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
             ]
         },
         operations2: {
-            title: "operations Popup 2 Content",
+            title: "Operations level 2",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -211,7 +211,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
             ]
         },
         operations3: {
-            title: "operations Popup 3 Content",
+            title: "Operations level 3",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",

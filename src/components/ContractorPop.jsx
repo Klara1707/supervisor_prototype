@@ -20,7 +20,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
 
     const contentMap = {
         contractor1: {
-        title: "contractor Popup 1 Content",
+        title: "Contractor management level 1 ",
         cells: [
             "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
             "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -33,7 +33,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
         ]
         },
         contractor2: {
-        title: "contractor Popup 2 Content",
+        title: "Contractor management level 2",
         cells: [
             "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
             "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -46,7 +46,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
         ]
         },
         contractor3: {
-        title: "contractor Popup 3 Content",
+        title: "Contractor management level 3",
         cells: [
             "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
             "Training Process", "Training Material", "Reviewer sign off", "Comments",

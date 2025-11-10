@@ -20,7 +20,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
 
     const contentMap = {
         safety1: {
-            title: "safety Popup 1 Content",
+            title: "Safety level 1",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -194,7 +194,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
         
 
         safety2: {
-            title: "safety Popup 2 Content",
+            title: "Safety level 2",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -396,7 +396,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
 
         
         safety3: {
-            title: "safety Popup 3 Content",
+            title: "Safety level 3",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",

@@ -21,7 +21,7 @@ const CostPop = ({ popupId, closePopup }) => {
 
     const contentMap = {
         cost1: {
-            title: "cost Popup 1 Content",
+            title: "Cost reporting level 1",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -34,7 +34,7 @@ const CostPop = ({ popupId, closePopup }) => {
             ]
         },
         cost2: {
-            title: "cost Popup 2 Content",
+            title: "Cost reporting level 2",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
@@ -47,7 +47,7 @@ const CostPop = ({ popupId, closePopup }) => {
             ]
         },
         cost3: {
-            title: "cost Popup 3 Content",
+            title: "Cost reporting level 3",
             cells: [
                 "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
                 "Training Process", "Training Material", "Reviewer sign off", "Comments",
