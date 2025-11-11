@@ -13,6 +13,8 @@ const OperationsPop = ({ popupId, closePopup }) => {
         "Box 19", "Box 20", "Box 21", "Box 22", "Box 23", "Box 24",
         "Box 25", "Box 26", "Box 27", "Box 28", "Box 29", "Box 30",
         "Box 31", "Box 32", "Box 33", "Box 34", "Box 35", "Box 36",
+        "Box 37", "Box 38", "Box 39", "Box 40", "Box 41", "Box 42",
+        "Box 43", "Box 44", "Box 45", "Box 46", "Box 47", "Box 48",
     ];
     const [progressChecks, setProgressChecks] = useState(Array(checkboxItems.length).fill(false));
 
@@ -215,7 +217,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                     {
                     type: "textWithCheckbox",
                     text: "Able to accurately report personnel presence on site using validated data sources. Proficient in navigating and extracting relevant information from the F+A SharePoint page. Can assist with the coordination of personnel movements between sites, ensuring alignment with operational requirements. Supports the review and assessment of accommodation lists, identifying constraints and ensuring compliance with site capacity and policy guidelines.", 
-                    checkboxLabel: "Box 1"
+                    checkboxLabel: "Box 3"
                 },
                 "", 
                 "Has access to the Travel and Logistics web page and understands how to navigate its key features. Receives an overview of the Quality Procurement Process (QPP) and Project Delivery Agreements (PDAs), as explained by a Subject Matter Expert (SME) or Supervisor. Is shown where to locate essential information related to bus schedules, flight details, and accommodation data, supporting informed decision-making and operational coordination.", 
@@ -226,12 +228,12 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 {
                     type: "textWithCheckbox",
                     text: "Proficient in using ServiceNow to raise, modify, or cancel project-related tickets", 
-                    checkboxLabel: "Box 3"
+                    checkboxLabel: "Box 4"
                 },
                                 {
                     type: "textWithCheckbox",
                     text: "Able to use ServiceNow to request a wide range of services and ticket types",  
-                    checkboxLabel: "Box 4"
+                    checkboxLabel: "Box 5"
                 },
                 "",
                 "",
@@ -251,7 +253,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                 {
                     type: "textWithCheckbox",
                     text: "Proficient in ArcGIS; can create MMPKs for Field Maps and load them onto iPads and Samsung tablets", 
-                    checkboxLabel: "Box 7"
+                    checkboxLabel: "Box 8"
                 },
                 "", 
                 "Education Reads and reviews how-to guides for accessing and using ArcGIS tools. Exposure Receives mentoring from experienced ArcGIS users (e.g., Supervisors, Geos, Hydros, Surveyors) on using the Portal, uploading files, and working with map layers.",
@@ -260,12 +262,12 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                 {
                     type: "textWithCheckbox",
                     text: "Proficient in using Prospect and Workday to manage personal workflow, reports, qualifications, development, and performance",  
-                    checkboxLabel: "Box 10"
+                    checkboxLabel: "Box 9"
                 },
                                                 {
                     type: "textWithCheckbox",
                     text: "Can initiate check-ins and development plans, view qualifications, raise notifications, update personal information, and manage tasks via the worklist", 
-                    checkboxLabel: "Box 11"
+                    checkboxLabel: "Box 10"
                 },
                 "",
                 "",
@@ -275,17 +277,17 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                 {
                     type: "textWithCheckbox",
                     text: "Understands the Operations Request (OR) process, its key components, and the use of the OR Tracking App as managed by the Planning Team", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 11"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Understands how Operations Requests relate to team activities; can navigate the OR Tracking App to access and interpret relevant data and information",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 12"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Regularly checks the OR Tracking App each swing for outstanding ground-truthing tasks. Can cross-reference Operations Requests with the two-week plan, Plan-to-Plan, and P6 Gantt to ensure alignment",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 13"
                 },
                 "",                  
                 "Mentored by SME or Supervisor to ensure proficient use of the Operations Request App. Understands how to locate drilling designs and extract key information from Operations Request forms. Has access to the P6 Gantt and can filter relevant information", 
@@ -295,22 +297,22 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                 {
                     type: "textWithCheckbox",
                     text: "Able to conduct quality ground-truthing activities and accurately record data relevant to Operations Requests", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 14"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Mentored by a Subject Matter Expert (SME) to conduct thorough and effective ground-truthing activities, ensuring accurate data collection for Operations Requests",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 15"
                 },
                                 {
                     type: "textWithCheckbox",
                     text: "Know how to use the app to identify GT, initial desk top review on ArcGIS, able to  manage data for field verification, able to identify issues with design (Pads off AR, too close to heritage, access issues, ground conditions, etc). ",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 16"
                 },                
                                                 {
                     type: "textWithCheckbox",
                     text: "Has full knowledge of ground-truthing processes. Can independently gather required tools and data, conduct both desktop and field checks, provide feedback via the Operations Request App, and communicate directly with designers to suggest design changes ",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 17"
                 },
                 "Mentored by SME or Supervisor on conducting ground-truthing activities. Training includes performing desktop reviews in ArcGIS, identifying design issues (e.g. access, heritage, ground conditions), and using Field Maps and ServiceNow to support field checks", 
 
@@ -319,17 +321,17 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                 {
                     type: "textWithCheckbox",
                     text: "Understands the AR process, including how to search for and locate requests. Can identify package-specific conditions and requirements within the AR system", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 18"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Understands which stakeholders are involved in approving ARs. Has access to ARCs and knows how to search for ARs. Demonstrates general knowledge of AR conditions and can identify package-specific requirements",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 19"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Able to assess Approval Request (AR) conditions and implement them effectively. Provides guidance to other stakeholders on condition requirements and ensures compliance through collaboration and communication",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 20"
                 },
                 "",
                 "Has access to ARCs and is able to search for Approval Requests (ARs). Can extract relevant information from ARs. Receives mentoring from a SME or Supervisor to build proficiency in navigating and interpreting AR documentation", 
@@ -339,22 +341,22 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                 {
                     type: "textWithCheckbox",
                     text: "Understands the different clearing mechanisms—POW, NVCP, and Part IV—and how their specific conditions impact operational activities and project planning", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 21"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Understands the differences between clearing mechanisms—POW, NVCP, and Part IV—and the specific conditions associated with each. Recognizes how these conditions influence operational planning and execution",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 22"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Confidently provides advice and instruction on POW, NVCP, and Part IV clearing mechanisms. Understands their differences, associated conditions, and how they impact operational planning and execution",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 23"
                 },
                                                                                             {
                     type: "textWithCheckbox",
                     text: "Able to implement required controls in the field and verify clearing methods to ensure compliance with conditions outlined in POW, NVCP, and Part IV mechanisms", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 24"
                 },                     
                 "Education Understands the Land Disturbance Work Practice and its relevance to operational activities. Exposure Has access to ARCs and can search for and extract information from Approval Requests (ARs). Receives mentoring from a SME or Supervisor to build proficiency in interpreting ARs and applying relevant conditions.", 
 
@@ -363,17 +365,17 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                 {
                     type: "textWithCheckbox",
                     text: "Demonstrates detailed understanding of the Laydown Management Guidelines, including principles, requirements, and practical application in field and planning activities", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 25"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Has read and understands the Laydown Management Guidelines, including their application in planning and field activities",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 26"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Able to apply WPI guidelines, identify non-compliances, and address them in Safeday",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 27"
                 },
                 "",
                 "Education – Read, understand, and apply WPI guidelines in the field. Exposure – SME or Supervisor to demonstrate effective application.", 
@@ -383,22 +385,22 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                                 {
                     type: "textWithCheckbox",
                     text: "Understand the Weekly Plan and the Operations Team’s role in executing the Plan within the MOS framework", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 28"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Understand the planning flow, including Monthly and 2-Weekly Plans",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 29"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Use the P6 Gantt chart to track progress, assess start and finish times, and provide feedback to the planning team",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 30"
                 },
                                                                                 {
                     type: "textWithCheckbox",
                     text: "Attends 2-week planning meetings, negotiates drilling and earthworks targets, provides feedback on the plan, takes ownership of actions, and ensures closure",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 31"
                 },
                 "Mentored by SME/Supervisor in using the P6 Gantt chart Attend 2-week planning meetings Provide feedback to the planning team for Friday meetings Learn to link the 2-week plan to the Gantt chart Guided in assessing targets and delivering effective feedback", 
                 "",
@@ -406,22 +408,22 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                                 {
                     type: "textWithCheckbox",
                     text: "Has detailed knowledge of the Unisolated Work Process and can perform associated tasks within their area of responsibility", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 32"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Can access the database to search for procedures. Has a solid understanding of tasks permitted under the Unisolated Work Process (UWP)",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 33"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Has a comprehensive understanding of tasks permitted under the Unisolated Work Process (UWP), conducts field checks, and integrates UWP into LIF activities",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 34"
                 },
                                                                                 {
                     type: "textWithCheckbox",
                     text: "Performs field verifications on individual Working with Live Equipment procedures to ensure compliance with documented processes",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 35"
                 },
                 "Receives mentoring from SME/Drill Advisor/Supervisor on the Working with Live Equipment (WWLE) process — including its purpose, management, and field application. Observes WWLE being performed and demonstrates capability to conduct field checks under supervision", 
 
@@ -430,17 +432,17 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                                 {
                     type: "textWithCheckbox",
                     text: "Has detailed knowledge and applies RTIO and ResDev guidelines for protection and clearing near Heritage areas, including adherence to Golden Rules and L2WI requirements", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 36"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Has read the Golden Rules and understands when Level 2/3 Work Instructions are required. Supports operators in preparing and conducting Level 2/3 instructions",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 37"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Provides guidance to operators on the Golden Rules. Has comprehensive knowledge of clearing requirements near Heritage and AR boundaries",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 38"
                 },
                 "",
                 "Education: Reads the Start-Up QRG and Golden Rules document, and understands their intent. Exposure: Golden Rules are explained; can apply them in the field and instruct survey teams to check flagging around heritage sites", 
@@ -449,17 +451,17 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                                 {
                     type: "textWithCheckbox",
                     text: "Develop and implement Traffic Management Plans specific to project needs", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 39"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Develop and implement Traffic Management Plans tailored to project requirements",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 40"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Ensure the Traffic Management Plan is updated whenever field conditions change",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 41"
                 },
                 "",
                 "Education: Has read the local Traffic Management Plan and understands its content. Exposure: Is shown by the Superintendent or Coordinator how to update the TMP when permanent field changes occur", 
@@ -469,12 +471,12 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                                 {
                     type: "textWithCheckbox",
                     text: "Prepare and Distribute Site Notifications/Banners", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 42"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Knows how to prepare a Blue Banner and distribute it to the correct group email",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 43"
                 },
                 "",
                 "",
@@ -485,17 +487,17 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                                                                 {
                     type: "textWithCheckbox",
                     text: "Understands pit permit, training, and AHS (Autonomous Haulage System) requirements relevant to site access and operations", 
-                    checkboxLabel: "Box 13"
+                    checkboxLabel: "Box 44"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Has completed V19 Pit Permit Rules training and understands the requirements for obtaining an AHS pit permit",  
-                    checkboxLabel: "Box 14"
+                    checkboxLabel: "Box 45"
                 },
                                                                 {
                     type: "textWithCheckbox",
                     text: "Can provide guidance on the AHS pass-out process and assist in facilitating the VOC (Verification of Competency) with Mine Operations or Resource Development OJT.",  
-                    checkboxLabel: "Box 15"
+                    checkboxLabel: "Box 46"
                 },
                 "",
                 "Reads and understands the Pit Permit Rules and completes the online V19 training.", 
@@ -544,12 +546,12 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                 {
                     type: "textWithCheckbox",
                     text: "Detailed knowledge of Water Catchment Guidelines for managing water discharge during drilling, including aquifer protection, permit requirements, and environmental impact controls", 
-                    checkboxLabel: "Box 6"
+                    checkboxLabel: "Box 5"
                 },
                                                 {
                     type: "textWithCheckbox",
                     text: "Understand the difference between DMP for hydro drilling, test pumping, and off-pad discharge. No discharge without AR check, water quality testing, and environmental/biodiversity approval", 
-                    checkboxLabel: "Box 7"
+                    checkboxLabel: "Box 6"
                 },
                                                                 {
                     type: "textWithCheckbox",
@@ -563,17 +565,17 @@ const OperationsPop = ({ popupId, closePopup }) => {
                                                 {
                     type: "textWithCheckbox",
                     text: "Compile production data for reporting or to support your Leader as required",  
-                    checkboxLabel: "Box 10"
+                    checkboxLabel: "Box 8"
                 },
                                                 {
                     type: "textWithCheckbox",
                     text: "Full understanding and demonstrated use of data sources: Protrak, DDM, Hydro DDM, State of Play, Earthworks tracking sheets", 
-                    checkboxLabel: "Box 11"
+                    checkboxLabel: "Box 9"
                 },
                                                 {
                     type: "textWithCheckbox",
                     text: "Accurately report weekly drilling, hydro, and earthworks data for Week in Review meetings", 
-                    checkboxLabel: "Box 11"
+                    checkboxLabel: "Box 10"
                 },
                 "",
                 "Exposure: SME/Supervisor demonstrates how to access and use data sources, check accuracy, understand data linkages, and view presentation formats", 
