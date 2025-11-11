@@ -69,8 +69,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "Sign off", 
                 "comment section",
 
-                                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
+
                     {
                     type: "textWithCheckbox",
                     text: "Sets and reviews development goals with team members to support growth and performance", 
@@ -92,8 +91,6 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "Sign off", 
                 "comment section",
 
-                                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
                     {
                     type: "textWithCheckbox",
                     text: "Regularly assess performance during check-ins, providing constructive feedback", 
@@ -134,8 +131,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "Sign off", 
                 "comment section",
 
-                                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
+
                     {
                     type: "textWithCheckbox",
                     text: "Ensures weekly consumable orders are necessary and reasonable, and manages stock levels to meet operational requirements", 
@@ -176,11 +172,10 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Exposure – SME/Supervisor-led session to demonstrate timesheet reconciliation and processing, ensuring correct cost code allocation",
+                "",
                 "Sign off", 
                 "comment section",
 
-                                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
                     {
                     type: "textWithCheckbox",
                     text: "Ensure WHS compliance through testing and tagging, and managing registers for fire extinguishers, lifting gear, and chemical storage", 
@@ -202,8 +197,6 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "Sign off", 
                 "comment section",
 
-                                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
                     {
                     type: "textWithCheckbox",
                     text: "Manages team performance and development through quality quarterly Check-Ins and oversight of Development Plans", 
@@ -225,8 +218,6 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "Sign off", 
                 "comment section",
 
-                                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
                     {
                     type: "textWithCheckbox",
                     text: "Manages IVMS and DSS reporting, addressing poor behaviours as required; includes DSS line item reviews and corrective actions", 
