@@ -48,7 +48,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 4"
                 },
                 "Exposure: Mentored by SME/Supervisor in accessing key data sources (plods, tracking sheets, Protrak, State of Play). Developed accuracy in data entry, detailed standby/downtime comments, and confidence in presenting weekly data to Superintendent in Monday review meetings", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/_layouts/15/stream.aspx?id=%2Fsites%2F6002923%2FShared+Documents%2F1.+How+To+Project%2FDaily+Plod+%28Co-ordinators+and+Supervisors%29%2FDDM+data+input+%26+WIR.mp4&startedResponseCatch=true&referrer=StreamWebApp.Web&referrerScenario=AddressBarCopied.view.2ebf4e15-2493-4015-8251-2ade37e5f6d9", "_blank")}>DDM data input & WIR </button>, 
                 "Sign off", 
                 "comment section",
 
@@ -65,7 +65,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Education – Watch how-to videos and learn what makes a strong PSI", 
-                "", 
+                <button onClick={() => window.open("https://palms.riotinto.com/home-page", "_blank")}>Palms </button>, 
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -80,7 +80,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "", 
                 "", 
                 "Exposure: Supported by SME/Supervisor to gain access and receive guidance on using State of Play, including how to interpret and assess data effectively",
-                "", 
+                <button onClick={() => window.open("https://rtio.maps.arcgis.com/sharing/oauth2/authorize?client_id=dashboards&response_type=code&state=%7B%22portalUrl%22%3A%22https%3A%2F%2Frtio.maps.arcgis.com%22%2C%22uid%22%3A%22-q1bxsbkPdeGVUnC1HHRbDgjjbsYFn0fY0YiL82E2x4%22%7D&expiration=20160&locale=en&redirect_uri=https%3A%2F%2Frtio.maps.arcgis.com%2Fapps%2Fdashboards%2F3c264ff5b63d4738944ea0d47f2ea2ac&redirectToUserOrgUrl=true&code_challenge=Yj6L85j2UDWJKI8Ff7pe0mo-lryQixZq62b-5h2fdng&code_challenge_method=S256", "_blank")}>ArcGis dashboard </button>, 
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -95,7 +95,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Exposure: Shown how to log in and use Weatherguard to track lightning and receive weather alerts", 
-                "",
+                <button onClick={() => window.open("https://mining.weatherzone.com.au/user/login/", "_blank")}>Weatherzone </button>,
                 "Sign off", "comment section",
                                                                 {
                     type: "textWithCheckbox",
@@ -119,7 +119,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },                     
                 "Exposure: Mentored by SME/Supervisor on compiling all relevant pad data for SWATs, including field-based guidance on pad checks. Shadowed during stakeholder communications to ensure accuracy of checks and completeness of data before submission", 
 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=oje63C&CID=55058d55%2Df1ea%2D4254%2Da9a1%2Dad183874b986&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FHandover%20Process%20SWAT", "_blank")}>Handover process SWAT </button>,
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -134,7 +134,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                     "",                  
                     "",
                 "Has read, understands, and applies the RTIO Fitness for Work Policy.", 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0144268.pdf", "_blank")}>Fatigue Management Work Practice </button>,
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -154,7 +154,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "Education – AOD Policy Has read, understands, and applies the RTIO Alcohol and Other Drugs (AOD) Policy Applies the policy to support personal safety and wellbeing Exposure – AOD Policy Application Shadowed by an SME or Supervisor to ensure correct application of the policy Understands and follows the process for managing non-negative results Maintains confidentiality in line with policy protocols", 
 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0092810.pdf", "_blank")}>Alcohol and Other Drugs Procedure</button>,
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -171,10 +171,10 @@ const OperationsPop = ({ popupId, closePopup }) => {
                     text: "Understands the minimum training requirements for their role Recognises the importance of maintaining current qualifications Understands how individual compliance contributes to the department’s collective Licence to Operate",  
                     checkboxLabel: "Box 22"
                 },
-                "",                     
+                "",               
                 "Exposure – My Learning in Prospect Shown how to access My Learning in Prospect Understands the importance of keeping qualifications current Learns how to search for and book internal courses using the My Learning platform Guided by an SME or Supervisor during the process", 
-
-                "",
+                <button onClick={() => window.open("https://prospect.riotinto.org/irj/portal#external", "_blank")}>Prospect </button>,
+            
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -193,8 +193,10 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Has access to Workday and the Res Dev Roster Shown how to enter leave and navigate the Workday system All leave types and their applications are explained Guided by an SME or Supervisor during the process", 
-
-                "",
+                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/:x:/r/sites/ResourceDevelopmentIronOreHub/_layouts/15/Doc.aspx?sourcedoc=%7BC35136E8-AA33-463A-BCC9-C8EDE1912247%7D&file=Res%20Dev%20Roster%202024.xlsx&wdLOR=cB8030848-9B3A-4F9B-A664-B54F69B3F293&fromShare=true&action=default&mobileredirect=true", "_blank")}>Res Dev roster</button>
+                    <button onClick={() => window.open("https://wd3.myworkday.com/riotinto/d/home.htmld", "_blank")}>My workday</button>
+                    </div>,
                 "Sign off", "comment section",
             ]
         },
@@ -220,7 +222,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Has access to the Travel and Logistics web page and understands how to navigate its key features. Receives an overview of the Quality Procurement Process (QPP) and Project Delivery Agreements (PDAs), as explained by a Subject Matter Expert (SME) or Supervisor. Is shown where to locate essential information related to bus schedules, flight details, and accommodation data, supporting informed decision-making and operational coordination.", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002712?xsdata=MDV8MDF8fDc0MDI1OTIzODI1OTQwODBmMmU3MDhkYmUxOGRiODAwfDQzNDFkZjgwZmJlNjQxYmY4OWIwZTZlMjM3OWM5YzIzfDB8MHw2MzgzNTE3NzA5OTY3NjU0MTV8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxMMk5vWVhSekx6RTVPalpsTlRWaU16Y3pMVEZpTnpBdE5EYzRNQzFoTkRBNExUVmpNV1UwWlRrNE9ESmhNbDgzWkdVMFlUbGlaaTFpWVRVM0xUUTNaakF0T0RWbVppMDVPREZsTVdGaU1HVTJNMlJBZFc1eExtZGliQzV6Y0dGalpYTXZiV1Z6YzJGblpYTXZNVFk1T1RVNE1ESTVPRFEzTlE9PXwxODA4ZmZmYzEzMWM0YWIwZjJlNzA4ZGJlMThkYjgwMHwxNmMwMmUwMjNkOTE0M2NhOWYyYjk0MDVhMzkxYmRkOQ%3D%3D&sdata=QmZVTjdiRlZRVlFtb1hlWWlNVWVXZjZvS2dOMUJSWloxd2szUzFyKzh2WT0%3D&ovuser=4341df80-fbe6-41bf-89b0-e6e2379c9c23%2CJason.LeBlanc%40riotinto.com&OR=Teams-HL&CT=1699580419021&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzEwMTIyNDgwNiIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D", "_blank")}>Resource Development Travel Logistics </button>,
                 "Sign off", 
                 "comment section",
 
@@ -237,7 +239,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Has access to ServiceNow and can use quick links and search functions to locate relevant tickets and service requests.", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.service-now.com/now/nav/ui/home", "_blank")}>Servicenow </button>, 
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -256,7 +258,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Education Reads and reviews how-to guides for accessing and using ArcGIS tools. Exposure Receives mentoring from experienced ArcGIS users (e.g., Supervisors, Geos, Hydros, Surveyors) on using the Portal, uploading files, and working with map layers.",
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=wfWkt6&CID=fdde3cb8%2De031%2D44fc%2Db3f0%2D35f5c9d0565c&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FArc%20Pro%20%28Install%20and%20functions%29", "_blank")}>Arc Pro Share Point </button>,
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -271,7 +273,10 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Mentored by a Subject Matter Expert (SME) or Supervisor on using Prospect and Workday. Supervisors provide examples of development plans and check-in templates to support learning", 
-                "",
+                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/:x:/r/sites/ResourceDevelopmentIronOreHub/_layouts/15/Doc.aspx?sourcedoc=%7BC35136E8-AA33-463A-BCC9-C8EDE1912247%7D&file=Res%20Dev%20Roster%202024.xlsx&wdLOR=cB8030848-9B3A-4F9B-A664-B54F69B3F293&fromShare=true&action=default&mobileredirect=true", "_blank")}>Res Dev roster</button>
+                    <button onClick={() => window.open("https://wd3.myworkday.com/riotinto/d/home.htmld", "_blank")}>My workday</button>
+                    </div>,
                 "Sign off", "comment section",
                                                                 {
                     type: "textWithCheckbox",
@@ -290,8 +295,10 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },
                 "",                  
                 "Mentored by SME or Supervisor to ensure proficient use of the Operations Request App. Understands how to locate drilling designs and extract key information from Operations Request forms. Has access to the P6 Gantt and can filter relevant information", 
-
-                "",
+                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://apps.powerapps.com/play/e/3d8e39a1-8810-e91d-abd5-6841378e88ca/a/6ebafd46-669e-4b3e-aab3-f6f756161b2b?tenantId=4341df80-fbe6-41bf-89b0-e6e2379c9c23&amp;sourcetime=1717566236850&amp;source=portal&source=teamsLinkUnfurling", "_blank")}>Res Dev planning app</button>
+                    <button onClick={() => window.open("https://app.powerbi.com/groups/me/reports/35cb0a26-49bb-41e0-afae-ef1c4ab8980b/9501346241a708f47b14?notificationType=DigestReminder&notificationId=8770fe97-5d2d-4e9f-b712-2fbf262a43fc&experience=power-bi", "_blank")}>Power BI P6 Gantt</button>
+                    </div>,
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -314,8 +321,9 @@ const OperationsPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 17"
                 },
                 "Mentored by SME or Supervisor on conducting ground-truthing activities. Training includes performing desktop reviews in ArcGIS, identifying design issues (e.g. access, heritage, ground conditions), and using Field Maps and ServiceNow to support field checks", 
+            
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/:w:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7B8A470831-6A07-4671-9859-B01F84C97DF3%7D&file=Ground%20Truthing%20Checklist%20V1.docx&action=default&mobileredirect=true", "_blank")}>Ground truthing checklist</button>,
 
-                "",
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -335,7 +343,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "Has access to ARCs and is able to search for Approval Requests (ARs). Can extract relevant information from ARs. Receives mentoring from a SME or Supervisor to build proficiency in navigating and interpreting AR documentation", 
 
-                "",
+                <button onClick={() => window.open("https://rtio-arcs.riotinto.org/", "_blank")}>Retired ARCS</button>,
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -359,7 +367,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },                     
                 "Education Understands the Land Disturbance Work Practice and its relevance to operational activities. Exposure Has access to ARCs and can search for and extract information from Approval Requests (ARs). Receives mentoring from a SME or Supervisor to build proficiency in interpreting ARs and applying relevant conditions.", 
 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/Forms/AllItems.aspx?id=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished%2FRTIO%2DHSE%2D0123835%2Epdf&parent=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished", "_blank")}>Land Disturbance Work Practice </button>,
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -379,7 +387,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "Education – Read, understand, and apply WPI guidelines in the field. Exposure – SME or Supervisor to demonstrate effective application.", 
 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Environment_1/RTIO-HSE-0084753.ppt", "_blank")}>Temporary Laydown Management Guidelines</button>,
                 "Sign off", "comment section",
                                                                                                 {
                     type: "textWithCheckbox",
@@ -402,7 +410,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 31"
                 },
                 "Mentored by SME/Supervisor in using the P6 Gantt chart Attend 2-week planning meetings Provide feedback to the planning team for Friday meetings Learn to link the 2-week plan to the Gantt chart Guided in assessing targets and delivering effective feedback", 
-                "",
+                <button onClick={() => window.open("https://app.powerbi.com/groups/me/reports/ecf4b2d5-01fe-4939-b4c1-aaa776db4d8b/ReportSection4f33076230bb230819ce?experience=power-bi", "_blank")}>Res Dev Report & Dashboard </button>,
                 "Sign off", "comment section",
                                                                                                 {
                     type: "textWithCheckbox",
@@ -426,7 +434,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },
                 "Receives mentoring from SME/Drill Advisor/Supervisor on the Working with Live Equipment (WWLE) process — including its purpose, management, and field application. Observes WWLE being performed and demonstrates capability to conduct field checks under supervision", 
 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/4000233/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Friotinto%2Esharepoint%2Ecom%2Fsites%2F4000233%2FDocuments%2F10%2E%20Operational%20Control%2FC1%20Isolation%2FWorking%20with%20Live%20Equipment%2FArchive%2F1%2E%20Resource%20Development%20Unisolated%20tasks%20register%202022%2Exlsx%3Fcid%3D7021D0A6%2D9D00%2D4AA8%2DBF9A%2D065B805CDA1D%26fromShare%3Dtrue%26ga%3D1&correlation=5e3ed8a1%2D8063%2Da000%2D8e8f%2Dfadc6ec15690&Type=item&name=d6e6c3d4%2D1621%2D41da%2D8255%2D162cebcf4761&listItemId=7260&listItemUniqueId=a00bf4cc%2D326e%2D4f62%2D85b0%2Dc4d586475e9d", "_blank")}>Unisolated tasks register </button>,
                 "Sign off", "comment section",
                                                                                                 {
                     type: "textWithCheckbox",
@@ -465,7 +473,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "Education: Has read the local Traffic Management Plan and understands its content. Exposure: Is shown by the Superintendent or Coordinator how to update the TMP when permanent field changes occur", 
 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0262657.pdf", "_blank")}>Traffic Management Plan</button>,
                 "Sign off", "comment section",
                                                                                                 {
                     type: "textWithCheckbox",
@@ -481,7 +489,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "Education: Has read and understands the Blue Banner template. Exposure: Can complete relevant information and send it to the correct audience, with mentoring from the Superintendent.", 
 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0076433.pdf", "_blank")}>Banner templates</button>,
                 "Sign off", "comment section",
                                                                                                 {
                     type: "textWithCheckbox",
@@ -501,7 +509,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "Reads and understands the Pit Permit Rules and completes the online V19 training.", 
 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSTemporaryPostProcessing3/OT_fnd_hse_BDT_hseq_mana_Managed_4/RTIO-HSE-0315544.pdf", "_blank")}>Pit Permit Rules </button>,
                 "Sign off", "comment section",
             ]
         },
@@ -523,7 +531,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "", 
                 "", 
                 "Exposure – SME-led survey to demonstrate SHOUT unit functionality, including portal sign-in and movement tracking", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=UvzuKW&CID=e19da2a1%2D6191%2D49ab%2D8d1a%2D237c19c6438b&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FGAP%20shout%20usage", "_blank")}>GAP shout usage </button>,
                 "Sign off", 
                 "comment section",
 
@@ -540,7 +548,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Exposure - Has access to app, SME shows how to navigate the app, is shown how to assess information in the request from, is shown how to track ground truthing in the app. ", 
-                "", 
+                <button onClick={() => window.open("https://apps.powerapps.com/play/e/3d8e39a1-8810-e91d-abd5-6841378e88ca/a/6ebafd46-669e-4b3e-aab3-f6f756161b2b?tenantId=4341df80-fbe6-41bf-89b0-e6e2379c9c23&amp;sourcetime=1717566236850&amp;source=portal&source=teamsLinkUnfurling", "_blank")}>Res Dev planning app</button>,
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -559,7 +567,10 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Education: Review QRG and process flow. Understand requirements for safe fluid discharge into the environment",
-                "", 
+                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSTemporaryPostProcessing6/Users_Cabinet_Managed_Non_Confidential_Files_1/RTIO-PDE-0053914.doc", "_blank")}>Pilbara Surface Water Management Strategy</button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Friotinto%2Esharepoint%2Ecom%2F%3Ap%3A%2Fr%2Fsites%2F6002923%2FShared%20Documents%2FSpecialist%2FDischarge%20Management%20%2D%20QRG%2FDMP%20process%20WRE%20V2%2Epptx%3Fd%3Dw620f0557c0b04a46bd817c6d8ce73796%26csf%3D1%26web%3D1%26e%3DBHcigE&correlation=8a3fd8a1%2D5042%2Da000%2Dae1e%2D0f2c45eb07a4&Type=item&name=33e26dbf%2De5d7%2D4e49%2D8130%2D409e7eb71132&listItemId=10548&listItemUniqueId=620f0557%2Dc0b0%2D4a46%2Dbd81%2D7c6d8ce73796", "_blank")}>Discharge Management</button>
+                    </div>,
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -578,7 +589,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Exposure: SME/Supervisor demonstrates how to access and use data sources, check accuracy, understand data linkages, and view presentation formats", 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/_layouts/15/stream.aspx?id=%2Fsites%2F6002923%2FShared+Documents%2F1.+How+To+Project%2FDaily+Plod+%28Co-ordinators+and+Supervisors%29%2FDDM+data+input+%26+WIR.mp4&startedResponseCatch=true&referrer=StreamWebApp.Web&referrerScenario=AddressBarCopied.view.2a827003-31c4-4bba-889b-ce9be9ae629c", "_blank")}>DDM data input & WIR </button>,
                 "Sign off", "comment section",
             ]
         }
