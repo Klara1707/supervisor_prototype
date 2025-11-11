@@ -41,7 +41,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Download to your mobile device using the provided link. Exposure: Familiarise yourself with how to create an active task, action items through your inbox, and review your team via the dashboard Exposure: familarise yourself how to create an active task, action through your inbox and review your team on the dashboard.", 
-                "", 
+                <button onClick={() => window.open("https://safeday.app/", "_blank")}>Safeday app</button>,
                 "Sign off", 
                 "comment section",
 
@@ -66,7 +66,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 7"
                 },
                 "The RTIO Critical Risk Management Hub provides comprehensive resources explaining the 'why' and 'how' behind critical risk processes", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Critical-Risk-Management-(CRM).aspx", "_blank")}>Critical Risk Management (CRM) </button>,
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -85,7 +85,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "The RTIO Pre-Task Hazard Assessment Hub provides comprehensive guidance on the 'why' and 'how' of effective risk assessment and control",
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Pre-Task-Risk-Assessment-Tools.aspx", "_blank")}>Pre-Task Hazard Assessment</button>, 
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -100,8 +100,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Exposure Tip: Before another leader presents a safety banner, take time to read it yourself. Consider how you would summarise the content without losing key messages, and identify the most important points to share. Resources: Access all banner templates via the provided link.", 
-
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB#banners", "_blank")}>HSEC Hub </button>,
                 "Sign off", "comment section",
                                                                 {
                     type: "textWithCheckbox",
@@ -145,8 +144,12 @@ const SafetyPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 19"
                 },                      
                 "Exposure Tip: Shadow a peer to understand scene requirements and how to communicate initial expectations for information collection. Once confident, practice entering incident details into Enablon.", 
+            
+                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.enablon.com/RioTinto/go.aspx", "_blank")}>Enablon</button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/4000233/Documents/Forms/All%20Documents.aspx?id=%2Fsites%2F4000233%2FDocuments%2F14%2E%20Non%2DConformance%2C%20Incident%2C%20Action%20Management%2FIncident%20Management%20Process%20Templates%5FQRG%5FTraining%2FResDev%20Enablon%20Training%2Epdf&parent=%2Fsites%2F4000233%2FDocuments%2F14%2E%20Non%2DConformance%2C%20Incident%2C%20Action%20Management%2FIncident%20Management%20Process%20Templates%5FQRG%5FTraining", "_blank")}>Enablon training</button>
+                    </div>,
 
-                "",
                 "Sign off", "comment section",
 
                                                                                                 {
@@ -211,7 +214,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 "", 
                 "", 
                 "", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/5060624/SiteAssets/Forms/AllItems.aspx?id=%2Fsites%2F5060624%2FSiteAssets%2FSitePages%2FResources%2FSMART%2DGoals%2Epdf&parent=%2Fsites%2F5060624%2FSiteAssets%2FSitePages%2FResources", "_blank")}>Setting Goals </button>,
                 "Sign off", 
                 "comment section",
     
@@ -234,7 +237,10 @@ const SafetyPop = ({ popupId, closePopup }) => {
             
                 "", 
                 "Self-Training: Access provided links for guided learning and familiarisation. On-the-Job Exposure: Shadow an SME during live incident entry to observe best practices. Pro Tip: Superintendents often schedule dedicated times to progress incidents in their hub — request to observe during these sessions for practical insights.", 
-                "", 
+                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=a0IK9F&CID=c6aed5b4%2Def86%2D49f0%2Db9cc%2D3b4b09cb5d4c&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FEnablon", "_blank")}>Enablon </button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/4000233/Documents/Forms/All%20Documents.aspx?id=%2Fsites%2F4000233%2FDocuments%2F14%2E%20Non%2DConformance%2C%20Incident%2C%20Action%20Management%2FIncident%20Management%20Process%20Templates%5FQRG%5FTraining%2FResDev%20Enablon%20Training%2Epdf&parent=%2Fsites%2F4000233%2FDocuments%2F14%2E%20Non%2DConformance%2C%20Incident%2C%20Action%20Management%2FIncident%20Management%20Process%20Templates%5FQRG%5FTraining", "_blank")}>Enablon training</button>
+                    </div>,
                 "Sign off", 
                 "comment section",
 
@@ -302,7 +308,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Pro Tip: Superintendents often block out dedicated times to progress incident investigations within their hub. Request an opportunity to observe these sessions to gain practical exposure to incident workflows, system use, and decision-making processes", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Incident-Investigation-and-Action-Quality.aspx", "_blank")}>Incident Investigation </button>,
                 "Sign off", 
                 "comment section",
 
@@ -345,7 +351,10 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "HSEQ Competencies – to highlight initiative and system familiarity Development Plan Summary – to show ongoing self-directed learning", 
-                "", 
+                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/Forms/AllItems.aspx?id=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished%2FRTIO%2D1046143%2Epdf&parent=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished", "_blank")}>Mine Safety Management System</button>
+                    <button onClick={() => window.open("http://auperweb34:91/HSEQ/Default.aspx?siteid=1", "_blank")}>HSEQ Management System </button>
+                    </div>,
                 "Sign off", 
                 "comment section",
 
@@ -366,7 +375,10 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "", 
-                "", 
+                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/E0007/_layouts/15/stream.aspx?id=%2Fsites%2FE0007%2FRTTV+videos%2FRio+Tinto+-+Safety+Maturity+Model.mp4&referrer=StreamWebApp.Web&referrerScenario=AddressBarCopied.view.3cb5ed7b-d37e-4e04-a828-e6074196de8d&startedResponseCatch=true", "_blank")}>Safety Maturity Model</button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6003066?e=1%3A7af2a707136e4e16831e1fa3a9690205#safety-maturity-model", "_blank")}>Safety Maturity model Share Point</button>
+                    </div>,
                 "Sign off", 
                 "comment section",
 
@@ -387,7 +399,10 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Tip: Level 2 Risk Assessments (L2RAs) are triggered for specific projects or scenarios that fall outside normal operations and involve risks not captured in the Hub Risk Register. Action: Speak with your Superintendent or HSE Advisor to express your interest in attending the next L2RA.", 
-                "", 
+                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Pre-Task-Risk-Assessment-Tools.aspx#level-2-risk-assessments", "_blank")}>Pre-Task Hazard Assessment Share Point</button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/4000233/sitepages/home.aspx?RootFolder=/sites/4000233/Documents/03.%20Hazard%20ID%20%26%20Risk%20Management/07.%20Level%202%20Risk%20Assessments&FolderCTID=0x0120005CC9CFB35F7E404C98B5B47EBB30C496&View=%7bBFD1968E-EBB3-432E-BF69-F4F84CC2924D%7d", "_blank")}>Enablon training</button>
+                    </div>,
                 "Sign off", 
                 "comment section",
             
@@ -413,7 +428,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 "", 
                 "", 
                 "Exposure – Request your Superintendent or HSE Advisor to involve you in a 5 Why’s investigation to gain practical experience", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FIncident%20and%20Action%20Management%2FBest%2DPractice%2D%2D%2DLearning%2Dfrom%2DEvents%2D%2DInvestigations%2D%2Epdf&parent=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FIncident%20and%20Action%20Management", "_blank")}>Best practice investigations </button>,
                 "Sign off", 
                 "comment section",
 
@@ -426,7 +441,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 "", 
                 "", 
                 "Uses provided link to identify outdated SWPs and collaborates with the team performing the work to review, update, or remove practices that are no longer best practice", 
-                "", 
+                <button onClick={() => window.open("https://app.powerbi.com/groups/me/apps/98bfa01a-c446-46a8-bbea-38d67e2ff15f/reports/be5075e2-eb98-4f8c-95a1-14ca041198e2/ReportSection9a4ee125335b0f30015f?ctid=4341df80-fbe6-41bf-89b0-e6e2379c9c23&experience=power-bi", "_blank")}>ResDev SWP Compliance </button>,
                 "Sign off", 
                 "comment section",
             ]
@@ -434,7 +449,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
         
     };
 
- const { title, cells } = contentMap[popupId];
+const { title, cells } = contentMap[popupId];
 
 
 return (
