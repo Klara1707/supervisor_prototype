@@ -134,7 +134,6 @@ const OperationsPop = ({ popupId, closePopup }) => {
                     "",                  
                     "",
                 "Has read, understands, and applies the RTIO Fitness for Work Policy.", 
-
                 "",
                 "Sign off", "comment section",
                                                                                 {

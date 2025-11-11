@@ -151,7 +151,7 @@ const CostPop = ({ popupId, closePopup }) => {
                 {
                     type: "textWithCheckbox",
                     text: "Understand the process flow for future work packages: request, approval, forecasting, and budgeting", 
-                    checkboxLabel: "Box 2"
+                    checkboxLabel: "Box 3"
                 },
                 "", 
                 "No formal training at Supervisor level—stay curious and ask questions of experienced Superintendents and Technical Leads", 
