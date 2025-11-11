@@ -37,7 +37,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                 "", 
                 "", 
                 "Tips: The RTIO Leadership Coaching App contains excellent resources to support QSI, coaching, and more. Exposure: SME: Demonstrates where to access PowerApps. Superintendent: Provides mentoring on how to complete forms, including the level of detail required.", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=0ZX0SA&CID=34de3119%2D65dd%2D4471%2Da88f%2D9af5194f5e7a&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FPower%20Apps", "_blank")}>Power apps Share Point </button>,
                 "Sign off", 
                 "comment section",
 
@@ -58,7 +58,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Education – Watch how-to videos and learn what makes a strong PSI", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Pre-Start-Information-Meetings.aspx", "_blank")}>Pre-Start Information Meetings </button>,
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -81,7 +81,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 9"
                 },
                 "Education Watch how-to videos. Understand effective LIF interactions. Complete QSI training. Exposure: SME/Super/Supt: Provide ongoing coaching on LIF and playback. Verify task controls during LIF activities.",
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Leadership-in-the-Field.aspx", "_blank")}>Leadership in the Field (LiF) </button>, 
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -98,7 +98,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                     text: "Demonstrates the ability to accurately enter objectives and understands the various types and their intended outcomes. Proactively follows up on assigned actions and ensures they are fully completed and closed out.", 
                     checkboxLabel: "Box 12"
                 },
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=aP0Kcd&CID=de8150f5%2D2990%2D4dfe%2Dac87%2D92aac7426860&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FP6%2C%20Role%20Descriptions%20and%20Blue%20Print", "_blank")}>P6, Role descriptions and Blue print</button>,
                 "Provides mentorship to SMEs and Supervisors on effective objective setting, emphasizing the use of SMART and measurable objectives. Guides others in developing achievable actions and supports them in aligning objectives with desired outcomes", 
 
                 "",
@@ -120,8 +120,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                 },
                 "",                         
                 "Provides guidance and mentorship to SMEs and Supervisors on effective objective setting, with a focus on developing SMART and measurable objectives. Supports others in creating realistic, achievable actions that align with performance and development goals", 
-
-                "",
+                <button onClick={() => window.open("https://wd3.myworkday.com/riotinto/d/home.htmld", "_blank")}>Workday </button>,
                 "Sign off", "comment section",
             ]
         },
@@ -170,7 +169,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Reads and understands the Recognition Guidelines and Tips to support effective nominations", 
-                "", 
+                <button onClick={() => window.open("https://cloud.workhuman.com/microsites/t/home?client=6317&setCAG=false", "_blank")}>Rockstar </button>, 
                 "Sign off", "comment section",
             ]
         },
@@ -196,7 +195,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Uses the Go Look See function to pre-arrange coaching with peers. Observes multiple interactions and engages in open discussions to understand intent, observations, and communication style. Once confident, seeks permission to provide feedback and uses open questions to encourage honest reflection. Shares observations to support improvement or celebrate success", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FRTIOHSECHUB%2FShared%20Documents%2FTools%20%26%20Templates%2FSafety%20coaching%20model%20overview%5FEN%2Epdf&parent=%2Fsites%2FRTIOHSECHUB%2FShared%20Documents%2FTools%20%26%20Templates&p=true&ga=1", "_blank")}>Safety coaching model </button>,
                 "Sign off", 
                 "comment section",
 
@@ -213,7 +212,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Exposure: Facilitate a LiF meeting with your Superintendent. Request feedback to support development", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=oV6dSJ&CID=171b6d8b%2D8ec5%2D4538%2D84ec%2D1c5eb21fb8e4&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FLIF%20%28RD%20planning%20%26%20debrief%20meeting%29", "_blank")}>LiF Share Point </button>,
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -247,7 +246,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "", 
-                "", 
+                <button onClick={() => window.open("https://app.powerbi.com/groups/me/reports/94ebe388-ceb3-4c77-870d-fe5bb5960311/ReportSection03e6dd9f9b4c9870728c?experience=power-bi", "_blank")}>Power BI Conformance Summary</button>,
                 "Sign off", "comment section",
             ]
         }
