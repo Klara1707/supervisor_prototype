@@ -82,8 +82,6 @@ const DrillingPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 9"
                 },
 "Education: Conducts independent research by utilizing internet resources and reviewing relevant materials to build foundational knowledge. Exposure: Actively engages in field activities with Drillers, Supervisors, and Drill Advisors, asking questions and observing operations to deepen practical understanding.",
-
-
                 "", 
                 "Sign off", "comment section",
                                                 {
