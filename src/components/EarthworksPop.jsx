@@ -42,7 +42,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Mentoring from Earthworks SME on data entry, State of Play usage, how data links to State of Play, and extracting data for reporting", 
-                "", 
+                <button onClick={() => window.open("https://rtio.maps.arcgis.com/sharing/oauth2/authorize?client_id=dashboards&response_type=code&state=%7B%22portalUrl%22%3A%22https%3A%2F%2Frtio.maps.arcgis.com%22%2C%22uid%22%3A%22dsxnQswsXbQzFiBhD5GkOmfhHMtmMDu3kZ1X1iVY_Fs%22%7D&expiration=20160&locale=en&redirect_uri=https%3A%2F%2Frtio.maps.arcgis.com%2Fapps%2Fdashboards%2F3c264ff5b63d4738944ea0d47f2ea2ac&redirectToUserOrgUrl=true&code_challenge=It5IQsTNcZ0_wfgxCf1qRB2qQ4rqjE62FFZT17ERePo&code_challenge_method=S256", "_blank")}>ArcGIS log in</button>,
                 "Sign off", 
                 "comment section",
 
@@ -86,7 +86,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 10"
                 },
                 "Education: Has read the Earthworks Rehabilitation Manual and understands how rehabilitation methods are applied in the field. Exposure: Received mentoring from Subject Matter Experts (SMEs) on rehabilitation quality standards. Conducts field checks to assess rehabilitation quality and ensures implementation aligns with established guidelines.",
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSAssetDevelopment/Resource_Development_1/RTIO-0994910.docx", "_blank")}>Operations Rehabilitation Manual</button>,
                 "Sign off", "comment section",
             ]
         },
@@ -112,7 +112,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Education & Exposure – Reads the Rehabilitation Manual and understands its field application. Mentored by SME on rehab quality, conducts field checks, and applies guidelines effectively", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSAssetDevelopment/Resource_Development_1/RTIO-0994910.docx", "_blank")}>Operations Rehabilitation Manual </button>, 
                 "Sign off", 
                 "comment section",
 
@@ -148,7 +148,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Exposure Receives mentoring from SME, EW Advisors, or Superintendent on pad creation guidelines. Ensures 10% of pads are checked in the field for size and quality. Learns how to assess clearance levels in ARs and track them using Power BI",
-                "", 
+                <button onClick={() => window.open("https://app.powerbi.com/groups/me/reports/4cef7f55-df16-4258-bf36-4042e60cb348/ReportSection888e3990e95dc23e38b9?ctid=4341df80-fbe6-41bf-89b0-e6e2379c9c23&experience=power-bi", "_blank")}>Ground disturbance power BI </button>, 
                 "Sign off", "comment section",
 
                                                                 {
@@ -168,7 +168,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Exposure Receives mentoring from SME/Superintendent on loading files onto Gen 3 screens through demonstration. Firmware updates should only be performed under instruction from EW Advisors",
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/rtioresourcedevelopment/Shared%20Documents/Forms/Technical%20Delivery.aspx?csf=1&e=DsGxoY&CID=a2610c92%2De1d0%2D43f3%2D8254%2Db1106436fdca&FolderCTID=0x01200003ED9D32C1E049409F18A09132200202&id=%2Fsites%2Frtioresourcedevelopment%2FShared%20Documents%2FOperations%20Team%2FTrimble%20SNS%2FSNS%20Training%20Videos", "_blank")}>Trimble </button>, 
                 "Sign off", "comment section",
                                                                 {
                     type: "textWithCheckbox",
@@ -187,7 +187,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Gains exposure through SME mentoring on survey work. Knows how to use the DPC online form to request survey tasks and understands the earthworks checks required before requesting — e.g., confirming pad readiness",
-                "", 
+                <button onClick={() => window.open("https://forms.office.com/pages/responsepage.aspx?id=gN9BQ-b7v0GJsObiN5ycIydsMwh41zlPvpcVJiWbXiJUQThVODdCWklPVjY4TzhLTzAwVzRaT0lCVSQlQCN0PWcu&route=shorturl", "_blank")}>Survey work requests</button>,
                 "Sign off", "comment section",
             ]
         },
@@ -213,7 +213,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Receive mentoring from SME/EW Advisor on machine capability, infield direction, and best practices for pad and track construction. Pass-out expected within 12 months", 
-                "", 
+                "No training material exists. To close out this topic the candidate will have to be mentored and coached by an earthworks SME. ", 
                 "Sign off", 
                 "comment section",
             ]
