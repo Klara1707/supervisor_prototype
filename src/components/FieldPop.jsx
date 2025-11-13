@@ -87,7 +87,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Education Understands role expectations by reviewing the role description. Exposure: Collaborates with Superintendent in meetings to define clear, measurable development actions and check-in plans aligned to the role.", 
-                "", 
+                <button onClick={() => window.open("https://wd3.myworkday.com/riotinto/d/home.htmld", "_blank")}>Workday </button>, 
                 "Sign off", 
                 "comment section",
 
@@ -172,7 +172,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Exposure – SME/Supervisor-led session to demonstrate timesheet reconciliation and processing, ensuring correct cost code allocation",
-                "",
+                <button onClick={() => window.open("https://my.workpac.com/public", "_blank")}>My WorkPac </button>,
                 "Sign off", 
                 "comment section",
 
@@ -193,7 +193,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Education – Dogging, Fire Extinguisher Test & Tag, and ChemAlert training (not mandatory but beneficial). Exposure – Mentorship from SME or Field Supervisor during field audits and compliance checks", 
-                "", 
+                <button onClick={() => window.open("https://safeday.app/", "_blank")}>Safeday </button>, 
                 "Sign off", 
                 "comment section",
 
@@ -214,7 +214,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Superintendent sets expectations for Check-Ins and Development Plans, follows up on actions and challenges, verifies progress, and guides staff in setting purposeful targets to improve performance", 
-                "", 
+                <button onClick={() => window.open("https://wd3.myworkday.com/riotinto/d/home.htmld", "_blank")}>Workday </button>, 
                 "Sign off", 
                 "comment section",
 
@@ -235,7 +235,11 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Education: Has read the IVMS and DSS Leader Guidance Notes. Exposure: Superintendent provides guidance to ensure clear understanding of IVMS and DSS rules, manages inappropriate behaviour, and ensures rules are upheld", 
-                "", 
+                                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0156051.pdf", "_blank")}> Vehicle Monitoring System (IVMS)
+</button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Health_Safety_Environment/RTIO-1054035.pdf", "_blank")}>RTIO DSS Driver Safety System</button>
+                    </div>, 
                 "Sign off", 
                 "comment section",
 
@@ -256,7 +260,11 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Education: Has reviewed all training videos, understands Rio Tools usage, and holds CCFV VOC qualification. Exposure: Mentored by SME/Supervisor to a level where the Supervisor can provide direct guidance on RTIO safety tool usage.", 
-                "", 
+                                                                <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://id.riotinto.forwoodsafety.com/", "_blank")}> Forwoodsafety
+</button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Critical-Risk-Management-(CRM).aspx", "_blank")}>Critical Risk Management (CRM)</button>
+                    </div>, 
                 "Sign off", 
                 "comment section",
                                     {
@@ -276,7 +284,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Mentored by SME/Field Supervisor in the safe and effective setup of water sources, including scoping and selecting bores for installation", 
-                "", 
+                "No training plan exists for this topic. Candidate will have to be mentored by a SME or superintendent with a field work background. ", 
                 "Sign off", 
                 "comment section",
 
@@ -293,7 +301,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Completed all ChemAlert training videos Understands system functionality and usage", 
-                "", 
+                <button onClick={() => window.open("https://chemalert.rmt.com.au/rtio/login/", "_blank")}>ChemAlert </button>,
                 "Sign off", 
                 "comment section",
 
@@ -314,7 +322,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "SME or Field Supervisor demonstrates how to raise a notification in SAP, including detailed steps and supporting photos", 
-                "", 
+                <button onClick={() => window.open("#", "_blank")}>link not working </button>,
                 "Sign off", 
                 "comment section",
 
@@ -331,7 +339,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "SME/Field Supervisor to demonstrate: request quote, raise PO, engage contractor, provide maps and documentation", 
-                "", 
+                "No training plan exists for this topic. Candidate will have to be mentored by a SME or superintendent with a field work background. ",
                 "Sign off", 
                 "comment section",
 
@@ -352,7 +360,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Exposure: Request to join interview panel for upcoming vacanciess", 
-                "", 
+                "No training plan exists for this topic. Candidate will have to be mentored by a SME or superintendent with a field work background. ", 
                 "Sign off", 
                 "comment section",
 
@@ -369,7 +377,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Gain SME/Field Supervisor mentoring on sample dispatch and Protrak use. Guide field assistants in generating sample and collar cutting sheet", 
-                "", 
+                <button onClick={() => window.open("#", "_blank")}>link not working </button>,
                 "Sign off", 
                 "comment section",
 
@@ -390,7 +398,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Gain exposure through SME/Field Supervisor mentoring on project needs, engaging hire companies, quoting, raising POs, and sharing knowledge with others", 
-                "", 
+                "No training plan exists for this topic. Candidate will have to be mentored by a SME or superintendent with a field work background. ", 
                 "Sign off", 
                 "comment section",
                 
