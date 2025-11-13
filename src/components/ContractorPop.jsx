@@ -37,7 +37,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "System Access & Usage: Able to download the Non-Inducted Transport Worker (NITW) checklist to a mobile device using the provided link. Familiar with accessing and navigating Safeday to support NITW activities. Exposure: Has familiarised themselves with the rules and requirements of the NITW process through hands-on experience and guidance from site procedures.", 
-                "", 
+                <button onClick={() => window.open("https://safeday.app/", "_blank")}>Safeday</button>, 
                 "Sign off", 
                 "comment section",
 
@@ -58,7 +58,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "System Access: Has access to CM One, Pegasus, SAP, R3413 for qualifications checks, Protrak for inspections, and Safeday for safety documentation. Exposure: Mentored on-site by SMEs and HSE personnel in conducting documentation reviews, inspections, qualifications checks, and using Safeday and Protrak systems. Also received guidance on the contractor mobilisation process and understanding contract stipulations.", 
-                "", 
+                <button onClick={() => window.open("https://app.avetta.com/login?referral=https://app.avetta.com/avt-cli/home", "_blank")}>Avetta</button>, 
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -77,7 +77,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 }, 
                 "", 
                 "CMS Qualification & System Access: Nominated by Superintendent/Manager and successfully completed the CMS classroom course. Has access to Pegasus and R3413 for qualifications checks.",
-                "", 
+                <button onClick={() => window.open("#", "_blank")}>linke not working (LiF) </button>,  
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -96,7 +96,17 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Form Review: Go through the form with an SME/Supervisor. Discuss key data points to present, including: DDM data Enablon actions Protrak inspections Safeday/CRM data Mentoring Session: Attend a meeting with an SME. Understand the meeting’s purpose, take notes, and help assign actions for improvement.", 
-                "",
+                
+                    <button
+                    onClick={() =>
+                        window.open(
+                        "mailto:RTIOResDevContractManagement@riotinto.com?subject=Contract Inquiry&body=Hello, I would like to discuss..."
+                        )
+                    }
+                    >
+                    Email Contract Management (LiF)
+                    </button>,
+
                 "Sign off", "comment section",
                                                                 {
                     type: "textWithCheckbox",
@@ -111,8 +121,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 "",
                 "",                  
                 "Education – Fatigue Management Read and understand the Fatigue Management Policy. Apply the policy during nightshift operations. Perform relevant checks to ensure compliance.", 
-
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSTemporaryPostProcessing3/OT_fnd_hse_BDT_hseq_mana_Managed_2/RTIO-HSE-0228064.pdf", "_blank")}>PERSONAL FATIGUE CHECKLIST</button>, 
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",
@@ -131,7 +140,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 },              
                     "",
                 "Exposure – Contract Management Team Understand the roles and responsibilities of the Contract Management (CM) team. Engage with CM team members to clarify contract terms when needed. Has access to contract summaries and can extract and apply relevant information to daily tasks. Receives mentoring from an SME or Supervisor to support learning and application.", 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/ResDevCMProcurement/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FResDevCMProcurement%2FShared%20Documents%2FGeneral%2FContract%20Summary%2FPdf%20format%2FDrilling&viewid=337cff9e%2D0979%2D475e%2Daccb%2D51780618938a&csf=1&web=1&e=A6q104&clickparams=eyAiWC1BcHBOYW1lIiA6ICJNaWNyb3NvZnQgT3V0bG9vayIsICJYLUFwcFZlcnNpb24iIDogIjE2LjAuMTgyMjcuMjAyNDAiLCAiT1MiIDogIldpbmRvd3MiIH0%3D&CID=fca789a1%2D8047%2D8000%2D2c2d%2D829a4a429502&cidOR=SPO&FolderCTID=0x012000B13C0CCE7934D84DA7EFE315D3D96105", "_blank")}> ResDev CM & Procurement </button>, 
                 "Sign off", "comment section",
         ]
         },
@@ -153,7 +162,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Has access to Protrak Inspections. Receives mentoring from the Mechanical team/Supervisor on the 6-month inspection process, field checks, and data entry into Protrak", 
-                "", 
+                <button onClick={() => window.open("#", "_blank")}>link not working </button>,
                 "Sign off", 
                 "comment section",
 
@@ -174,7 +183,16 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Exposure: Receives mentoring on CMS weekly meetings and how they link to monthly meetings. Experience: Provides contractor feedback to the CM team for inclusion in monthly meetings.", 
-                "", 
+                    <button
+                    onClick={() =>
+                        window.open(
+                        "mailto:RTIOResDevContractManagement@riotinto.com?subject=Contract Inquiry&body=Hello, I would like to discuss..."
+                        )
+                    }
+                    >
+                    Email Contract Management (LiF)
+                    </button>,
+
                 "Sign off", "comment section",
         ]
         },
@@ -200,7 +218,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Exposure through mentoring by SME/Supervisor on RSO contacts, required documentation, and managing vehicle movements", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSTemporaryPostProcessing/OT_fnd_hse_BDT_hseq_contr_1/RTIO-HSE-0135314.docx", "_blank")}>Radiation Management Guidance Note </button>, 
                 "Sign off", 
                 "comment section",
 
@@ -217,7 +235,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Education: Know where to find the Weed & Seed form (Safeday). Exposure: SME mentoring on effective and thorough Weed & Seed checks on site", 
-                "", 
+                <button onClick={() => window.open("https://safeday.app/", "_blank")}>Safeday</button>, 
                 "Sign off", "comment section",
 
                                     {
@@ -237,7 +255,7 @@ const ContractorPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Exposure through SME/Supervisor mentoring on ICP contacts, required documentation, managing pressure vessels onsite, field assurance activities, and CCVS checks", 
-                "", 
+                <button onClick={() => window.open("https://id.riotinto.forwoodsafety.com/?redirect_uri=https://verification.riotinto.forwoodsafety.com", "_blank")}>Forwood Safety </button>, 
                 "Sign off", 
                 "comment section",
         ]
