@@ -46,7 +46,10 @@ const CostPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 4"
                 },
                 "Review & Access Understand the E/Works PLOD signing process flow. Access Matrix and contract summaries. Exposure Mentoring from SME/Supervisor on thorough PLOD checks. Engage with CM team and escalate charge queries to Cat 3 Supervisor.", 
-                "", 
+                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/:f:/r/sites/ResDevCMProcurement/Shared%20Documents/General/Contract%20Summary/Pdf%20format/Earthworks?csf=1&web=1&e=jmebKR", "_blank")}>Earthworks pdf format</button>
+                    <button onClick={() => window.open("#", "_blank")}>Should this be corplan now we moving over?(not matrix)</button>
+                    </div>, 
                 "Sign off", 
                 "comment section",
 
@@ -71,7 +74,10 @@ const CostPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 8"
                 },
                 "Review: Understands the end-to-end process flow for signing Drilling and Hydro contractor plods, ensuring accuracy and compliance with operational procedures. Access: Has access to contract summaries to support informed decision-making during plod reviews and approvals.Exposure: Mentored by SMEs and Supervisors on conducting thorough plod checks. Engages in communication with the Contract Management (CM) team and escalates queries on charges to the Category 3 Supervisor as required.", 
-                "", 
+                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("#", "_blank")}>Earthworks pdf format</button>
+                    <button onClick={() => window.open("#", "_blank")}>Should this be corplan now we moving over?(not matrix)</button>
+                    </div>, 
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",
@@ -86,7 +92,10 @@ const CostPop = ({ popupId, closePopup }) => {
                 "", 
                 "", 
                 "System Access: Has access to both Protrak and Matrix systems, enabling efficient data entry and approval of contractor plods. Exposure: Shadowed by SMEs and Supervisors to learn accurate entry and approval processes for Hydro plods in Matrix, ensuring compliance with operational and contractual standards.",
-                "", 
+                                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("#", "_blank")}>link not working</button>
+                    <button onClick={() => window.open("", "_blank")}>coreplan ??</button>
+                    </div>, 
                 "Sign off", "comment section",
             ]
         },
@@ -129,7 +138,7 @@ const CostPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "No formal training is available at Supervisor level—stay curious, ask questions, and seek guidance from experienced Supervisors or Superintendents", 
-                "", 
+                <button onClick={() => window.open("https://app.powerbi.com/groups/me/reports/4f3d49d8-5f37-4727-bb06-25ea221f7399/ReportSection?experience=power-bi", "_blank")}>2025 WBS Register </button>,
                 "Sign off", "comment section",
             ]
         },
