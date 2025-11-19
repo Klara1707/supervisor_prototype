@@ -42,7 +42,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Education – Borehole Planning Document (BHPD) Hydro team provides context on the purpose, structure, and level of detail in the BHPD Understands operational responsibilities outlined in the documentExposure – BHPD Review and Sign-Off Reviews and signs the BHPD daily under guidance from an SME or Supervisor Gains practical understanding of how to align field activities with project requirements", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/:x:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7B532BED0C-0239-4927-B0F7-69C6FECB5B94%7D&file=Copy%20of%20BHPD_Single%20Shift_2025_250624_Template_RTIO_Locked.xlsm&action=default&mobileredirect=true", "_blank")}>BHPD Single Shift Template </button>,
                 "Sign off", 
                 "comment section",
 

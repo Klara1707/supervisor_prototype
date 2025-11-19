@@ -42,7 +42,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Mentoring from Earthworks SME on data entry, State of Play usage, how data links to State of Play, and extracting data for reporting", 
-                <button onClick={() => window.open("https://rtio.maps.arcgis.com/sharing/oauth2/authorize?client_id=dashboards&response_type=code&state=%7B%22portalUrl%22%3A%22https%3A%2F%2Frtio.maps.arcgis.com%22%2C%22uid%22%3A%22dsxnQswsXbQzFiBhD5GkOmfhHMtmMDu3kZ1X1iVY_Fs%22%7D&expiration=20160&locale=en&redirect_uri=https%3A%2F%2Frtio.maps.arcgis.com%2Fapps%2Fdashboards%2F3c264ff5b63d4738944ea0d47f2ea2ac&redirectToUserOrgUrl=true&code_challenge=It5IQsTNcZ0_wfgxCf1qRB2qQ4rqjE62FFZT17ERePo&code_challenge_method=S256", "_blank")}>ArcGIS log in</button>,
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=29Nx7h&CID=2b5b1417%2Dcbb8%2D4d66%2Db590%2D8cf8617d823d&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2FBulk%20supervisor%20training%20app%20docs%20and%20links%2F2025%20Data%20Entry%20Sheets", "_blank")}>2025 Data Entry Sheets</button>,
                 "Sign off", 
                 "comment section",
 
@@ -63,7 +63,7 @@ const EarthworksPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Gained exposure through mentoring by SMEs, EW Advisors, and Supervisors on pad creation guidelines, including understanding the appropriate pad sizes for various drilling methods. Received guidance from SMEs on clearance levels for ARs and how these are tracked and managed", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=GBPKC2&CID=d3590976%2D3070%2D4a04%2D8621%2D5b248ad1c4f9&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2FBulk%20supervisor%20training%20app%20docs%20and%20links%2FPad%5FDimensions%5FCraig%5FCosgrove%5F02%2D02%2D2023", "_blank")}>Pad Dimensions</button>,
                 "Sign off", "comment section",
                                                 {
                     type: "textWithCheckbox",

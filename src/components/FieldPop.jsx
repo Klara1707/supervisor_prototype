@@ -42,7 +42,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Education Review and understand the role description, including key accountabilities, safety responsibilities, and performance expectations. Gain clarity on role-specific responsibilities through discussion with supervisors and reference to relevant procedures and standards. Exposure Receive hands-on training from a Subject Matter Expert (SME) or Supervisor with experience in field operations, hydro-tech, or survey. Understand work priorities and field expectations through guided instruction and real-time feedback. Shadow an experienced Field Supervisor to observe best practices in task planning, team coordination, and field execution.", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/:w:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7BCCB2E43F-A048-4070-8C9C-D8DC2410C857%7D&file=2018_RE_Field%20Assistant_IN%20REVIEW.DOCX&action=default&mobileredirect=true", "_blank")}>Role description Field assistant</button>,  
                 "Sign off", 
                 "comment section",
             ]

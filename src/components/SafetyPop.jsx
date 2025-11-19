@@ -146,8 +146,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 "Exposure Tip: Shadow a peer to understand scene requirements and how to communicate initial expectations for information collection. Once confident, practice entering incident details into Enablon.", 
             
                     <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
-                    <button onClick={() => window.open("https://riotinto.enablon.com/RioTinto/go.aspx", "_blank")}>Enablon</button>
-                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/4000233/Documents/Forms/All%20Documents.aspx?id=%2Fsites%2F4000233%2FDocuments%2F14%2E%20Non%2DConformance%2C%20Incident%2C%20Action%20Management%2FIncident%20Management%20Process%20Templates%5FQRG%5FTraining%2FResDev%20Enablon%20Training%2Epdf&parent=%2Fsites%2F4000233%2FDocuments%2F14%2E%20Non%2DConformance%2C%20Incident%2C%20Action%20Management%2FIncident%20Management%20Process%20Templates%5FQRG%5FTraining", "_blank")}>Enablon training</button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/Forms/AllItems.aspx?id=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished%2FRTIO%2DHSE%2D0071439%2Epdf&parent=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished", "_blank")}>Incident Investigation Procedure</button>
                     </div>,
 
                 "Sign off", "comment section",
@@ -190,7 +189,10 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 "",  
 
                 "Tip: Speak with your Leader to confirm whether your role requires access to the MiX Telematics and DSSi Portal", 
-                "",   
+                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0156051.pdf", "_blank")}>Vehicle Monitoring System (IVMS) Guidance </button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Light-Vehicles-and-Driving.aspx", "_blank")}>Light Vehicles and Driving</button>
+                    </div>, 
                 "Sign off", "comment section",
             ]
         },

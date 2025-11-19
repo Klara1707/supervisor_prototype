@@ -99,7 +99,10 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
 
         Drilling: (
         <div id="Drilling" className="w3-container city">
-            <h2>Drilling</h2>
+            <h2>Drilling for Success</h2>
+            <p className="intro">
+            This training will guide you through the essentials of drilling—what it is, how the activities work, and why they matter. You’ll learn how to record daily PLOD data and spot ways to make the job more efficient. By the end, you’ll understand the basics and feel confident to contribute safely and effectively.
+            </p>
             <button className="button1" onClick={() => openPopup("drilling1")}>Drilling Level 1</button>
             <button className="button1" onClick={() => openPopup("drilling2")}>Drilling Level 2</button>
             <button className="button1" onClick={() => openPopup("drilling3")}>Drilling Level 3</button>
@@ -108,7 +111,10 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
 
         Safety: (
         <div id="Safety" className="w3-container city">
-            <h2>Safety</h2>
+            <h2>Lead the Way in Safety</h2>
+            <p className="intro">
+            At Rio Tinto, safety leadership is the foundation of our success. This training empowers you to go beyond compliance—become a role model who champions safe behaviours, influences others, and drives a culture of zero harm. Learn how to identify hazards, apply critical controls, and lead conversations that make safety a shared responsibility. When leaders set the standard, everyone goes home safe.
+            </p>
             <button className="button1" onClick={() => openPopup("safety1")}>Safety Level 1</button>
             <button className="button1" onClick={() => openPopup("safety2")}>Safety Level 2</button>
             <button className="button1" onClick={() => openPopup("safety3")}>Safety Level 3</button>
@@ -118,6 +124,9 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         Leadership: (
         <div id="Leadership" className="w3-container city">
             <h2>Leadership</h2>
+            <p className="intro">
+            Develop the skills that matter most in front line, field leadership -  field verifications, stakeholder engagement, and operational discipline. Our training empowers you to drive safety, performance, and collaboration—every day, in every decision.
+            </p>
             <button className="button1" onClick={() => openPopup("leadership1")}>Leadership Level 1</button>
             <button className="button1" onClick={() => openPopup("leadership2")}>Leadership Level 2</button>
             <button className="button1" onClick={() => openPopup("leadership3")}>Leadership Level 3</button>
@@ -126,7 +135,10 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
 
         Operations: (
         <div id="Operations" className="w3-container city">
-            <h2>Operations</h2>
+            <h2>Operational Excellence</h2>
+            <p className="intro">
+            Welcome to Rio Tinto. This guide is designed to help you build the skills that keep our operations safe, efficient, and reliable. You’ll learn how to manage accommodation and flights, plan rosters, raise tickets to repair breakdowns, and understand workflows for ARs and ORs. These are the foundations of supporting our people and maintaining world-class operations. By the end, you’ll be ready to play your part in delivering excellence every day.
+            </p>
             <button className="button1" onClick={() => openPopup("operations1")}>Operations Level 1</button>
             <button className="button1" onClick={() => openPopup("operations2")}>Operations Level 2</button>
             <button className="button1" onClick={() => openPopup("operations3")}>Operations Level 3</button>
@@ -135,7 +147,10 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
 
         Earthworks: (
         <div id="Earthworks" className="w3-container city">
-            <h2>Earthworks</h2>
+            <h2>Earthworks Supervision for Safer, Smarter Operations</h2> 
+            <p className="intro">
+            Our program equips supervisors with the knowledge and practical skills to manage earthworks programs with precision and confidence. Learn best practices in planning, quality control, safety compliance, data collection, package of works and team coordination to ensure projects are delivered efficiently and to the highest standards.
+            </p>
             <button className="button1" onClick={() => openPopup("earthworks1")}>Earthworks Level 1</button>
             <button className="button1" onClick={() => openPopup("earthworks2")}>Earthworks Level 2</button>
             <button className="button1" onClick={() => openPopup("earthworks3")}>Earthworks Level 3</button>
@@ -145,6 +160,9 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         Cost_Reporting: (
         <div id="Cost_Reporting" className="w3-container city">
             <h2>Cost Reporting</h2>
+            <p className="intro">
+            This training will guide you through your cost capture and reporting responsibilities. You’ll learn how to manage daily plods, enter accurate data, and track the bottom line effectively.
+            </p>
             <button className="button1" onClick={() => openPopup("cost1")}>Cost Reporting Level 1</button>
             <button className="button1" onClick={() => openPopup("cost2")}>Cost Reporting Level 2</button>
             <button className="button1" onClick={() => openPopup("cost3")}>Cost Reporting Level 3</button>
@@ -154,6 +172,9 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         Contractor_Management: (
         <div id="Contractor_Management" className="w3-container city">
             <h2>Contractor Management</h2>
+            <p className="intro">
+            This training will teach you how to manage contractors safely and efficiently. You’ll learn the full process—from onboarding and compliance checks to using the Permit system for works and ensuring all procedures are followed. By the end, you’ll be confident in keeping contractors aligned with site standards and maintaining smooth, safe operations.
+            </p>
             <button className="button1" onClick={() => openPopup("contractor1")}>Contractor Management Level 1</button>
             <button className="button1" onClick={() => openPopup("contractor2")}>Contractor Management Level 2</button>
             <button className="button1" onClick={() => openPopup("contractor3")}>Contractor Management Level 3</button>
@@ -163,6 +184,9 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         Field_Supervisor: (
         <div id="Field_Supervisor" className="w3-container city">
             <h2>Field Supervisor</h2>
+            <p className="intro">
+            This training focuses on supporting the people who do the front-line work. You’ll learn how to lead teams on site, ensure safety and compliance, and provide the guidance they need to get the job done right. By the end, you’ll be confident in managing day-to-day operations while looking after your crew.
+            </p>
             <button className="button1" onClick={() => openPopup("field1")}>Field Supervisor Level 1</button>
             <button className="button1" onClick={() => openPopup("field2")}>Field Supervisor Level 2</button>
             <button className="button1" onClick={() => openPopup("field3")}>Field Supervisor Level 3</button>
