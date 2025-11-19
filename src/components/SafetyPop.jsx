@@ -241,7 +241,6 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 "Self-Training: Access provided links for guided learning and familiarisation. On-the-Job Exposure: Shadow an SME during live incident entry to observe best practices. Pro Tip: Superintendents often schedule dedicated times to progress incidents in their hub — request to observe during these sessions for practical insights.", 
                     <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
                     <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=a0IK9F&CID=c6aed5b4%2Def86%2D49f0%2Db9cc%2D3b4b09cb5d4c&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FEnablon", "_blank")}>Enablon </button>
-                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/4000233/Documents/Forms/All%20Documents.aspx?id=%2Fsites%2F4000233%2FDocuments%2F14%2E%20Non%2DConformance%2C%20Incident%2C%20Action%20Management%2FIncident%20Management%20Process%20Templates%5FQRG%5FTraining%2FResDev%20Enablon%20Training%2Epdf&parent=%2Fsites%2F4000233%2FDocuments%2F14%2E%20Non%2DConformance%2C%20Incident%2C%20Action%20Management%2FIncident%20Management%20Process%20Templates%5FQRG%5FTraining", "_blank")}>Enablon training</button>
                     </div>,
                 "Sign off", 
                 "comment section",
@@ -268,7 +267,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 9"
                 },
                 "Exposure: Shadow an SME or experienced peer during CCFV tasks. Participate in LIF (Life-Intervening Factors) activities and stay curious during task execution to deepen understanding. Tip: During verifications, ensure thorough checks of: Work area housekeeping Harnesses, lanyards, and clips Static lines and poles Personnel recovery plans", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2F6002923%2FShared%20Documents%2FBulk%20supervisor%20training%20app%20docs%20and%20links%2FWorking%20at%20heights%20%2Epdf&parent=%2Fsites%2F6002923%2FShared%20Documents%2FBulk%20supervisor%20training%20app%20docs%20and%20links", "_blank")}>Working at Height Work Practice</button>, 
                 "Sign off", 
                 "comment section",
 
@@ -289,7 +288,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Shadow an SME or experienced peer to learn the full permit process, including risk identification and control verification. Focus on service identification within the permit area — including: Utilities (e.g., water, power, gas) Site Communications Fixed Plant infrastructure Site Services", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2F6002923%2FShared%20Documents%2FBulk%20supervisor%20training%20app%20docs%20and%20links%2FExcavation%20permit%2Epdf&parent=%2Fsites%2F6002923%2FShared%20Documents%2FBulk%20supervisor%20training%20app%20docs%20and%20links", "_blank")}>Excavation Safety Work Practice </button>,
                 "Sign off", 
                 "comment section",
 
@@ -331,7 +330,7 @@ const SafetyPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Exposure for Vicinity Permit Management: Shadow an SME or peer to learn how to create a VP, manage handovers on FIFO days, and properly close out permits with all documentation returned. Pro Tip: Be Prepared! Every power pole has a unique ID number — travel to the crossing and record the IDs of poles being crossed beneath. Measure and record the maximum height of the largest equipment using the crossing, including reach. Print a map to verify the area and ensure accuracy. Contact the HV Electrician to request a VP. They will advise whether to meet at their office or directly at the crossing.", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/:w:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7B2149766E-7A05-4E9E-A047-126EDD0833B8%7D&file=Vicinity%20permit.docx&action=default&mobileredirect=true", "_blank")}>Vicinity Permit Procedure</button>,
                 "Sign off", 
                 "comment section",
 

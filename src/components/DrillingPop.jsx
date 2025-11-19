@@ -212,8 +212,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                     "Exposure: Is shown how to conduct a stocktake by an experienced team member. Can manage stock levels effectively to prevent shortages.",  
-
-                    "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/:x:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7BF2A4F232-ABE7-45C7-B8B8-9045BA68E523%7D&file=Res%20Dev%20Casing%20Register.xlsx&action=default&mobileredirect=true", "_blank")}>Casing register </button>,
                 "Sign off", "comment section",
                                                                                 {
                     type: "textWithCheckbox",

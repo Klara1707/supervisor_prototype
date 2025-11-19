@@ -453,7 +453,7 @@ const OperationsPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Education: Reads the Start-Up QRG and Golden Rules document, and understands their intent. Exposure: Golden Rules are explained; can apply them in the field and instruct survey teams to check flagging around heritage sites", 
-                "",
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/:p:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7B1EEEF012-76A5-4E76-A4DA-3D92B30B06C5%7D&file=240804-Earthworks%20Startup%20Presentation%20Template.pptx&action=edit&mobileredirect=true", "_blank")}>Project start-up</button>,
                 "Sign off", "comment section",
                                                                                                 {
                     type: "textWithCheckbox",

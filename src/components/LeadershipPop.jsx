@@ -152,7 +152,7 @@ const LeadershipPop = ({ popupId, closePopup }) => {
                     checkboxLabel: "Box 4"
                 },
                 "Tip & Exposure – Request access to MTS 2-week planning meetings and distribution lists. Follow up all MTS discussions with emails to support execution and track agreements. Identify key MTS engineers and their preferred communication style, and commit to regular engagement. Attend meetings prepared, review pre-reads, and align your work with PMO activities. Use the 2-week plan to spot opportunities between production milestones", 
-                "", 
+                "No training plan exists for this topic. Candidate will have to be mentored by a SME or superintendent with a field work background. ", 
                 "Sign off", 
                 "comment section",
 

@@ -65,7 +65,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Training: Receive guidance from SMEs or Superintendents on high-risk licence requirements and site protocols. Document Management: Develop a method for tracking and securely storing licence and VOC documentation. Compliance Monitoring: Learn how to report and monitor VOC completion to ensure ongoing compliance with site standards.", 
-                "", 
+                "No training plan exists for this topic. Candidate will have to be mentored by a SME or superintendent with a field work background.", 
                 "Sign off", 
                 "comment section",
 
@@ -127,7 +127,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 "",
                 "",
                 "Education: Reads the role description and relevant SWPs to understand responsibilities and task requirements. Exposure: Shadows a Field Supervisor to learn task prioritization; receives coaching from SME/Superintendent on LIF activities.", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/:w:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7BCCB2E43F-A048-4070-8C9C-D8DC2410C857%7D&file=2018_RE_Field%20Assistant_IN%20REVIEW.DOCX&action=default&mobileredirect=true", "_blank")}>Role Description Field assistant </button>, 
                 "Sign off", 
                 "comment section",
 
@@ -149,7 +149,7 @@ const FieldPop = ({ popupId, closePopup }) => {
                 },
                 "",
                 "Exposure Shadows an experienced Field Supervisor to learn stocktake, ordering, and reconciliation of stores orders, including how to track orders in SAP", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/:x:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7B5131BB96-E9AF-4C61-A2D5-50E9C7652EBD%7D&file=2025%20RD%20Ordering%20Guide.xlsx&action=default&mobileredirect=true", "_blank")}>2025 RD ordering Guide </button>,
                 "Sign off", 
                 "comment section",
             ]
