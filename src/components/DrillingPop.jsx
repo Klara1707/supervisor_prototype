@@ -470,7 +470,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Exposure – Able to receive mentoring from SMEs (Drill Advisors) to understand factors contributing to lost circulation and slow penetration rates, with Supervisor guidance to actively support solution identification and implementation", 
-                "", 
+                <button onClick={() => window.open("https://waterwelljournal.com/loss-circulation/", "_blank")}>Loss Circulation</button>, 
                 "Sign off", 
                 "comment section",
 
@@ -513,7 +513,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
                 "", 
                 "", 
                 "Exposure – Able to receive guidance from Hydrogeology SMEs on instrument types, their functions, and installation methods, supporting practical understanding and field readiness", 
-                "", 
+                <button onClick={() => window.open("https://riotinto.sharepoint.com/:x:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7B4292C3EB-263C-4CF4-8B9C-31E46EE22893%7D&file=VWP%20materials%20list.xlsx&action=default&mobileredirect=true", "_blank")}>VMP materials list</button>, 
                 "Sign off", 
                 "comment section",
 
@@ -534,7 +534,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "Exposure – Able to receive guidance from Hydrogeology SMEs on instrument types, their functions, and installation methods, supporting practical understanding and correct field application", 
-                "", 
+                <button onClick={() => window.open("https://www.precisiondrillingaustralia.com.au/blog/vibrating-wire-pizeometer/", "_blank")}>Install Guide</button>, 
                 "Sign off", 
                 "comment section",
 

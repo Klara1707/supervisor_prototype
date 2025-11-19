@@ -164,7 +164,7 @@ const CostPop = ({ popupId, closePopup }) => {
                 },
                 "", 
                 "No formal training at Supervisor level—stay curious and ask questions of experienced Superintendents and Technical Leads", 
-                "", 
+                "No training plan exists for this topic. Candidate will have to be mentored by a SME or superintendent.", 
                 "Sign off", 
                 "comment section",
             ]
