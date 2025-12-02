@@ -17,6 +17,7 @@ function NavBar() {
                 <a href="https://element.riotinto.com/sites/e0003#/sitepages/peer-support.aspx" className="nav-button">Peer Support</a>
                 <a href="https://cloud.workhuman.com/microsites/t/home?client=6317&setCAG=false" className="nav-button">RockStar</a>
                 <Link to="/login" className="nav-button">Login</Link>
+                <p>&copy; Klara van den Burg</p>
                 </div>
             </nav>
             <Outlet />

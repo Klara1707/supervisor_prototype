@@ -4,7 +4,7 @@ import "./MandatoryList.css";
 
 function MandatoryList() {
     const trainingList = [
-                "RTIO RD Earthworks",
+        "RTIO RD Earthworks",
         "RTIO RD Drilling",
         "RTIO Driver Safety System (DSS)",
         "RT Cyber Security Awareness",

@@ -17,6 +17,13 @@ function LogInPage() {
         <>
         <HeroBar />
         <div className="login-container">
+            {/* New User Box */}
+            <div className="new-user-box">
+                <div>New user?</div>
+                    <Link to="/createaccount">
+                <button className="create-account-btn">Create Account</button>
+                </Link>
+            </div>
             <form className="login-form">
             {/* Welcome Text at the Top */}
             <div className="form-header">
@@ -71,7 +78,12 @@ function LogInPage() {
                 <input type="checkbox" name="remember" />
                 Remember Me
                 </label>
-                <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
+                                <a
+                                    href="mailto:?subject=Login%20Help&body=Dear%20Admin%20team%2C%20I%20cant%20login%20please%20help.%20Thank%20you"
+                                    className="forgot-link"
+                                >
+                                    Forgot Password?
+                                </a>
             </div>
 
             {/* Buttons */}

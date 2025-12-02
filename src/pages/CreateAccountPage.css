@@ -20,7 +20,6 @@
     margin: 0;
     }
 
-/* Typography */
 body {
     font-family: var(--font-default);
     background-color: #f0ead2  ;
@@ -28,15 +27,14 @@ body {
     padding: 0;
 }
 
-
-.login-container {
+.signup-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 3rem;
 }
 
-.login-form {
+.signup-form {
     background-color: var(--white);
     padding: var(--space-large);
     border-radius: 8px;
@@ -50,87 +48,23 @@ body {
     margin-right: auto;
 }
 
-.login-form label {
+.signup-form label {
     font-weight: bold;
     margin-bottom: 4px;
 }
 
-.login-form input {
+.signup-form input {
     padding: 0.75rem;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.login-form input:focus {
+.signup-form input:focus {
     outline: none;
     border-color: var(--brand);
     box-shadow: 0 0 0 2px rgba(205, 44, 44, 0.2);
 }
-
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9rem;
-}
-
-.forgot-link {
-    color: #004b87;
-    text-decoration: none;
-}
-
-.forgot-link:hover {
-    text-decoration: underline;
-}
-
-.form-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-small);
-}
-
-.login-form button {
-    padding: 0.75rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.login-form button[type="submit"] {
-    background-color: #004b87;
-    color: white;
-}
-
-.login-form button[type="submit"]:hover {
-    background-color: #00345c;
-}
-
-.cancel-button {
-    background-color: #ccc;
-    color: #333;
-}
-
-.cancel-button:hover {
-    background-color: #999;
-}
-
-.form-select {
-    padding: 0.75rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
-}
-
-.form-select:focus {
-    outline: none;
-    border-color: var(--brand);
-    box-shadow: 0 0 0 2px rgba(205, 44, 44, 0.2);
-}
-
 
 .form-header {
     text-align: center;
@@ -148,25 +82,24 @@ body {
     color: #555;
 }
 
-
-/* New User Box Styles */
-.new-user-box {
-    background: var(--white);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.0rem;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: var(--black);
+.signup-form button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #004b87;
+    color: white;
 }
 
-.create-account-btn {
+.signup-form button[type="submit"]:hover {
+    background-color: #00345c;
+}
+
+.back-to-login {
+    display: block;
+    margin: 0 auto;
     margin-top: 0.75rem;
     padding: 0.75rem;
     font-size: 1rem;
@@ -176,9 +109,8 @@ body {
     background-color: #004b87;
     color: white;
     transition: background-color 0.3s ease;
-    
 }
-.create-account-btn:hover {
+.back-to-login:hover {
     background-color: #00345c;
 }
 

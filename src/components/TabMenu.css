@@ -67,6 +67,20 @@ h1, h2, h3, h4, h5, h6 {
 .city {
     border: 1px solid #ccc;
     animation: fadeEffect 0.3s ease-in-out;
+    min-height: calc(100vh - 60px); /* Adjust 60px to match your navbar height */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-small);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Buttons */

@@ -10,10 +10,6 @@ function HomePage() {
             <HeroBar />
             <TabMenu />
             <NavBar />
-
-            <section className="copyright-bar">
-                <p>&copy; Klara van den Burg</p>
-            </section>
         </>
     );
 }
