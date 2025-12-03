@@ -15,9 +15,7 @@ function LogInPage() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (role === "contractor-supervisor") {
-            navigate("/admindatapage");
-        } else if (role === "visitor") {
+        if (role === "contractor-supervisor" || role === "visitor") {
             navigate("/");
         } else {
             // No role selected, stay on page or show error
