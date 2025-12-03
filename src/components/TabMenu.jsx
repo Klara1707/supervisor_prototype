@@ -46,8 +46,8 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     );
     };
 
-    const TabMenu = () => {
-    const [activeTab, setActiveTab] = useState("Home");
+    const TabMenu = ({ initialTab = "Home" }) => {
+    const [activeTab, setActiveTab] = useState(initialTab);
     const [popupVisible, setPopupVisible] = useState(null);
     const [menuVisible, setMenuVisible] = useState(false);
 

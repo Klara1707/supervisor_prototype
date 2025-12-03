@@ -7,7 +7,7 @@ function NavBar() {
     return (
         <>
             <nav className="nav-bar">
-                <h3>Find Your Way to</h3>
+                <h3></h3>
                 <div className="nav-links">
                 <a href ="https://prospect.riotinto.org/irj/portal" className="nav-button">Prospect</a>
                 <a href="https://riotinto.csod.com/ui/lms-learner-home/home" className="nav-button">LMS Learning</a>

@@ -13,6 +13,18 @@ function LogInPage() {
         navigate('/');
     };
 
+    const handleLogin = (e) => {
+        e.preventDefault();
+        if (role === "contractor-supervisor") {
+            navigate("/admindatapage");
+        } else if (role === "visitor") {
+            navigate("/");
+        } else {
+            // No role selected, stay on page or show error
+            alert("Please select a role.");
+        }
+    };
+
     return (
         <>
         <HeroBar />
@@ -24,7 +36,7 @@ function LogInPage() {
                 <button className="create-account-btn">Create Account</button>
                 </Link>
             </div>
-            <form className="login-form">
+            <form className="login-form" onSubmit={handleLogin}>
             {/* Welcome Text at the Top */}
             <div className="form-header">
                 <h1>Welcome Back</h1>
@@ -33,10 +45,10 @@ function LogInPage() {
 
             {/* Username & Password */}
             <label htmlFor="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" />
+            <input type="text" id="username" name="username" placeholder="Enter your username" autoComplete="username" />
 
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" />
+            <input type="password" id="password" name="password" placeholder="Enter your password" autoComplete="current-password" />
 
             {/* Role Selection */}
             <label htmlFor="role">Select Role</label>
@@ -75,7 +87,7 @@ function LogInPage() {
             {/* Options */}
             <div className="form-options">
                 <label>
-                <input type="checkbox" name="remember" />
+                <input type="checkbox" name="remember" autoComplete="off" />
                 Remember Me
                 </label>
                                 <a
@@ -88,7 +100,7 @@ function LogInPage() {
 
             {/* Buttons */}
             <div className="form-buttons">
-                <button type="submit">Log In</button>
+                <button type="submit">Login</button>
                 <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>
             </div>
             </form>

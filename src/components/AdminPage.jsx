@@ -1,20 +1,21 @@
 
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./AdminPage.css";
 
 
 function AdminPage() {
     const navigate = useNavigate();
-    const [role, setRole] = useState("");
-    const [site, setSite] = useState("");
 
     const handleCancel = () => {
+        console.log('Cancel clicked, navigating to home');
         navigate('/');
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate('/admindata');
+        console.log('Login clicked, navigating to /admindatapage');
+        navigate('/admindatapage');
     };
 
     return (
@@ -29,16 +30,17 @@ function AdminPage() {
 
                 {/* Username & Password */}
                 <label htmlFor="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" />
+                <input type="text" id="username" name="username" placeholder="Enter your username" autoComplete="username" />
 
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" />
+                <input type="password" id="password" name="password" placeholder="Enter your password" autoComplete="current-password" />
 
-                {/* Buttons */}
-                <div className="form-buttons">
-                    <button type="submit">Log In</button>
-                </div>
+            <div className="form-buttons">
+                <button type="submit" className="login-btn">Login</button>
+                <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>
+            </div>
             </form>
+
         </div>
         </>
     );

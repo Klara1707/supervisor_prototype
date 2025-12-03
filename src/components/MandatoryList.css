@@ -35,7 +35,7 @@
     /* Section titles */
     .requirements h2 {
     font-size: 1.8rem;
-    color: #2c3e50;
+    color: var(--brand);
     margin-bottom: 20px;
     text-align: center;
     }

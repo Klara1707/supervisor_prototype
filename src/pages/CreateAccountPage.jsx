@@ -2,35 +2,44 @@ import React, { useState } from "react";
 import HeroBar from "../components/HeroBar";
 import "./CreateAccountPage.css";
 import { Link } from "react-router-dom";
+import SuccesLoginPop from "../components/SuccesLoginPop";
 
 function CreateAccountPage() {
 	const [fullName, setFullName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [showPopup, setShowPopup] = useState(false);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		// Add submit logic here
+		setShowPopup(true);
+	};
+
+	const handleClosePopup = () => {
+		setShowPopup(false);
 	};
 
 	return (
 		<>
 			<HeroBar />
+			<SuccesLoginPop show={showPopup} onClose={handleClosePopup} />
 			<div className="signup-container">
 				<form className="signup-form" onSubmit={handleSubmit}>
 					<div className="form-header">
 						<h1>Create Account</h1>
 					</div>
-										<label htmlFor="fullName">Full Name</label>
-										<input
-												type="text"
-												id="fullName"
-												name="fullName"
-												value={fullName}
-												onChange={(e) => setFullName(e.target.value)}
-												required
-												placeholder="Full Name"
-										/>
+					<label htmlFor="fullName">Full Name</label>
+					<input
+						type="text"
+						id="fullName"
+						name="fullName"
+						value={fullName}
+						onChange={(e) => setFullName(e.target.value)}
+						required
+						placeholder="Full Name"
+						autoComplete="name"
+					/>
 
 					<label htmlFor="email">Rio Tinto Email Address</label>
 					<input
@@ -40,7 +49,8 @@ function CreateAccountPage() {
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						required
-                        placeholder="Your Rio Tinto Email"
+						placeholder="Your Rio Tinto Email"
+						autoComplete="email"
 					/>
 
 					<label htmlFor="password">Password</label>
@@ -51,13 +61,12 @@ function CreateAccountPage() {
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
-                        placeholder="Your SAP Number"
+						placeholder="Your SAP Number"
+						autoComplete="new-password"
 					/>
 
 					<button type="submit">Create Account</button>
-					<Link to="/login">
-						<button type="button" className="back-to-login">Back to Login</button>
-					</Link>
+					<Link to="/login" className="back-to-login">Back to Login</Link>
 				</form>
 			</div>
 		</>
