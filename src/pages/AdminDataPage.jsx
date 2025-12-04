@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import HeroBar from "../components/HeroBar";
 import NavBar from "../components/NavBar";
 import "./AdminDataPage.css";
@@ -6,6 +7,7 @@ import TabMenu from "../components/TabMenu";
 
 
 function AdminDataPage() {
+                const navigate = useNavigate();
         const [showButton, setShowButton] = useState(false);
         const robevalley = [
                 "test data 1", 
@@ -53,7 +55,13 @@ function AdminDataPage() {
                 <NavBar />
                                 <div className="container">
                                         <section className="requirements">
-                                                <h2>Admin</h2>
+                                                                                                                                                                                                <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
+                                                                                                                                                                                                        <h2 style={{margin: 0, textAlign: 'center'}}>Admin</h2>
+                                                                                                                                                                                                        <button 
+                                                                                                                                                                                                                style={{position: 'absolute', right: 0, padding: '0.5rem 1rem', fontSize: '1rem', borderRadius: '4px', border: 'none', background: '#004b87', color: 'white', cursor: 'pointer'}} 
+                                                                                                                                                                                                                onClick={() => navigate('/login')}
+                                                                                                                                                                                                        >Log Out</button>
+                                                                                                                                                                                                </div>
                                                 <p>Please click the “Delete user” to remove the person from the Supervisor Training Portal</p>
                                                 <div className="navigation-buttons">
                                                         <button onClick={() => document.getElementById("RobeValley").scrollIntoView({ behavior: "smooth" })}>
