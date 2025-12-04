@@ -7,14 +7,8 @@ import "./AdminPage.css";
 function AdminPage() {
     const navigate = useNavigate();
 
-    const handleCancel = () => {
-        console.log('Cancel clicked, navigating to home');
-        navigate('/');
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Login clicked, navigating to /admindatapage');
         navigate('/admindatapage');
     };
 
@@ -37,7 +31,6 @@ function AdminPage() {
 
             <div className="form-buttons">
                 <button type="submit" className="login-btn">Login</button>
-                <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>
             </div>
             </form>
 
