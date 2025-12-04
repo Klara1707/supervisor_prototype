@@ -11,7 +11,7 @@ import EarthworksPop from "./EarthworksPop";
 import CostPop from "./CostPop";
 import ContractorPop from "./ContractorPop";
 import FieldPop from "./FieldPop";
-import AdminPage from "./AdminPage";
+
 
 const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     return (
@@ -216,11 +216,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         </div>
         ),
 
-        Admin_Page: (
-        <div id="Admin_Page" className="w3-container city">
-            <AdminPage />
-        </div>
-        ),
 
         
     };

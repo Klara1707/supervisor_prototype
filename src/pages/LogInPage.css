@@ -1,3 +1,19 @@
+    .top-row {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        justify-content: center;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+    }
+    .context-inner-box {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        font-size: 1rem;
+    }
     :root {
     --brand: #cd2c2c;
     --action: #90a955;
@@ -79,6 +95,18 @@ body {
     color: #004b87;
     text-decoration: none;
 }
+    .admin-login-box {
+        background: var(--white);
+        padding: var(--space-large);
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        margin: 2rem auto;
+        max-width: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-medium);
+    }
 
 .forgot-link:hover {
     text-decoration: underline;
@@ -88,6 +116,11 @@ body {
     display: flex;
     justify-content: space-between;
     gap: var(--space-small);
+}
+
+/* Center the admin login button in the admin-login-box */
+.admin-login-box .form-buttons {
+    justify-content: center;
 }
 
 .login-form button {
@@ -111,6 +144,20 @@ body {
 .cancel-button {
     background-color: #ccc;
     color: #333;
+    .admin-login-box,
+    .new-user-box {
+        background: var(--white);
+        border: 2px solid #004b87;
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: var(--space-large);
+        margin: 2rem auto;
+        max-width: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-medium);
+    }
 }
 
 .cancel-button:hover {
@@ -163,7 +210,7 @@ body {
     margin-bottom: 1.0rem;
     font-weight: bold;
     font-size: 1.2rem;
-    color: var(--black);
+    color: #cd2c2c;
 }
 
 .create-account-btn {

@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import LogInPage from "./pages/LogInPage";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import AdminDataPage from "./pages/AdminDataPage";
-import AdminPage from "./components/AdminPage";
+// import AdminPage from "./components/AdminPage";
 
 const router = createBrowserRouter(
     [
@@ -13,7 +13,7 @@ const router = createBrowserRouter(
         { path: "/login", element: <LogInPage /> },
         { path: "/createaccount", element: <CreateAccountPage /> },
         { path: "/admindatapage", element: <AdminDataPage /> },
-        { path: "/admin", element: <AdminPage /> },
+        // { path: "/admin", element: <AdminPage /> },
     ],
     { basename: "/supervisor_prototype" }
 );
