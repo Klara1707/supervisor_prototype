@@ -1,8 +1,9 @@
+    import { useDebouncedSave } from "../hooks/useDebouncedSave";
 
 import "./Pop.css";
 import { useState } from "react";
 
-const DrillingPop = ({ popupId, closePopup }) => {
+const DrillingPop = ({ popupId, closePopup, userToken }) => {
     const [comment, setComment] = useState("");
     const [signOffDate, setSignOffDate] = useState("");
     const [signOffName, setSignOffName] = useState("");
@@ -15,6 +16,7 @@ const DrillingPop = ({ popupId, closePopup }) => {
         "Box 31", "Box 32", "Box 33", "Box 34", "Box 35", "Box 36",
     ];
     const [progressChecks, setProgressChecks] = useState(Array(checkboxItems.length).fill(false));
+    useDebouncedSave(popupId, progressChecks, userToken);
 
     if (!popupId) return null;
 
@@ -558,19 +560,34 @@ return (
 
         <h2>{title}</h2>
 
-        {/* Progress Bar */}
-        <div className="progress-bar-container">
-            <div
-            className="progress-bar"
-            style={{
-                width: `${(progressChecks.filter(Boolean).length / checkboxItems.length) * 100}%`
-            }}
-            >
-            <span className="progress-text">
-                {Math.round((progressChecks.filter(Boolean).length / checkboxItems.length) * 100)}%
-            </span>
-            </div>
-        </div>
+        {/* Progress Bar for current popup only */}
+        {(() => {
+            // Get all checkbox labels for the current popup
+            const popupCheckboxLabels = cells
+                .filter(cell => typeof cell === "object" && cell.type === "textWithCheckbox")
+                .map(cell => cell.checkboxLabel);
+
+            // Get indexes for those labels
+            const popupCheckboxIndexes = popupCheckboxLabels.map(label => checkboxItems.indexOf(label));
+
+            // Count checked boxes for this popup
+            const checkedCount = popupCheckboxIndexes.filter(i => progressChecks[i]).length;
+            const totalCount = popupCheckboxIndexes.length;
+            const percent = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
+
+            return (
+                <div className="progress-bar-container">
+                    <div
+                        className="progress-bar"
+                        style={{ width: `${percent}%` }}
+                    >
+                        <span className="progress-text">
+                            {percent}%
+                        </span>
+                    </div>
+                </div>
+            );
+        })()}
 
         {/* Grid Container */}
         <div className="grid-container">

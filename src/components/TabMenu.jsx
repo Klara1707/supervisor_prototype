@@ -70,7 +70,10 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     const tabContent = {
         Home: (
         <div className="welcome-container">
-            <h1>Welcome .......</h1>
+            {(() => {
+                const username = localStorage.getItem("username");
+                return <h1>Welcome {username ? username : ""}!</h1>;
+            })()}
             <p className="intro">
             Congratulations on stepping into your role as a Contractor Supervisor within Res Dev!
             This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.

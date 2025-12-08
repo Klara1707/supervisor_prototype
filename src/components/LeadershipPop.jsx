@@ -1,20 +1,25 @@
+    import { useDebouncedSave } from "../hooks/useDebouncedSave";
 
 import "./Pop.css";
 import { useState } from "react";
 
-const LeadershipPop = ({ popupId, closePopup }) => {
+const LeadershipPop = ({ popupId, closePopup, userToken }) => {
+        // ...existing code...
     const [comment, setComment] = useState("");
     const [signOffDate, setSignOffDate] = useState("");
     const [signOffName, setSignOffName] = useState("");
-    const checkboxItems = [
-        "Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6",
-        "Box 7", "Box 8", "Box 9", "Box 10", "Box 11", "Box 12",
-        "Box 13", "Box 14", "Box 15", "Box 16", "Box 17", "Box 18",
-        "Box 19", "Box 20", "Box 21", "Box 22", "Box 23", "Box 24",
-        "Box 25", "Box 26", "Box 27", "Box 28", "Box 29", "Box 30",
-        "Box 31", "Box 32", "Box 33", "Box 34", "Box 35", "Box 36",
-    ];
+
+    // Dynamically collect only the checkboxes relevant to the current popup
+    // contentMap is already declared below, so do not redeclare here
+    // Only declare checkboxItems and progressChecks here
+    let checkboxItems = [];
+    if (popupId && contentMap[popupId]) {
+        checkboxItems = contentMap[popupId].cells
+            .filter(cell => typeof cell === "object" && cell.type === "textWithCheckbox" && cell.checkboxLabel)
+            .map(cell => cell.checkboxLabel);
+    }
     const [progressChecks, setProgressChecks] = useState(Array(checkboxItems.length).fill(false));
+    useDebouncedSave(popupId, progressChecks, userToken);
 
     if (!popupId) return null;
 

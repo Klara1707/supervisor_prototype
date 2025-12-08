@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import SuccesLoginPop from "../components/SuccesLoginPop";
 
 function CreateAccountPage() {
-	const [fullName, setFullName] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPopup, setShowPopup] = useState(false);
@@ -32,12 +33,24 @@ function CreateAccountPage() {
 					<label htmlFor="fullName">Full Name</label>
 					<input
 						type="text"
-						id="fullName"
-						name="fullName"
-						value={fullName}
-						onChange={(e) => setFullName(e.target.value)}
+						id="firstName"
+						name="firstName"
+						value={firstName}
+						onChange={(e) => setFirstName(e.target.value)}
 						required
-						placeholder="Full Name"
+						placeholder="First Name"
+						autoComplete="name"
+					/>
+
+					<label htmlFor="lastName">Last Name</label>
+					<input
+						type="text"
+						id="lastName"
+						name="lastName"
+						value={lastName}
+						onChange={(e) => setLastName(e.target.value)}
+						required
+						placeholder="Last Name"
 						autoComplete="name"
 					/>
 

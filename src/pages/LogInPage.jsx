@@ -13,12 +13,35 @@ function LogInPage() {
         navigate('/');
     };
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (role === "contractor-supervisor" || role === "visitor") {
-            navigate("/");
+        if (role === "visitor") {
+            // Do NOT store or send any login data for visitors
+            navigate("/"); // or wherever you want to send the visitor
+        } else if (role === "contractor-supervisor") {
+            // Collect the username and password from the form
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+            // Optionally, collect the site value
+            // const site = e.target.site.value;
+
+            // Send login data to backend
+            const response = await fetch("http://127.0.0.1:8000/api/token/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                // Store token or any other data as needed
+                localStorage.setItem("token", data.access);
+                // Optionally, store site or other info
+                // localStorage.setItem("site", site);
+                navigate("/"); // or to a protected page
+            } else {
+                alert(data.detail || "Login failed.");
+            }
         } else {
-            // No role selected, stay on page or show error
             alert("Please select a role.");
         }
     };
@@ -27,10 +50,33 @@ function LogInPage() {
     const [adminUsername, setAdminUsername] = useState("");
     const [adminPassword, setAdminPassword] = useState("");
 
-    const handleAdminLogin = (e) => {
+    const handleAdminLogin = async (e) => {
         e.preventDefault();
-        // You can add validation here if needed
-        navigate("/admindatapage");
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/token/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: adminUsername, // use email for login
+                    password: adminPassword
+                }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                // Check if user is admin
+                if (data.user && (data.user.is_staff || data.user.is_superuser)) {
+                    // Save token if needed
+                    localStorage.setItem("token", data.access);
+                    navigate("/admindatapage");
+                } else {
+                    alert("You are not an admin.");
+                }
+            } else {
+                alert(data.detail || "Login failed.");
+            }
+        } catch (error) {
+            alert("Error logging in.");
+        }
     };
 
     return (
@@ -80,12 +126,14 @@ function LogInPage() {
                     )}
                     <div className="form-options">
                         <label>
-                        <input type="checkbox" name="remember" autoComplete="off" />
-                        Remember Me
+                            <input type="checkbox" name="remember" autoComplete="off" />
+                            Remember Me
                         </label>
                         <a
-                            href="mailto:?subject=Login%20Help&body=Dear%20Admin%20team%2C%20I%20cant%20login%20please%20help.%20Thank%20you"
+                            href="http://localhost:8000/password_reset/"
                             className="forgot-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
                             Forgot Password?
                         </a>
