@@ -50,6 +50,38 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     const [activeTab, setActiveTab] = useState(initialTab);
     const [popupVisible, setPopupVisible] = useState(null);
     const [menuVisible, setMenuVisible] = useState(false);
+    const [user, setUser] = useState(() => {
+        const userStr = localStorage.getItem("user");
+        return userStr ? JSON.parse(userStr) : null;
+    });
+    const [token, setToken] = useState(() => localStorage.getItem("token") || "");
+    const [progress, setProgress] = useState(null);
+
+    React.useEffect(() => {
+        // Listen for login changes (if setUser/setToken called elsewhere)
+        const handleStorage = () => {
+            const userStr = localStorage.getItem("user");
+            setUser(userStr ? JSON.parse(userStr) : null);
+            setToken(localStorage.getItem("token") || "");
+        };
+        window.addEventListener("storage", handleStorage);
+        return () => window.removeEventListener("storage", handleStorage);
+    }, []);
+
+    React.useEffect(() => {
+        if (token) {
+            fetch("/api/training-progress/", {
+                headers: { Authorization: "Bearer " + token }
+            })
+                .then(res => res.ok ? res.json() : Promise.reject(res))
+                .then(data => {
+                    setProgress(data.progress_by_popup || null);
+                })
+                .catch(() => setProgress(null));
+        } else {
+            setProgress(null);
+        }
+    }, [token]);
 
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
@@ -70,14 +102,22 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     const tabContent = {
         Home: (
         <div className="welcome-container">
-            {(() => {
-                const username = localStorage.getItem("username");
-                return <h1>Welcome {username ? username : ""}!</h1>;
-            })()}
+            <h1>Welcome{user && user.first_name ? `, ${user.first_name}` : ""}!</h1>
             <p className="intro">
             Congratulations on stepping into your role as a Contractor Supervisor within Res Dev!
             This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.
             </p>
+
+            {progress && (
+                <div className="progress-section">
+                    <h2>Your Training Progress</h2>
+                    <ul>
+                        {Object.entries(progress).map(([popup, value]) => (
+                            <li key={popup}>{popup.replace(/_/g, " ")}: {value}%</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
             <h2>Our Values</h2>
             <ul className="values-list">

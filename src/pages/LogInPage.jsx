@@ -22,7 +22,7 @@ function LogInPage() {
             // Collect the username and password from the form
             const username = e.target.username.value;
             const password = e.target.password.value;
-            // Optionally, collect the site value
+            // Collect the site value
             // const site = e.target.site.value;
 
             // Send login data to backend
@@ -35,8 +35,12 @@ function LogInPage() {
             if (response.ok) {
                 // Store token or any other data as needed
                 localStorage.setItem("token", data.access);
-                // Optionally, store site or other info
-                // localStorage.setItem("site", site);
+                // Store site for later use in progress updates
+                localStorage.setItem("site", site);
+                // Optionally, store user info if returned
+                if (data.user) {
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                }
                 navigate("/"); // or to a protected page
             } else {
                 alert(data.detail || "Login failed.");
@@ -57,7 +61,7 @@ function LogInPage() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    email: adminUsername, // use email for login
+                    username: adminUsername,
                     password: adminPassword
                 }),
             });
@@ -65,8 +69,8 @@ function LogInPage() {
             if (response.ok) {
                 // Check if user is admin
                 if (data.user && (data.user.is_staff || data.user.is_superuser)) {
-                    // Save token if needed
                     localStorage.setItem("token", data.access);
+                    localStorage.setItem("user", JSON.stringify(data.user));
                     navigate("/admindatapage");
                 } else {
                     alert("You are not an admin.");

@@ -9,32 +9,54 @@ import TabMenu from "../components/TabMenu";
 function AdminDataPage() {
                 const navigate = useNavigate();
         const [showButton, setShowButton] = useState(false);
-        const robevalley = [
-                "test data 1", 
-                "test data 2",
-                "test data 3",
-                "test data 4",           
-        ];
-        const greaterhopedowns = [
-                "test data 1", 
-                "test data 2",
-                "test data 3",
-                "test data 4",           
-        ];
+        // Example user data structure for each hub
+        const [robevalley, setRobeValley] = useState([
+                { username: "user1", first_name: "Alice" },
+                { username: "user2", first_name: "Bob" }
+        ]);
+        const [greaterhopedowns, setGreaterHopeDowns] = useState([
+                { username: "user3", first_name: "Charlie" }
+        ]);
+        const [restofeast, setRestOfEast] = useState([
+                { username: "user4", first_name: "Dana" }
+        ]);
+        const [restofwest, setRestOfWest] = useState([
+                { username: "user5", first_name: "Eve" }
+        ]);
 
-        const restofeast = [
-                "test data 1", 
-                "test data 2",
-                "test data 3",
-                "test data 4",           
-        ];
-        
-        const restofwest = [
-                "test data 1", 
-                "test data 2",
-                "test data 3",
-                "test data 4",           
-        ];
+        // Get admin token from localStorage
+        const adminToken = localStorage.getItem("token");
+
+        // Delete user handler
+        const handleDeleteUser = (username, hub) => {
+                fetch("http://127.0.0.1:8000/api/delete-user/", {
+                        method: "POST",
+                        headers: {
+                                Authorization: "Bearer " + adminToken,
+                                "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ username })
+                })
+                        .then(res => res.json())
+                        .then(data => {
+                                if (data.success) {
+                                        // Remove user from the correct hub list
+                                        if (hub === "robevalley") {
+                                                setRobeValley(prev => prev.filter(u => u.username !== username));
+                                        } else if (hub === "greaterhopedowns") {
+                                                setGreaterHopeDowns(prev => prev.filter(u => u.username !== username));
+                                        } else if (hub === "restofeast") {
+                                                setRestOfEast(prev => prev.filter(u => u.username !== username));
+                                        } else if (hub === "restofwest") {
+                                                setRestOfWest(prev => prev.filter(u => u.username !== username));
+                                        }
+                                        alert("User deleted successfully.");
+                                } else {
+                                        alert(data.error || "Failed to delete user.");
+                                }
+                        })
+                        .catch(() => alert("Error deleting user."));
+        };
 
         const scrollToTop = () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
@@ -81,37 +103,37 @@ function AdminDataPage() {
 
                                         <div className="container3" id="RobeValley">
                                                 <h3><strong>Robe Valley</strong></h3>
-                                                {robevalley.map((item, idx) => (
-                                                        <div key={idx} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{item}</span>
-                                                                <button className="admin-action-btn">Delete user</button>
+                                                {robevalley.map((user, idx) => (
+                                                        <div key={user.username} className="admin-subject-row">
+                                                                <span className="admin-subject-label">{user.first_name} ({user.username})</span>
+                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.username, "robevalley")}>Delete user</button>
                                                         </div>
                                                 ))}
                                         </div>
                                         <div className="container3" id="GreaterHopeDowns">
                                                 <h3><strong>Greater Hope Downs</strong></h3>
-                                                {greaterhopedowns.map((item, idx) => (
-                                                        <div key={idx} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{item}</span>
-                                                                <button className="admin-action-btn">Delete user</button>
+                                                {greaterhopedowns.map((user, idx) => (
+                                                        <div key={user.username} className="admin-subject-row">
+                                                                <span className="admin-subject-label">{user.first_name} ({user.username})</span>
+                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.username, "greaterhopedowns")}>Delete user</button>
                                                         </div>
                                                 ))}
                                         </div>
                                         <div className="container3" id="RestOfEast">
                                                 <h3><strong>Rest of East</strong></h3>
-                                                {restofeast.map((item, idx) => (
-                                                        <div key={idx} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{item}</span>
-                                                                <button className="admin-action-btn">Delete user</button>
+                                                {restofeast.map((user, idx) => (
+                                                        <div key={user.username} className="admin-subject-row">
+                                                                <span className="admin-subject-label">{user.first_name} ({user.username})</span>
+                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.username, "restofeast")}>Delete user</button>
                                                         </div>
                                                 ))}
                                         </div>
                                         <div className="container3" id="RestOfWest">
                                                 <h3><strong>Rest of West</strong></h3>
-                                                {restofwest.map((item, idx) => (
-                                                        <div key={idx} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{item}</span>
-                                                                <button className="admin-action-btn">Delete user</button>
+                                                {restofwest.map((user, idx) => (
+                                                        <div key={user.username} className="admin-subject-row">
+                                                                <span className="admin-subject-label">{user.first_name} ({user.username})</span>
+                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.username, "restofwest")}>Delete user</button>
                                                         </div>
                                                 ))}
                                         </div>
