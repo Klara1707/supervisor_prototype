@@ -9,13 +9,13 @@ function NavBar() {
             <nav className="nav-bar">
                 <h3></h3>
                 <div className="nav-links">
-                <a href ="https://prospect.riotinto.org/irj/portal" className="nav-button">Prospect</a>
-                <a href="https://riotinto.csod.com/ui/lms-learner-home/home" className="nav-button">LMS Learning</a>
-                <a href="https://riotinto.sharepoint.com/sites/ResourceDevelopmentIronOreHub" className="nav-button">Res Dev Hub (Share Point)</a>
-                <a href="https://riotinto.sharepoint.com/sites/5062437/SitePages/Home.aspx" className="nav-button">Contractor Portal</a>
-                <a href="https://element.riotinto.com/#/sitepages/acronyms.aspx" className="nav-button">Acronym Finder</a>
-                <a href="https://element.riotinto.com/sites/e0003#/sitepages/peer-support.aspx" className="nav-button">Peer Support</a>
-                <a href="https://cloud.workhuman.com/microsites/t/home?client=6317&setCAG=false" className="nav-button">RockStar</a>
+                <a href ="https://prospect.riotinto.org/irj/portal" className="nav-button" target="_blank" rel="noopener noreferrer">Prospect</a>
+                <a href="https://riotinto.csod.com/ui/lms-learner-home/home" className="nav-button" target="_blank" rel="noopener noreferrer">LMS Learning</a>
+                <a href="https://riotinto.sharepoint.com/sites/ResourceDevelopmentIronOreHub" className="nav-button" target="_blank" rel="noopener noreferrer">Res Dev Hub (Share Point)</a>
+                <a href="https://riotinto.sharepoint.com/sites/5062437/SitePages/Home.aspx" className="nav-button" target="_blank" rel="noopener noreferrer">Contractor Portal</a>
+                <a href="https://element.riotinto.com/#/sitepages/acronyms.aspx" className="nav-button" target="_blank" rel="noopener noreferrer">Acronym Finder</a>
+                <a href="https://element.riotinto.com/sites/e0003#/sitepages/peer-support.aspx" className="nav-button" target="_blank" rel="noopener noreferrer">Peer Support</a>
+                <a href="https://cloud.workhuman.com/microsites/t/home?client=6317&setCAG=false" className="nav-button" target="_blank" rel="noopener noreferrer">RockStar</a>
                 <Link to="/login" className="nav-button">Logout</Link>
                 <p>&copy; Klara van den Burg</p>
                 </div>

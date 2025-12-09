@@ -25,27 +25,28 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 20px;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    padding: 10px 16px;
+    flex-wrap: wrap;
     background: linear-gradient(to right, orange, #cd2c2c);
+    min-height: 80px;
 }
 
 .hero-image img {
-    width: 250px;
+    width: 140px;
     height: auto;
-    margin-right: 40px;
-    border-radius: 8px;
+    margin-right: 24px;
+    border-radius: 6px;
 }
 
 .hero-text {
     flex: 1;
     text-align: right;
-    padding-left: 40px;
+    padding-left: 18px;
 }
 
 .hero-text h1 {
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: bold;
     text-align: right;
     font-family: "Delima SemiBold", sans-serif;
@@ -53,8 +54,8 @@
 }
 
 .hero-text p {
-    margin-top: 10px;
-    font-size: 1.2rem;
+    margin-top: 6px;
+    font-size: 1rem;
     text-align: right;
 }
 

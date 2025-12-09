@@ -127,7 +127,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
                 </div>
             )}
 
-            <button className="button1" onClick={handleLogout} style={{marginTop: "2rem"}}>Logout</button>
 
             <h2>Our Values</h2>
             <ul className="values-list">

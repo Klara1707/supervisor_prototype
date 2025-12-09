@@ -1,5 +1,9 @@
 
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./LogInPage.css";
+import HeroBar from "../components/HeroBar";
+
 function AdminLogin({ onSuccess }) {
     const [adminUsername, setAdminUsername] = useState("");
     const [adminPassword, setAdminPassword] = useState("");
@@ -73,9 +77,6 @@ function AdminLogin({ onSuccess }) {
         </div>
     );
 }
-import { Link, useNavigate } from "react-router-dom";
-import "./LogInPage.css";
-import HeroBar from "../components/HeroBar";
 
 function LogInPage() {
     const navigate = useNavigate();
@@ -102,7 +103,7 @@ function LogInPage() {
             const response = await fetch("http://127.0.0.1:8000/api/token/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username, password, site }),
             });
             const data = await response.json();
             if (response.ok) {
