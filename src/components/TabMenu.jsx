@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./TabMenu.css";
 import MandatoryList from "./MandatoryList";
 import DrillingPop from "./DrillingPop";
@@ -56,6 +56,14 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     });
     const [token, setToken] = useState(() => localStorage.getItem("token") || "");
     const [progress, setProgress] = useState(null);
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        setUser(null);
+        setToken("");
+        navigate("/login");
+    };
 
     React.useEffect(() => {
         // Listen for login changes (if setUser/setToken called elsewhere)
@@ -118,6 +126,8 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
                     </ul>
                 </div>
             )}
+
+            <button className="button1" onClick={handleLogout} style={{marginTop: "2rem"}}>Logout</button>
 
             <h2>Our Values</h2>
             <ul className="values-list">
