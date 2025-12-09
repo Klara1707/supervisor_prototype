@@ -11,44 +11,44 @@ function AdminDataPage() {
         const [showButton, setShowButton] = useState(false);
         // Example user data structure for each hub
         const [robevalley, setRobeValley] = useState([
-                { username: "user1", first_name: "Alice" },
-                { username: "user2", first_name: "Bob" }
+                { email: "user1", first_name: "Alice" },
+                { email: "user2", first_name: "Bob" }
         ]);
         const [greaterhopedowns, setGreaterHopeDowns] = useState([
-                { username: "user3", first_name: "Charlie" }
+                { email: "user3", first_name: "Charlie" }
         ]);
         const [restofeast, setRestOfEast] = useState([
-                { username: "user4", first_name: "Dana" }
+                { email: "user4", first_name: "Dana" }
         ]);
         const [restofwest, setRestOfWest] = useState([
-                { username: "user5", first_name: "Eve" }
+                { email: "user5", first_name: "Eve" }
         ]);
 
         // Get admin token from localStorage
         const adminToken = localStorage.getItem("token");
 
         // Delete user handler
-        const handleDeleteUser = (username, hub) => {
+        const handleDeleteUser = (email, hub) => {
                 fetch("http://127.0.0.1:8000/api/delete-user/", {
                         method: "POST",
                         headers: {
                                 Authorization: "Bearer " + adminToken,
                                 "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({ username })
+                        body: JSON.stringify({ email })
                 })
                         .then(res => res.json())
                         .then(data => {
                                 if (data.success) {
                                         // Remove user from the correct hub list
                                         if (hub === "robevalley") {
-                                                setRobeValley(prev => prev.filter(u => u.username !== username));
+                                                setRobeValley(prev => prev.filter(u => u.email !== email));
                                         } else if (hub === "greaterhopedowns") {
-                                                setGreaterHopeDowns(prev => prev.filter(u => u.username !== username));
+                                                setGreaterHopeDowns(prev => prev.filter(u => u.email !== email));
                                         } else if (hub === "restofeast") {
-                                                setRestOfEast(prev => prev.filter(u => u.username !== username));
+                                                setRestOfEast(prev => prev.filter(u => u.email !== email));
                                         } else if (hub === "restofwest") {
-                                                setRestOfWest(prev => prev.filter(u => u.username !== username));
+                                                setRestOfWest(prev => prev.filter(u => u.email !== email));
                                         }
                                         alert("User deleted successfully.");
                                 } else {
@@ -82,8 +82,7 @@ function AdminDataPage() {
                                                                                                                                                                                                         <button 
                                                                                                                                                                                                                 style={{position: 'absolute', right: 0, padding: '0.5rem 1rem', fontSize: '1rem', borderRadius: '4px', border: 'none', background: '#004b87', color: 'white', cursor: 'pointer'}} 
                                                                                                                                                                                                                 onClick={() => navigate('/login')}
-                                                                                                                                                                                                        >Log Out</button>
-                                                                                                                                                                                                </div>
+                                                                                                                                                                                                        >Log Out</button>                                                                                                                                          </div>
                                                 <p>Please click the “Delete user” to remove the person from the Supervisor Training Portal</p>
                                                 <div className="navigation-buttons">
                                                         <button onClick={() => document.getElementById("RobeValley").scrollIntoView({ behavior: "smooth" })}>
@@ -104,36 +103,36 @@ function AdminDataPage() {
                                         <div className="container3" id="RobeValley">
                                                 <h3><strong>Robe Valley</strong></h3>
                                                 {robevalley.map((user, idx) => (
-                                                        <div key={user.username} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{user.first_name} ({user.username})</span>
-                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.username, "robevalley")}>Delete user</button>
+                                                        <div key={user.email} className="admin-subject-row">
+                                                                <span className="admin-subject-label">{user.first_name} ({user.email})</span>
+                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.email, "robevalley")}>Delete user</button>
                                                         </div>
                                                 ))}
                                         </div>
                                         <div className="container3" id="GreaterHopeDowns">
                                                 <h3><strong>Greater Hope Downs</strong></h3>
                                                 {greaterhopedowns.map((user, idx) => (
-                                                        <div key={user.username} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{user.first_name} ({user.username})</span>
-                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.username, "greaterhopedowns")}>Delete user</button>
+                                                        <div key={user.email} className="admin-subject-row">
+                                                                <span className="admin-subject-label">{user.first_name} ({user.email})</span>
+                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.email, "greaterhopedowns")}>Delete user</button>
                                                         </div>
                                                 ))}
                                         </div>
                                         <div className="container3" id="RestOfEast">
                                                 <h3><strong>Rest of East</strong></h3>
                                                 {restofeast.map((user, idx) => (
-                                                        <div key={user.username} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{user.first_name} ({user.username})</span>
-                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.username, "restofeast")}>Delete user</button>
+                                                        <div key={user.email} className="admin-subject-row">
+                                                                <span className="admin-subject-label">{user.first_name} ({user.email})</span>
+                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.email, "restofeast")}>Delete user</button>
                                                         </div>
                                                 ))}
                                         </div>
                                         <div className="container3" id="RestOfWest">
                                                 <h3><strong>Rest of West</strong></h3>
                                                 {restofwest.map((user, idx) => (
-                                                        <div key={user.username} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{user.first_name} ({user.username})</span>
-                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.username, "restofwest")}>Delete user</button>
+                                                        <div key={user.email} className="admin-subject-row">
+                                                                <span className="admin-subject-label">{user.first_name} ({user.email})</span>
+                                                                <button className="admin-action-btn" onClick={() => handleDeleteUser(user.email, "restofwest")}>Delete user</button>
                                                         </div>
                                                 ))}
                                         </div>

@@ -1,5 +1,10 @@
-// Utility functions for authentication and protected requests
-
+// Safely remove authentication data from localStorage
+export function removeAuth() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("jwt_token");
+  localStorage.removeItem("user");
+  localStorage.removeItem("site");
+}
 export function getToken() {
   return localStorage.getItem("token");
 }
@@ -17,10 +22,6 @@ export function setToken(token) {
   localStorage.setItem("token", token);
 }
 
-export function removeAuth() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-}
 
 export function authFetch(url, options = {}) {
   const token = getToken();

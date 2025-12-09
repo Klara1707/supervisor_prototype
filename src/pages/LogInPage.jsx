@@ -8,6 +8,8 @@ function LogInPage() {
     const navigate = useNavigate();
     const [role, setRole] = useState("");
     const [site, setSite] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleCancel = () => {
         navigate('/');
@@ -19,17 +21,11 @@ function LogInPage() {
             // Do NOT store or send any login data for visitors
             navigate("/"); // or wherever you want to send the visitor
         } else if (role === "contractor-supervisor") {
-            // Collect the username and password from the form
-            const username = e.target.username.value;
-            const password = e.target.password.value;
-            // Collect the site value
-            // const site = e.target.site.value;
-
-            // Send login data to backend
+            // Use controlled state for email and password
             const response = await fetch("http://127.0.0.1:8000/api/token/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ email, password }),
             });
             const data = await response.json();
             if (response.ok) {
@@ -57,7 +53,7 @@ function LogInPage() {
     const handleAdminLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/token/", {
+            const response = await fetch("http://127.0.0.1:8000/api/admin-token/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -65,7 +61,13 @@ function LogInPage() {
                     password: adminPassword
                 }),
             });
-            const data = await response.json();
+            let data = {};
+            try {
+                data = await response.json();
+            } catch (jsonErr) {
+                // If response is not JSON, fallback
+                data = {};
+            }
             if (response.ok) {
                 // Check if user is admin
                 if (data.user && (data.user.is_staff || data.user.is_superuser)) {
@@ -76,10 +78,11 @@ function LogInPage() {
                     alert("You are not an admin.");
                 }
             } else {
-                alert(data.detail || "Login failed.");
+                // Show backend error message if available
+                alert(data.detail || data.error || "Login failed. Please check your username and password.");
             }
         } catch (error) {
-            alert("Error logging in.");
+            alert("Error logging in. Please check your network or server.");
         }
     };
 
@@ -94,10 +97,26 @@ function LogInPage() {
                         <h1>Welcome Back</h1>
                         <p>Please log in to continue</p>
                     </div>
-                    <label htmlFor="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter your username" autoComplete="username" />
+                    <label htmlFor="email">Rio Tinto Email</label>
+                    <input
+                        type="text"
+                        id="email"
+                        name="email"
+                        placeholder="Enter Rio Tinto email"
+                        autoComplete="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
                     <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" autoComplete="current-password" />
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autoComplete="current-password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
                     <label htmlFor="role">Select Role</label>
                     <select
                         id="role"

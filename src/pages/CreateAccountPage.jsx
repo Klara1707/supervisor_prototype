@@ -6,7 +6,6 @@ import SuccesLoginPop from "../components/SuccesLoginPop";
 
 function CreateAccountPage() {
 	const [form, setForm] = useState({
-		username: "",
 		email: "",
 		first_name: "",
 		last_name: "",
@@ -38,7 +37,7 @@ function CreateAccountPage() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				if (data.id || data.username) {
+				if (data.id || data.email) {
 					setMessage("Registration successful!");
 					setShowPopup(true);
 				} else {
@@ -61,17 +60,6 @@ function CreateAccountPage() {
 					<div className="form-header">
 						<h1>Create Account</h1>
 					</div>
-					<label htmlFor="username">Username</label>
-					<input
-						type="text"
-						id="username"
-						name="username"
-						value={form.username}
-						onChange={handleChange}
-						required
-						placeholder="Username"
-						autoComplete="username"
-					/>
 					<label htmlFor="first_name">First Name</label>
 					<input
 						type="text"
