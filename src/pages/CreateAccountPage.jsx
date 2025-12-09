@@ -6,7 +6,7 @@ import SuccesLoginPop from "../components/SuccesLoginPop";
 
 function CreateAccountPage() {
 	const [form, setForm] = useState({
-		email: "",
+		username: "",
 		first_name: "",
 		last_name: "",
 		password: ""
@@ -20,14 +20,9 @@ function CreateAccountPage() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// Email must end with @riotinto.com
-		if (!form.email.endsWith("@riotinto.com")) {
-			setMessage("Email must end with @riotinto.com");
-			return;
-		}
-		// Password must be numbers only and at least 5 digits
-		if (!/^\d{5,}$/.test(form.password)) {
-			setMessage("Password must be numbers only and at least 5 digits.");
+		// Username must end with @riotinto.com
+		if (!form.username.endsWith("@riotinto.com")) {
+			setMessage("Username must end with @riotinto.com");
 			return;
 		}
 		fetch("http://127.0.0.1:8000/api/register/", {
@@ -82,16 +77,16 @@ function CreateAccountPage() {
 						placeholder="Last Name"
 						autoComplete="family-name"
 					/>
-					<label htmlFor="email">Rio Tinto Email Address</label>
+					<label htmlFor="username">Rio Tinto Email</label>
 					<input
-						type="email"
-						id="email"
-						name="email"
-						value={form.email}
+						type="text"
+						id="username"
+						name="username"
+						value={form.username}
 						onChange={handleChange}
 						required
-						placeholder="Your Rio Tinto Email"
-						autoComplete="email"
+						placeholder=".............@riotinto.com"
+						autoComplete="username"
 					/>
 					<label htmlFor="password">Password</label>
 					<input

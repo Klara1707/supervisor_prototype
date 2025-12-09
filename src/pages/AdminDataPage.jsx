@@ -3,29 +3,41 @@ import { useNavigate } from "react-router-dom";
 import HeroBar from "../components/HeroBar";
 import NavBar from "../components/NavBar";
 import "./AdminDataPage.css";
-import TabMenu from "../components/TabMenu";
-
 
 function AdminDataPage() {
-                const navigate = useNavigate();
+        const navigate = useNavigate();
         const [showButton, setShowButton] = useState(false);
-        // Example user data structure for each hub
-        const [robevalley, setRobeValley] = useState([
-                { email: "user1", first_name: "Alice" },
-                { email: "user2", first_name: "Bob" }
-        ]);
-        const [greaterhopedowns, setGreaterHopeDowns] = useState([
-                { email: "user3", first_name: "Charlie" }
-        ]);
-        const [restofeast, setRestOfEast] = useState([
-                { email: "user4", first_name: "Dana" }
-        ]);
-        const [restofwest, setRestOfWest] = useState([
-                { email: "user5", first_name: "Eve" }
-        ]);
+        // State for each hub, initially empty
+        const [robevalley, setRobeValley] = useState([]);
+        const [greaterhopedowns, setGreaterHopeDowns] = useState([]);
+        const [restofeast, setRestOfEast] = useState([]);
+        const [restofwest, setRestOfWest] = useState([]);
 
         // Get admin token from localStorage
         const adminToken = localStorage.getItem("token");
+
+        // Fetch users by site on mount
+        useEffect(() => {
+                fetch("http://127.0.0.1:8000/api/users-by-site/", {
+                        headers: {
+                                Authorization: "Bearer " + adminToken,
+                        },
+                })
+                        .then(res => res.json())
+                        .then(data => {
+                                // Data format: { robevalley: [...], greaterhopedowns: [...], restofeast: [...], restofwest: [...] }
+                                setRobeValley(data.robevalley || []);
+                                setGreaterHopeDowns(data.greaterhopedowns || []);
+                                setRestOfEast(data.restofeast || []);
+                                setRestOfWest(data.restofwest || []);
+                        })
+                        .catch(() => {
+                                setRobeValley([]);
+                                setGreaterHopeDowns([]);
+                                setRestOfEast([]);
+                                setRestOfWest([]);
+                        });
+        }, [adminToken]);
 
         // Delete user handler
         const handleDeleteUser = (email, hub) => {
@@ -77,12 +89,8 @@ function AdminDataPage() {
                 <NavBar />
                                 <div className="container">
                                         <section className="requirements">
-                                                                                                                                                                                                <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
-                                                                                                                                                                                                        <h2 style={{margin: 0, textAlign: 'center'}}>Admin</h2>
-                                                                                                                                                                                                        <button 
-                                                                                                                                                                                                                style={{position: 'absolute', right: 0, padding: '0.5rem 1rem', fontSize: '1rem', borderRadius: '4px', border: 'none', background: '#004b87', color: 'white', cursor: 'pointer'}} 
-                                                                                                                                                                                                                onClick={() => navigate('/login')}
-                                                                                                                                                                                                        >Log Out</button>                                                                                                                                          </div>
+                                        <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
+                                        <h2 style={{margin: 0, textAlign: 'center'}}>Admin</h2>                                                                                                                                          </div>
                                                 <p>Please click the “Delete user” to remove the person from the Supervisor Training Portal</p>
                                                 <div className="navigation-buttons">
                                                         <button onClick={() => document.getElementById("RobeValley").scrollIntoView({ behavior: "smooth" })}>

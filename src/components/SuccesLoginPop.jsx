@@ -9,7 +9,7 @@ const SuccesLoginPop = ({ show, onClose }) => {
             const timer = setTimeout(() => {
                 onClose();
                 navigate("/login");
-            }, 5000);
+            }, 10000);
             return () => clearTimeout(timer);
         }
     }, [show, onClose, navigate]);

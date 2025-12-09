@@ -1,58 +1,9 @@
 
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./LogInPage.css";
-import HeroBar from "../components/HeroBar";
-
-function LogInPage() {
-    const navigate = useNavigate();
-    const [role, setRole] = useState("");
-    const [site, setSite] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [rememberMe, setRememberMe] = useState(false);
-
-    const handleCancel = () => {
-        setEmail("");
-        setPassword("");
-        setSite("");
-        setRole("");
-        setRememberMe(false);
-    };
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        if (role === "visitor") {
-            // Do NOT store or send any login data for visitors
-            navigate("/"); // or wherever you want to send the visitor
-        } else if (role === "contractor-supervisor") {
-            // Use controlled state for email and password
-            const response = await fetch("http://127.0.0.1:8000/api/token/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                // Store token/user in localStorage or sessionStorage based on rememberMe
-                const storage = rememberMe ? localStorage : sessionStorage;
-                storage.setItem("token", data.access);
-                storage.setItem("site", site);
-                if (data.user) {
-                    storage.setItem("user", JSON.stringify(data.user));
-                }
-                navigate("/"); // or to a protected page
-            } else {
-                alert(data.detail || "Login failed.");
-            }
-        } else {
-            alert("Please select a role.");
-        }
-    };
-
-    // State for admin login
+function AdminLogin({ onSuccess }) {
     const [adminUsername, setAdminUsername] = useState("");
     const [adminPassword, setAdminPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleAdminLogin = async (e) => {
         e.preventDefault();
@@ -69,26 +20,107 @@ function LogInPage() {
             try {
                 data = await response.json();
             } catch (jsonErr) {
-                // If response is not JSON, fallback
                 data = {};
             }
             if (response.ok) {
-                // Check if user is admin
                 if (data.user && (data.user.is_staff || data.user.is_superuser)) {
                     localStorage.setItem("token", data.access);
                     localStorage.setItem("user", JSON.stringify(data.user));
+                    if (onSuccess) onSuccess();
                     navigate("/admindatapage");
                 } else {
                     alert("You are not an admin.");
                 }
             } else {
-                // Show backend error message if available
                 alert(data.detail || data.error || "Login failed. Please check your username and password.");
             }
         } catch (error) {
             alert("Error logging in. Please check your network or server.");
         }
     };
+
+    return (
+        <div className="admin-login-box" style={{marginTop: '-1.5rem'}}>
+            <div className="context-inner-box">
+                <h1>Admin Login</h1>
+                <p>Please log in with Admin credentials</p>
+            </div>
+            <form className="login-form" onSubmit={handleAdminLogin}>
+                <label htmlFor="admin-username">Username</label>
+                <input
+                    type="text"
+                    id="admin-username"
+                    name="admin-username"
+                    placeholder="Enter your username"
+                    autoComplete="username"
+                    value={adminUsername}
+                    onChange={(e) => setAdminUsername(e.target.value)}
+                />
+                <label htmlFor="admin-password">Password</label>
+                <input
+                    type="password"
+                    id="admin-password"
+                    name="admin-password"
+                    placeholder="Enter your password"
+                    autoComplete="current-password"
+                    value={adminPassword}
+                    onChange={(e) => setAdminPassword(e.target.value)}
+                />
+                <div className="form-buttons">
+                    <button type="submit" className="login-btn">Login</button>
+                </div>
+            </form>
+        </div>
+    );
+}
+import { Link, useNavigate } from "react-router-dom";
+import "./LogInPage.css";
+import HeroBar from "../components/HeroBar";
+
+function LogInPage() {
+    const navigate = useNavigate();
+    const [role, setRole] = useState("");
+    const [site, setSite] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
+    const [showAdminLogin, setShowAdminLogin] = useState(false);
+
+    const handleCancel = () => {
+        setUsername("");
+        setPassword("");
+        setSite("");
+        setRole("");
+        setRememberMe(false);
+    };
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        if (role === "visitor") {
+            navigate("/");
+        } else if (role === "contractor-supervisor") {
+            const response = await fetch("http://127.0.0.1:8000/api/token/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                const storage = rememberMe ? localStorage : sessionStorage;
+                storage.setItem("token", data.access);
+                storage.setItem("site", site);
+                if (data.user) {
+                    storage.setItem("user", JSON.stringify(data.user));
+                }
+                navigate("/");
+            } else {
+                alert(data.detail || "Login failed.");
+            }
+        } else {
+            alert("Please select a role.");
+        }
+    };
+
 
     return (
         <>
@@ -101,15 +133,15 @@ function LogInPage() {
                         <h1>Welcome Back</h1>
                         <p>Please log in to continue</p>
                     </div>
-                    <label htmlFor="email">Rio Tinto Email</label>
+                    <label htmlFor="username">Rio Tinto  Email</label>
                     <input
                         type="text"
-                        id="email"
-                        name="email"
-                        placeholder="Enter Rio Tinto email"
-                        autoComplete="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        autoComplete="username"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
                     />
                     <label htmlFor="password">Password</label>
                     <input
@@ -183,38 +215,19 @@ function LogInPage() {
                         </Link>
                     </div>
                 </form>
-                {/* Admin Login Box with username and password - now next to login-form */}
-                <div className="admin-login-box" style={{marginTop: '-1.5rem'}}>
-                    <div className="context-inner-box">
-                        <h1>Admin Login</h1>
-                        <p>Please log in with Admin credentials</p>
-                    </div>
-                    <form className="login-form" onSubmit={handleAdminLogin}>
-                        <label htmlFor="admin-username">Username</label>
-                        <input
-                            type="text"
-                            id="admin-username"
-                            name="admin-username"
-                            placeholder="Enter your username"
-                            autoComplete="username"
-                            value={adminUsername}
-                            onChange={(e) => setAdminUsername(e.target.value)}
-                        />
-                        <label htmlFor="admin-password">Password</label>
-                        <input
-                            type="password"
-                            id="admin-password"
-                            name="admin-password"
-                            placeholder="Enter your password"
-                            autoComplete="current-password"
-                            value={adminPassword}
-                            onChange={(e) => setAdminPassword(e.target.value)}
-                        />
-                        <div className="form-buttons">
-                            <button type="submit" className="login-btn">Login</button>
-                        </div>
-                    </form>
+                {/* Admin Login Toggle Button below login form */}
+                <div style={{marginTop: '2rem', textAlign: 'center'}}>
+                    <button
+                        className="admin-login-toggle"
+                        onClick={() => setShowAdminLogin(v => !v)}
+                        type="button"
+                    >
+                        {showAdminLogin ? "Hide Admin Login" : "Admin Login"}
+                    </button>
                 </div>
+                {/* Admin Login Toggle Button removed, now only above the form */}
+                {/* Admin Login Box with username and password - toggled */}
+                {showAdminLogin && <AdminLogin onSuccess={() => setShowAdminLogin(false)} />}
             </div>
         </div>
         </>
