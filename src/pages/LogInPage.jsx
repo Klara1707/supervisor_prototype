@@ -10,9 +10,14 @@ function LogInPage() {
     const [site, setSite] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
 
     const handleCancel = () => {
-        navigate('/');
+        setEmail("");
+        setPassword("");
+        setSite("");
+        setRole("");
+        setRememberMe(false);
     };
 
     const handleLogin = async (e) => {
@@ -29,13 +34,12 @@ function LogInPage() {
             });
             const data = await response.json();
             if (response.ok) {
-                // Store token or any other data as needed
-                localStorage.setItem("token", data.access);
-                // Store site for later use in progress updates
-                localStorage.setItem("site", site);
-                // Optionally, store user info if returned
+                // Store token/user in localStorage or sessionStorage based on rememberMe
+                const storage = rememberMe ? localStorage : sessionStorage;
+                storage.setItem("token", data.access);
+                storage.setItem("site", site);
                 if (data.user) {
-                    localStorage.setItem("user", JSON.stringify(data.user));
+                    storage.setItem("user", JSON.stringify(data.user));
                 }
                 navigate("/"); // or to a protected page
             } else {
@@ -149,7 +153,13 @@ function LogInPage() {
                     )}
                     <div className="form-options">
                         <label>
-                            <input type="checkbox" name="remember" autoComplete="off" />
+                            <input
+                                type="checkbox"
+                                name="remember"
+                                autoComplete="off"
+                                checked={rememberMe}
+                                onChange={e => setRememberMe(e.target.checked)}
+                            />
                             Remember Me
                         </label>
                         <a
