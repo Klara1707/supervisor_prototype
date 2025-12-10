@@ -112,6 +112,9 @@ function LogInPage() {
             });
             const data = await response.json();
             if (response.ok) {
+                // Always clear both storages before saving new login data
+                localStorage.clear();
+                sessionStorage.clear();
                 const storage = rememberMe ? localStorage : sessionStorage;
                 storage.setItem("token", data.access);
                 storage.setItem("site", site);
