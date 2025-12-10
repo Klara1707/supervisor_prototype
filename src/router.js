@@ -8,10 +8,11 @@ import HomePage from "./pages/HomePage";
 
 const router = createBrowserRouter(
     [
-        { path: "/", element: <HomePage /> },
+        { path: "/", element: <LogInPage /> },
         { path: "/login", element: <LogInPage /> },
         { path: "/createaccount", element: <CreateAccountPage /> },
         { path: "/admindatapage", element: <AdminDataPage /> },
+        { path: "/home", element: <HomePage /> },
         // { path: "/admin", element: <AdminPage /> },
     ],
     { basename: "/supervisor_prototype" }

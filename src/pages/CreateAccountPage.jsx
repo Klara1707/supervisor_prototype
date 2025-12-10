@@ -9,7 +9,8 @@ function CreateAccountPage() {
 		username: "",
 		first_name: "",
 		last_name: "",
-		password: ""
+		password: "",
+		site: ""
 	});
 	const [message, setMessage] = useState("");
 	const [showPopup, setShowPopup] = useState(false);
@@ -25,10 +26,12 @@ function CreateAccountPage() {
 			setMessage("Username must end with @riotinto.com");
 			return;
 		}
+		// Make username case-insensitive
+		const formToSend = { ...form, username: form.username.toLowerCase() };
 		fetch("http://127.0.0.1:8000/api/register/", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(form)
+			body: JSON.stringify(formToSend)
 		})
 			.then(res => res.json())
 			.then(data => {
@@ -99,6 +102,28 @@ function CreateAccountPage() {
 						placeholder="Password"
 						autoComplete="new-password"
 					/>
+					<label htmlFor="site">Select Site<span style={{color: 'red'}}>*</span></label>
+					<select
+						id="site"
+						name="site"
+						value={form.site}
+						onChange={handleChange}
+						required
+						className="signup-input"
+						style={{
+							padding: '0.75rem',
+							fontSize: '1rem',
+							border: '1px solid #ccc',
+							borderRadius: '4px',
+							marginBottom: '16px'
+						}}
+					>
+						<option value="">-- Choose a Hub --</option>
+						<option value="robevalley">Robe Valley</option>
+						<option value="greaterhopedowns">Greater Hope Downs</option>
+						<option value="restofeast">Rest of East</option>
+						<option value="restofwest">Rest of West</option>
+					</select>
 					<button type="submit">Create Account</button>
 					<Link to="/login" className="back-to-login">Back to Login</Link>
 				</form>

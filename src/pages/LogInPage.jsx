@@ -100,10 +100,15 @@ function LogInPage() {
         if (role === "visitor") {
             navigate("/");
         } else if (role === "contractor-supervisor") {
+            if (!site) {
+                alert("Please select a site.");
+                return;
+            }
+            // Make username case-insensitive
             const response = await fetch("http://127.0.0.1:8000/api/token/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password, site }),
+                body: JSON.stringify({ username: username.toLowerCase(), password, site }),
             });
             const data = await response.json();
             if (response.ok) {
@@ -113,7 +118,7 @@ function LogInPage() {
                 if (data.user) {
                     storage.setItem("user", JSON.stringify(data.user));
                 }
-                navigate("/");
+                navigate("/home");
             } else {
                 alert(data.detail || "Login failed.");
             }
@@ -168,13 +173,14 @@ function LogInPage() {
                     </select>
                     {role === "contractor-supervisor" && (
                         <>
-                        <label htmlFor="site">Select Site</label>
+                        <label htmlFor="site">Select Site<span style={{color: 'red'}}>*</span></label>
                         <select
                             id="site"
                             name="site"
                             className="form-select"
                             value={site}
                             onChange={(e) => setSite(e.target.value)}
+                            required
                         >
                             <option value="">-- Choose a Hub --</option>
                             <option value="robevalley">Robe Valley</option>
