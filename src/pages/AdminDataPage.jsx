@@ -111,8 +111,11 @@ function AdminDataPage() {
                                         <div className="container3" id="RobeValley">
                                                 <h3><strong>Robe Valley</strong></h3>
                                                 {robevalley.map((user, idx) => (
-                                                        <div key={user.email} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{user.first_name} ({user.email})</span>
+                                                        <div key={user.email || user.full_name || idx} className="admin-subject-row">
+                                                                <span className="admin-subject-label">
+                                                                        {user.full_name}
+                                                                        {user.email ? ` (${user.email})` : ""}
+                                                                </span>
                                                                 <button className="admin-action-btn" onClick={() => handleDeleteUser(user.email, "robevalley")}>Delete user</button>
                                                         </div>
                                                 ))}
@@ -120,8 +123,11 @@ function AdminDataPage() {
                                         <div className="container3" id="GreaterHopeDowns">
                                                 <h3><strong>Greater Hope Downs</strong></h3>
                                                 {greaterhopedowns.map((user, idx) => (
-                                                        <div key={user.email} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{user.first_name} ({user.email})</span>
+                                                        <div key={user.email || user.full_name || idx} className="admin-subject-row">
+                                                                <span className="admin-subject-label">
+                                                                        {user.full_name}
+                                                                        {user.email ? ` (${user.email})` : ""}
+                                                                </span>
                                                                 <button className="admin-action-btn" onClick={() => handleDeleteUser(user.email, "greaterhopedowns")}>Delete user</button>
                                                         </div>
                                                 ))}
@@ -129,8 +135,11 @@ function AdminDataPage() {
                                         <div className="container3" id="RestOfEast">
                                                 <h3><strong>Rest of East</strong></h3>
                                                 {restofeast.map((user, idx) => (
-                                                        <div key={user.email} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{user.first_name} ({user.email})</span>
+                                                        <div key={user.email || user.full_name || idx} className="admin-subject-row">
+                                                                <span className="admin-subject-label">
+                                                                        {user.full_name}
+                                                                        {user.email ? ` (${user.email})` : ""}
+                                                                </span>
                                                                 <button className="admin-action-btn" onClick={() => handleDeleteUser(user.email, "restofeast")}>Delete user</button>
                                                         </div>
                                                 ))}
@@ -138,8 +147,11 @@ function AdminDataPage() {
                                         <div className="container3" id="RestOfWest">
                                                 <h3><strong>Rest of West</strong></h3>
                                                 {restofwest.map((user, idx) => (
-                                                        <div key={user.email} className="admin-subject-row">
-                                                                <span className="admin-subject-label">{user.first_name} ({user.email})</span>
+                                                        <div key={user.email || user.full_name || idx} className="admin-subject-row">
+                                                                <span className="admin-subject-label">
+                                                                        {user.full_name}
+                                                                        {user.email ? ` (${user.email})` : ""}
+                                                                </span>
                                                                 <button className="admin-action-btn" onClick={() => handleDeleteUser(user.email, "restofwest")}>Delete user</button>
                                                         </div>
                                                 ))}

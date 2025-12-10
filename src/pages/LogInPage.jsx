@@ -177,10 +177,10 @@ function LogInPage() {
                             onChange={(e) => setSite(e.target.value)}
                         >
                             <option value="">-- Choose a Hub --</option>
-                            <option value="robe-valley">Robe Valley</option>
-                            <option value="greater-hope-downs">Greater Hope Downs</option>
-                            <option value="rest-of-east">Rest of East</option>
-                            <option value="rest-of-west">Rest of West</option>
+                            <option value="robevalley">Robe Valley</option>
+                            <option value="greaterhopedowns">Greater Hope Downs</option>
+                            <option value="restofeast">Rest of East</option>
+                            <option value="restofwest">Rest of West</option>
                         </select>
                         </>
                     )}

@@ -4,22 +4,25 @@ import "./Pop.css";
 import { useState } from "react";
 
 const SafetyPop = ({ popupId, closePopup, userToken }) => {
-        // ...existing code...
+    // ...existing code...
+    // ...existing code...
     const [comment, setComment] = useState("");
     const [signOffDate, setSignOffDate] = useState("");
     const [signOffName, setSignOffName] = useState("");
-    // Dynamically collect only the checkboxes relevant to the current popup
-    let checkboxItems = [];
-    if (popupId && contentMap[popupId]) {
-        checkboxItems = contentMap[popupId].cells
-            .filter(cell => typeof cell === "object" && cell.type === "textWithCheckbox" && cell.checkboxLabel)
-            .map(cell => cell.checkboxLabel);
-    }
+
+    // Add checkboxItems array (should match all possible checkbox labels used in contentMap)
+    const checkboxItems = [
+        "Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6",
+        "Box 7", "Box 8", "Box 9", "Box 10", "Box 11", "Box 12",
+        "Box 13", "Box 14", "Box 15", "Box 16", "Box 17", "Box 18",
+        "Box 19", "Box 20", "Box 21", "Box 22", "Box 23", "Box 24",
+        "Box 25", "Box 26", "Box 27", "Box 28", "Box 29", "Box 30",
+        "Box 31", "Box 32", "Box 33", "Box 34", "Box 35", "Box 36",
+    ];
     const [progressChecks, setProgressChecks] = useState(Array(checkboxItems.length).fill(false));
     useDebouncedSave(popupId, progressChecks, userToken);
 
-    if (!popupId) return null;
-
+    // Define contentMap before any usage
     const contentMap = {
         safety1: {
             title: "Safety level 1",
@@ -45,42 +48,17 @@ const SafetyPop = ({ popupId, closePopup, userToken }) => {
                 "Download to your mobile device using the provided link. Exposure: Familiarise yourself with how to create an active task, action items through your inbox, and review your team via the dashboard Exposure: familarise yourself how to create an active task, action through your inbox and review your team on the dashboard.", 
                 <button onClick={() => window.open("https://safeday.app/", "_blank")}>Safeday app</button>,
                 "Sign off", 
-                "comment section",
-
                 {
-                    type: "textWithCheckbox",
-                    text: "Understands the purpose and origin of Critical Risk Management, including key concepts and trending data, and performs high-quality verifications to ensure compliance and effectiveness", 
-                    checkboxLabel: "Box 4"
-                },
-                                {
-                    type: "textWithCheckbox",
-                    text: "Understands task timelines, can assess credible fatality risks, and demonstrates general proficiency in using the app",  
-                    checkboxLabel: "Box 5"
-                },
-                {
-                    type: "textWithCheckbox",
-                    text: "Capable of verifying controls for effectiveness and providing constructive feedback during Critical Control Field Verifications (CCFV)", 
-                    checkboxLabel: "Box 6"
-                },
-                                {
-                    type: "textWithCheckbox",
-                    text: "Knows the appropriate actions to take when a red is identified—capturing photos, recording the issue, resolving it in the field where possible, assigning actions, setting timelines, and ensuring close-out",  
-                    checkboxLabel: "Box 7"
-                },
-                "The RTIO Critical Risk Management Hub provides comprehensive resources explaining the 'why' and 'how' behind critical risk processes", 
-                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Critical-Risk-Management-(CRM).aspx", "_blank")}>Critical Risk Management (CRM) </button>,
-                "Sign off", "comment section",
-                                                {
                     type: "textWithCheckbox",
                     text: "Understands the purpose of Hazard & Risk Assessment—including risk levels, key concepts, and timelines—and performs thorough, high-quality assessments", 
                     checkboxLabel: "Box 8"
                 },
-                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Understands that all activities involving risk must be assessed through a Pre-Task Hazard Assessment (PTHA), with appropriate controls implemented to manage the risk", 
                     checkboxLabel: "Box 9"
                 },
-                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Able to provide guidance to contractors and others on improving the quality of risk assessments", 
                     checkboxLabel: "Box 10"
@@ -89,12 +67,12 @@ const SafetyPop = ({ popupId, closePopup, userToken }) => {
                 "The RTIO Pre-Task Hazard Assessment Hub provides comprehensive guidance on the 'why' and 'how' of effective risk assessment and control",
                 <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Pre-Task-Risk-Assessment-Tools.aspx", "_blank")}>Pre-Task Hazard Assessment</button>, 
                 "Sign off", "comment section",
-                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Able to analyse safety banners and effectively share key information during safety discussions, meetings, and field interactions",  
                     checkboxLabel: "Box 11"
                 },
-                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Able to analyse safety banners and clearly communicate key messages during safety discussions, meetings, and field interactions", 
                     checkboxLabel: "Box 12"
@@ -104,97 +82,121 @@ const SafetyPop = ({ popupId, closePopup, userToken }) => {
                 "Exposure Tip: Before another leader presents a safety banner, take time to read it yourself. Consider how you would summarise the content without losing key messages, and identify the most important points to share. Resources: Access all banner templates via the provided link.", 
                 <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB#banners", "_blank")}>HSEC Hub </button>,
                 "Sign off", "comment section",
-                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Maintains project action tracking to ensure timely completion of safety gaps and improvements identified through SMMs, LIF interactions, and PSIs", 
                     checkboxLabel: "Box 13"
                 },
-                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Gathers actions from PSI, DWI, and LIF interactions, and accurately captures them in the DDM for effective tracking and follow-up",  
                     checkboxLabel: "Box 14"
                 },
-                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Follows up on open actions to ensure close-out before the due date, and provides reasoning for any extensions on overdue items",  
                     checkboxLabel: "Box 15"
                 },
                 "",                         
                 "Exposure Tip:Closely follow the action tracking process during your team meetings. Once you're confident in your understanding, volunteer to be the scribe or action taker to help capture and manage meeting outcomes.", 
-
                 "",
                 "Sign off", "comment section",
-
-                                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Understands the initial response to an incident - securing the scene, reporting to chain of command, confidentiality in distributing information. ", 
                     checkboxLabel: "Box 16"
                 },
-                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Understands their responsibility in securing the scene of an incident and is familiar with the initial reporting process",  
                     checkboxLabel: "Box 17"
                 },
-                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Able to enter initial incident reports in Enablon and distribute a Leader Report to relevant stakeholders",  
                     checkboxLabel: "Box 18"
                 },
-                                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Able to enter actions into Enablon accurately for tracking and follow-up",  
                     checkboxLabel: "Box 19"
                 },                      
                 "Exposure Tip: Shadow a peer to understand scene requirements and how to communicate initial expectations for information collection. Once confident, practice entering incident details into Enablon.", 
-            
-                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
                     <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/Forms/AllItems.aspx?id=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished%2FRTIO%2DHSE%2D0071439%2Epdf&parent=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished", "_blank")}>Incident Investigation Procedure</button>
-                    </div>,
-
+                </div>,
                 "Sign off", "comment section",
-
-                                                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Qualified and skilled in issuing and managing Hot Works permits ", 
                     checkboxLabel: "Box 20"
                 },
-                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Raises, signs, and verifies Hot Works permits with control measures in place",  
                     checkboxLabel: "Box 21"
                 },
-                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Can conduct LIF activities to verify controls, including PTHA and CCFV",  
                     checkboxLabel: "Box 22"
                 },
-                                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Able to enter actions into Enablon accurately for tracking and follow-up",  
                     checkboxLabel: "Box 23"
                 },
-
                 "Qualification: RTIO Certified – Hot Work Permit Issuer Exposure: Shadowed SMEs/peers, conducted LIF activities, and actively engaged with controls (PTHA, CCFV) during tasks.", 
                 "",   
                 "Sign off", "comment section",
-                                                                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Understands the functionality and purpose of IVMS and DSS systems, including their role in promoting safety, compliance, and operational efficiency", 
                     checkboxLabel: "Box 24"
                 },
-                                                                {
+                {
                     type: "textWithCheckbox",
                     text: "Understands how the system operates, can identify what constitutes a breach, and is aware of the potential consequences associated with non-compliance",  
                     checkboxLabel: "Box 25"
                 },
                 "",  
                 "",  
-
                 "Tip: Speak with your Leader to confirm whether your role requires access to the MiX Telematics and DSSi Portal", 
-                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
+                <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
                     <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0156051.pdf", "_blank")}>Vehicle Monitoring System (IVMS) Guidance </button>
                     <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Light-Vehicles-and-Driving.aspx", "_blank")}>Light Vehicles and Driving</button>
-                    </div>, 
+                </div>, 
+                "Sign off", "comment section",
+                {
+                    type: "textWithCheckbox",
+                    text: "Can conduct LIF activities to verify controls, including PTHA and CCFV",
+                    checkboxLabel: "Box 22"
+                },
+                {
+                    type: "textWithCheckbox",
+                    text: "Able to enter actions into Enablon accurately for tracking and follow-up",
+                    checkboxLabel: "Box 23"
+                },
+                "Qualification: RTIO Certified – Hot Work Permit Issuer Exposure: Shadowed SMEs/peers, conducted LIF activities, and actively engaged with controls (PTHA, CCFV) during tasks.",
+                "",
+                "Sign off", "comment section",
+                {
+                    type: "textWithCheckbox",
+                    text: "Understands the functionality and purpose of IVMS and DSS systems, including their role in promoting safety, compliance, and operational efficiency",
+                    checkboxLabel: "Box 24"
+                },
+                {
+                    type: "textWithCheckbox",
+                    text: "Understands how the system operates, can identify what constitutes a breach, and is aware of the potential consequences associated with non-compliance",
+                    checkboxLabel: "Box 25"
+                },
+                "",
+                "",
+                "Tip: Speak with your Leader to confirm whether your role requires access to the MiX Telematics and DSSi Portal",
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px" }}>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0156051.pdf", "_blank")}>Vehicle Monitoring System (IVMS) Guidance </button>
+                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Light-Vehicles-and-Driving.aspx", "_blank")}>Light Vehicles and Driving</button>
+                </div>,
                 "Sign off", "comment section",
             ]
         },
