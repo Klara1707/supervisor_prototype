@@ -1,8 +1,9 @@
 
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./LogInPage.css";
+import { useNavigate, Link } from "react-router-dom";
+import PasswordResetForm from "../components/PasswordResetForm";
 import HeroBar from "../components/HeroBar";
+import { useState } from "react";
+import "./LogInPage.css";
 
 function AdminLogin({ onSuccess }) {
     const [adminUsername, setAdminUsername] = useState("");
@@ -78,6 +79,7 @@ function AdminLogin({ onSuccess }) {
     );
 }
 
+
 function LogInPage() {
     const navigate = useNavigate();
     const [role, setRole] = useState("");
@@ -86,6 +88,7 @@ function LogInPage() {
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [showAdminLogin, setShowAdminLogin] = useState(false);
+    const [showResetPopup, setShowResetPopup] = useState(false);
 
     const handleCancel = () => {
         setUsername("");
@@ -144,12 +147,12 @@ function LogInPage() {
                         <h1>Welcome Back</h1>
                         <p>Please log in to continue</p>
                     </div>
-                    <label htmlFor="username">Rio Tinto  Email</label>
+                    <label htmlFor="username">Enter Rio Tinto email</label>
                     <input
                         type="text"
                         id="username"
                         name="username"
-                        placeholder="Enter your username"
+                        placeholder=".......@riotinto.com"
                         autoComplete="username"
                         value={username}
                         onChange={e => setUsername(e.target.value)}
@@ -206,14 +209,14 @@ function LogInPage() {
                             />
                             Remember Me
                         </label>
-                        <a
-                            href="http://localhost:8000/password_reset/"
+                        <button
+                            type="button"
                             className="forgot-link"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            style={{marginLeft: '1rem', background: 'none', border: 'none', color: '#004b87', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.9rem'}}
+                            onClick={() => setShowResetPopup(true)}
                         >
-                            Forgot Password?
-                        </a>
+                            Reset Password
+                        </button>
                     </div>
                     <div className="form-buttons">
                         <button type="submit">Login</button>
@@ -237,9 +240,37 @@ function LogInPage() {
                         {showAdminLogin ? "Hide Admin Login" : "Admin Login"}
                     </button>
                 </div>
-                {/* Admin Login Toggle Button removed, now only above the form */}
                 {/* Admin Login Box with username and password - toggled */}
                 {showAdminLogin && <AdminLogin onSuccess={() => setShowAdminLogin(false)} />}
+                {/* Password Reset Popup */}
+                {showResetPopup && (
+                    <div style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        background: 'rgba(0,0,0,0.3)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 1000
+                    }}>
+                        <div className="admin-login-box" style={{position: 'relative', maxWidth: '400px', width: '100%'}}>
+                            <div className="context-inner-box" style={{marginBottom: '1rem'}}>
+                                <h1 style={{margin: 0}}>Reset Password</h1>
+                            </div>
+                            <button
+                                style={{position: 'absolute', top: 8, right: 8, background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer'}}
+                                onClick={() => setShowResetPopup(false)}
+                                aria-label="Close"
+                            >
+                                &times;
+                            </button>
+                            <PasswordResetForm />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
         </>

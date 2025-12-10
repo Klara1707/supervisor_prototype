@@ -1,3 +1,51 @@
+    .password-reset-form {
+        font-family: var(--font-default);
+        font-weight: normal;
+        font-size: 1rem;
+        color: var(--black);
+    }
+    .password-reset-form h2 {
+        font-family: var(--font-default);
+        font-weight: normal;
+        font-size: 1.5rem;
+        color: var(--black);
+        margin-bottom: 1rem;
+    }
+    .password-reset-form label {
+        font-family: var(--font-default);
+        font-weight: bold;
+        font-size: 1rem;
+        color: var(--black);
+        margin-bottom: 4px;
+    }
+    /* Password Reset Form input and button styling to match login form */
+    .login-form-input {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .login-form-input:focus {
+        outline: none;
+        border-color: var(--brand);
+        box-shadow: 0 0 0 2px rgba(205, 44, 44, 0.2);
+    }
+    .login-form-btn {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #004b87;
+        color: white;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+    .login-form-btn:hover:enabled {
+        background-color: #00345c;
+    }
     /* Style for the admin login toggle button above the login form */
     .admin-login-toggle {
         display: block;
@@ -109,7 +157,16 @@ body {
 
 .forgot-link {
     color: #004b87;
-    text-decoration: none;
+    text-decoration: underline;
+    font-size: 0.85rem;
+    padding: 2px 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+    margin-bottom: 0;
+    display: inline;
 }
     .admin-login-box {
         background: var(--white);
@@ -230,18 +287,19 @@ body {
 }
 
 .create-account-btn {
-    margin-top: 0.75rem;
-    padding: 0.75rem;
-    font-size: 1rem;
+    margin-top: 0.25rem;
+    padding: 2px 12px;
+    font-size: 0.85rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    background-color: #004b87;
+    background-color: #cd2c2c;
     color: white;
     transition: background-color 0.3s ease;
-    
+    vertical-align: middle;
+    display: inline;
 }
 .create-account-btn:hover {
-    background-color: #00345c;
+    background-color: #a81f1f;
 }
 
