@@ -51,9 +51,13 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     const [popupVisible, setPopupVisible] = useState(null);
     const [menuVisible, setMenuVisible] = useState(false);
     const [user, setUser] = useState(() => {
-        const userStr = localStorage.getItem("user");
+        let userStr = localStorage.getItem("user");
+        if (!userStr) {
+            userStr = sessionStorage.getItem("user");
+        }
         return userStr ? JSON.parse(userStr) : null;
     });
+    console.log("User from localStorage:", user);
     const [token, setToken] = useState(() => localStorage.getItem("token") || "");
     const [progress, setProgress] = useState(null);
     const navigate = useNavigate();
@@ -68,9 +72,16 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     React.useEffect(() => {
         // Listen for login changes (if setUser/setToken called elsewhere)
         const handleStorage = () => {
-            const userStr = localStorage.getItem("user");
+            let userStr = localStorage.getItem("user");
+            if (!userStr) {
+                userStr = sessionStorage.getItem("user");
+            }
             setUser(userStr ? JSON.parse(userStr) : null);
-            setToken(localStorage.getItem("token") || "");
+            let tokenStr = localStorage.getItem("token");
+            if (!tokenStr) {
+                tokenStr = sessionStorage.getItem("token");
+            }
+            setToken(tokenStr || "");
         };
         window.addEventListener("storage", handleStorage);
         return () => window.removeEventListener("storage", handleStorage);
@@ -110,7 +121,10 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     const tabContent = {
         Home: (
         <div className="welcome-container">
-            <h1>Welcome{user && user.first_name ? `, ${user.first_name}` : ""}!</h1>
+            {console.log("TabMenu Home user:", user)}
+            <h1>
+                Welcome{user && user.first_name && user.first_name.trim() !== "" ? `, ${user.first_name}` : ""}!
+            </h1>
             <p className="intro">
             Congratulations on stepping into your role as a Contractor Supervisor within Res Dev!
             This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.

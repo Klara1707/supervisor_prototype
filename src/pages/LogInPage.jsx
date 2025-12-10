@@ -117,7 +117,9 @@ function LogInPage() {
                 storage.setItem("site", site);
                 if (data.user) {
                     storage.setItem("user", JSON.stringify(data.user));
+                    console.log("Saved user to storage:", data.user);
                 }
+                console.log("Saved token to storage:", data.access);
                 navigate("/home");
             } else {
                 alert(data.detail || "Login failed.");
