@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import HeroBar from "../components/HeroBar";
 import NavBar from "../components/NavBar";
 import "./AdminDataPage.css";
+
 function AdminDataPage() {
         const navigate = useNavigate();
         const [showButton, setShowButton] = useState(false);
@@ -36,15 +37,28 @@ function AdminDataPage() {
 
         // Improved delete user handler
         const handleDeleteUser = (email, hub) => {
-                setDeleting(prev => ({ ...prev, [email]: true }));
-                fetch("http://127.0.0.1:8000/api/delete-user/", {
-                        method: "POST",
-                        headers: {
-                                Authorization: "Bearer " + adminToken,
-                                "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ username: email })
-                })
+                                setDeleting(prev => ({ ...prev, [email]: true }));
+                                // Find the user object from the correct hub array
+                                let userObj = null;
+                                if (hub === "robevalley") {
+                                        userObj = robevalley.find(u => u.email === email);
+                                } else if (hub === "greaterhopedowns") {
+                                        userObj = greaterhopedowns.find(u => u.email === email);
+                                } else if (hub === "restofeast") {
+                                        userObj = restofeast.find(u => u.email === email);
+                                } else if (hub === "restofwest") {
+                                        userObj = restofwest.find(u => u.email === email);
+                                }
+                                const username = userObj?.username || "";
+                                const first_name = userObj?.first_name || "";
+                                fetch("http://127.0.0.1:8000/api/delete-user/", {
+                                                method: "POST",
+                                                headers: {
+                                                                Authorization: "Bearer " + adminToken,
+                                                                "Content-Type": "application/json"
+                                                },
+                                                body: JSON.stringify({ username, first_name })
+                                })
                         .then(async res => {
                                 if (res.status === 404) {
                                         alert("User already deleted or not found.");
