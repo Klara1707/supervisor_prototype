@@ -41,6 +41,18 @@
   flex: 1;
   text-align: left;
 }
+
+.user-bordered-container {
+  border: 1.5px solid #b0b8c1;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(60,72,88,0.06);
+}
 .admin-data-container {
   max-width: 500px;
   margin: 40px auto;
