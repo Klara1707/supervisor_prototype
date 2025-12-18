@@ -68,6 +68,7 @@ function CreateAccountPage() {
 						required
 						placeholder="First Name"
 						autoComplete="given-name"
+						style={{border: '1px solid #ccc'}}
 					/>
 					<label htmlFor="last_name">Last Name</label>
 					<input
@@ -79,6 +80,7 @@ function CreateAccountPage() {
 						required
 						placeholder="Last Name"
 						autoComplete="family-name"
+						style={{border: '1px solid #ccc'}}
 					/>
 					<label htmlFor="username">Rio Tinto Email</label>
 					<input
@@ -90,6 +92,7 @@ function CreateAccountPage() {
 						required
 						placeholder=".............@riotinto.com"
 						autoComplete="username"
+						style={{border: '1px solid #ccc'}}
 					/>
 					<label htmlFor="password">Password</label>
 					<input
@@ -101,6 +104,7 @@ function CreateAccountPage() {
 						required
 						placeholder="Password"
 						autoComplete="new-password"
+						style={{border: '1px solid #ccc'}}
 					/>
 					<label htmlFor="site">Select Site<span style={{color: 'red'}}>*</span></label>
 					<select

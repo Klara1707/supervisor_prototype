@@ -1,18 +1,4 @@
-    :root {
-    --brand: #cd2c2c;
-    --action: #90a955;
-    --white: white;
-    --base-light: #ecf39e;
-    --base-dark: #4caf50;
-    --black: #0a2342;
-    --font-default: "Delima SemiBold", sans-serif;
-    --space-small: 8px;
-    --space-medium: 16px;
-    --space-large: 32px;
-    --space-xl: 64px;
-    }
-
-    /* Typography */
+     /* Typography */
     h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-default);
     font-weight: normal;

@@ -1,3 +1,4 @@
+import './styles/universal.css';
 
 
 import React from "react";

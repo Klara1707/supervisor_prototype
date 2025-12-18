@@ -1,4 +1,3 @@
-
 import { useNavigate, Link } from "react-router-dom";
 import PasswordResetForm from "../components/PasswordResetForm";
 import HeroBar from "../components/HeroBar";
@@ -123,9 +122,7 @@ function LogInPage() {
                 storage.setItem("site", site);
                 if (data.user) {
                     storage.setItem("user", JSON.stringify(data.user));
-                    console.log("Saved user to storage:", data.user);
                 }
-                console.log("Saved token to storage:", data.access);
                 navigate("/home");
             } else {
                 alert(data.detail || "Login failed.");
@@ -141,8 +138,14 @@ function LogInPage() {
         <HeroBar />
         <div className="login-container">
             <div className="top-row">
-                {/* Welcome Back Login Box */}
+                {/* New User section at the top of the login form */}
                 <form className="login-form" onSubmit={handleLogin} style={{marginTop: '-1.5rem'}}>
+                    <div className="new-user-box" style={{marginBottom: '2rem'}}>
+                        <div className="context-inner-box" style={{color: '#cd2c2c', fontWeight: 'normal', fontSize: '1.5rem'}}>New user?</div>
+                        <Link to="/createaccount">
+                            <button className="create-account-btn">Create Account</button>
+                        </Link>
+                    </div>
                     <div className="context-inner-box">
                         <h1>Welcome Back</h1>
                         <p>Please log in to continue</p>
@@ -156,6 +159,8 @@ function LogInPage() {
                         autoComplete="username"
                         value={username}
                         onChange={e => setUsername(e.target.value)}
+                        className="login-form-input"
+                        style={{border: '1px solid #ccc'}} // <-- Add this inline style as a last-resort override
                     />
                     <label htmlFor="password">Password</label>
                     <input
@@ -166,6 +171,8 @@ function LogInPage() {
                         autoComplete="current-password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        className="login-form-input"
+                        style={{border: '1px solid #ccc'}} // <-- Add this inline style as a last-resort override
                     />
                     <label htmlFor="role">Select Role</label>
                     <select
@@ -221,13 +228,6 @@ function LogInPage() {
                     <div className="form-buttons">
                         <button type="submit">Login</button>
                         <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>
-                    </div>
-                    {/* New User section inside Welcome Back box, styled like original */}
-                    <div className="new-user-box" style={{marginTop: '2rem'}}>
-                        <div className="context-inner-box" style={{color: '#cd2c2c', fontWeight: 'normal', fontSize: '1.5rem'}}>New user?</div>
-                        <Link to="/createaccount">
-                            <button className="create-account-btn">Create Account</button>
-                        </Link>
                     </div>
                 </form>
                 {/* Admin Login Toggle Button below login form */}

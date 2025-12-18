@@ -57,7 +57,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         }
         return userStr ? JSON.parse(userStr) : null;
     });
-    console.log("User from localStorage:", user);
     const [token, setToken] = useState(() => localStorage.getItem("token") || "");
     const [progress, setProgress] = useState(null);
     const navigate = useNavigate();
@@ -121,7 +120,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     const tabContent = {
         Home: (
         <div className="welcome-container">
-            {console.log("TabMenu Home user:", user)}
             <h1>
                 Welcome{user && user.first_name && user.first_name.trim() !== "" ? `, ${user.first_name}` : ""}!
             </h1>

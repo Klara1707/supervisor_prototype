@@ -1,17 +1,23 @@
+import UserListSection from "../components/UserListSection";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import HeroBar from "../components/HeroBar";
 import NavBar from "../components/NavBar";
 import "./AdminDataPage.css";
 
 function AdminDataPage() {
-        const navigate = useNavigate();
+                // Refs for section navigation
+                const robeValleyRef = React.useRef(null);
+                const greaterHopeDownsRef = React.useRef(null);
+                const restOfEastRef = React.useRef(null);
+                const restOfWestRef = React.useRef(null);
         const [showButton, setShowButton] = useState(false);
         const [robevalley, setRobeValley] = useState([]);
         const [greaterhopedowns, setGreaterHopeDowns] = useState([]);
         const [restofeast, setRestOfEast] = useState([]);
         const [restofwest, setRestOfWest] = useState([]);
         const [deleting, setDeleting] = useState({}); // Track which users are being deleted
+        const [message, setMessage] = useState("");
+        const [messageType, setMessageType] = useState(""); // 'success' or 'error'
         const adminToken = localStorage.getItem("token");
 
         useEffect(() => {
@@ -36,56 +42,64 @@ function AdminDataPage() {
         }, [adminToken]);
 
         // Improved delete user handler
-        const handleDeleteUser = (email, hub) => {
-                                setDeleting(prev => ({ ...prev, [email]: true }));
-                                // Find the user object from the correct hub array
-                                let userObj = null;
-                                if (hub === "robevalley") {
-                                        userObj = robevalley.find(u => u.email === email);
-                                } else if (hub === "greaterhopedowns") {
-                                        userObj = greaterhopedowns.find(u => u.email === email);
-                                } else if (hub === "restofeast") {
-                                        userObj = restofeast.find(u => u.email === email);
-                                } else if (hub === "restofwest") {
-                                        userObj = restofwest.find(u => u.email === email);
-                                }
-                                const username = userObj?.username || "";
-                                const first_name = userObj?.first_name || "";
-                                fetch("http://127.0.0.1:8000/api/delete-user/", {
-                                                method: "POST",
-                                                headers: {
-                                                                Authorization: "Bearer " + adminToken,
-                                                                "Content-Type": "application/json"
-                                                },
-                                                body: JSON.stringify({ username, first_name })
-                                })
-                        .then(async res => {
-                                if (res.status === 404) {
-                                        alert("User already deleted or not found.");
-                                        return { success: false };
-                                }
-                                return res.json();
-                        })
-                        .then(data => {
-                                if (data.success) {
-                                        if (hub === "robevalley") {
-                                                setRobeValley(prev => prev.filter(u => u.email !== email));
-                                        } else if (hub === "greaterhopedowns") {
-                                                setGreaterHopeDowns(prev => prev.filter(u => u.email !== email));
-                                        } else if (hub === "restofeast") {
-                                                setRestOfEast(prev => prev.filter(u => u.email !== email));
-                                        } else if (hub === "restofwest") {
-                                                setRestOfWest(prev => prev.filter(u => u.email !== email));
+                const handleDeleteUser = (email, hub) => {
+                        setDeleting(prev => ({ ...prev, [email]: true }));
+                        setMessage("");
+                        setMessageType("");
+        fetch("http://127.0.0.1:8000/api/delete-user/", {
+                method: "POST",
+                headers: {
+                        Authorization: "Bearer " + adminToken,
+                        "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username: email })
+        })
+                                .then(async res => {
+                                        if (res.status === 204) {
+                                                // No content, deletion successful
+                                                return { success: true };
                                         }
-                                        alert("User deleted successfully.");
-                                } else if (data.success === false) {
-                                        // Already handled above or failed
-                                } else {
-                                        alert(data.error || "Failed to delete user.");
+                                        if (res.status === 404) {
+                                                setMessage("User already deleted or not found.");
+                                                setMessageType("error");
+                                                return { success: false };
+                                        }
+                                        // Only try to parse JSON if there is content
+                                        const text = await res.text();
+                                        if (text) {
+                                                try {
+                                                        return JSON.parse(text);
+                                                } catch {
+                                                        return { success: false, error: "Unexpected response from server." };
+                                                }
+                                        }
+                                        return { success: false, error: "Unexpected response from server." };
+                                })
+                .then(data => {
+                        if (data.success) {
+                                if (hub === "robevalley") {
+                                        setRobeValley(prev => prev.filter(u => u.email !== email));
+                                } else if (hub === "greaterhopedowns") {
+                                        setGreaterHopeDowns(prev => prev.filter(u => u.email !== email));
+                                } else if (hub === "restofeast") {
+                                        setRestOfEast(prev => prev.filter(u => u.email !== email));
+                                } else if (hub === "restofwest") {
+                                        setRestOfWest(prev => prev.filter(u => u.email !== email));
                                 }
-                        })
-                        .catch(() => alert("Error deleting user."))
-                        .finally(() => setDeleting(prev => ({ ...prev, [email]: false })));
+                                setMessage("User deleted successfully.");
+                                setMessageType("success");
+                        } else if (data.success === false) {
+                                // Already handled above or failed
+                        } else {
+                                setMessage(data.error || "Failed to delete user.");
+                                setMessageType("error");
+                        }
+                })
+                .catch(() => {
+                    setMessage("Error deleting user.");
+                    setMessageType("error");
+                })
+                .finally(() => setDeleting(prev => ({ ...prev, [email]: false })));
         };
 
         const scrollToTop = () => {
@@ -104,6 +118,19 @@ function AdminDataPage() {
                 <>
                         <HeroBar />
                         <NavBar />
+                        {message && (
+                                <div style={{
+                                        background: messageType === "success" ? "#d4edda" : "#f8d7da",
+                                        color: messageType === "success" ? "#155724" : "#721c24",
+                                        border: `1px solid ${messageType === "success" ? "#c3e6cb" : "#f5c6cb"}`,
+                                        padding: "10px",
+                                        margin: "10px 0",
+                                        borderRadius: "4px",
+                                        textAlign: "center"
+                                }}>
+                                        {message}
+                                </div>
+                        )}
                         <div className="container">
                                 <section className="requirements">
                                         <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
@@ -111,93 +138,53 @@ function AdminDataPage() {
                                         </div>
                                         <p>Please click the “Delete user” to remove the person from the Supervisor Training Portal</p>
                                         <div className="navigation-buttons">
-                                                <button onClick={() => document.getElementById("RobeValley").scrollIntoView({ behavior: "smooth" })}>
+                                                <button onClick={() => robeValleyRef.current?.scrollIntoView({ behavior: "smooth" })}>
                                                         Robe Valley
                                                 </button>
-                                                <button onClick={() => document.getElementById("GreaterHopeDowns").scrollIntoView({ behavior: "smooth" })}>
+                                                <button onClick={() => greaterHopeDownsRef.current?.scrollIntoView({ behavior: "smooth" })}>
                                                         Greater Hope Downs
                                                 </button>
-                                                <button onClick={() => document.getElementById("RestOfEast").scrollIntoView({ behavior: "smooth" })}>
+                                                <button onClick={() => restOfEastRef.current?.scrollIntoView({ behavior: "smooth" })}>
                                                         Rest of East
                                                 </button>
-                                                <button onClick={() => document.getElementById("RestOfWest").scrollIntoView({ behavior: "smooth" })}>
+                                                <button onClick={() => restOfWestRef.current?.scrollIntoView({ behavior: "smooth" })}>
                                                         Rest of West
                                                 </button>
                                         </div>
                                 </section>
 
-                                <div className="container3" id="RobeValley">
-                                        <h3><strong>Robe Valley</strong></h3>
-                                        {robevalley.map((user, idx) => (
-                                                <div key={user.email || user.full_name || idx} className="admin-subject-row">
-                                                        <span className="admin-subject-label">
-                                                                {user.full_name}
-                                                                {user.email ? ` (${user.email})` : ""}
-                                                        </span>
-                                                        <button
-                                                                className="admin-action-btn"
-                                                                onClick={() => handleDeleteUser(user.email, "robevalley")}
-                                                                disabled={!!deleting[user.email]}
-                                                        >
-                                                                {deleting[user.email] ? "Deleting..." : "Delete user"}
-                                                        </button>
-                                                </div>
-                                        ))}
-                                </div>
-                                <div className="container3" id="GreaterHopeDowns">
-                                        <h3><strong>Greater Hope Downs</strong></h3>
-                                        {greaterhopedowns.map((user, idx) => (
-                                                <div key={user.email || user.full_name || idx} className="admin-subject-row">
-                                                        <span className="admin-subject-label">
-                                                                {user.full_name}
-                                                                {user.email ? ` (${user.email})` : ""}
-                                                        </span>
-                                                        <button
-                                                                className="admin-action-btn"
-                                                                onClick={() => handleDeleteUser(user.email, "greaterhopedowns")}
-                                                                disabled={!!deleting[user.email]}
-                                                        >
-                                                                {deleting[user.email] ? "Deleting..." : "Delete user"}
-                                                        </button>
-                                                </div>
-                                        ))}
-                                </div>
-                                <div className="container3" id="RestOfEast">
-                                        <h3><strong>Rest of East</strong></h3>
-                                        {restofeast.map((user, idx) => (
-                                                <div key={user.email || user.full_name || idx} className="admin-subject-row">
-                                                        <span className="admin-subject-label">
-                                                                {user.full_name}
-                                                                {user.email ? ` (${user.email})` : ""}
-                                                        </span>
-                                                        <button
-                                                                className="admin-action-btn"
-                                                                onClick={() => handleDeleteUser(user.email, "restofeast")}
-                                                                disabled={!!deleting[user.email]}
-                                                        >
-                                                                {deleting[user.email] ? "Deleting..." : "Delete user"}
-                                                        </button>
-                                                </div>
-                                        ))}
-                                </div>
-                                <div className="container3" id="RestOfWest">
-                                        <h3><strong>Rest of West</strong></h3>
-                                        {restofwest.map((user, idx) => (
-                                                <div key={user.email || user.full_name || idx} className="admin-subject-row">
-                                                        <span className="admin-subject-label">
-                                                                {user.full_name}
-                                                                {user.email ? ` (${user.email})` : ""}
-                                                        </span>
-                                                        <button
-                                                                className="admin-action-btn"
-                                                                onClick={() => handleDeleteUser(user.email, "restofwest")}
-                                                                disabled={!!deleting[user.email]}
-                                                        >
-                                                                {deleting[user.email] ? "Deleting..." : "Delete user"}
-                                                        </button>
-                                                </div>
-                                        ))}
-                                </div>
+                                <UserListSection
+                                        title="Robe Valley"
+                                        users={robevalley}
+                                        deleting={deleting}
+                                        handleDeleteUser={handleDeleteUser}
+                                        hub="robevalley"
+                                        sectionRef={robeValleyRef}
+                                />
+                                <UserListSection
+                                        title="Greater Hope Downs"
+                                        users={greaterhopedowns}
+                                        deleting={deleting}
+                                        handleDeleteUser={handleDeleteUser}
+                                        hub="greaterhopedowns"
+                                        sectionRef={greaterHopeDownsRef}
+                                />
+                                <UserListSection
+                                        title="Rest of East"
+                                        users={restofeast}
+                                        deleting={deleting}
+                                        handleDeleteUser={handleDeleteUser}
+                                        hub="restofeast"
+                                        sectionRef={restOfEastRef}
+                                />
+                                <UserListSection
+                                        title="Rest of West"
+                                        users={restofwest}
+                                        deleting={deleting}
+                                        handleDeleteUser={handleDeleteUser}
+                                        hub="restofwest"
+                                        sectionRef={restOfWestRef}
+                                />
 
                                 {showButton && (
                                         <button className="back-to-top" onClick={scrollToTop}>

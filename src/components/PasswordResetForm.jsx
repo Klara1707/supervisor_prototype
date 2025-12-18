@@ -10,20 +10,29 @@ function PasswordResetForm() {
         setLoading(true);
         setMessage("");
         try {
-        const response = await fetch("/password_reset/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email }),
-        });
-        if (response.ok) {
-            setMessage(
-            "If an account with that email exists, a password reset link has been sent."
-            );
-        } else {
-            setMessage("There was a problem sending the reset email. Please try again.");
-        }
+            const response = await fetch("/api/password_reset/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username: email, email }),
+            });
+            if (response.ok) {
+                setMessage("Email sent.");
+            } else {
+                let errorMsg = "There was a problem sending the reset email. Please try again.";
+                try {
+                    const errorData = await response.json();
+                    if (errorData && (errorData.detail === "User not found." || errorData.error === "User not found.")) {
+                        errorMsg = "User not found.";
+                    } else if (errorData && errorData.detail) {
+                        errorMsg = errorData.detail;
+                    } else if (errorData && errorData.error) {
+                        errorMsg = errorData.error;
+                    }
+                } catch {}
+                setMessage(errorMsg);
+            }
         } catch (err) {
-        setMessage("Network error. Please try again.");
+            setMessage("Network error. Please try again.");
         }
         setLoading(false);
     };
