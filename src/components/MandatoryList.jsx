@@ -1,8 +1,13 @@
 
+
 import React, { useState, useEffect } from "react";
 import "./MandatoryList.css";
+import { getToken, authFetch } from "../utils/auth";
 
-function MandatoryList() {
+function MandatoryList({ onProgressUpdate }) {
+    // --- Auth & User Info ---
+    const token = getToken();
+    const popupId = "mandatory_training";
     const trainingList = [
         "RTIO RD Earthworks",
         "RTIO RD Drilling",
@@ -173,12 +178,51 @@ function MandatoryList() {
 
 
     const [checkedItems, setCheckedItems] = useState(Array(trainingList.length).fill(false));
+    // Fetch saved state on mount
+    useEffect(() => {
+        if (!token) return;
+        authFetch("/api/training-progress/", { method: "GET", redirect: "manual" })
+            .then(res => {
+                if (res.status === 401 || res.status === 302) {
+                    alert("Session expired or not authenticated. Please log in again.");
+                    window.location.href = "/login";
+                    return Promise.reject("Not authenticated");
+                }
+                return res.ok ? res.json() : Promise.reject(res);
+            })
+            .then(data => {
+                console.log("[MandatoryList] Received progress_by_popup:", data.progress_by_popup);
+                const progress = data.progress_by_popup || {};
+                const saved = progress[popupId];
+                if (Array.isArray(saved) && saved.length === trainingList.length) {
+                    console.log("[MandatoryList] Setting checkedItems:", saved);
+                    setCheckedItems(saved);
+                } else {
+                    console.log("[MandatoryList] No valid saved array for popupId", popupId, saved);
+                }
+            })
+            .catch((e) => { console.log("[MandatoryList] Error fetching progress:", e); });
+    }, [token, trainingList.length]);
     const [showButton, setShowButton] = useState(false);
 
-    const handleCheckboxChange = (index) => {
+    const handleCheckboxChange = async (index) => {
         const updatedItems = [...checkedItems];
         updatedItems[index] = !updatedItems[index];
         setCheckedItems(updatedItems);
+        // Save to backend
+        if (token) {
+            await authFetch("/api/training-progress/", {
+                method: "POST",
+                body: JSON.stringify({
+                    popup_id: popupId,
+                    checked_items: updatedItems
+                })
+            });
+            // Notify parent to update progress
+            if (onProgressUpdate) {
+                await onProgressUpdate();
+            }
+        }
     };
 
     const completedCount = checkedItems.filter(Boolean).length;

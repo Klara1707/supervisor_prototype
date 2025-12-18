@@ -42,6 +42,13 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         {popupVisible?.startsWith("field") && (
             <FieldPop popupId={popupVisible} closePopup={closePopup} />
         )}
+            <button
+                className="back-to-top"
+                style={{ margin: '32px auto 0 auto', display: 'block' }}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+                Back to Top
+            </button>
         </div>
     );
     };
@@ -57,7 +64,28 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         return userStr ? JSON.parse(userStr) : null;
     });
     const [token, setToken] = useState(() => localStorage.getItem("token") || "");
-    const [progress, setProgress] = useState(null);
+    const [progress, setProgress] = useState({});
+
+    // Fetch progress from backend
+    const fetchProgressFromBackend = async () => {
+        if (!token) return {};
+        try {
+            const res = await fetch("/api/training-progress/", {
+                headers: { Authorization: "Bearer " + token }
+            });
+            if (!res.ok) return {};
+            const data = await res.json();
+            return data.progress_by_popup || {};
+        } catch {
+            return {};
+        }
+    };
+
+    // Handler to update progress state
+    const handleProgressUpdate = async () => {
+        const latest = await fetchProgressFromBackend();
+        setProgress(latest);
+    };
     // Removed unused setMenuVisible and navigate
     // Removed unused handleLogout and toggleMenu functions
 
@@ -82,13 +110,22 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     React.useEffect(() => {
         if (token) {
             fetch("/api/training-progress/", {
-                headers: { Authorization: "Bearer " + token }
+                headers: { Authorization: "Bearer " + token },
+                redirect: "manual"
             })
-                .then(res => res.ok ? res.json() : Promise.reject(res))
+                .then(res => {
+                    if (res.status === 401 || res.status === 302) {
+                        alert("Session expired or not authenticated. Please log in again.");
+                        window.location.href = "/login";
+                        return Promise.reject("Not authenticated");
+                    }
+                    return res.ok ? res.json() : Promise.reject(res);
+                })
                 .then(data => {
+                    console.log("[TabMenu] Received progress_by_popup:", data.progress_by_popup);
                     setProgress(data.progress_by_popup || null);
                 })
-                .catch(() => setProgress(null));
+                .catch((e) => { console.log("[TabMenu] Error fetching progress:", e); setProgress(null); });
         } else {
             setProgress(null);
         }
@@ -165,18 +202,16 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
                     <div className="tab-buttons">
                         {(() => {
                             // Assume site is available as user.site or 'default'
-                            const site = (user && user.site) || 'default';
                             // Use 'mandatory_training' as the popupId for this example
                             const popupId = 'mandatory_training';
-                            // Assume 1 box for mandatory training, or adjust as needed
-                            const total = 1;
+                            // Use the same total as in MandatoryList.jsx
+                            const total = 83; // Update this if trainingList length changes in MandatoryList.jsx
                             const checked =
                                 progress &&
-                                progress[site] &&
-                                progress[site][popupId]
-                                    ? progress[site][popupId]
+                                progress[popupId]
+                                    ? progress[popupId]
                                     : [];
-                            const percent = Math.round((checked.length / total) * 100);
+                            const percent = total > 0 ? Math.round((checked.filter(Boolean).length / total) * 100) : 0;
                             return (
                                 <div
                                     className="progress-bar-container"
@@ -362,7 +397,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
 
         Mandatory_Training: (
         <div id="Mandatory_Training" className="w3-container city">
-            <MandatoryList />
+            <MandatoryList onProgressUpdate={handleProgressUpdate} />
         </div>
         ),
 
