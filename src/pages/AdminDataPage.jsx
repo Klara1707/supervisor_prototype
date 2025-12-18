@@ -20,26 +20,31 @@ function AdminDataPage() {
         const [messageType, setMessageType] = useState(""); // 'success' or 'error'
         const adminToken = localStorage.getItem("token");
 
-        useEffect(() => {
-                fetch("http://127.0.0.1:8000/api/users-by-site/", {
-                        headers: {
-                                Authorization: "Bearer " + adminToken,
-                        },
-                })
-                        .then(res => res.json())
-                        .then(data => {
-                                setRobeValley(data.robevalley || []);
-                                setGreaterHopeDowns(data.greaterhopedowns || []);
-                                setRestOfEast(data.restofeast || []);
-                                setRestOfWest(data.restofwest || []);
+                // Helper to refresh user lists
+                const refreshUserLists = () => {
+                        fetch("http://127.0.0.1:8000/api/users-by-site/", {
+                                headers: {
+                                        Authorization: "Bearer " + adminToken,
+                                },
                         })
-                        .catch(() => {
-                                setRobeValley([]);
-                                setGreaterHopeDowns([]);
-                                setRestOfEast([]);
-                                setRestOfWest([]);
-                        });
-        }, [adminToken]);
+                                .then(res => res.json())
+                                .then(data => {
+                                        setRobeValley(data.robevalley || []);
+                                        setGreaterHopeDowns(data.greaterhopedowns || []);
+                                        setRestOfEast(data.restofeast || []);
+                                        setRestOfWest(data.restofwest || []);
+                                })
+                                .catch(() => {
+                                        setRobeValley([]);
+                                        setGreaterHopeDowns([]);
+                                        setRestOfEast([]);
+                                        setRestOfWest([]);
+                                });
+                };
+
+                useEffect(() => {
+                        refreshUserLists();
+                }, [adminToken]);
 
         // Improved delete user handler
                 const handleDeleteUser = (email, hub) => {
@@ -53,51 +58,39 @@ function AdminDataPage() {
                         "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ username: email })
-        })
-                                .then(async res => {
-                                        if (res.status === 204) {
-                                                // No content, deletion successful
-                                                return { success: true };
-                                        }
-                                        if (res.status === 404) {
-                                                setMessage("User already deleted or not found.");
-                                                setMessageType("error");
-                                                return { success: false };
-                                        }
-                                        // Only try to parse JSON if there is content
-                                        const text = await res.text();
-                                        if (text) {
-                                                try {
-                                                        return JSON.parse(text);
-                                                } catch {
-                                                        return { success: false, error: "Unexpected response from server." };
-                                                }
-                                        }
-                                        return { success: false, error: "Unexpected response from server." };
-                                })
-                .then(data => {
-                        if (data.success) {
-                                if (hub === "robevalley") {
-                                        setRobeValley(prev => prev.filter(u => u.email !== email));
-                                } else if (hub === "greaterhopedowns") {
-                                        setGreaterHopeDowns(prev => prev.filter(u => u.email !== email));
-                                } else if (hub === "restofeast") {
-                                        setRestOfEast(prev => prev.filter(u => u.email !== email));
-                                } else if (hub === "restofwest") {
-                                        setRestOfWest(prev => prev.filter(u => u.email !== email));
-                                }
-                                setMessage("User deleted successfully.");
-                                setMessageType("success");
-                        } else if (data.success === false) {
-                                // Already handled above or failed
-                        } else {
+                })
+                .then(async res => {
+                        if (res.status === 204 || res.status === 200) {
+                        setMessage("User deleted successfully.");
+                        setMessageType("success");
+                        refreshUserLists();
+                        return;
+                        }
+                        if (res.status === 404) {
+                        setMessage("User already deleted or not found.");
+                        setMessageType("error");
+                        return;
+                        }
+                        // Try to parse JSON only if content-type is application/json
+                        const contentType = res.headers.get("content-type");
+                        if (contentType && contentType.includes("application/json")) {
+                        try {
+                                const data = await res.json();
                                 setMessage(data.error || "Failed to delete user.");
                                 setMessageType("error");
+                                return;
+                        } catch {
+                                setMessage("Unexpected response from server.");
+                                setMessageType("error");
+                                return;
                         }
+                        }
+                        setMessage("Failed to delete user.");
+                        setMessageType("error");
                 })
                 .catch(() => {
-                    setMessage("Error deleting user.");
-                    setMessageType("error");
+                        setMessage("Error deleting user.");
+                        setMessageType("error");
                 })
                 .finally(() => setDeleting(prev => ({ ...prev, [email]: false })));
         };

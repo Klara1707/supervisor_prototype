@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import "./TabMenu.css";
 import MandatoryList from "./MandatoryList";
 import DrillingPop from "./DrillingPop";
@@ -49,7 +49,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     const TabMenu = ({ initialTab = "Home" }) => {
     const [activeTab, setActiveTab] = useState(initialTab);
     const [popupVisible, setPopupVisible] = useState(null);
-    const [menuVisible, setMenuVisible] = useState(false);
     const [user, setUser] = useState(() => {
         let userStr = localStorage.getItem("user");
         if (!userStr) {
@@ -59,14 +58,8 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     });
     const [token, setToken] = useState(() => localStorage.getItem("token") || "");
     const [progress, setProgress] = useState(null);
-    const navigate = useNavigate();
-    const handleLogout = () => {
-        localStorage.clear();
-        sessionStorage.clear();
-        setUser(null);
-        setToken("");
-        navigate("/login");
-    };
+    // Removed unused setMenuVisible and navigate
+    // Removed unused handleLogout and toggleMenu functions
 
     React.useEffect(() => {
         // Listen for login changes (if setUser/setToken called elsewhere)
@@ -101,9 +94,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         }
     }, [token]);
 
-    const toggleMenu = () => {
-        setMenuVisible(!menuVisible);
-    };
 
     const openCity = (event, cityName) => {
         setActiveTab(cityName);
@@ -286,7 +276,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
 
     return (
         <div className="page-wrapper">
-        <div className={`w3-bar ${menuVisible ? "show" : ""}`}>
+        <div className="w3-bar">
             {Object.keys(tabContent).map((tab) => (
             <button
                 key={tab}
