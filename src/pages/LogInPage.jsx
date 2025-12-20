@@ -99,6 +99,12 @@ function LogInPage() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        // Validate email format for username
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(username)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
         if (role === "visitor") {
             navigate("/");
         } else if (role === "contractor-supervisor") {
@@ -150,17 +156,17 @@ function LogInPage() {
                         <h1>Welcome Back</h1>
                         <p>Please log in to continue</p>
                     </div>
-                    <label htmlFor="username">Enter Rio Tinto email</label>
+                    <label htmlFor="username">Email address</label>
                     <input
-                        type="text"
+                        type="email"
                         id="username"
                         name="username"
-                        placeholder=".......@riotinto.com"
+                        placeholder="Enter your email address"
                         autoComplete="username"
                         value={username}
                         onChange={e => setUsername(e.target.value)}
                         className="login-form-input"
-                        style={{border: '1px solid #ccc'}} // <-- Add this inline style as a last-resort override
+                        style={{border: '1px solid #ccc'}}
                     />
                     <label htmlFor="password">Password</label>
                     <input

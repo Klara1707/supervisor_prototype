@@ -160,6 +160,25 @@ h3 {
     background-color: #ff7043;
 }
 
+    /* Button positioning */
+    .back-to-top {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: calc((100% - 800px) / 2.5 - 140px); /* 60px is button width + spacing */
+    z-index: 1000;
+    padding: 10px 15px;
+    background-color: #8d99ae;;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+
+    .back-to-top:hover {
+        background-color: orange;
+        }
+        
 /* Hamburger menu */
 .hamburger {
     display: none;

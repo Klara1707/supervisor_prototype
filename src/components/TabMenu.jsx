@@ -14,44 +14,47 @@ import FieldPop from "./FieldPop";
 
 
 const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
+    const showBackToTop = ["Home", "Overview", "Mandatory_Training"].includes(activeTab);
     return (
         <div>
-        <div className="city">{tabContent[activeTab]}</div>
+            <div className="city">{tabContent[activeTab]}</div>
 
-        {popupVisible?.startsWith("drilling") && (
-            <DrillingPop popupId={popupVisible} closePopup={closePopup} />
-        )}
-        {popupVisible?.startsWith("safety") && (
-            <SafetyPop popupId={popupVisible} closePopup={closePopup} />
-        )}
-        {popupVisible?.startsWith("leadership") && (
-            <LeadershipPop popupId={popupVisible} closePopup={closePopup} />
-        )}
-        {popupVisible?.startsWith("operations") && (
-            <OperationsPop popupId={popupVisible} closePopup={closePopup} />
-        )}
-        {popupVisible?.startsWith("earthworks") && (
-            <EarthworksPop popupId={popupVisible} closePopup={closePopup} />
-        )}
-        {popupVisible?.startsWith("cost") && (
-            <CostPop popupId={popupVisible} closePopup={closePopup} />
-        )}
-        {popupVisible?.startsWith("contractor") && (
-            <ContractorPop popupId={popupVisible} closePopup={closePopup} />
-        )}
-        {popupVisible?.startsWith("field") && (
-            <FieldPop popupId={popupVisible} closePopup={closePopup} />
-        )}
-            <button
-                className="back-to-top"
-                style={{ margin: '32px auto 0 auto', display: 'block' }}
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            >
-                Back to Top
-            </button>
+            {popupVisible?.startsWith("drilling") && (
+                <DrillingPop popupId={popupVisible} closePopup={closePopup} />
+            )}
+            {popupVisible?.startsWith("safety") && (
+                <SafetyPop popupId={popupVisible} closePopup={closePopup} />
+            )}
+            {popupVisible?.startsWith("leadership") && (
+                <LeadershipPop popupId={popupVisible} closePopup={closePopup} />
+            )}
+            {popupVisible?.startsWith("operations") && (
+                <OperationsPop popupId={popupVisible} closePopup={closePopup} />
+            )}
+            {popupVisible?.startsWith("earthworks") && (
+                <EarthworksPop popupId={popupVisible} closePopup={closePopup} />
+            )}
+            {popupVisible?.startsWith("cost") && (
+                <CostPop popupId={popupVisible} closePopup={closePopup} />
+            )}
+            {popupVisible?.startsWith("contractor") && (
+                <ContractorPop popupId={popupVisible} closePopup={closePopup} />
+            )}
+            {popupVisible?.startsWith("field") && (
+                <FieldPop popupId={popupVisible} closePopup={closePopup} />
+            )}
+            {showBackToTop && (
+                <button
+                    className="back-to-top"
+                    style={{ margin: '32px auto 0 auto', display: 'block' }}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
+                    Back to Top
+                </button>
+            )}
         </div>
     );
-    };
+};
 
     const TabMenu = ({ initialTab = "Home" }) => {
     const [activeTab, setActiveTab] = useState(initialTab);
@@ -65,6 +68,8 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     });
     const [token, setToken] = useState(() => localStorage.getItem("token") || "");
     const [progress, setProgress] = useState({});
+    // Add a dummy state to force re-render
+    const [progressTrigger, setProgressTrigger] = useState(0);
 
     // Fetch progress from backend
     const fetchProgressFromBackend = async () => {
@@ -82,9 +87,15 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     };
 
     // Handler to update progress state
-    const handleProgressUpdate = async () => {
-        const latest = await fetchProgressFromBackend();
-        setProgress(latest);
+    const handleProgressUpdate = async (newProgress) => {
+        if (newProgress) {
+            setProgress(prev => ({ ...prev, ...newProgress }));
+            setProgressTrigger(t => t + 1); // force re-render
+        } else {
+            const latest = await fetchProgressFromBackend();
+            setProgress(latest);
+            setProgressTrigger(t => t + 1); // force re-render
+        }
     };
     // Removed unused setMenuVisible and navigate
     // Removed unused handleLogout and toggleMenu functions
@@ -108,27 +119,33 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     }, []);
 
     React.useEffect(() => {
-        if (token) {
-            fetch("/api/training-progress/", {
-                headers: { Authorization: "Bearer " + token },
-                redirect: "manual"
-            })
-                .then(res => {
+        const fetchAndSetProgress = async () => {
+            if (token) {
+                try {
+                    const res = await fetch("/api/training-progress/", {
+                        headers: { Authorization: "Bearer " + token },
+                        redirect: "manual"
+                    });
                     if (res.status === 401 || res.status === 302) {
                         alert("Session expired or not authenticated. Please log in again.");
                         window.location.href = "/login";
-                        return Promise.reject("Not authenticated");
+                        return;
                     }
-                    return res.ok ? res.json() : Promise.reject(res);
-                })
-                .then(data => {
-                    console.log("[TabMenu] Received progress_by_popup:", data.progress_by_popup);
-                    setProgress(data.progress_by_popup || null);
-                })
-                .catch((e) => { console.log("[TabMenu] Error fetching progress:", e); setProgress(null); });
-        } else {
-            setProgress(null);
-        }
+                    if (res.ok) {
+                        const data = await res.json();
+                        setProgress(data.progress_by_popup || {});
+                    } else {
+                        setProgress({});
+                    }
+                } catch (e) {
+                    console.log("[TabMenu] Error fetching progress:", e);
+                    setProgress({});
+                }
+            } else {
+                setProgress({});
+            }
+        };
+        fetchAndSetProgress();
     }, [token]);
 
 
@@ -144,9 +161,17 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         setPopupVisible(null);
     };
 
+    // Calculate Mandatory Training percentage from progress state
+    const popupId = 'mandatory_training';
+    const totalMandatory = 83;
+    let checkedMandatory = progress && progress[popupId] ? progress[popupId] : [];
+    if (!Array.isArray(checkedMandatory)) checkedMandatory = [];
+    const completedMandatory = checkedMandatory.filter(Boolean).length;
+    const percentMandatory = totalMandatory > 0 ? Math.round((completedMandatory / totalMandatory) * 100) : 0;
+
     const tabContent = {
         Home: (
-        <div className="welcome-container">
+        <div className="city welcome-container">
             <h1>
                 Welcome{user && user.first_name && user.first_name.trim() !== "" ? `, ${user.first_name}` : ""}!
             </h1>
@@ -190,7 +215,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         ),
         
     Overview: (
-        <div className="welcome-container">
+        <div className="city welcome-container" key={progressTrigger}>
             <h1>Overview</h1>
             <p className="intro">
                 Your progress for each training area. Click a bar to open the popup and continue your training.
@@ -200,37 +225,36 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
                 <div className="overview-section">
                     <h2>Mandatory Training</h2>
                     <div className="tab-buttons">
-                        {(() => {
-                            // Assume site is available as user.site or 'default'
-                            // Use 'mandatory_training' as the popupId for this example
-                            const popupId = 'mandatory_training';
-                            // Use the same total as in MandatoryList.jsx
-                            const total = 83; // Update this if trainingList length changes in MandatoryList.jsx
-                            const checked =
-                                progress &&
-                                progress[popupId]
-                                    ? progress[popupId]
-                                    : [];
-                            const percent = total > 0 ? Math.round((checked.filter(Boolean).length / total) * 100) : 0;
-                            return (
+                        <div
+                            className="progress-bar-container"
+                            onClick={() => setActiveTab('Mandatory_Training')}
+                            style={{ cursor: "pointer", marginBottom: 12 }}
+                        >
+                            <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
+                                <span style={{ flex: 1 }}>Mandatory Training</span>
+                                <span style={{ marginLeft: 12, fontWeight: 600 }}>{percentMandatory}%</span>
+                            </div>
+                            <div className="progress-bar-bg" style={{ background: '#e0e0e0', borderRadius: 8, height: 24, overflow: 'hidden' }}>
                                 <div
-                                    className="progress-bar-container"
-                                    onClick={() => setActiveTab('Mandatory_Training')}
-                                    style={{ cursor: "pointer", marginBottom: 12 }}
+                                    className="progress-bar-fill"
+                                    style={{
+                                        width: `${percentMandatory}%`,
+                                        background: 'linear-gradient(90deg, #4caf50 0%, #43e97b 100%)',
+                                        height: '100%',
+                                        borderRadius: 8,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: 'white',
+                                        fontWeight: 700,
+                                        fontSize: 16,
+                                        transition: 'width 0.5s',
+                                    }}
                                 >
-                                    <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
-                                        <span style={{ flex: 1 }}>Mandatory Training</span>
-                                        <span style={{ marginLeft: 12, fontWeight: 600 }}>{percent}%</span>
-                                    </div>
-                                    <div className="progress-bar-bg">
-                                        <div
-                                            className="progress-bar-fill"
-                                            style={{ width: `${percent}%` }}
-                                        ></div>
-                                    </div>
+                                    {percentMandatory > 0 ? `${percentMandatory}%` : ''}
                                 </div>
-                            );
-                        })()}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {/* End Mandatory Training Section */}
@@ -397,7 +421,11 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
 
         Mandatory_Training: (
         <div id="Mandatory_Training" className="w3-container city">
-            <MandatoryList onProgressUpdate={handleProgressUpdate} />
+            <MandatoryList
+                onProgressUpdate={handleProgressUpdate}
+                progress={progress}
+                setProgress={setProgress}
+            />
         </div>
         ),
 

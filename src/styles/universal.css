@@ -1,6 +1,6 @@
 /* Universal styles for the whole app */
 :root {
-  --font-default: 'Segoe UI', Arial, sans-serif;
+  --font-default: 'Delima SemiBold', 'Segoe UI', Arial, sans-serif;
   --brand: #2a3a4d;
   --white: #fff;
   --space-small: 0.5rem;

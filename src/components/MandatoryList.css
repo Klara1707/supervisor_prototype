@@ -146,27 +146,6 @@ input[type="checkbox"] {
     margin: 0 auto;
     }
 
-    /* Button positioning */
-    .back-to-top {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    right: calc((100% - 800px) / 2 - 140px); /* 60px is button width + spacing */
-    z-index: 1000;
-    padding: 10px 15px;
-    background-color: #8d99ae;;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    }
-
-    .back-to-top:hover {
-        background-color: orange;
-        }
-
-
-
     .navigation-buttons {
     margin: 20px 0;
     display: flex;

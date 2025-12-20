@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import "./MandatoryList.css";
 import { getToken, authFetch } from "../utils/auth";
 
-function MandatoryList({ onProgressUpdate }) {
+function MandatoryList({ onProgressUpdate, progress, setProgress }) {
     // --- Auth & User Info ---
     const token = getToken();
     const popupId = "mandatory_training";

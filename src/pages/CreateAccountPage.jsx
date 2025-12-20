@@ -21,9 +21,10 @@ function CreateAccountPage() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		// Username must end with @riotinto.com
-		if (!form.username.endsWith("@riotinto.com")) {
-			setMessage("Username must end with @riotinto.com");
+		// Email must be valid format
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(form.username)) {
+			setMessage("Please enter a valid email address.");
 			return;
 		}
 		// Make username case-insensitive
@@ -33,7 +34,16 @@ function CreateAccountPage() {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(formToSend)
 		})
-			.then(res => res.json())
+			.then(res => {
+				if (!res.ok) {
+					return res.json().then(err => { 
+						console.log("Registration error:", err); 
+						alert("Registration error: " + JSON.stringify(err));
+						throw err; 
+					});
+				}
+				return res.json();
+			})
 			.then(data => {
 				if (data.id || data.email) {
 					setMessage("Registration successful!");
@@ -42,7 +52,9 @@ function CreateAccountPage() {
 					setMessage(data.detail || "Registration failed.");
 				}
 			})
-			.catch(() => setMessage("Registration failed."));
+			.catch((err) => {
+				setMessage("Registration failed.");
+			});
 	};
 
 	const handleClosePopup = () => {
@@ -82,15 +94,15 @@ function CreateAccountPage() {
 						autoComplete="family-name"
 						style={{border: '1px solid #ccc'}}
 					/>
-					<label htmlFor="username">Rio Tinto Email</label>
+					<label htmlFor="username">Email address</label>
 					<input
-						type="text"
+						type="email"
 						id="username"
 						name="username"
 						value={form.username}
 						onChange={handleChange}
 						required
-						placeholder=".............@riotinto.com"
+						placeholder="Enter your email address"
 						autoComplete="username"
 						style={{border: '1px solid #ccc'}}
 					/>

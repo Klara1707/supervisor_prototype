@@ -2,7 +2,7 @@ import React from "react";
 
 function UserListSection({ title, users, deleting, handleDeleteUser, hub, sectionRef }) {
     return (
-        <div className="container3" id={title.replace(/\s+/g, "")}> 
+        <div className="" id={title.replace(/\s+/g, "")}> 
             <div ref={sectionRef} />
             <h3><strong>{title}</strong></h3>
             {users.map((user, idx) => {
