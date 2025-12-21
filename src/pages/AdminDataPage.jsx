@@ -22,6 +22,7 @@ function AdminDataPage() {
 
                 // Helper to refresh user lists
                 const refreshUserLists = () => {
+                        console.log("[AdminDataPage] Fetching users-by-site with token:", adminToken);
                         fetch("http://127.0.0.1:8000/api/users-by-site/", {
                                 headers: {
                                         Authorization: "Bearer " + adminToken,
@@ -29,6 +30,7 @@ function AdminDataPage() {
                         })
                                 .then(res => res.json())
                                 .then(data => {
+                                        console.log("[AdminDataPage] users-by-site response:", data);
                                         setRobeValley(data.robevalley || []);
                                         setGreaterHopeDowns(data.greaterhopedowns || []);
                                         setRestOfEast(data.restofeast || []);

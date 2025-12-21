@@ -1,10 +1,28 @@
+
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import PasswordResetForm from "../components/PasswordResetForm";
 import HeroBar from "../components/HeroBar";
-import { useState } from "react";
 import "./LogInPage.css";
 
+// Test fetch function for debugging
+function testFetchToken() {
+    fetch("http://127.0.0.1:8000/api/token/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            username: "your_email", // replace with real email
+            password: "your_password", // replace with real password
+            site: "restofwest"
+        })
+    })
+        .then(r => r.json())
+        .then(console.log)
+        .catch(console.error);
+}
+
 function AdminLogin({ onSuccess }) {
+    // Removed undefined variables from console.log to fix ESLint error
     const [adminUsername, setAdminUsername] = useState("");
     const [adminPassword, setAdminPassword] = useState("");
     const navigate = useNavigate();
@@ -32,6 +50,8 @@ function AdminLogin({ onSuccess }) {
                     localStorage.setItem("user", JSON.stringify(data.user));
                     if (onSuccess) onSuccess();
                     navigate("/admindatapage");
+                    // Force reload to ensure fresh data
+                    window.location.reload();
                 } else {
                     alert("You are not an admin.");
                 }
@@ -102,21 +122,27 @@ function LogInPage() {
         // Validate email format for username
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(username)) {
-            alert("Please enter a valid email address.");
+            alert("klara.vandenburg@yahoo.com");
             return;
         }
         if (role === "visitor") {
             navigate("/");
         } else if (role === "contractor-supervisor") {
-            if (!site) {
-                alert("Please select a site.");
+            if (!site || site === "") {
+                alert("Please select a site before logging in.");
                 return;
             }
-            // Make username case-insensitive
+            // Make username and site case-insensitive
+            const siteValue = site ? site.toLowerCase() : site;
+            if (!siteValue) {
+                alert("Site value missing. Please select a site.");
+                return;
+            }
+            console.log("Submitting login", { username: username.toLowerCase(), password, site: siteValue });
             const response = await fetch("http://127.0.0.1:8000/api/token/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username: username.toLowerCase(), password, site }),
+                body: JSON.stringify({ username: username.toLowerCase(), password, site: siteValue }),
             });
             const data = await response.json();
             if (response.ok) {
@@ -125,9 +151,11 @@ function LogInPage() {
                 sessionStorage.clear();
                 const storage = rememberMe ? localStorage : sessionStorage;
                 storage.setItem("token", data.access);
-                storage.setItem("site", site);
+                storage.setItem("site", siteValue);
                 if (data.user) {
-                    storage.setItem("user", JSON.stringify(data.user));
+                    // Optionally, ensure user.site is also lowercased for consistency
+                    const userObj = { ...data.user, site: data.user.site ? data.user.site.toLowerCase() : data.user.site };
+                    storage.setItem("user", JSON.stringify(userObj));
                 }
                 navigate("/home");
             } else {
@@ -200,8 +228,12 @@ function LogInPage() {
                             name="site"
                             className="form-select"
                             value={site}
-                            onChange={(e) => setSite(e.target.value)}
+                            onChange={(e) => {
+                                console.log("Site dropdown changed to:", e.target.value);
+                                setSite(e.target.value);
+                            }}
                             required
+                            style={{ border: site ? '1px solid #ccc' : '2px solid red' }}
                         >
                             <option value="">-- Choose a Hub --</option>
                             <option value="robevalley">Robe Valley</option>

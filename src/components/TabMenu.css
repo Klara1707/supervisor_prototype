@@ -1,3 +1,28 @@
+/* Progress bar container for Overview (match MandatoryList) */
+#myProgress {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+/* Progress bar fill for Overview (match MandatoryList) */
+#myBar {
+    height: 30px;
+    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    transition: width 0.4s ease;
+}
+
+/* Percentage text for Overview (match MandatoryList) */
+#percentage {
+    font-size: 1rem;
+}
 
 
 /* Typography - match HomePage.css */
