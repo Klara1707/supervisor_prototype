@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
 import "./TabMenu.css";
-import MandatoryList, { trainingList } from "./MandatoryList";
+import MandatoryList from "./MandatoryList";
+import trainingList from "../data/trainingList";
 import DrillingPop from "./DrillingPop";
 import SafetyPop from "./SafetyPop";
 import LeadershipPop from "./LeadershipPop";

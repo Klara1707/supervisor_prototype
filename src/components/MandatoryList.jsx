@@ -2,40 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import "./MandatoryList.css";
+import trainingList from "../data/trainingList";
 import { getToken, authFetch } from "../utils/auth";
-
-export const trainingList = [
-    "RTIO RD Earthworks",
-    "RTIO RD Drilling",
-    "RTIO Driver Safety System (DSS)",
-    "RT Cyber Security Awareness",
-    "RTIO Functional Safety Awareness",
-    "RTIO L1 Basic Incident Investigation",
-    "RT MATE Bystander programme",
-    "RTIO IHMP Training for Team Members",
-    "RTIO Pit Permit Rules V19 Awareness",
-    "RTIO Pit Permit Rules V19 Driving",
-    "RTIO Pit Permit Rules V19 Engagement",
-    "RT Building Everyday Respect for All",
-    "RTIO Electrical Hazard Awareness SWBT",
-    "RTIO Cultural Awareness Noongar",
-    "RT Code of Conduct Online",
-    "RTIO MEQ Isolation Officer Theory",
-    "RTIO Mobility and Tablet Essentials",
-    "RT Code of Conduct Adaptive Learning",
-    "RTIO Airborne Contaminant Control",
-    "RTIO Introduction to Change Management",
-    "RTIO Fibrous Minerals Awareness",
-    "RTIO Mobile Equipment Spotter",
-    "RTIO Noise Awareness",
-    "RTIO Issue Hot Work Permit",
-    "RTIO Essentials",
-    "RTIO Snr Staff Environment Orientation",
-    "RTIO Individual Rail Access Road Permit",
-    "RTIO Heritage Awareness",
-    "RTIO Manual Handling Awareness",
-    // ...existing code...
-];
 
 function MandatoryList({ onProgressUpdate, progress, setProgress }) {
         // Define onlineItems and classroomItems arrays
