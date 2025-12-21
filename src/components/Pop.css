@@ -99,12 +99,16 @@ body.popup-open {
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     padding: 10px;
-    text-align: center;
     font-size: 1rem;
     border-radius: 4px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: 480px;
+    text-align: left;
 }
 
 /* Form fields */
@@ -174,12 +178,16 @@ body.popup-open {
 
 /* Custom checkbox */
 .custom-checkbox {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
     font-size: 1rem;
     cursor: pointer;
     position: relative;
+    word-break: break-word;
+    white-space: normal;
+    max-width: 420px;
+    line-height: 1.4;
 }
 
 .checkmark {

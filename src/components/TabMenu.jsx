@@ -180,19 +180,7 @@ const refreshUserFromStorage = () => {
             Congratulations on stepping into your role as a Contractor Supervisor within Res Dev!
             This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.
             </p>
-
-            {progress && (
-                <div className="progress-section">
-                    <h2>Your Training Progress</h2>
-                    <ul>
-                        {Object.entries(progress).map(([popup, value]) => (
-                            <li key={popup}>{popup.replace(/_/g, " ")}: {value}%</li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
-
+            
             <h2>Our Values</h2>
             <ul className="values-list">
             <li><strong>Care</strong> – We care about the physical and psychological safety of ourselves and others, we care about creating an environment of trust, and we care about the impact we have on our colleagues, communities, and the environment.</li>
