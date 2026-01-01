@@ -16,6 +16,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             signOffs,
             progressPercentage: percentage
         };
+        console.log('[SafetyPop] POST payload:', payload);
         await fetch("/api/training-progress/", {
             method: "POST",
             headers: {
@@ -43,23 +44,49 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     const completedGridChecks = gridProgressChecks.flat().filter(Boolean).length;
     const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
 
-    // Load progress from backend on mount (expect flat object, like other popups)
+    // Load progress from backend on mount (now with popupId query param)
     useEffect(() => {
         if (!popupId || !userToken) return;
-        fetch("/api/training-progress/", {
+        fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
             method: "GET",
             headers: { "Authorization": `Bearer ${userToken}` }
         })
-            .then(res => res.ok ? res.json() : null)
+            .then(async res => {
+                if (res.ok) {
+                    return res.json();
+                } else if (res.status === 404) {
+                    alert("No saved progress found for this popup. You can start fresh.");
+                    return null;
+                } else {
+                    alert(`Failed to load progress: ${res.status}`);
+                    return null;
+                }
+            })
             .then(data => {
-                const entry = data && data[popupId];
+                console.log('[SafetyPop] Backend response:', data);
+                let entry = null;
+                if (data && data[popupId]) {
+                    entry = data[popupId];
+                } else if (data && data.gridProgressChecks) {
+                    entry = data;
+                }
                 if (entry) {
                     setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
                     setComments(entry.comments || Array(7).fill(""));
                     setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                    console.log('[SafetyPop] State set:', {
+                        gridProgressChecks: entry.gridProgressChecks,
+                        comments: entry.comments,
+                        signOffs: entry.signOffs
+                    });
+                } else {
+                    console.warn(`[SafetyPop] No entry found for popupId '${popupId}' in backend response`, data);
                 }
             })
-            .catch(() => {});
+            .catch((err) => {
+                alert("Network error while loading progress. Please try again.");
+                console.error("GET /api/training-progress/ error:", err);
+            });
         // eslint-disable-next-line
     }, [popupId, userToken]);
 
@@ -73,6 +100,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             signOffs,
             progressPercentage: percentage
         };
+        console.log('[SafetyPop] Auto-save POST payload:', payload);
         fetch("/api/training-progress/", {
             method: "POST",
             headers: {
@@ -83,6 +111,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
         });
         // Also save on unmount (when popup closes)
         return () => {
+            console.log('[SafetyPop] Unmount POST payload:', payload);
             fetch("/api/training-progress/", {
                 method: "POST",
                 headers: {

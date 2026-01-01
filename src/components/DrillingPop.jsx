@@ -91,7 +91,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             return;
         }
         console.log("[DrillingPop] Fetching progress for", { popupId, token });
-        fetch("/api/training-progress/", {
+        fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -104,7 +104,13 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             })
             .then(data => {
                 console.log("[DrillingPop] Backend response:", data);
-                const entry = data && data[popupId];
+                // If backend returns {gridProgressChecks:..., ...} directly, treat as entry
+                let entry = null;
+                if (data && data[popupId]) {
+                    entry = data[popupId];
+                } else if (data && data.gridProgressChecks) {
+                    entry = data;
+                }
                 if (entry) {
                     setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
                     setComments(entry.comments || Array(7).fill(""));
