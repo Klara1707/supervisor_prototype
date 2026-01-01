@@ -1,520 +1,213 @@
-import { useDebouncedSave } from "../hooks/useDebouncedSave";
+// import { useDebouncedSave } from "../hooks/useDebouncedSave";
 import "./Pop.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SignOffForm from "./SignOffForm";
 
-const OperationsPop = ({ popupId, closePopup, userToken }) => {
-    // State hooks
-    const [comment, setComment] = useState("");
-    const [signOffDate, setSignOffDate] = useState("");
-    const [signOffName, setSignOffName] = useState("");
-
-    // Checkbox items (should match all possible checkbox labels used in contentMap)
-    const checkboxItems = [
-        "Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6", "Box 7", "Box 8", "Box 9", "Box 10",
-        "Box 11", "Box 12", "Box 13", "Box 14", "Box 15", "Box 16", "Box 17", "Box 18", "Box 19", "Box 20",
-        "Box 21", "Box 22", "Box 23", "Box 24", "Box 25", "Box 26", "Box 27", "Box 28", "Box 29", "Box 30",
-        "Box 31", "Box 32", "Box 33", "Box 34", "Box 35", "Box 36", "Box 37", "Box 38", "Box 39", "Box 40",
-        "Box 41", "Box 42", "Box 43", "Box 44", "Box 45", "Box 46"
+const LevelPopup = ({ level, onClose, popupId, userToken }) => {
+    // Grid headers
+    const headers = [
+        "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
+        "Training Process", "Training Material", "Reviewer sign off", "Comments"
     ];
-    const [progressChecks, setProgressChecks] = useState(Array(checkboxItems.length).fill(false));
-    useDebouncedSave(popupId, progressChecks, userToken);
+    // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
+    // Must have 7 rows for rows 1-7 (index 0-6)
+    const [gridProgressChecks, setGridProgressChecks] = useState(
+        Array(7).fill(null).map(() => Array(6).fill(false))
+    );
+    // Per-row comment state
+    const [comments, setComments] = useState(Array(7).fill(""));
+    const [signOffs, setSignOffs] = useState(
+        Array(7).fill(null).map(() => ({ name: "", date: "", signed: false }))
+    );
+    // Calculate progress as percentage of checked boxes in gridProgressChecks
+    const totalGridChecks = 7 * 6;
+    const completedGridChecks = gridProgressChecks.flat().filter(Boolean).length;
+    const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
 
-    // Pure data only! No JSX in contentMap
-    const contentMap = {
-        operations1: {
-            title: "Operations level 1",
-            cells: [
-                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
-                { type: "textWithCheckbox", text: "Understands basic site safety and reporting requirements.", checkboxLabel: "Box 1" },
-                { type: "textWithCheckbox", text: "Knows how to access and use the site radio for communication.", checkboxLabel: "Box 2" },
-                "",
-                "Shown how to use the site radio and emergency channels by a supervisor.",
-                "site-radio-guide", // key for button
-                "Sign off",
-                "comment section",
-                { type: "textWithCheckbox", text: "Can identify and report hazards to a supervisor.", checkboxLabel: "Box 3" },
-                { type: "textWithCheckbox", text: "Knows the location of first aid kits and emergency exits.", checkboxLabel: "Box 4" },
-                "",
-                "Walked through emergency procedures and first aid kit locations.",
-                "emergency-procedures", // key for button
-                "Sign off",
-                "comment section"
-            ]
-        },
-        operations2: {
-            title: "Operations level 2",
-            cells: [
-                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
-                {
-                    type: "textWithCheckbox",
-                    text: "Understand demand forecasting and optimisation requirements specific to your project, including roster patterns and travel lead times. Be aware of accommodation constraints, such as room availability, site capacity, and booking windows. Know how PDA (Project Delivery Allocation) impacts travel and accommodation planning, and ensure alignment with project schedules and personnel movements.", 
-                    checkboxLabel: "Box 1"
-                },
-                {
-                    type: "textWithCheckbox",
-                    text: "Develop a comprehensive understanding of the Quality Procurement Process (QPP) and its integration with Finance and Operations (F+O) systems. Gain familiarity with accommodation constraints, including policy limitations and operational impacts. Build working knowledge of Project Delivery Agreements (PDAs) and their relevance to contract management and execution", 
-                    checkboxLabel: "Box 2"
-                },
-                    {
-                    type: "textWithCheckbox",
-                    text: "Able to accurately report personnel presence on site using validated data sources. Proficient in navigating and extracting relevant information from the F+A SharePoint page. Can assist with the coordination of personnel movements between sites, ensuring alignment with operational requirements. Supports the review and assessment of accommodation lists, identifying constraints and ensuring compliance with site capacity and policy guidelines.", 
-                    checkboxLabel: "Box 3"
-                },
-                "", 
-                "Has access to the Travel and Logistics web page and understands how to navigate its key features. Receives an overview of the Quality Procurement Process (QPP) and Project Delivery Agreements (PDAs), as explained by a Subject Matter Expert (SME) or Supervisor. Is shown where to locate essential information related to bus schedules, flight details, and accommodation data, supporting informed decision-making and operational coordination.", 
-                "resource-development-travel-logistics", // key for button
-                "Sign off",
-                "comment section",
-                    {
-                        type: "textWithCheckbox",
-                        text: "Has access to ArcPortal and can upload project files and use mapping tools to ground-truth drilling designs from desktop", 
-                        checkboxLabel: "Box 7"
-                    },
-                    {
-                        type: "textWithCheckbox",
-                        text: "Proficient in ArcGIS; can create MMPKs for Field Maps and load them onto iPads and Samsung tablets", 
-                        checkboxLabel: "Box 8"
-                    },
-                    "", 
-                    "Education Reads and reviews how-to guides for accessing and using ArcGIS tools. Exposure Receives mentoring from experienced ArcGIS users (e.g., Supervisors, Geos, Hydros, Surveyors) on using the Portal, uploading files, and working with map layers.",
-                    <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=wfWkt6&CID=fdde3cb8%2De031%2D44fc%2Db3f0%2D35f5c9d0565c&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FArc%20Pro%20%28Install%20and%20functions%29", "_blank")}>Arc Pro Share Point </button>,
-                    "Sign off", "comment section",
-                    {
-                        type: "textWithCheckbox",
-                        text: "Proficient in using Prospect and Workday to manage personal workflow, reports, qualifications, development, and performance",  
-                        checkboxLabel: "Box 9"
-                    },
-                // ...existing code continues...
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Regularly checks the OR Tracking App each swing for outstanding ground-truthing tasks. Can cross-reference Operations Requests with the two-week plan, Plan-to-Plan, and P6 Gantt to ensure alignment",  
-                    checkboxLabel: "Box 13"
-                },
-                "",                  
-                "Mentored by SME or Supervisor to ensure proficient use of the Operations Request App. Understands how to locate drilling designs and extract key information from Operations Request forms. Has access to the P6 Gantt and can filter relevant information", 
-                    <div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
-                    <button onClick={() => window.open("https://apps.powerapps.com/play/e/3d8e39a1-8810-e91d-abd5-6841378e88ca/a/6ebafd46-669e-4b3e-aab3-f6f756161b2b?tenantId=4341df80-fbe6-41bf-89b0-e6e2379c9c23&amp;sourcetime=1717566236850&amp;source=portal&source=teamsLinkUnfurling", "_blank")}>Res Dev planning app</button>
-                    <button onClick={() => window.open("https://app.powerbi.com/groups/me/reports/35cb0a26-49bb-41e0-afae-ef1c4ab8980b/9501346241a708f47b14?notificationType=DigestReminder&notificationId=8770fe97-5d2d-4e9f-b712-2fbf262a43fc&experience=power-bi", "_blank")}>Power BI P6 Gantt</button>
-                    </div>,
-                "Sign off", "comment section",
-                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Able to conduct quality ground-truthing activities and accurately record data relevant to Operations Requests", 
-                    checkboxLabel: "Box 14"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Mentored by a Subject Matter Expert (SME) to conduct thorough and effective ground-truthing activities, ensuring accurate data collection for Operations Requests",  
-                    checkboxLabel: "Box 15"
-                },
-                                {
-                    type: "textWithCheckbox",
-                    text: "Know how to use the app to identify GT, initial desk top review on ArcGIS, able to  manage data for field verification, able to identify issues with design (Pads off AR, too close to heritage, access issues, ground conditions, etc). ",  
-                    checkboxLabel: "Box 16"
-                },                
-                                                {
-                    type: "textWithCheckbox",
-                    text: "Has full knowledge of ground-truthing processes. Can independently gather required tools and data, conduct both desktop and field checks, provide feedback via the Operations Request App, and communicate directly with designers to suggest design changes ",  
-                    checkboxLabel: "Box 17"
-                },
-                "Mentored by SME or Supervisor on conducting ground-truthing activities. Training includes performing desktop reviews in ArcGIS, identifying design issues (e.g. access, heritage, ground conditions), and using Field Maps and ServiceNow to support field checks", 
-            
-                    <button onClick={() => window.open("https://riotinto.sharepoint.com/:w:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7B8A470831-6A07-4671-9859-B01F84C97DF3%7D&file=Ground%20Truthing%20Checklist%20V1.docx&action=default&mobileredirect=true", "_blank")}>Ground truthing checklist</button>,
+    // Load progress from backend on mount
+    useEffect(() => {
+        if (!popupId || !userToken) return;
+        fetch("/api/training-progress/?popupId=" + encodeURIComponent(popupId), {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${userToken}`,
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data) {
+                    setGridProgressChecks(data.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
+                    setComments(data.comments || Array(7).fill(""));
+                    setSignOffs(data.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                }
+            })
+            .catch(() => {});
+        // eslint-disable-next-line
+    }, [popupId, userToken]);
 
-                "Sign off", "comment section",
-                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Understands the AR process, including how to search for and locate requests. Can identify package-specific conditions and requirements within the AR system", 
-                    checkboxLabel: "Box 18"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Understands which stakeholders are involved in approving ARs. Has access to ARCs and knows how to search for ARs. Demonstrates general knowledge of AR conditions and can identify package-specific requirements",  
-                    checkboxLabel: "Box 19"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Able to assess Approval Request (AR) conditions and implement them effectively. Provides guidance to other stakeholders on condition requirements and ensures compliance through collaboration and communication",  
-                    checkboxLabel: "Box 20"
-                },
-                "",
-                "Has access to ARCs and is able to search for Approval Requests (ARs). Can extract relevant information from ARs. Receives mentoring from a SME or Supervisor to build proficiency in navigating and interpreting AR documentation", 
+    // Auto-save progress to backend on every change
+    useEffect(() => {
+        if (!popupId || !userToken) return;
+        const payload = {
+            popupId,
+            gridProgressChecks,
+            comments,
+            signOffs,
+            progressPercentage: percentage
+        };
+        fetch("/api/training-progress/", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${userToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        // eslint-disable-next-line
+    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken]);
 
-                <button onClick={() => window.open("https://rtio-arcs.riotinto.org/", "_blank")}>Retired ARCS</button>,
-                "Sign off", "comment section",
-                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Understands the different clearing mechanisms—POW, NVCP, and Part IV—and how their specific conditions impact operational activities and project planning", 
-                    checkboxLabel: "Box 21"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Understands the differences between clearing mechanisms—POW, NVCP, and Part IV—and the specific conditions associated with each. Recognizes how these conditions influence operational planning and execution",  
-                    checkboxLabel: "Box 22"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Confidently provides advice and instruction on POW, NVCP, and Part IV clearing mechanisms. Understands their differences, associated conditions, and how they impact operational planning and execution",  
-                    checkboxLabel: "Box 23"
-                },
-                                                                                            {
-                    type: "textWithCheckbox",
-                    text: "Able to implement required controls in the field and verify clearing methods to ensure compliance with conditions outlined in POW, NVCP, and Part IV mechanisms", 
-                    checkboxLabel: "Box 24"
-                },                     
-                "Education Understands the Land Disturbance Work Practice and its relevance to operational activities. Exposure Has access to ARCs and can search for and extract information from Approval Requests (ARs). Receives mentoring from a SME or Supervisor to build proficiency in interpreting ARs and applying relevant conditions.", 
+    // Build table rows for Bootstrap table
+    const tableRows = [];
+    // Header row
+    tableRows.push(
+        <tr key="header">
+            {headers.map((header, idx) => (
+                <th key={idx} className="text-center align-middle bg-light">{header}</th>
+            ))}
+        </tr>
+    );
+    // Data rows
+    for (let row = 1; row <= 7; row++) {
+        tableRows.push(
+            <tr key={row}>
+                {/* Progress checkboxes */}
+                {[0,1,2,3,4,5].map(col => (
+                    <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                        <input
+                            type="checkbox"
+                            checked={gridProgressChecks[row-1][col]}
+                            onChange={() => {
+                                const updated = gridProgressChecks.map(arr => arr.slice());
+                                updated[row-1][col] = !updated[row-1][col];
+                                setGridProgressChecks(updated);
+                            }}
+                            style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                        />
+                    </td>
+                ))}
+                {/* Sign off cell */}
+                <td className="align-middle">
+                    <SignOffForm
+                        name={signOffs[row-1].name}
+                        date={signOffs[row-1].date}
+                        signed={signOffs[row-1].signed}
+                        onChange={(field, value) => {
+                            const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, [field]: value } : s);
+                            setSignOffs(updated);
+                        }}
+                        onSignOff={() => {
+                            if (signOffs[row-1].name && signOffs[row-1].date) {
+                                const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, signed: true } : s);
+                                setSignOffs(updated);
+                            }
+                        }}
+                    />
+                </td>
+                {/* Comment cell */}
+                <td className="align-middle" style={{ padding: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                            <textarea
+                                value={comments[row-1]}
+                                onChange={e => {
+                                    const updated = comments.slice();
+                                    updated[row-1] = e.target.value;
+                                    setComments(updated);
+                                }}
+                                placeholder="Enter your comment"
+                                className="form-control"
+                                style={{
+                                    minHeight: 140,
+                                    maxHeight: 140,
+                                    width: '100%',
+                                    border: '1px solid #ced4da',
+                                    borderRadius: 4,
+                                    resize: 'none',
+                                    boxShadow: 'none',
+                                    padding: 8,
+                                    margin: 0,
+                                    display: 'block',
+                                }}
+                            />
+                        </div>
+                </td>
+            </tr>
+        );
+    }
 
-                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/Forms/AllItems.aspx?id=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished%2FRTIO%2DHSE%2D0123835%2Epdf&parent=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished", "_blank")}>Land Disturbance Work Practice </button>,
-                "Sign off", "comment section",
-                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Demonstrates detailed understanding of the Laydown Management Guidelines, including principles, requirements, and practical application in field and planning activities", 
-                    checkboxLabel: "Box 25"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Has read and understands the Laydown Management Guidelines, including their application in planning and field activities",  
-                    checkboxLabel: "Box 26"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Able to apply WPI guidelines, identify non-compliances, and address them in Safeday",  
-                    checkboxLabel: "Box 27"
-                },
-                "",
-                "Education – Read, understand, and apply WPI guidelines in the field. Exposure – SME or Supervisor to demonstrate effective application.", 
+    // Helper component for per-row sign-off form
+    // Move outside the loop
+    // ...existing code...
 
-                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Environment_1/RTIO-HSE-0084753.ppt", "_blank")}>Temporary Laydown Management Guidelines</button>,
-                "Sign off", "comment section",
-                                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Understand the Weekly Plan and the Operations Team’s role in executing the Plan within the MOS framework", 
-                    checkboxLabel: "Box 28"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Understand the planning flow, including Monthly and 2-Weekly Plans",  
-                    checkboxLabel: "Box 29"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Use the P6 Gantt chart to track progress, assess start and finish times, and provide feedback to the planning team",  
-                    checkboxLabel: "Box 30"
-                },
-                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Attends 2-week planning meetings, negotiates drilling and earthworks targets, provides feedback on the plan, takes ownership of actions, and ensures closure",  
-                    checkboxLabel: "Box 31"
-                },
-                "Mentored by SME/Supervisor in using the P6 Gantt chart Attend 2-week planning meetings Provide feedback to the planning team for Friday meetings Learn to link the 2-week plan to the Gantt chart Guided in assessing targets and delivering effective feedback", 
-                <button onClick={() => window.open("https://app.powerbi.com/groups/me/reports/ecf4b2d5-01fe-4939-b4c1-aaa776db4d8b/ReportSection4f33076230bb230819ce?experience=power-bi", "_blank")}>Res Dev Report & Dashboard </button>,
-                "Sign off", "comment section",
-                                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Has detailed knowledge of the Unisolated Work Process and can perform associated tasks within their area of responsibility", 
-                    checkboxLabel: "Box 32"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Can access the database to search for procedures. Has a solid understanding of tasks permitted under the Unisolated Work Process (UWP)",  
-                    checkboxLabel: "Box 33"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Has a comprehensive understanding of tasks permitted under the Unisolated Work Process (UWP), conducts field checks, and integrates UWP into LIF activities",  
-                    checkboxLabel: "Box 34"
-                },
-                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Performs field verifications on individual Working with Live Equipment procedures to ensure compliance with documented processes",  
-                    checkboxLabel: "Box 35"
-                },
-                "Receives mentoring from SME/Drill Advisor/Supervisor on the Working with Live Equipment (WWLE) process — including its purpose, management, and field application. Observes WWLE being performed and demonstrates capability to conduct field checks under supervision", 
-
-                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/4000233/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Friotinto%2Esharepoint%2Ecom%2Fsites%2F4000233%2FDocuments%2F10%2E%20Operational%20Control%2FC1%20Isolation%2FWorking%20with%20Live%20Equipment%2FArchive%2F1%2E%20Resource%20Development%20Unisolated%20tasks%20register%202022%2Exlsx%3Fcid%3D7021D0A6%2D9D00%2D4AA8%2DBF9A%2D065B805CDA1D%26fromShare%3Dtrue%26ga%3D1&correlation=5e3ed8a1%2D8063%2Da000%2D8e8f%2Dfadc6ec15690&Type=item&name=d6e6c3d4%2D1621%2D41da%2D8255%2D162cebcf4761&listItemId=7260&listItemUniqueId=a00bf4cc%2D326e%2D4f62%2D85b0%2Dc4d586475e9d", "_blank")}>Unisolated tasks register </button>,
-                "Sign off", "comment section",
-                                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Has detailed knowledge and applies RTIO and ResDev guidelines for protection and clearing near Heritage areas, including adherence to Golden Rules and L2WI requirements", 
-                    checkboxLabel: "Box 36"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Has read the Golden Rules and understands when Level 2/3 Work Instructions are required. Supports operators in preparing and conducting Level 2/3 instructions",  
-                    checkboxLabel: "Box 37"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Provides guidance to operators on the Golden Rules. Has comprehensive knowledge of clearing requirements near Heritage and AR boundaries",  
-                    checkboxLabel: "Box 38"
-                },
-                "",
-                "Education: Reads the Start-Up QRG and Golden Rules document, and understands their intent. Exposure: Golden Rules are explained; can apply them in the field and instruct survey teams to check flagging around heritage sites", 
-                <button onClick={() => window.open("https://riotinto.sharepoint.com/:p:/r/sites/6002923/_layouts/15/Doc.aspx?sourcedoc=%7B1EEEF012-76A5-4E76-A4DA-3D92B30B06C5%7D&file=240804-Earthworks%20Startup%20Presentation%20Template.pptx&action=edit&mobileredirect=true", "_blank")}>Project start-up</button>,
-                "Sign off", "comment section",
-                                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Develop and implement Traffic Management Plans specific to project needs", 
-                    checkboxLabel: "Box 39"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Develop and implement Traffic Management Plans tailored to project requirements",  
-                    checkboxLabel: "Box 40"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Ensure the Traffic Management Plan is updated whenever field conditions change",  
-                    checkboxLabel: "Box 41"
-                },
-                "",
-                "Education: Has read the local Traffic Management Plan and understands its content. Exposure: Is shown by the Superintendent or Coordinator how to update the TMP when permanent field changes occur", 
-
-                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0262657.pdf", "_blank")}>Traffic Management Plan</button>,
-                "Sign off", "comment section",
-                                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Prepare and Distribute Site Notifications/Banners", 
-                    checkboxLabel: "Box 42"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Knows how to prepare a Blue Banner and distribute it to the correct group email",  
-                    checkboxLabel: "Box 43"
-                },
-                "",
-                "",
-                "Education: Has read and understands the Blue Banner template. Exposure: Can complete relevant information and send it to the correct audience, with mentoring from the Superintendent.", 
-
-                <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0076433.pdf", "_blank")}>Banner templates</button>,
-                "Sign off", "comment section",
-                                                                                                {
-                    type: "textWithCheckbox",
-                    text: "Understands pit permit, training, and AHS (Autonomous Haulage System) requirements relevant to site access and operations", 
-                    checkboxLabel: "Box 44"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Has completed V19 Pit Permit Rules training and understands the requirements for obtaining an AHS pit permit",  
-                    checkboxLabel: "Box 45"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Can provide guidance on the AHS pass-out process and assist in facilitating the VOC (Verification of Competency) with Mine Operations or Resource Development OJT.",  
-                    checkboxLabel: "Box 46"
-                },
-                "",
-                "Reads and understands the Pit Permit Rules and completes the online V19 training.", 
-                (<button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSTemporaryPostProcessing3/OT_fnd_hse_BDT_hseq_mana_Managed_4/RTIO-HSE-0315544.pdf", "_blank")}>Pit Permit Rules </button>),
-                "Sign off", "comment section",
-            ]
-        },
-        operations3: {
-            title: "Operations level 3",
-            cells: [
-                "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-                "Training Process", "Training Material", "Reviewer sign off", "Comments",
-                    {
-                    type: "textWithCheckbox",
-                    text: "Competent in using the GAP platform to manage remote workers via SHOUT or SPOT units", 
-                    checkboxLabel: "Box 1"
-                },
-                {
-                    type: "textWithCheckbox",
-                    text: "Can track users on the portal, can send messages to shout units. Fully understands the functionality of the shout unit and responds to alerts. ", 
-                    checkboxLabel: "Box 2"
-                },
-                "", 
-                "", 
-                "Exposure – SME-led survey to demonstrate SHOUT unit functionality, including portal sign-in and movement tracking", 
-                (<button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=UvzuKW&CID=e19da2a1%2D6191%2D49ab%2D8d1a%2D237c19c6438b&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FGAP%20shout%20usage", "_blank")}>GAP shout usage </button>),
-                "Sign off", 
-                "comment section",
-
-                {
-                    type: "textWithCheckbox",
-                    text: "Understand and execute Operations Requests for assigned Drilling, Hydro, and Earthworks projects as per plan", 
-                    checkboxLabel: "Box 3"
-                },
-                                {
-                    type: "textWithCheckbox",
-                    text: "Full understanding of Operations Requests. Able to use the app to source design info, troubleshoot issues, and verify data from app and design folders",  
-                    checkboxLabel: "Box 4"
-                },
-                "",
-                "",
-                "Exposure - Has access to app, SME shows how to navigate the app, is shown how to assess information in the request from, is shown how to track ground truthing in the app. ", 
-                (<button onClick={() => window.open("https://apps.powerapps.com/play/e/3d8e39a1-8810-e91d-abd5-6841378e88ca/a/6ebafd46-669e-4b3e-aab3-f6f756161b2b?tenantId=4341df80-fbe6-41bf-89b0-e6e2379c9c23&amp;sourcetime=1717566236850&amp;source=portal&source=teamsLinkUnfurling", "_blank")}>Res Dev planning app</button>),
-                "Sign off", "comment section",
-                                                {
-                    type: "textWithCheckbox",
-                    text: "Detailed knowledge of Water Catchment Guidelines for managing water discharge during drilling, including aquifer protection, permit requirements, and environmental impact controls", 
-                    checkboxLabel: "Box 5"
-                },
-                                                {
-                    type: "textWithCheckbox",
-                    text: "Understand the difference between DMP for hydro drilling, test pumping, and off-pad discharge. No discharge without AR check, water quality testing, and environmental/biodiversity approval", 
-                    checkboxLabel: "Box 6"
-                },
-                                                                {
-                    type: "textWithCheckbox",
-                    text: "Enganage communication between Enviro/Bio team and site to coordinate off-pad water discharges", 
-                    checkboxLabel: "Box 7"
-                },
-                "", 
-                "Education: Review QRG and process flow. Understand requirements for safe fluid discharge into the environment",
-                                    (<div style={{  display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px"  }}>
-                                        <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/IODMSTemporaryPostProcessing6/Users_Cabinet_Managed_Non_Confidential_Files_1/RTIO-PDE-0053914.doc", "_blank")}>Pilbara Surface Water Management Strategy</button>
-                                        <button onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Friotinto%2Esharepoint%2Ecom%2F%3Ap%3A%2Fr%2Fsites%2F6002923%2FShared%20Documents%2FSpecialist%2FDischarge%20Management%20%2D%20QRG%2FDMP%20process%20WRE%20V2%2Epptx%3Fd%3Dw620f0557c0b04a46bd817c6d8ce73796%26csf%3D1%26web%3D1%26e%3DBHcigE&correlation=8a3fd8a1%2D5042%2Da000%2Dae1e%2D0f2c45eb07a4&Type=item&name=33e26dbf%2De5d7%2D4e49%2D8130%2D409e7eb71132&listItemId=10548&listItemUniqueId=620f0557%2Dc0b0%2D4a46%2Dbd81%2D7c6d8ce73796", "_blank")}>Discharge Management</button>
-                                    </div>),
-                "Sign off", "comment section",
-                                                {
-                    type: "textWithCheckbox",
-                    text: "Compile production data for reporting or to support your Leader as required",  
-                    checkboxLabel: "Box 8"
-                },
-                                                {
-                    type: "textWithCheckbox",
-                    text: "Full understanding and demonstrated use of data sources: Protrak, DDM, Hydro DDM, State of Play, Earthworks tracking sheets", 
-                    checkboxLabel: "Box 9"
-                },
-                                                {
-                    type: "textWithCheckbox",
-                    text: "Accurately report weekly drilling, hydro, and earthworks data for Week in Review meetings", 
-                    checkboxLabel: "Box 10"
-                },
-                "",
-                "Exposure: SME/Supervisor demonstrates how to access and use data sources, check accuracy, understand data linkages, and view presentation formats", 
-                                (
-                                    <button
-                                        onClick={() => window.open("https://riotinto.sharepoint.com/sites/6002923/_layouts/15/stream.aspx?id=%2Fsites%2F6002923%2FShared+Documents%2F1.+How+To+Project%2FDaily+Plod+%28Co-ordinators+and+Supervisors%29%2FDDM+data+input+%26+WIR.mp4&startedResponseCatch=true&referrer=StreamWebApp.Web&referrerScenario=AddressBarCopied.view.2a827003-31c4-4bba-889b-ce9be9ae629c", "_blank")}
-                                    >
-                                        DDM data input & WIR
-                                    </button>
-                                ),
-                "Sign off", "comment section",
-            ]
-        }
-    };
-
-    const { title, cells } = contentMap[popupId];
     return (
         <div className="popup-overlay">
-            <div className="popup-content">
-                <button className="close-button" onClick={closePopup} aria-label="Close popup">
+            <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
+                <h2>Operations Level {level}</h2>
+                <div className="progress-bar-container mb-3">
+                    <div
+                        className="progress-bar"
+                        style={{
+                            width: `${percentage}%`,
+                            backgroundColor: completedGridChecks > 0 ? '#4caf50' : '#e0e0e0',
+                            color: completedGridChecks > 0 ? 'white' : '#333',
+                            position: 'relative'
+                        }}
+                    >
+                        {completedGridChecks > 0 && (
+                            <span className="progress-text">{percentage}%</span>
+                        )}
+                    </div>
+                </div>
+                <div className="table-responsive mb-3">
+                    <table className="table table-bordered table-striped table-hover align-middle">
+                        <tbody>
+                            {tableRows}
+                        </tbody>
+                    </table>
+                </div>
+                <button className="close-button" onClick={onClose} aria-label="Close popup">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
                         <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
                         <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
                     </svg>
                 </button>
-                <h2>{title}</h2>
-                {/* Progress Bar */}
-                <div className="progress-bar-container">
-                    <div
-                        className="progress-bar"
-                        style={{
-                            width: `${(progressChecks.filter(Boolean).length / checkboxItems.length) * 100}%`
-                        }}
-                    >
-                        <span className="progress-text">
-                            {Math.round((progressChecks.filter(Boolean).length / checkboxItems.length) * 100)}%
-                        </span>
-                    </div>
-                </div>
-                {/* Grid Container */}
-                <div className="grid-container">
-                    {cells.map((cellContent, index) => {
-                        if (typeof cellContent === "object" && cellContent.type === "textWithCheckbox") {
-                            const checkboxIndex = checkboxItems.indexOf(cellContent.checkboxLabel);
-                            return (
-                                <div key={index} className="grid-item">
-                                    <p>{cellContent.text}</p>
-                                    <label className="custom-checkbox">
-                                        <span className="sr-only"></span>
-                                        <input
-                                            type="checkbox"
-                                            checked={progressChecks[checkboxIndex]}
-                                            onChange={() => {
-                                                const updatedChecks = [...progressChecks];
-                                                updatedChecks[checkboxIndex] = !updatedChecks[checkboxIndex];
-                                                setProgressChecks(updatedChecks);
-                                            }}
-                                        />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                </div>
-                            );
-                        }
-                        if (checkboxItems.includes(cellContent)) {
-                            const checkboxIndex = checkboxItems.indexOf(cellContent);
-                            return (
-                                <div key={index} className="grid-item">
-                                    <label className="custom-checkbox">
-                                        <input
-                                            type="checkbox"
-                                            checked={progressChecks[checkboxIndex]}
-                                            onChange={() => {
-                                                const updatedChecks = [...progressChecks];
-                                                updatedChecks[checkboxIndex] = !updatedChecks[checkboxIndex];
-                                                setProgressChecks(updatedChecks);
-                                            }}
-                                        />
-                                        <span className="checkmark"></span>
-                                    </label>
-                                </div>
-                            );
-                        }
-                        if (cellContent === "comment section") {
-                            return (
-                                <div key={index} className="grid-item">
-                                    <label htmlFor={`comment-${index}`}>Comment:</label>
-                                    <textarea
-                                        id={`comment-${index}`}
-                                        placeholder="Enter your comment..."
-                                        className="comment-box"
-                                        rows={3}
-                                        value={comment}
-                                        onChange={(e) => setComment(e.target.value)}
-                                    />
-                                </div>
-                            );
-                        }
-                        if (cellContent === "Sign off") {
-                            return (
-                                <div key={index} className="grid-item">
-                                    <label htmlFor={`signoff-date-${index}`}>Sign-off Date:</label>
-                                    <input
-                                        type="date"
-                                        id={`signoff-date-${index}`}
-                                        className="signoff-date"
-                                        value={signOffDate}
-                                        onChange={(e) => setSignOffDate(e.target.value)}
-                                    />
-                                    <label htmlFor={`signoff-name-${index}`}>Sign-off Name:</label>
-                                    <input
-                                        type="text"
-                                        id={`signoff-name-${index}`}
-                                        className="signoff-name"
-                                        placeholder="Enter your name"
-                                        value={signOffName}
-                                        onChange={(e) => setSignOffName(e.target.value)}
-                                    />
-                                </div>
-                            );
-                        }
-                        return (
-                            <div key={index} className="grid-item">
-                                {cellContent}
-                            </div>
-                        );
-                    })}
-                </div>
             </div>
         </div>
     );
-};
+    
+}
+
+
+
+function OperationsPop({ popupId, closePopup, userToken }) {
+    if (!popupId) return null;
+    let openLevel = null;
+    if (popupId === "operations1") openLevel = 1;
+    else if (popupId === "operations2") openLevel = 2;
+    else if (popupId === "operations3") openLevel = 3;
+
+    return (
+        openLevel ? (
+            <div className="popup-overlay operations-popup-fadein">
+                <div className="popup-container operations-popup-centered">
+                    <button className="close-btn" onClick={closePopup} style={{ float: 'right' }}>Close</button>
+                    <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} />
+                </div>
+            </div>
+        ) : null
+    );
+}
 
 export default OperationsPop;

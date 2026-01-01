@@ -5,11 +5,11 @@ import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/auth";
-import TestPop from "../components/TestPop";
+import DrillingPop from "../components/DrillingPop";
 
 function HomePage() {
     const navigate = useNavigate();
-    const [openTestLevel, setOpenTestLevel] = useState(null);
+    const [showDrillingPop, setShowDrillingPop] = useState(false);
 
     useEffect(() => {
         const token = getToken();
@@ -21,6 +21,8 @@ function HomePage() {
     return (
         <>
             <HeroBar />
+            <button style={{margin: 20}} onClick={() => setShowDrillingPop(true)}>Show DrillingPop (DEV TEST)</button>
+            {showDrillingPop && <DrillingPop closePopup={() => setShowDrillingPop(false)} />}
             <TabMenu />
             <NavBar />
         </>
@@ -28,4 +30,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

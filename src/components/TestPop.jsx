@@ -1,142 +1,124 @@
-import { useDebouncedSave } from "../hooks/useDebouncedSave";
+// import { useDebouncedSave } from "../hooks/useDebouncedSave";
 import "./Pop.css";
 import { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose }) => {
-    const checkboxItems = [
-        `Level ${level} Box 1`, `Level ${level} Box 2`, `Level ${level} Box 3`, `Level ${level} Box 4`
-    ];
-    const [progressChecks, setProgressChecks] = useState(Array(checkboxItems.length).fill(false));
-    const [comment, setComment] = useState("");
-    const [signOffDate, setSignOffDate] = useState("");
-    const [signOffName, setSignOffName] = useState("");
-    const completedCount = progressChecks.filter(Boolean).length;
-    const percentage = Math.round((completedCount / checkboxItems.length) * 100);
-    const handleCheckboxChange = (idx) => {
-        const updated = [...progressChecks];
-        updated[idx] = !updated[idx];
-        setProgressChecks(updated);
-    };
-    const handleSignOff = () => {
-        setSignOffDate(new Date().toLocaleDateString());
-    };
-    // Grid headers
-    const headers = [
-        "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-        "Training Process", "Training Material", "Reviewer sign off", "Comments"
-    ];
-    // 8x8 grid: 8 headers, 7 more rows (empty for now)
-    const grid = Array(8).fill(null).map((_, rowIdx) =>
-        Array(8).fill("")
+        // Grid headers
+        const headers = [
+            "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
+            "Training Process", "Training Material", "Reviewer sign off", "Comments"
+        ];
+    // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
+    // Must have 7 rows for rows 1-7 (index 0-6)
+    const [gridProgressChecks, setGridProgressChecks] = useState(
+        Array(7).fill(null).map(() => Array(6).fill(false))
     );
-    // Fill first row with headers
-    grid[0] = headers;
-    // Apply row 2 layout to rows 2-7 (rowIdx 1-6):
+    // Per-row comment state
+    const [comments, setComments] = useState(Array(7).fill(""));
+    // Per-row sign-off state
+    const [signOffs, setSignOffs] = useState(
+        Array(7).fill(null).map(() => ({ name: "", date: "", signed: false }))
+    );
+    // Calculate progress as percentage of checked boxes in gridProgressChecks
+    const totalGridChecks = 7 * 6;
+    const completedGridChecks = gridProgressChecks.flat().filter(Boolean).length;
+    const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
+
+    // Build table rows for Bootstrap table
+    const tableRows = [];
+    // Header row
+    tableRows.push(
+        <tr key="header">
+            {headers.map((header, idx) => (
+                <th key={idx} className="text-center align-middle bg-light">{header}</th>
+            ))}
+        </tr>
+    );
+    // Data rows
     for (let row = 1; row <= 7; row++) {
-        // Boxes 9-14: col 0-5 empty, and specifically clear boxes 17, 18, 19 (row 2, col 0-2)
-        for (let col = 0; col <= 5; col++) {
-            // Remove all content from box 17, 18, 19 (row 2, col 0-2)
-            if (row === 2 && col >= 0 && col <= 2) {
-                grid[row][col] = null;
-            } else {
-                grid[row][col] = null;
-            }
-        }
-        // Box 15: col 6 sign off for row 2-8 (rowIdx 1-7, col 6)
-        if (row >= 1 && row <= 7) {
-            grid[row][6] = (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                    {signOffDate && signOffName ? (
-                        <>
-                            <div><strong>Name:</strong> {signOffName}</div>
-                            <div><strong>Date:</strong> {signOffDate}</div>
-                        </>
-                    ) : (
-                        <>
-                            <input
-                                type="date"
-                                value={signOffDate}
-                                onChange={e => setSignOffDate(e.target.value)}
-                                style={{ width: '100%' }}
-                            />
-                            <textarea
-                                value={signOffName}
-                                onChange={e => setSignOffName(e.target.value)}
-                                placeholder="Name assessor"
-                                style={{ width: '100%', minHeight: 32 }}
-                            />
-                            <button onClick={() => {
-                                if (signOffName && signOffDate) {
-                                    setSignOffName(signOffName);
-                                    setSignOffDate(signOffDate);
-                                }
-                            }}>Sign Off</button>
-                        </>
-                    )}
-                </div>
-            );
-        }
-        // Box 16: col 7 (box 8) gets a comment box for rows 2-8 (rowIdx 1-7)
-        if (row >= 1 && row <= 7) {
-            grid[row][7] = (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                    <textarea
-                        value={comment}
-                        onChange={e => setComment(e.target.value)}
-                        placeholder="Enter your comment"
-                        style={{ width: '100%', minHeight: 32 }}
+        tableRows.push(
+            <tr key={row}>
+                {/* Progress checkboxes */}
+                {[0,1,2,3,4,5].map(col => (
+                    <td key={col} className="text-center align-middle">
+                        <input
+                            type="checkbox"
+                            checked={gridProgressChecks[row-1][col]}
+                            onChange={() => {
+                                const updated = gridProgressChecks.map(arr => arr.slice());
+                                updated[row-1][col] = !updated[row-1][col];
+                                setGridProgressChecks(updated);
+                            }}
+                        />
+                    </td>
+                ))}
+                {/* Sign off cell */}
+                <td className="align-middle">
+                    <SignOffForm
+                        name={signOffs[row-1].name}
+                        date={signOffs[row-1].date}
+                        signed={signOffs[row-1].signed}
+                        onChange={(field, value) => {
+                            const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, [field]: value } : s);
+                            setSignOffs(updated);
+                        }}
+                        onSignOff={() => {
+                            if (signOffs[row-1].name && signOffs[row-1].date) {
+                                const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, signed: true } : s);
+                                setSignOffs(updated);
+                            }
+                        }}
                     />
-                </div>
-            );
-        } else {
-            grid[row][7] = null;
-        }
+                </td>
+                {/* Comment cell */}
+                <td className="align-middle">
+                    <textarea
+                        value={comments[row-1]}
+                        onChange={e => {
+                            const updated = comments.slice();
+                            updated[row-1] = e.target.value;
+                            setComments(updated);
+                        }}
+                        placeholder="Enter your comment"
+                        className="form-control"
+                        style={{ minHeight: 32 }}
+                    />
+                </td>
+            </tr>
+        );
     }
-    // Only fill grid cells with comment box if you want them to have a comment box. For now, do not add comment boxes to unset cells.
-    
+
+    // Helper component for per-row sign-off form
+    // Move outside the loop
+    // ...existing code...
+
     return (
         <div className="popup-overlay">
-            <div className="popup-content" style={{ maxWidth: 900 }}>
+            <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
                 <h2>Test Level {level}</h2>
-                <div className="progress-bar-container">
-                    <div className="progress-bar" style={{ width: `${percentage}%` }}>
-                        <span className="progress-text">{percentage}%</span>
-                    </div>
-                </div>
-                <div style={{ overflowX: 'auto', marginBottom: 20 }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 4 }}>
-                        {grid.flatMap((row, rowIdx) =>
-                            row.map((cell, colIdx) => (
-                                <div key={rowIdx + '-' + colIdx} style={{
-                                    border: '1px solid #ccc',
-                                    padding: 8,
-                                    background: rowIdx === 0 ? '#f0f0f0' : '#fff',
-                                    fontWeight: rowIdx === 0 ? 'bold' : 'normal',
-                                    minHeight: 32,
-                                    textAlign: 'center'
-                                }}>{cell}</div>
-                            ))
+                <div className="progress-bar-container mb-3">
+                    <div
+                        className="progress-bar"
+                        style={{
+                            width: `${percentage}%`,
+                            backgroundColor: completedGridChecks > 0 ? '#4caf50' : '#e0e0e0',
+                            color: completedGridChecks > 0 ? 'white' : '#333',
+                            position: 'relative'
+                        }}
+                    >
+                        {completedGridChecks > 0 && (
+                            <span className="progress-text">{percentage}%</span>
                         )}
                     </div>
                 </div>
-                <div className="comment-section">
-                    <label>Comment:</label>
-                    <textarea
-                        value={comment}
-                        onChange={e => setComment(e.target.value)}
-                        placeholder="Enter your comment"
-                    />
-                </div>
-                <div className="signoff-section">
-                    <label>Sign off name:</label>
-                    <input
-                        type="text"
-                        value={signOffName}
-                        onChange={e => setSignOffName(e.target.value)}
-                        placeholder="Your name"
-                    />
-                    <button onClick={handleSignOff}>Sign Off</button>
-                    {signOffDate && <div>Date: {signOffDate}</div>}
+                <div className="table-responsive mb-3">
+                    <table className="table table-bordered table-striped table-hover align-middle">
+                        <tbody>
+                            {tableRows}
+                        </tbody>
+                    </table>
                 </div>
                 <button className="close-button" onClick={onClose} aria-label="Close popup">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -148,33 +130,16 @@ const LevelPopup = ({ level, onClose }) => {
             </div>
         </div>
     );
+    
 }
 
 function TestPop({ popupId, closePopup, userToken }) {
-    const checkboxItems = [
-        "Test Box 1", "Test Box 2", "Test Box 3", "Test Box 4"
-    ];
-    const [progressChecks, setProgressChecks] = useState(Array(checkboxItems.length).fill(false));
-    useDebouncedSave(popupId, progressChecks, userToken);
     const [comment, setComment] = useState("");
     const [signOffDate, setSignOffDate] = useState("");
     const [signOffName, setSignOffName] = useState("");
     const [openLevel, setOpenLevel] = useState(null);
 
     if (!popupId) return null;
-
-    const handleCheckboxChange = (idx) => {
-        const updated = [...progressChecks];
-        updated[idx] = !updated[idx];
-        setProgressChecks(updated);
-    };
-
-    const handleSignOff = () => {
-        setSignOffDate(new Date().toLocaleDateString());
-    };
-
-    const completedCount = progressChecks.filter(Boolean).length;
-    const percentage = Math.round((completedCount / checkboxItems.length) * 100);
 
     return (
         <div className="popup-container">
@@ -184,24 +149,6 @@ function TestPop({ popupId, closePopup, userToken }) {
                 <button onClick={() => setOpenLevel(1)}>Test Level 1</button>
                 <button onClick={() => setOpenLevel(2)}>Test Level 2</button>
                 <button onClick={() => setOpenLevel(3)}>Test Level 3</button>
-            </div>
-            {/* Progress Bar */}
-            <div className="progress-bar-container">
-                <div className="progress-bar" style={{ width: `${percentage}%` }}>
-                    <span className="progress-text">{percentage}%</span>
-                </div>
-            </div>
-            <div className="checkbox-list">
-                {checkboxItems.map((label, idx) => (
-                    <label key={label} className="custom-checkbox">
-                        <input
-                            type="checkbox"
-                            checked={progressChecks[idx]}
-                            onChange={() => handleCheckboxChange(idx)} />
-                        <span className="checkmark"></span>
-                        {label}
-                    </label>
-                ))}
             </div>
             <div className="comment-section">
                 <label>Comment:</label>
@@ -217,7 +164,7 @@ function TestPop({ popupId, closePopup, userToken }) {
                     value={signOffName}
                     onChange={e => setSignOffName(e.target.value)}
                     placeholder="Your name" />
-                <button onClick={handleSignOff}>Sign Off</button>
+                <button onClick={() => setSignOffDate(new Date().toLocaleDateString())}>Sign Off</button>
                 {signOffDate && <div>Date: {signOffDate}</div>}
             </div>
             <button className="close-btn" onClick={closePopup}>Close</button>
