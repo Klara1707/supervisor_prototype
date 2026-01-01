@@ -48,37 +48,28 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     };
     // ...existing code...
 
-    // Auto-save progress to backend on every change and on unmount (close)
+    // Load progress from backend on mount
     useEffect(() => {
         if (!popupId || !userToken) return;
-        const payload = {
-            popupId,
-            gridProgressChecks,
-            comments,
-            signOffs,
-            progressPercentage: percentage
-        };
         fetch("/api/training-progress/", {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Authorization": `Bearer ${userToken}`,
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
-        // Also save on unmount (when popup closes)
-        return () => {
-            fetch("/api/training-progress/", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${userToken}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
-        };
+            }
+        })
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                const entry = data && data[popupId];
+                if (entry) {
+                    setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
+                    setComments(entry.comments || Array(7).fill(""));
+                    setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                }
+            })
+            .catch(() => {});
         // eslint-disable-next-line
-    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken]);
+    }, [popupId, userToken]);
 
     // Build table rows for Bootstrap table
     const tableRows = [];

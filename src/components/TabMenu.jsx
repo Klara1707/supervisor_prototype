@@ -111,7 +111,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
     // Handler to update progress state
     const handleProgressUpdate = async () => {
         const latest = await fetchProgressFromBackend();
-        console.log('[TabMenu] handleProgressUpdate, latest:', latest);
+        // ...existing code...
         if (latest && Object.keys(latest).length > 0) {
             setProgress(latest);
         } else {
@@ -162,13 +162,11 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
                     }
                     if (res.ok) {
                         const data = await res.json();
-                        console.log('[TabMenu] fetchAndSetProgress, data:', data);
                         setProgress(data || {});
                     } else {
                         setProgress((prev) => ({ ...prev }));
                     }
                 } catch (e) {
-                    console.log("[TabMenu] Error fetching progress:", e);
                     setProgress((prev) => ({ ...prev }));
                 }
             } else {
@@ -183,7 +181,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
     };
 
     const openPopup = (popupId) => {
-        console.log('[TabMenu] openPopup:', popupId, 'token:', token);
         setPopupVisible(popupId);
     };
 
@@ -363,7 +360,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
 
     return (
         <div className="page-wrapper">
-        {/* Removed debug display for production */}
         <div className="w3-bar">
             {Object.keys(tabContent).map((tab) => (
             <button
@@ -375,8 +371,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
             </button>
             ))}
         </div>
-
-                token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
         <TrainingTabs
             tabContent={tabContent}
             activeTab={activeTab}
@@ -394,15 +388,12 @@ export default TabMenu;
 // --- OverviewTab component ---
 function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user }) {
     // DEBUG: Log progress and checkedMandatory to diagnose issues
-    console.log('[OverviewTab] progress:', progress);
     if (progress && progress['mandatory_training']) {
-        console.log('[OverviewTab] progress[mandatory_training]:', progress['mandatory_training']);
     }
     let checkedMandatory = [];
     if (progress && Array.isArray(progress['mandatory_training'])) {
         checkedMandatory = progress['mandatory_training'];
     }
-    console.log('[OverviewTab] checkedMandatory:', checkedMandatory);
     // Only count truthy (checked) values, not just array length
     const completedMandatory = checkedMandatory.filter(Boolean).length;
     const totalMandatory = trainingList.length;

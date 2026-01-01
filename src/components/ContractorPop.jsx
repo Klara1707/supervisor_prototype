@@ -45,7 +45,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     // Load progress from backend on mount
     useEffect(() => {
         if (!popupId || !userToken) return;
-        fetch("/api/training-progress/?popupId=" + encodeURIComponent(popupId), {
+        fetch("/api/training-progress/", {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${userToken}`,
@@ -54,10 +54,11 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
         })
             .then(res => res.ok ? res.json() : null)
             .then(data => {
-                if (data) {
-                    setGridProgressChecks(data.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
-                    setComments(data.comments || Array(7).fill(""));
-                    setSignOffs(data.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                const entry = data && data[popupId];
+                if (entry) {
+                    setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
+                    setComments(entry.comments || Array(7).fill(""));
+                    setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
                 }
             })
             .catch(() => {});

@@ -9,8 +9,7 @@ import { getToken } from "../utils/auth";
 
 function HomePage() {
     const navigate = useNavigate();
-    const [openTestLevel, setOpenTestLevel] = useState(null);
-
+    // Production: no debug or test state
     useEffect(() => {
         const token = getToken();
         if (!token) {

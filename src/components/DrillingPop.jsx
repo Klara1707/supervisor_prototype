@@ -6,9 +6,23 @@ import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     // Manual save progress button with success tick
-    const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
+    const [saveStatus, setSaveStatus] = useState('idle'); // idle | success | error
+    const [saveError, setSaveError] = useState("");
+    // Robust token retrieval: prefer prop, fallback to storage
+    const getToken = () => {
+        if (userToken) return userToken;
+        const local = window.localStorage.getItem('token');
+        const session = window.sessionStorage.getItem('token');
+        return local || session || null;
+    };
     const handleManualSave = async () => {
-        if (!popupId || !userToken) return;
+        const token = getToken();
+        if (!popupId || !token) {
+            setSaveError("Missing popupId or authentication token. Please log in again.");
+            setSaveStatus('error');
+            console.warn("[DrillingPop] Save aborted: missing popupId or token", { popupId, token });
+            return;
+        }
         const payload = {
             popupId,
             gridProgressChecks,
@@ -16,16 +30,37 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             signOffs,
             progressPercentage: percentage
         };
-        await fetch("/api/training-progress/", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${userToken}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
-        setSaveStatus('success');
-        setTimeout(() => setSaveStatus('idle'), 1200);
+        try {
+            const res = await fetch("/api/training-progress/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                let msg = "Save failed";
+                try {
+                    const err = await res.json();
+                    msg = err.detail || JSON.stringify(err);
+                } catch {}
+                setSaveError(msg);
+                setSaveStatus('error');
+                console.error("[DrillingPop] Save failed:", msg);
+            } else {
+                setSaveStatus('success');
+                setSaveError("");
+            }
+        } catch (e) {
+            setSaveStatus('error');
+            setSaveError(e.message || "Save failed");
+            console.error("[DrillingPop] Save error:", e);
+        }
+        setTimeout(() => {
+            setSaveStatus('idle');
+            setSaveError("");
+        }, 3000);
     };
     // ...no manual save button, match EarthworksPop...
     // Grid headers
@@ -50,29 +85,47 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
 
     // Load progress from backend on mount
     useEffect(() => {
-        if (!popupId || !userToken) return;
-        fetch("/api/training-progress/?popupId=" + encodeURIComponent(popupId), {
+        const token = getToken();
+        if (!popupId || !token) {
+            console.warn("[DrillingPop] Load aborted: missing popupId or token", { popupId, token });
+            return;
+        }
+        console.log("[DrillingPop] Fetching progress for", { popupId, token });
+        fetch("/api/training-progress/", {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${userToken}`,
+                "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
         })
-            .then(res => res.ok ? res.json() : null)
+            .then(res => {
+                console.log("[DrillingPop] GET /api/training-progress/ status:", res.status);
+                return res.ok ? res.json() : null;
+            })
             .then(data => {
-                if (data) {
-                    setGridProgressChecks(data.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
-                    setComments(data.comments || Array(7).fill(""));
-                    setSignOffs(data.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                console.log("[DrillingPop] Backend response:", data);
+                const entry = data && data[popupId];
+                if (entry) {
+                    setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
+                    setComments(entry.comments || Array(7).fill(""));
+                    setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                } else {
+                    console.warn(`[DrillingPop] No entry found for popupId '${popupId}' in backend response`, data);
                 }
             })
-            .catch(() => {});
+            .catch((err) => {
+                console.error("[DrillingPop] Error fetching progress:", err);
+            });
         // eslint-disable-next-line
     }, [popupId, userToken]);
 
     // Auto-save progress to backend on every change and on unmount (close)
     useEffect(() => {
-        if (!popupId || !userToken) return;
+        const token = getToken();
+        if (!popupId || !token) {
+            console.warn("[DrillingPop] Auto-save aborted: missing popupId or token", { popupId, token });
+            return;
+        }
         const payload = {
             popupId,
             gridProgressChecks,
@@ -83,7 +136,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
         fetch("/api/training-progress/", {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${userToken}`,
+                "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(payload)
@@ -93,7 +146,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             fetch("/api/training-progress/", {
                 method: "POST",
                 headers: {
-                    "Authorization": `Bearer ${userToken}`,
+                    "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(payload)
@@ -187,7 +240,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     return (
                 <div className="popup-overlay">
                         <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
-                                    {/* Removed debug display for production */}
+                                    {/* Production version: no debug display */}
                                 <h2>Drilling Level {level}</h2>
                 <button
                     onClick={handleManualSave}
@@ -208,11 +261,19 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
                         gap: 8
                     }}
                 >
-                    {saveStatus === 'success' ? (
+                    {saveStatus === 'success' && (
                         <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
-                    ) : null}
+                    )}
+                    {saveStatus === 'error' && (
+                        <span style={{ fontSize: 20, color: 'red' }}>❌</span>
+                    )}
                     Save Progress
                 </button>
+                {saveError && (
+                    <div style={{ color: 'red', marginBottom: 8, fontWeight: 500 }}>
+                        {saveError}
+                    </div>
+                )}
                 <div className="progress-bar-container mb-3">
                     <div
                         className="progress-bar"
