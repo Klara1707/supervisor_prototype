@@ -187,10 +187,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     return (
                 <div className="popup-overlay">
                         <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
-                                {/* DEBUG: Show userToken for troubleshooting */}
-                                <div style={{ fontSize: 12, color: '#b00', marginBottom: 4, wordBreak: 'break-all' }}>
-                                    <strong>DEBUG userToken:</strong> {userToken ? userToken : <span style={{color:'#c00'}}>NO TOKEN</span>}
-                                </div>
+                                    {/* Removed debug display for production */}
                                 <h2>Drilling Level {level}</h2>
                 <button
                     onClick={handleManualSave}

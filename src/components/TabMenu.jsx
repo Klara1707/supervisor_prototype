@@ -20,28 +20,28 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
         <div>
             <div className="city">{tabContent[activeTab]}</div>
 
-            {popupVisible?.startsWith("drilling") && (
+            {popupVisible?.startsWith("drilling") && token && (
                 <DrillingPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
-            {popupVisible?.startsWith("safety") && (
+            {popupVisible?.startsWith("safety") && token && (
                 <SafetyPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
-            {popupVisible?.startsWith("leadership") && (
+            {popupVisible?.startsWith("leadership") && token && (
                 <LeadershipPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
-            {popupVisible?.startsWith("operations") && (
+            {popupVisible?.startsWith("operations") && token && (
                 <OperationsPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
-            {popupVisible?.startsWith("earthworks") && (
+            {popupVisible?.startsWith("earthworks") && token && (
                 <EarthworksPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
-            {popupVisible?.startsWith("cost") && (
+            {popupVisible?.startsWith("cost") && token && (
                 <CostPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
-            {popupVisible?.startsWith("contractor") && (
+            {popupVisible?.startsWith("contractor") && token && (
                 <ContractorPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
-            {popupVisible?.startsWith("field") && (
+            {popupVisible?.startsWith("field") && token && (
                 <FieldPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {showBackToTop && (
@@ -69,7 +69,29 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
         return userStr ? JSON.parse(userStr) : null;
     };
     const [user, setUser] = useState(getStoredUser);
-    const [token, setToken] = useState(() => localStorage.getItem("token") || "");
+    // Always check both storages for token
+    const getTokenFromStorage = () => {
+        return localStorage.getItem("token") || sessionStorage.getItem("token") || "";
+    };
+    const [token, setToken] = useState(getTokenFromStorage);
+    // Redirect to login if no token is found
+    React.useEffect(() => {
+        if (!token) {
+            alert("You are not logged in or your session has expired. Please log in again.");
+            window.location.href = "/login";
+        }
+    }, [token]);
+
+    // Always sync token from both storages on mount and storage events
+    React.useEffect(() => {
+        const syncToken = () => {
+            const latestToken = getTokenFromStorage();
+            setToken(latestToken);
+        };
+        window.addEventListener("storage", syncToken);
+        syncToken(); // also on mount
+        return () => window.removeEventListener("storage", syncToken);
+    }, []);
     const [progress, setProgress] = useState({});
     // Add a dummy state to force re-render
     const [progressTrigger, setProgressTrigger] = useState(0);
@@ -103,14 +125,14 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
 
 
     // Always sync user.site with the latest selected site from storage after login
-    const refreshUserFromStorage = () => {
+    const refreshUserFromStorage = React.useCallback(() => {
         const storedUser = getStoredUser();
         let site = localStorage.getItem("site") || sessionStorage.getItem("site");
         if (storedUser && site) {
             storedUser.site = site.toLowerCase();
         }
         setUser(storedUser);
-    };
+    }, []);
 
     React.useEffect(() => {
         // Listen for login changes (if setUser/setToken called elsewhere)
@@ -126,7 +148,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
         // Also check on mount in case user was updated in another tab
         handleStorage();
         return () => window.removeEventListener("storage", handleStorage);
-    }, []);
+    }, [refreshUserFromStorage]);
 
     React.useEffect(() => {
         const fetchAndSetProgress = async () => {
@@ -341,6 +363,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
 
     return (
         <div className="page-wrapper">
+        {/* Removed debug display for production */}
         <div className="w3-bar">
             {Object.keys(tabContent).map((tab) => (
             <button
@@ -353,11 +376,13 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
             ))}
         </div>
 
+                token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
         <TrainingTabs
             tabContent={tabContent}
             activeTab={activeTab}
             popupVisible={popupVisible}
             closePopup={closePopup}
+            token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
         />
         </div>
     );

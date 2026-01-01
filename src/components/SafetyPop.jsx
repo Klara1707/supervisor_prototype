@@ -4,31 +4,29 @@ import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
-const LevelPopup = ({ level, onClose, popupId }) => {
-            // Manual save progress button with success tick
-            const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
-            // getToken already declared below, remove duplicate
-            const handleManualSave = async () => {
-                if (!popupId) return;
-                const token = getToken();
-                const payload = {
-                    popupId,
-                    gridProgressChecks,
-                    comments,
-                    signOffs,
-                    progressPercentage: percentage
-                };
-                await fetch("/api/training-progress/", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                });
-                setSaveStatus('success');
-                setTimeout(() => setSaveStatus('idle'), 1200);
-            };
+const LevelPopup = ({ level, onClose, popupId, userToken }) => {
+    // Manual save progress button with success tick
+    const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
+    const handleManualSave = async () => {
+        if (!popupId || !userToken) return;
+        const payload = {
+            popupId,
+            gridProgressChecks,
+            comments,
+            signOffs,
+            progressPercentage: percentage
+        };
+        await fetch("/api/training-progress/", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${userToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        setSaveStatus('success');
+        setTimeout(() => setSaveStatus('idle'), 1200);
+    };
         // Grid headers
         const headers = [
             "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
@@ -39,8 +37,6 @@ const LevelPopup = ({ level, onClose, popupId }) => {
     const [gridProgressChecks, setGridProgressChecks] = useState(Array(7).fill(null).map(() => Array(6).fill(false)));
     const [comments, setComments] = useState(Array(7).fill(""));
     const [signOffs, setSignOffs] = useState(Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
-    // Load token
-    const getToken = () => localStorage.getItem("token") || sessionStorage.getItem("token") || "";
 
     // Calculate progress as percentage of checked boxes in gridProgressChecks
     const totalGridChecks = 7 * 6;
@@ -49,11 +45,10 @@ const LevelPopup = ({ level, onClose, popupId }) => {
 
     // Load progress from backend on mount (expect flat object, like other popups)
     useEffect(() => {
-        if (!popupId) return;
-        const token = getToken();
+        if (!popupId || !userToken) return;
         fetch("/api/training-progress/?popupId=" + encodeURIComponent(popupId), {
             method: "GET",
-            headers: { "Authorization": `Bearer ${token}` }
+            headers: { "Authorization": `Bearer ${userToken}` }
         })
             .then(res => res.ok ? res.json() : null)
             .then(data => {
@@ -65,34 +60,39 @@ const LevelPopup = ({ level, onClose, popupId }) => {
             })
             .catch(() => {});
         // eslint-disable-next-line
-    }, [popupId]);
+    }, [popupId, userToken]);
 
     // Save progress to backend on every change and on unmount (close)
     useEffect(() => {
-        const saveProgress = async () => {
-            const token = getToken();
-            await fetch("/api/training-progress/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    popupId,
-                    gridProgressChecks,
-                    comments,
-                    signOffs,
-                    progressPercentage: percentage
-                })
-            });
+        if (!popupId || !userToken) return;
+        const payload = {
+            popupId,
+            gridProgressChecks,
+            comments,
+            signOffs,
+            progressPercentage: percentage
         };
-        saveProgress();
+        fetch("/api/training-progress/", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${userToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
         // Also save on unmount (when popup closes)
         return () => {
-            saveProgress();
+            fetch("/api/training-progress/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${userToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
         };
         // eslint-disable-next-line
-    }, [gridProgressChecks, comments, signOffs, percentage, popupId]);
+    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken]);
 
     // Build table rows for Bootstrap table
     const tableRows = [];
@@ -253,7 +253,7 @@ function SafetyPop({ popupId, closePopup, userToken }) {
             <div className="popup-overlay safety-popup-fadein">
                 <div className="popup-container safety-popup-centered">
                     <button className="close-btn" onClick={closePopup} style={{ float: 'right' }}>Close</button>
-                    <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} />
+                    <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} />
                 </div>
             </div>
         ) : null

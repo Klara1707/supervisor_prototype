@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { trainingList } from "./MandatoryList";
-import TestPop from "./TestPop";
+// import TestPop from "./TestPop";
 
 function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user }) {
     // DEBUG: Log progress and checkedMandatory to diagnose issues
@@ -18,24 +18,24 @@ function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user 
     const totalMandatory = trainingList.length;
     const percentMandatory = totalMandatory > 0 ? Math.round((completedMandatory / totalMandatory) * 100) : 0;
 
-    // Temporary: Show TestPop level buttons at the top
+    //
     const [openTestLevel, setOpenTestLevel] = useState(null);
     useEffect(() => {
         const handler = (e) => setOpenTestLevel(e.detail);
-        window.addEventListener('openTestPop', handler);
-        return () => window.removeEventListener('openTestPop', handler);
+        // window.addEventListener('openTestPop', handler);
+        // return () => window.removeEventListener('openTestPop', handler);
     }, []);
 
     return (
         <div className="city welcome-container" key={progressTrigger}>
-            {/* TEMPORARY TESTPOP BUTTONS */}
+            {/* */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                 <button onClick={() => setOpenTestLevel(1)}>Test Level 1</button>
                 <button onClick={() => setOpenTestLevel(2)}>Test Level 2</button>
                 <button onClick={() => setOpenTestLevel(3)}>Test Level 3</button>
             </div>
             {openTestLevel && (
-                <TestPop popupId={`testlevel${openTestLevel}`} closePopup={() => setOpenTestLevel(null)} userToken={null} openLevel={openTestLevel} />
+                {/* <TestPop ... /> removed */}
             )}
             <h1>Overview</h1>
             <p className="intro">

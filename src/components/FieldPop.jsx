@@ -8,7 +8,12 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
         // Manual save progress button with success tick
         const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
         const handleManualSave = async () => {
-            if (!popupId || !userToken) return;
+            if (!popupId || !userToken) {
+                setSaveStatus('error');
+                setTimeout(() => setSaveStatus('idle'), 2000);
+                alert("Cannot save: missing user session or popup ID.");
+                return;
+            }
             const payload = {
                 popupId,
                 gridProgressChecks,
@@ -16,16 +21,29 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
                 signOffs,
                 progressPercentage: percentage
             };
-            await fetch("/api/training-progress/", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${userToken}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
-            setSaveStatus('success');
-            setTimeout(() => setSaveStatus('idle'), 1200);
+            try {
+                const res = await fetch("/api/training-progress/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${userToken}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) {
+                    setSaveStatus('error');
+                    setTimeout(() => setSaveStatus('idle'), 2000);
+                    alert("Save failed: " + res.status);
+                    return;
+                }
+                setSaveStatus('success');
+                setTimeout(() => setSaveStatus('idle'), 1200);
+            } catch (err) {
+                setSaveStatus('error');
+                setTimeout(() => setSaveStatus('idle'), 2000);
+                alert("Save failed: network error");
+                console.error("Save Progress error:", err);
+            }
         };
     // Grid headers
     const headers = [
@@ -195,11 +213,12 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     return (
         <div className="popup-overlay">
             <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
+                {/* Removed debug display for production */}
                 <h2>Field Supervisor Level {level}</h2>
                 <button
                     onClick={handleManualSave}
                     style={{
-                        background: '#28a745',
+                        background: saveStatus === 'error' ? '#dc3545' : '#28a745',
                         color: 'white',
                         border: 'none',
                         borderRadius: 4,
@@ -217,6 +236,8 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
                 >
                     {saveStatus === 'success' ? (
                         <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
+                    ) : saveStatus === 'error' ? (
+                        <span style={{ fontSize: 20, color: 'white' }}>❌</span>
                     ) : null}
                     Save Progress
                 </button>

@@ -5,7 +5,7 @@ import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/auth";
-import TestPop from "../components/TestPop";
+// import TestPop from "../components/TestPop";
 
 function HomePage() {
     const navigate = useNavigate();
