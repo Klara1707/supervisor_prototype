@@ -145,12 +145,15 @@ function LogInPage() {
                 body: JSON.stringify({ username: username.toLowerCase(), password, site: siteValue }),
             });
             const data = await response.json();
+                console.log("LOGIN RESPONSE:", data);
             if (response.ok) {
                 // Always clear both storages before saving new login data
                 localStorage.clear();
                 sessionStorage.clear();
                 const storage = rememberMe ? localStorage : sessionStorage;
-                storage.setItem("token", data.access);
+                    // Always use 'access' property as the token
+                    const token = data.access || null;
+                storage.setItem("token", token);
                 storage.setItem("site", siteValue);
                 if (data.user) {
                     // Optionally, ensure user.site is also lowercased for consistency

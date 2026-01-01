@@ -22,7 +22,7 @@ function HomePage() {
         <>
             <HeroBar />
             <button style={{margin: 20}} onClick={() => setShowDrillingPop(true)}>Show DrillingPop (DEV TEST)</button>
-            {showDrillingPop && <DrillingPop closePopup={() => setShowDrillingPop(false)} />}
+            {showDrillingPop && <DrillingPop closePopup={() => setShowDrillingPop(false)} userToken={getToken()} popupId="drilling1" />}
             <TabMenu />
             <NavBar />
         </>

@@ -5,6 +5,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId }) => {
+            // Manual save progress button with success tick
+            const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
+            // getToken already declared below, remove duplicate
+            const handleManualSave = async () => {
+                if (!popupId) return;
+                const token = getToken();
+                const payload = {
+                    popupId,
+                    gridProgressChecks,
+                    comments,
+                    signOffs,
+                    progressPercentage: percentage
+                };
+                await fetch("/api/training-progress/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+                setSaveStatus('success');
+                setTimeout(() => setSaveStatus('idle'), 1200);
+            };
         // Grid headers
         const headers = [
             "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
@@ -18,30 +42,32 @@ const LevelPopup = ({ level, onClose, popupId }) => {
     // Load token
     const getToken = () => localStorage.getItem("token") || sessionStorage.getItem("token") || "";
 
-    // Load progress from backend on mount
+    // Calculate progress as percentage of checked boxes in gridProgressChecks
+    const totalGridChecks = 7 * 6;
+    const completedGridChecks = gridProgressChecks.flat().filter(Boolean).length;
+    const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
+
+    // Load progress from backend on mount (expect flat object, like other popups)
     useEffect(() => {
-        const fetchProgress = async () => {
-            try {
-                const token = getToken();
-                const res = await fetch("/api/training-progress/", {
-                    method: "GET",
-                    headers: { "Authorization": `Bearer ${token}` }
-                });
-                if (!res.ok) return;
-                const data = await res.json();
-                if (data.progress_by_popup && data.progress_by_popup[popupId]) {
-                    const p = data.progress_by_popup[popupId];
-                    if (p.gridProgressChecks) setGridProgressChecks(p.gridProgressChecks);
-                    if (p.comments) setComments(p.comments);
-                    if (p.signOffs) setSignOffs(p.signOffs);
+        if (!popupId) return;
+        const token = getToken();
+        fetch("/api/training-progress/?popupId=" + encodeURIComponent(popupId), {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${token}` }
+        })
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data) {
+                    if (data.gridProgressChecks) setGridProgressChecks(data.gridProgressChecks);
+                    if (data.comments) setComments(data.comments);
+                    if (data.signOffs) setSignOffs(data.signOffs);
                 }
-            } catch {}
-        };
-        fetchProgress();
+            })
+            .catch(() => {});
         // eslint-disable-next-line
     }, [popupId]);
 
-    // Save progress to backend on every change
+    // Save progress to backend on every change and on unmount (close)
     useEffect(() => {
         const saveProgress = async () => {
             const token = getToken();
@@ -61,12 +87,12 @@ const LevelPopup = ({ level, onClose, popupId }) => {
             });
         };
         saveProgress();
+        // Also save on unmount (when popup closes)
+        return () => {
+            saveProgress();
+        };
         // eslint-disable-next-line
     }, [gridProgressChecks, comments, signOffs, percentage, popupId]);
-    // Calculate progress as percentage of checked boxes in gridProgressChecks
-    const totalGridChecks = 7 * 6;
-    const completedGridChecks = gridProgressChecks.flat().filter(Boolean).length;
-    const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
 
     // Build table rows for Bootstrap table
     const tableRows = [];
@@ -154,6 +180,30 @@ const LevelPopup = ({ level, onClose, popupId }) => {
         <div className="popup-overlay">
             <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
                 <h2>Safety Level {level}</h2>
+                <button
+                    onClick={handleManualSave}
+                    style={{
+                        background: '#28a745',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: 4,
+                        padding: '8px 20px',
+                        fontWeight: 600,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        marginBottom: 16,
+                        alignSelf: 'flex-start',
+                        marginTop: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8
+                    }}
+                >
+                    {saveStatus === 'success' ? (
+                        <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
+                    ) : null}
+                    Save Progress
+                </button>
                 <div className="progress-bar-container mb-3">
                     <div
                         className="progress-bar"

@@ -14,35 +14,35 @@ import FieldPop from "./FieldPop";
 import { authFetch } from "../utils/auth";
 
 
-const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
+const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }) => {
     const showBackToTop = ["Home", "Overview", "Mandatory_Training"].includes(activeTab);
     return (
         <div>
             <div className="city">{tabContent[activeTab]}</div>
 
             {popupVisible?.startsWith("drilling") && (
-                <DrillingPop popupId={popupVisible} closePopup={closePopup} />
+                <DrillingPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {popupVisible?.startsWith("safety") && (
-                <SafetyPop popupId={popupVisible} closePopup={closePopup} />
+                <SafetyPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {popupVisible?.startsWith("leadership") && (
-                <LeadershipPop popupId={popupVisible} closePopup={closePopup} />
+                <LeadershipPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {popupVisible?.startsWith("operations") && (
-                <OperationsPop popupId={popupVisible} closePopup={closePopup} />
+                <OperationsPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {popupVisible?.startsWith("earthworks") && (
-                <EarthworksPop popupId={popupVisible} closePopup={closePopup} />
+                <EarthworksPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {popupVisible?.startsWith("cost") && (
-                <CostPop popupId={popupVisible} closePopup={closePopup} />
+                <CostPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {popupVisible?.startsWith("contractor") && (
-                <ContractorPop popupId={popupVisible} closePopup={closePopup} />
+                <ContractorPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {popupVisible?.startsWith("field") && (
-                <FieldPop popupId={popupVisible} closePopup={closePopup} />
+                <FieldPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
             )}
             {showBackToTop && (
                 <button
@@ -80,7 +80,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
             const res = await authFetch("/api/training-progress/");
             if (!res.ok) return {};
             const data = await res.json();
-            return data.progress_by_popup || {};
+            return data || {};
         } catch {
             return {};
         }
@@ -100,6 +100,17 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
     };
     // Removed unused setMenuVisible and navigate
     // Removed unused handleLogout and toggleMenu functions
+
+
+    // Always sync user.site with the latest selected site from storage after login
+    const refreshUserFromStorage = () => {
+        const storedUser = getStoredUser();
+        let site = localStorage.getItem("site") || sessionStorage.getItem("site");
+        if (storedUser && site) {
+            storedUser.site = site.toLowerCase();
+        }
+        setUser(storedUser);
+    };
 
     React.useEffect(() => {
         // Listen for login changes (if setUser/setToken called elsewhere)
@@ -129,8 +140,8 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
                     }
                     if (res.ok) {
                         const data = await res.json();
-                        console.log('[TabMenu] fetchAndSetProgress, data.progress_by_popup:', data.progress_by_popup);
-                        setProgress(data.progress_by_popup || {});
+                        console.log('[TabMenu] fetchAndSetProgress, data:', data);
+                        setProgress(data || {});
                     } else {
                         setProgress((prev) => ({ ...prev }));
                     }
@@ -145,22 +156,12 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup }) => {
         fetchAndSetProgress();
     }, [token, progressTrigger]);
 
-
-// Always sync user.site with the latest selected site from storage after login
-const refreshUserFromStorage = () => {
-    const storedUser = getStoredUser();
-    let site = localStorage.getItem("site") || sessionStorage.getItem("site");
-    if (storedUser && site) {
-        storedUser.site = site.toLowerCase();
-    }
-    setUser(storedUser);
-};
-
     const openCity = (event, cityName) => {
         setActiveTab(cityName);
     };
 
     const openPopup = (popupId) => {
+        console.log('[TabMenu] openPopup:', popupId, 'token:', token);
         setPopupVisible(popupId);
     };
 

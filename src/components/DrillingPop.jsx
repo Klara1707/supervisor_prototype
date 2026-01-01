@@ -5,6 +5,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken }) => {
+    // Manual save progress button with success tick
+    const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
+    const handleManualSave = async () => {
+        if (!popupId || !userToken) return;
+        const payload = {
+            popupId,
+            gridProgressChecks,
+            comments,
+            signOffs,
+            progressPercentage: percentage
+        };
+        await fetch("/api/training-progress/", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${userToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        setSaveStatus('success');
+        setTimeout(() => setSaveStatus('idle'), 1200);
+    };
+    // ...no manual save button, match EarthworksPop...
     // Grid headers
     const headers = [
         "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
@@ -47,7 +70,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
         // eslint-disable-next-line
     }, [popupId, userToken]);
 
-    // Auto-save progress to backend on every change
+    // Auto-save progress to backend on every change and on unmount (close)
     useEffect(() => {
         if (!popupId || !userToken) return;
         const payload = {
@@ -65,6 +88,17 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             },
             body: JSON.stringify(payload)
         });
+        // Also save on unmount (when popup closes)
+        return () => {
+            fetch("/api/training-progress/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${userToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+        };
         // eslint-disable-next-line
     }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken]);
 
@@ -151,9 +185,37 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     // ...existing code...
 
     return (
-        <div className="popup-overlay">
-            <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
-                <h2>Drilling Level {level}</h2>
+                <div className="popup-overlay">
+                        <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
+                                {/* DEBUG: Show userToken for troubleshooting */}
+                                <div style={{ fontSize: 12, color: '#b00', marginBottom: 4, wordBreak: 'break-all' }}>
+                                    <strong>DEBUG userToken:</strong> {userToken ? userToken : <span style={{color:'#c00'}}>NO TOKEN</span>}
+                                </div>
+                                <h2>Drilling Level {level}</h2>
+                <button
+                    onClick={handleManualSave}
+                    style={{
+                        background: '#28a745',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: 4,
+                        padding: '8px 20px',
+                        fontWeight: 600,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        marginBottom: 16,
+                        alignSelf: 'flex-start',
+                        marginTop: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8
+                    }}
+                >
+                    {saveStatus === 'success' ? (
+                        <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
+                    ) : null}
+                    Save Progress
+                </button>
                 <div className="progress-bar-container mb-3">
                     <div
                         className="progress-bar"

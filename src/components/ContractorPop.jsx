@@ -5,21 +5,38 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken }) => {
-    // Grid headers
-    const headers = [
-        "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-        "Training Process", "Training Material", "Reviewer sign off", "Comments"
-    ];
-    // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
-    // Must have 7 rows for rows 1-7 (index 0-6)
-    const [gridProgressChecks, setGridProgressChecks] = useState(
-        Array(7).fill(null).map(() => Array(6).fill(false))
-    );
-    // Per-row comment state
-    const [comments, setComments] = useState(Array(7).fill(""));
-    const [signOffs, setSignOffs] = useState(
-        Array(7).fill(null).map(() => ({ name: "", date: "", signed: false }))
-    );
+        // Grid headers
+        const headers = [
+            "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
+            "Training Process", "Training Material", "Reviewer sign off", "Comments"
+        ];
+        // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
+        // Must have 7 rows for rows 1-7 (index 0-6)
+        const [gridProgressChecks, setGridProgressChecks] = useState(Array(7).fill(null).map(() => Array(6).fill(false)));
+        const [comments, setComments] = useState(Array(7).fill(""));
+        const [signOffs, setSignOffs] = useState(Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+    // Manual save progress button with success tick
+    const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
+    const handleManualSave = async () => {
+        if (!popupId || !userToken) return;
+        const payload = {
+            popupId,
+            gridProgressChecks,
+            comments,
+            signOffs,
+            progressPercentage: percentage
+        };
+        await fetch("/api/training-progress/", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${userToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        setSaveStatus('success');
+        setTimeout(() => setSaveStatus('idle'), 1200);
+    };
     // Calculate progress as percentage of checked boxes in gridProgressChecks
     const totalGridChecks = 7 * 6;
     const completedGridChecks = gridProgressChecks.flat().filter(Boolean).length;
@@ -47,7 +64,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
         // eslint-disable-next-line
     }, [popupId, userToken]);
 
-    // Auto-save progress to backend on every change
+    // Auto-save progress to backend on every change and on unmount (close)
     useEffect(() => {
         if (!popupId || !userToken) return;
         const payload = {
@@ -65,6 +82,17 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             },
             body: JSON.stringify(payload)
         });
+        // Also save on unmount (when popup closes)
+        return () => {
+            fetch("/api/training-progress/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${userToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+        };
         // eslint-disable-next-line
     }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken]);
 
@@ -154,6 +182,30 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
         <div className="popup-overlay">
             <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
                 <h2>Contractor Management Level {level}</h2>
+                <button
+                    onClick={handleManualSave}
+                    style={{
+                        background: '#28a745',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: 4,
+                        padding: '8px 20px',
+                        fontWeight: 600,
+                        fontSize: 16,
+                        cursor: 'pointer',
+                        marginBottom: 16,
+                        alignSelf: 'flex-start',
+                        marginTop: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8
+                    }}
+                >
+                    {saveStatus === 'success' ? (
+                        <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
+                    ) : null}
+                    Save Progress
+                </button>
                 <div className="progress-bar-container mb-3">
                     <div
                         className="progress-bar"
