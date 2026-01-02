@@ -1,25 +1,10 @@
-
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import PasswordResetForm from "../components/PasswordResetForm";
 import HeroBar from "../components/HeroBar";
 import "./LogInPage.css";
 
-// Test fetch function for debugging
-function testFetchToken() {
-    fetch("http://127.0.0.1:8000/api/token/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            username: "your_email", // replace with real email
-            password: "your_password", // replace with real password
-            site: "restofwest"
-        })
-    })
-        .then(r => r.json())
-        .then(console.log)
-        .catch(console.error);
-}
+// ...existing code...
 
 function AdminLogin({ onSuccess }) {
     // Removed undefined variables from console.log to fix ESLint error
@@ -176,14 +161,14 @@ function LogInPage() {
         <div className="login-container">
             <div className="top-row">
                 {/* New User section at the top of the login form */}
-                <form className="login-form" onSubmit={handleLogin} style={{marginTop: '-1.5rem'}}>
-                    <div className="new-user-box" style={{marginBottom: '2rem'}}>
-                        <div className="context-inner-box" style={{color: '#cd2c2c', fontWeight: 'normal', fontSize: '1.5rem'}}>New user?</div>
+                <form className="login-form" onSubmit={handleLogin} style={{marginTop: '-1.0rem', gap: '0.4rem'}}>
+                    <div className="new-user-box" style={{marginBottom: '0.1rem', marginTop: '-1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f8f9fa', borderRadius: '6px', padding: '0.5rem 1rem', justifyContent: 'flex-start'}}>
+                        <span style={{color: '#cd2c2c', fontWeight: 'normal', fontSize: '1.2rem', margin: 0}}>New user?</span>
                         <Link to="/createaccount">
-                            <button className="create-account-btn">Create Account</button>
+                            <button className="create-account-btn" style={{marginLeft: '0.5rem'}}>Create Account</button>
                         </Link>
                     </div>
-                    <div className="context-inner-box">
+                    <div className="context-inner-box" style={{paddingBottom: '0.1rem'}}>
                         <h1>Welcome Back</h1>
                         <p>Please log in to continue</p>
                     </div>
@@ -197,7 +182,7 @@ function LogInPage() {
                         value={username}
                         onChange={e => setUsername(e.target.value)}
                         className="login-form-input"
-                        style={{border: '1px solid #ccc'}}
+                        style={{border: '1px solid #ccc', marginBottom: '0.3rem'}}
                     />
                     <label htmlFor="password">Password</label>
                     <input
@@ -209,7 +194,7 @@ function LogInPage() {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         className="login-form-input"
-                        style={{border: '1px solid #ccc'}} // <-- Add this inline style as a last-resort override
+                        style={{border: '1px solid #ccc', marginBottom: '0.3rem'}}
                     />
                     <label htmlFor="role">Select Role</label>
                     <select
@@ -218,6 +203,7 @@ function LogInPage() {
                         className="form-select"
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
+                        style={{marginBottom: '0.3rem'}}
                     >
                         <option value="">-- Please choose an option --</option>
                         <option value="contractor-supervisor">Contractor Supervisor</option>
@@ -236,7 +222,7 @@ function LogInPage() {
                                 setSite(e.target.value);
                             }}
                             required
-                            style={{ border: site ? '1px solid #ccc' : '2px solid red' }}
+                            style={{ border: site ? '1px solid #ccc' : '2px solid red', marginBottom: '0.3rem' }}
                         >
                             <option value="">-- Choose a Hub --</option>
                             <option value="robevalley">Robe Valley</option>

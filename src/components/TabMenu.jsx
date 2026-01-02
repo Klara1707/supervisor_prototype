@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./TabMenu.css";
 import MandatoryList from "./MandatoryList";
-import trainingList from "../data/trainingList";
+// import trainingList from "../data/trainingList";
 import DrillingPop from "./DrillingPop";
 import SafetyPop from "./SafetyPop";
 import LeadershipPop from "./LeadershipPop";
@@ -12,37 +12,44 @@ import CostPop from "./CostPop";
 import ContractorPop from "./ContractorPop";
 import FieldPop from "./FieldPop";
 import { authFetch } from "../utils/auth";
+import OverviewTab from "./OverviewTab"; // Ensure we are using the imported OverviewTab
 
 
-const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }) => {
+const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, onProgressUpdate }) => {
     const showBackToTop = ["Home", "Overview", "Mandatory_Training"].includes(activeTab);
     return (
         <div>
             <div className="city">{tabContent[activeTab]}</div>
 
             {popupVisible?.startsWith("drilling") && token && (
-                <DrillingPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
+                <DrillingPop
+                    key={popupVisible}
+                    popupId={popupVisible}
+                    closePopup={closePopup}
+                    userToken={token}
+                    onProgressUpdate={onProgressUpdate}
+                />
             )}
             {popupVisible?.startsWith("safety") && token && (
-                <SafetyPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
+                <SafetyPop key={popupVisible} popupId={popupVisible} closePopup={closePopup} userToken={token} onProgressUpdate={onProgressUpdate} />
             )}
             {popupVisible?.startsWith("leadership") && token && (
-                <LeadershipPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
+                <LeadershipPop key={popupVisible} popupId={popupVisible} closePopup={closePopup} userToken={token} onProgressUpdate={onProgressUpdate} />
             )}
             {popupVisible?.startsWith("operations") && token && (
-                <OperationsPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
+                <OperationsPop key={popupVisible} popupId={popupVisible} closePopup={closePopup} userToken={token} onProgressUpdate={onProgressUpdate} />
             )}
             {popupVisible?.startsWith("earthworks") && token && (
-                <EarthworksPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
+                <EarthworksPop key={popupVisible} popupId={popupVisible} closePopup={closePopup} userToken={token} onProgressUpdate={onProgressUpdate} />
             )}
             {popupVisible?.startsWith("cost") && token && (
-                <CostPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
+                <CostPop key={popupVisible} popupId={popupVisible} closePopup={closePopup} userToken={token} onProgressUpdate={onProgressUpdate} />
             )}
             {popupVisible?.startsWith("contractor") && token && (
-                <ContractorPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
+                <ContractorPop key={popupVisible} popupId={popupVisible} closePopup={closePopup} userToken={token} onProgressUpdate={onProgressUpdate} />
             )}
             {popupVisible?.startsWith("field") && token && (
-                <FieldPop popupId={popupVisible} closePopup={closePopup} userToken={token} />
+                <FieldPop key={popupVisible} popupId={popupVisible} closePopup={closePopup} userToken={token} onProgressUpdate={onProgressUpdate} />
             )}
             {showBackToTop && (
                 <button
@@ -377,6 +384,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
             popupVisible={popupVisible}
             closePopup={closePopup}
             token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
+            onProgressUpdate={handleProgressUpdate}
         />
         </div>
     );
@@ -385,112 +393,3 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token }
 
 export default TabMenu;
 
-// --- OverviewTab component ---
-function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user }) {
-    // DEBUG: Log progress and checkedMandatory to diagnose issues
-    if (progress && progress['mandatory_training']) {
-    }
-    let checkedMandatory = [];
-    if (progress && Array.isArray(progress['mandatory_training'])) {
-        checkedMandatory = progress['mandatory_training'];
-    }
-    // Only count truthy (checked) values, not just array length
-    const completedMandatory = checkedMandatory.filter(Boolean).length;
-    const totalMandatory = trainingList.length;
-    const percentMandatory = totalMandatory > 0 ? Math.round((completedMandatory / totalMandatory) * 100) : 0;
-
-    return (
-        <div className="city welcome-container" key={progressTrigger}>
-            <h1>Overview</h1>
-            <p className="intro">
-                Your progress for each training area. Click a bar to open the popup and continue your training.
-            </p>
-            <div className="overview-grid">
-                {/* Mandatory Training Section */}
-                <div className="overview-section">
-                    <h2>Mandatory Training</h2>
-                    <div className="tab-buttons">
-                        <div
-                            className="progress-bar-container"
-                            onClick={() => setActiveTab('Mandatory_Training')}
-                            style={{ cursor: "pointer", marginBottom: 12 }}
-                        >
-                            <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
-                                <span style={{ flex: 1 }}>Mandatory Training</span>
-                                <span style={{ marginLeft: 12, fontWeight: 600 }}>{percentMandatory}%</span>
-                            </div>
-                            <div id="myProgress" style={{ background: '#e0e0e0', borderRadius: 8, height: 24, overflow: 'hidden', width: '100%' }}>
-                                <div
-                                    id="myBar"
-                                    style={{
-                                        width: `${percentMandatory}%`,
-                                        minWidth: percentMandatory > 0 ? undefined : 32,
-                                        background: 'linear-gradient(90deg, #4caf50 0%, #43e97b 100%)',
-                                        height: '100%',
-                                        borderRadius: 8,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: 'white',
-                                        fontWeight: 700,
-                                        fontSize: 16,
-                                        transition: 'width 0.5s',
-                                    }}
-                                >
-                                    <span id="percentage">{percentMandatory}%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* End Mandatory Training Section */}
-                {[
-                    { area: "Drilling", popups: ["drilling1", "drilling2", "drilling3"], labels: ["Drilling Level 1", "Drilling Level 2", "Drilling Level 3"], total: 36 },
-                    { area: "Safety", popups: ["safety1", "safety2", "safety3"], labels: ["Safety Level 1", "Safety Level 2", "Safety Level 3"], total: 36 },
-                    { area: "Leadership", popups: ["leadership1", "leadership2", "leadership3"], labels: ["Leadership Level 1", "Leadership Level 2", "Leadership Level 3"], total: 15 },
-                    { area: "Operations", popups: ["operations1", "operations2", "operations3"], labels: ["Operations Level 1", "Operations Level 2", "Operations Level 3"], total: 36 },
-                    { area: "Earthworks", popups: ["earthworks1", "earthworks2", "earthworks3"], labels: ["Earthworks Level 1", "Earthworks Level 2", "Earthworks Level 3"], total: 36 },
-                    { area: "Cost Reporting", popups: ["cost1", "cost2", "cost3"], labels: ["Cost Reporting Level 1", "Cost Reporting Level 2", "Cost Reporting Level 3"], total: 36 },
-                    { area: "Contractor Management", popups: ["contractor1", "contractor2", "contractor3"], labels: ["Contractor Management Level 1", "Contractor Management Level 2", "Contractor Management Level 3"], total: 36 },
-                    { area: "Field Supervisor", popups: ["field1", "field2", "field3"], labels: ["Field Supervisor Level 1", "Field Supervisor Level 2", "Field Supervisor Level 3"], total: 36 },
-                ].map(({ area, popups, labels, total }) => (
-                    <div className="overview-section" key={area}>
-                        <h2>{area}</h2>
-                        <div className="tab-buttons">
-                            {popups.map((popupId, idx) => {
-                                const site = (user && user.site) || 'default';
-                                let checked = [];
-                                if (progress && progress[site] && progress[site][popupId]) {
-                                    checked = progress[site][popupId];
-                                }
-                                if (!Array.isArray(checked)) checked = [];
-                                const percent = total > 0 ? Math.round((checked.length / total) * 100) : 0;
-                                return (
-                                    <div
-                                        key={popupId}
-                                        className="progress-bar-container"
-                                        onClick={() => openPopup(popupId)}
-                                        style={{ cursor: "pointer", marginBottom: 12 }}
-                                    >
-                                        <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
-                                            <span style={{ flex: 1 }}>{labels[idx]}</span>
-                                            <span style={{ marginLeft: 12, fontWeight: 600 }}>{percent}%</span>
-                                        </div>
-                                        <div className="progress-bar-bg">
-                                            <div
-                                                className="progress-bar-fill"
-                                                style={{ width: `${percent}%`, minWidth: percent > 0 ? undefined : 32 }}
-                                            >
-                                                {percent}%
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}

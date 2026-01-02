@@ -472,3 +472,51 @@ a:focus {
     /* border-color: transparent !important; */ /* Ensure this line is removed except for .create-account-btn and .new-user-box button */
 }
 
+/* Responsive styles for small screens */
+@media (max-width: 600px) {
+    .login-container {
+        margin-top: 1rem;
+        padding: 0 0.5rem;
+    }
+    .login-form,
+    .admin-login-box,
+    .new-user-box {
+        max-width: 98vw;
+        width: 100%;
+        padding: 1rem;
+        border-radius: 6px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        margin: 1rem auto;
+    }
+    .form-header h1 {
+        font-size: 1.1rem;
+    }
+    .form-header p {
+        font-size: 0.95rem;
+    }
+    .login-form-btn,
+    .admin-login-toggle,
+    .create-account-btn {
+        font-size: 1rem;
+        padding: 0.6rem 1rem;
+    }
+    .login-form-input,
+    .form-select {
+        font-size: 0.95rem;
+        padding: 0.6rem;
+    }
+    .top-row {
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    .context-inner-box {
+        font-size: 0.95rem;
+        padding: 0.7rem;
+    }
+    .forgot-link {
+        font-size: 0.8rem;
+        padding: 2px 4px;
+    }
+}
+

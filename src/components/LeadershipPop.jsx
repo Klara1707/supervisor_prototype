@@ -4,9 +4,35 @@ import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
-const LevelPopup = ({ level, onClose, popupId, userToken }) => {
+const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
         // Manual save progress button with success tick
         const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
+        const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
+        // Extracted fetch logic for re-use
+        const fetchProgress = async () => {
+            if (!popupId || !userToken) return;
+            try {
+                const res = await fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${userToken}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    // Support both new ({ popupId: {...} }) and legacy ({...}) formats
+                    const entry = data && (data[popupId] || data);
+                    if (entry) {
+                        setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
+                        setComments(entry.comments || Array(7).fill(""));
+                        setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                        setHasLoaded(true); // Mark as loaded so auto-save can start
+                    }
+                }
+            } catch (err) {}
+        };
+
         const handleManualSave = async () => {
             if (!popupId || !userToken) return;
             const payload = {
@@ -25,6 +51,9 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
                 body: JSON.stringify(payload)
             });
             setSaveStatus('success');
+            if (onProgressUpdate) await onProgressUpdate();
+            // Re-fetch latest progress after save
+            await fetchProgress();
             setTimeout(() => setSaveStatus('idle'), 1200);
         };
     // Grid headers
@@ -42,37 +71,21 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     const [signOffs, setSignOffs] = useState(
         Array(7).fill(null).map(() => ({ name: "", date: "", signed: false }))
     );
-    // Calculate progress as percentage of checked boxes in gridProgressChecks
-    const totalGridChecks = 7 * 6;
-    const completedGridChecks = gridProgressChecks.flat().filter(Boolean).length;
+    // Robust percentage calculation: support both 2D and flat arrays
+    let flatChecks = Array.isArray(gridProgressChecks[0]) ? gridProgressChecks.flat() : gridProgressChecks;
+    const totalGridChecks = 42; // Always 7x6
+    const completedGridChecks = flatChecks.filter(Boolean).length;
     const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
 
     // Load progress from backend on mount
     useEffect(() => {
-        if (!popupId || !userToken) return;
-        fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${userToken}`,
-                "Content-Type": "application/json"
-            }
-        })
-            .then(res => res.ok ? res.json() : null)
-            .then(data => {
-                // Support both new ({ popupId: {...} }) and legacy ({...}) formats
-                const entry = data && (data[popupId] || data);
-                if (entry) {
-                    setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
-                    setComments(entry.comments || Array(7).fill(""));
-                    setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
-                }
-            })
-            .catch(() => {});
+        fetchProgress();
         // eslint-disable-next-line
     }, [popupId, userToken]);
 
     // Auto-save progress to backend on every change and on unmount (close)
     useEffect(() => {
+        if (!hasLoaded) return; // Don't auto-save until data is loaded
         if (!popupId || !userToken) return;
         const payload = {
             popupId,
@@ -89,6 +102,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             },
             body: JSON.stringify(payload)
         });
+        if (onProgressUpdate) onProgressUpdate();
         // Also save on unmount (when popup closes)
         return () => {
             fetch("/api/training-progress/", {
@@ -99,9 +113,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
                 },
                 body: JSON.stringify(payload)
             });
+            if (onProgressUpdate) onProgressUpdate();
         };
         // eslint-disable-next-line
-    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken]);
+    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken, hasLoaded]);
 
     // Build table rows for Bootstrap table
     const tableRows = [];
@@ -250,7 +265,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
 
 
 
-function LeadershipPop({ popupId, closePopup, userToken }) {
+function LeadershipPop({ popupId, closePopup, userToken, onProgressUpdate }) {
     if (!popupId) return null;
     let openLevel = null;
     if (popupId === "leadership1") openLevel = 1;
@@ -262,7 +277,7 @@ function LeadershipPop({ popupId, closePopup, userToken }) {
             <div className="popup-overlay leadership-popup-fadein">
                 <div className="popup-container leadership-popup-centered">
                     <button className="close-btn" onClick={closePopup} style={{ float: 'right' }}>Close</button>
-                    <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} />
+                    <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} onProgressUpdate={onProgressUpdate} />
                 </div>
             </div>
         ) : null

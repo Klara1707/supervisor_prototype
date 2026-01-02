@@ -108,65 +108,45 @@ function MandatoryList({ onProgressUpdate, progress, setProgress }) {
                     saved = data;
                 }
                 setDebugProgress(saved); // Save for debug display
+                let restored = Array(trainingList.length).fill(false);
                 if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
-                    if (Array.isArray(saved.checkedItems) && saved.checkedItems.length === trainingList.length) {
-                        setCheckedItems(saved.checkedItems);
+                    if (Array.isArray(saved.checkedItems)) {
+                        // Use as many as possible, pad if needed
+                        restored = saved.checkedItems.slice(0, trainingList.length).concat(Array(Math.max(0, trainingList.length - saved.checkedItems.length)).fill(false));
                         console.log('[MandatoryList] Restored from checkedItems array.');
                     } else if (Array.isArray(saved.gridProgressChecks)) {
                         const flat = saved.gridProgressChecks.flat();
-                        if (flat.length > 0) {
-                            // Accept any length, fill the rest with false
-                            const padded = flat.concat(Array(trainingList.length - flat.length).fill(false)).slice(0, trainingList.length);
-                            setCheckedItems(padded);
-                            console.log(`[MandatoryList] Restored from gridProgressChecks (flattened, padded to ${trainingList.length}).`);
-                        } else {
-                            setCheckedItems(Array(trainingList.length).fill(false));
-                            console.log('[MandatoryList] gridProgressChecks empty, fallback to all unchecked.');
-                        }
+                        restored = flat.slice(0, trainingList.length).concat(Array(Math.max(0, trainingList.length - flat.length)).fill(false));
+                        console.log(`[MandatoryList] Restored from gridProgressChecks (flattened, padded to ${trainingList.length}).`);
                     } else {
-                        setCheckedItems(Array(trainingList.length).fill(false));
                         console.log('[MandatoryList] No valid checkedItems or gridProgressChecks, fallback to all unchecked.');
                     }
-                } else if (Array.isArray(saved) && saved.length === trainingList.length) {
-                    setCheckedItems(saved);
-                    console.log('[MandatoryList] Restored from legacy array.');
+                } else if (Array.isArray(saved)) {
+                    // Use as many as possible, pad if needed
+                    restored = saved.slice(0, trainingList.length).concat(Array(Math.max(0, trainingList.length - saved.length)).fill(false));
+                    console.log('[MandatoryList] Restored from legacy array or 2D array.');
                 } else {
-                    setCheckedItems(Array(trainingList.length).fill(false));
                     console.log('[MandatoryList] No valid saved progress, fallback to all unchecked.');
                 }
+                setCheckedItems(restored);
             })
             .catch((e) => { console.log("[MandatoryList] Error fetching progress:", e); });
     }, [token, trainingList.length]);
     const [showButton, setShowButton] = useState(false);
 
     const handleCheckboxChange = async (index) => {
-        const updatedItems = [...checkedItems];
+        // Always work with a flat array for checkedItems
+        let updatedItems = Array.isArray(checkedItems[0]) ? checkedItems.flat() : [...checkedItems];
         updatedItems[index] = !updatedItems[index];
         setCheckedItems(updatedItems);
         // Save to backend
         if (token) {
-            // Build arrays of length 7 for backend
-            const gridProgressChecks = [
-                updatedItems.slice(0, 6), // first row: first 6 items
-                updatedItems.slice(6, 12),
-                updatedItems.slice(12, 18),
-                updatedItems.slice(18, 24),
-                updatedItems.slice(24, 30),
-                updatedItems.slice(30, 36),
-                updatedItems.slice(36, 42)
-            ];
-            const comments = Array(7).fill("");
-            const signOffs = Array.from({ length: 7 }, () => ({ name: "", date: "", signed: false }));
-            const totalChecked = updatedItems.filter(Boolean).length;
+            // Send as flat array for gridProgressChecks
             await authFetch("/api/training-progress/", {
                 method: "POST",
                 body: JSON.stringify({
                     popupId: popupId,
-                    gridProgressChecks,
-                    checkedItems: updatedItems, // for mandatory list restore
-                    comments,
-                    signOffs,
-                    progressPercentage: Math.round((totalChecked / trainingList.length) * 100)
+                    gridProgressChecks: updatedItems
                 })
             });
             // Notify parent to update progress

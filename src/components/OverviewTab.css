@@ -1,0 +1,26 @@
+/* Progress bar container for OverviewTab, matching MandatoryList */
+.overview-progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+/* Progress bar fill for OverviewTab, matching MandatoryList */
+.overview-progress-bar-fill {
+    height: 30px;
+    background-color: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    transition: width 0.4s ease;
+    font-size: 1rem;
+}
+
+/* Percentage text for OverviewTab */
+.overview-percentage {
+    font-size: 1rem;
+}

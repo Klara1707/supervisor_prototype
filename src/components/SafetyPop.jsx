@@ -4,9 +4,51 @@ import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
-const LevelPopup = ({ level, onClose, popupId, userToken }) => {
+const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
     // Manual save progress button with success tick
     const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
+    const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
+    // Extracted fetch logic for re-use
+    const fetchProgress = async () => {
+        if (!popupId || !userToken) return;
+        try {
+            const res = await fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${userToken}` }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                console.log('[SafetyPop] Backend response:', data);
+                let entry = null;
+                if (data && data[popupId]) {
+                    entry = data[popupId];
+                } else if (data && data.gridProgressChecks) {
+                    entry = data;
+                }
+                if (entry) {
+                    setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
+                    setComments(entry.comments || Array(7).fill(""));
+                    setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                    setHasLoaded(true); // Mark as loaded so auto-save can start
+                    console.log('[SafetyPop] State set:', {
+                        gridProgressChecks: entry.gridProgressChecks,
+                        comments: entry.comments,
+                        signOffs: entry.signOffs
+                    });
+                } else {
+                    console.warn(`[SafetyPop] No entry found for popupId '${popupId}' in backend response`, data);
+                }
+            } else if (res.status === 404) {
+                alert("No saved progress found for this popup. You can start fresh.");
+            } else {
+                alert(`Failed to load progress: ${res.status}`);
+            }
+        } catch (err) {
+            alert("Network error while loading progress. Please try again.");
+            console.error("GET /api/training-progress/ error:", err);
+        }
+    };
+
     const handleManualSave = async () => {
         if (!popupId || !userToken) return;
         const payload = {
@@ -26,6 +68,9 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             body: JSON.stringify(payload)
         });
         setSaveStatus('success');
+        if (onProgressUpdate) await onProgressUpdate();
+        // Re-fetch latest progress after save
+        await fetchProgress();
         setTimeout(() => setSaveStatus('idle'), 1200);
     };
         // Grid headers
@@ -39,59 +84,21 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
     const [comments, setComments] = useState(Array(7).fill(""));
     const [signOffs, setSignOffs] = useState(Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
 
-    // Calculate progress as percentage of checked boxes in gridProgressChecks
-    const totalGridChecks = 7 * 6;
-    const completedGridChecks = gridProgressChecks.flat().filter(Boolean).length;
+    // Robust percentage calculation: support both 2D and flat arrays
+    let flatChecks = Array.isArray(gridProgressChecks[0]) ? gridProgressChecks.flat() : gridProgressChecks;
+    const totalGridChecks = 42; // Always 7x6
+    const completedGridChecks = flatChecks.filter(Boolean).length;
     const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
 
     // Load progress from backend on mount (now with popupId query param)
     useEffect(() => {
-        if (!popupId || !userToken) return;
-        fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
-            method: "GET",
-            headers: { "Authorization": `Bearer ${userToken}` }
-        })
-            .then(async res => {
-                if (res.ok) {
-                    return res.json();
-                } else if (res.status === 404) {
-                    alert("No saved progress found for this popup. You can start fresh.");
-                    return null;
-                } else {
-                    alert(`Failed to load progress: ${res.status}`);
-                    return null;
-                }
-            })
-            .then(data => {
-                console.log('[SafetyPop] Backend response:', data);
-                let entry = null;
-                if (data && data[popupId]) {
-                    entry = data[popupId];
-                } else if (data && data.gridProgressChecks) {
-                    entry = data;
-                }
-                if (entry) {
-                    setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
-                    setComments(entry.comments || Array(7).fill(""));
-                    setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
-                    console.log('[SafetyPop] State set:', {
-                        gridProgressChecks: entry.gridProgressChecks,
-                        comments: entry.comments,
-                        signOffs: entry.signOffs
-                    });
-                } else {
-                    console.warn(`[SafetyPop] No entry found for popupId '${popupId}' in backend response`, data);
-                }
-            })
-            .catch((err) => {
-                alert("Network error while loading progress. Please try again.");
-                console.error("GET /api/training-progress/ error:", err);
-            });
+        fetchProgress();
         // eslint-disable-next-line
     }, [popupId, userToken]);
 
     // Save progress to backend on every change and on unmount (close)
     useEffect(() => {
+        if (!hasLoaded) return; // Don't auto-save until data is loaded
         if (!popupId || !userToken) return;
         const payload = {
             popupId,
@@ -109,6 +116,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
             },
             body: JSON.stringify(payload)
         });
+        if (onProgressUpdate) onProgressUpdate();
         // Also save on unmount (when popup closes)
         return () => {
             console.log('[SafetyPop] Unmount POST payload:', payload);
@@ -120,9 +128,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
                 },
                 body: JSON.stringify(payload)
             });
+            if (onProgressUpdate) onProgressUpdate();
         };
         // eslint-disable-next-line
-    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken]);
+    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken, hasLoaded]);
 
     // Build table rows for Bootstrap table
     const tableRows = [];
@@ -271,7 +280,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken }) => {
 
 
 
-function SafetyPop({ popupId, closePopup, userToken }) {
+function SafetyPop({ popupId, closePopup, userToken, onProgressUpdate }) {
     if (!popupId) return null;
     let openLevel = null;
     if (popupId === "safety1") openLevel = 1;
@@ -283,7 +292,7 @@ function SafetyPop({ popupId, closePopup, userToken }) {
             <div className="popup-overlay safety-popup-fadein">
                 <div className="popup-container safety-popup-centered">
                     <button className="close-btn" onClick={closePopup} style={{ float: 'right' }}>Close</button>
-                    <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} />
+                    <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} onProgressUpdate={onProgressUpdate} />
                 </div>
             </div>
         ) : null
