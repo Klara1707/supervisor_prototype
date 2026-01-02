@@ -28,17 +28,27 @@
 
 .hero-text h1 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 2.4rem;
     font-weight: bold;
     text-align: right;
     font-family: "Delima SemiBold", sans-serif;
     color: var(--black);
 }
 
+.hero-text h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    text-align: right;
+    color: var(--black);
+}
+
 .hero-text p {
     margin-top: 6px;
-    font-size: 1rem;
+    font-size: 1.8rem;
+    font-weight: bold;
     text-align: right;
+    color: #fff;
 }
 
 /* ✅ Mobile-friendly styles */
@@ -60,13 +70,19 @@
     }
 
     .hero-text h1 {
-        font-size: 2rem;
+        font-size: 2.8rem;
+        text-align: center;
+    }
+    .hero-text h2 {
+        font-size: 1.8rem;
         text-align: center;
     }
 
     .hero-text p {
-        font-size: 1rem;
+        font-size: 2.1rem;
+        font-weight: bold;
         text-align: center;
+        color: #fff;
     }
 }
 

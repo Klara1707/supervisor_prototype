@@ -205,23 +205,8 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
                 <h2>Leadership Level {level}</h2>
                 <button
+                    className="save-progress-btn"
                     onClick={handleManualSave}
-                    style={{
-                        background: '#28a745',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: 4,
-                        padding: '8px 20px',
-                        fontWeight: 600,
-                        fontSize: 16,
-                        cursor: 'pointer',
-                        marginBottom: 16,
-                        alignSelf: 'flex-start',
-                        marginTop: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 8
-                    }}
                 >
                     {saveStatus === 'success' ? (
                         <span style={{ fontSize: 20, color: 'white' }}>✔️</span>

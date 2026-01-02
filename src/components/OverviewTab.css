@@ -4,7 +4,7 @@
 .welcome-container {
     max-width: 900px;
     margin: 0 auto 0 auto;
-    padding: 16px 8px 18px 8px;
+    padding: 6px 4px 8px 4px;
     background: #f8fafc;
     border-radius: 0;
     box-shadow: 0 2px 12px 0 rgba(60,72,88,0.08), 0 1px 2px 0 rgba(60,72,88,0.06);
@@ -14,7 +14,7 @@
 .overview-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
+    gap: 6px;
     margin-top: 2px;
 }
 
@@ -54,7 +54,7 @@
 .overview-section h2 {
     font-size: 1.22rem;
     font-weight: 600;
-    margin-bottom: 2px;
+    margin-bottom: 0;
     color: #2d3748;
     letter-spacing: 0.01em;
 }
@@ -113,7 +113,7 @@
 .intro {
     font-size: 0.98rem;
     color: #4a5568;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
     margin-top: 0;
 }
 

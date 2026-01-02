@@ -233,23 +233,8 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 {/* Removed debug display for production */}
                 <h2>Field Supervisor Level {level}</h2>
                 <button
+                    className={saveStatus === 'error' ? 'save-progress-btn error' : 'save-progress-btn'}
                     onClick={handleManualSave}
-                    style={{
-                        background: saveStatus === 'error' ? '#dc3545' : '#28a745',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: 4,
-                        padding: '8px 20px',
-                        fontWeight: 600,
-                        fontSize: 16,
-                        cursor: 'pointer',
-                        marginBottom: 16,
-                        alignSelf: 'flex-start',
-                        marginTop: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 8
-                    }}
                 >
                     {saveStatus === 'success' ? (
                         <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
