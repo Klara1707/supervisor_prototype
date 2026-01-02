@@ -66,9 +66,12 @@ function CreateAccountPage() {
 			<HeroBar />
 			<SuccesLoginPop show={showPopup} onClose={handleClosePopup} />
 			<div className="signup-container">
-				<form className="signup-form" onSubmit={handleSubmit}>
+				<form className="signup-form" onSubmit={handleSubmit} aria-labelledby="signup-form-header">
 					<div className="form-header">
-						<h1>Create Account</h1>
+						<h1 id="signup-form-header" style={{ fontSize: '2.0rem', fontWeight: 'bold' }}>Create Account</h1>
+					</div>
+					<div aria-live="polite" aria-atomic="true" style={{ minHeight: '1.5em', color: message === 'Registration successful!' ? '#388e3c' : '#cd2c2c', fontWeight: message === 'Registration successful!' ? 'normal' : 'bold', marginBottom: '0.5rem' }}>
+						{message}
 					</div>
 					<label htmlFor="first_name">First Name</label>
 					<input
@@ -78,6 +81,7 @@ function CreateAccountPage() {
 						value={form.first_name}
 						onChange={handleChange}
 						required
+						aria-required="true"
 						placeholder="First Name"
 						autoComplete="given-name"
 						style={{border: '1px solid #ccc'}}
@@ -90,6 +94,7 @@ function CreateAccountPage() {
 						value={form.last_name}
 						onChange={handleChange}
 						required
+						aria-required="true"
 						placeholder="Last Name"
 						autoComplete="family-name"
 						style={{border: '1px solid #ccc'}}
@@ -102,6 +107,7 @@ function CreateAccountPage() {
 						value={form.username}
 						onChange={handleChange}
 						required
+						aria-required="true"
 						placeholder="Enter your email address"
 						autoComplete="username"
 						style={{border: '1px solid #ccc'}}
@@ -114,6 +120,7 @@ function CreateAccountPage() {
 						value={form.password}
 						onChange={handleChange}
 						required
+						aria-required="true"
 						placeholder="Password"
 						autoComplete="new-password"
 						style={{border: '1px solid #ccc'}}
@@ -125,6 +132,7 @@ function CreateAccountPage() {
 						value={form.site}
 						onChange={handleChange}
 						required
+						aria-required="true"
 						className="signup-input"
 						style={{
 							padding: '0.75rem',

@@ -49,14 +49,10 @@
     }
     button:focus,
     a:focus {
-        outline: none !important;
-        box-shadow: none !important;
-        /* border-color: transparent !important; */ /* REMOVE THIS LINE */
-    }
-    button:focus,
-    a:focus {
-        outline: none !important;
-        box-shadow: none !important;
+        outline: 2px solid #004b87 !important;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 2px #90caf9 !important;
+        /* border-color: transparent !important; */
     }
     .new-user-box button:focus,
     .new-user-box button:active {
@@ -476,47 +472,80 @@ a:focus {
 @media (max-width: 600px) {
     .login-container {
         margin-top: 1rem;
-        padding: 0 0.5rem;
+        padding: 0 1.2rem;
     }
     .login-form,
     .admin-login-box,
     .new-user-box {
-        max-width: 98vw;
+        max-width: 99vw;
         width: 100%;
-        padding: 1rem;
-        border-radius: 6px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-        margin: 1rem auto;
+        padding: 1.1rem 0.7rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        margin: 1.1rem auto;
+        word-break: break-word;
     }
     .form-header h1 {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
     .form-header p {
-        font-size: 0.95rem;
+        font-size: 0.98rem;
     }
     .login-form-btn,
     .admin-login-toggle,
     .create-account-btn {
-        font-size: 1rem;
-        padding: 0.6rem 1rem;
+        font-size: 1.08rem;
+        padding: 0.7rem 1.1rem;
+        min-height: 44px;
     }
     .login-form-input,
     .form-select {
-        font-size: 0.95rem;
-        padding: 0.6rem;
+        font-size: 1rem;
+        padding: 0.7rem;
     }
     .top-row {
         flex-direction: column;
-        gap: 1rem;
-        margin-bottom: 1rem;
+        gap: 1.2rem;
+        margin-bottom: 1.1rem;
     }
     .context-inner-box {
-        font-size: 0.95rem;
-        padding: 0.7rem;
+        font-size: 0.98rem;
+        padding: 0.8rem;
     }
     .forgot-link {
-        font-size: 0.8rem;
-        padding: 2px 4px;
+        font-size: 0.82rem;
+        padding: 4px 6px;
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .form-buttons {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .login-form label,
+    .login-form input,
+    .login-form-btn,
+    .admin-login-toggle,
+    .create-account-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .login-form input,
+    .form-select {
+        min-height: 44px;
+    }
+    .new-user-box {
+        font-size: 1.08rem;
+    }
+    .admin-login-box {
+        font-size: 1.08rem;
+    }
+    .password-reset-form {
+        font-size: 1rem;
+    }
+    .password-reset-form h2 {
+        font-size: 1.15rem;
     }
 }
 

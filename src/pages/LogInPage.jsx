@@ -94,12 +94,17 @@ function LogInPage() {
     const [showAdminLogin, setShowAdminLogin] = useState(false);
     const [showResetPopup, setShowResetPopup] = useState(false);
 
-    const handleCancel = () => {
+        const [loginMessage, setLoginMessage] = useState("");
+        const [loginMessageType, setLoginMessageType] = useState(""); // "error" or "success"
+    
+        const handleCancel = () => {
         setUsername("");
         setPassword("");
         setSite("");
         setRole("");
         setRememberMe(false);
+            setLoginMessage("");
+            setLoginMessageType("");
     };
 
     const handleLogin = async (e) => {
@@ -184,6 +189,9 @@ function LogInPage() {
                         className="login-form-input"
                         style={{border: '1px solid #ccc', marginBottom: '0.3rem'}}
                     />
+                    <div aria-live="polite" aria-atomic="true" style={{ minHeight: '1.5em', color: loginMessageType === 'error' ? '#cd2c2c' : '#388e3c', fontWeight: loginMessageType === 'error' ? 'bold' : 'normal', marginBottom: '0.5rem' }}>
+                        {loginMessage}
+                    </div>
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
