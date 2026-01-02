@@ -207,7 +207,6 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
             Congratulations on stepping into your role as a Contractor Supervisor within Res Dev!
             This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.
             </p>
-            
             <h2>Our Values</h2>
             <ul className="values-list">
             <li><strong>Care</strong> – We care about the physical and psychological safety of ourselves and others, we care about creating an environment of trust, and we care about the impact we have on our colleagues, communities, and the environment.</li>
@@ -367,25 +366,49 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
 
     return (
         <div className="page-wrapper">
-        <div className="w3-bar">
-            {Object.keys(tabContent).map((tab) => (
-            <button
-                key={tab}
-                className={`tablink ${activeTab === tab ? "w3-red" : ""}`}
-                onClick={(e) => openCity(e, tab)}
+            <div className="w3-bar" role="tablist" aria-label="Training sections">
+                {Object.keys(tabContent).map((tab, idx) => (
+                    <button
+                        key={tab}
+                        id={`tab-${tab}`}
+                        className={`tablink ${activeTab === tab ? "w3-red" : ""}`}
+                        role="tab"
+                        aria-selected={activeTab === tab}
+                        aria-controls={`tabpanel-${tab}`}
+                        tabIndex={activeTab === tab ? 0 : -1}
+                        onClick={(e) => openCity(e, tab)}
+                        onKeyDown={e => {
+                            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                                e.preventDefault();
+                                const tabs = Object.keys(tabContent);
+                                const currentIdx = tabs.indexOf(activeTab);
+                                let nextIdx = e.key === 'ArrowRight' ? currentIdx + 1 : currentIdx - 1;
+                                if (nextIdx < 0) nextIdx = tabs.length - 1;
+                                if (nextIdx >= tabs.length) nextIdx = 0;
+                                setActiveTab(tabs[nextIdx]);
+                                document.getElementById(`tab-${tabs[nextIdx]}`)?.focus();
+                            }
+                        }}
+                    >
+                        {tab.replace(/_/g, " ")}
+                    </button>
+                ))}
+            </div>
+            <div
+                id={`tabpanel-${activeTab}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${activeTab}`}
+                tabIndex={0}
             >
-                {tab.replace(/_/g, " ")}
-            </button>
-            ))}
-        </div>
-        <TrainingTabs
-            tabContent={tabContent}
-            activeTab={activeTab}
-            popupVisible={popupVisible}
-            closePopup={closePopup}
-            token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
-            onProgressUpdate={handleProgressUpdate}
-        />
+                <TrainingTabs
+                    tabContent={tabContent}
+                    activeTab={activeTab}
+                    popupVisible={popupVisible}
+                    closePopup={closePopup}
+                    token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
+                    onProgressUpdate={handleProgressUpdate}
+                />
+            </div>
         </div>
     );
 };

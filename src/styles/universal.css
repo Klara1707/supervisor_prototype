@@ -16,6 +16,10 @@ body {
   color: #2a3a4d;
 }
 
+main, .main-content, .login-container, .App {
+  padding-bottom: 80px; /* Ensure content is not hidden behind fixed NavBar */
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-default);
   font-weight: normal;

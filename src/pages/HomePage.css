@@ -1,3 +1,34 @@
+/* Responsive styles for HomePage */
+@media (max-width: 600px) {
+    body, html {
+        padding: 0;
+        margin: 0;
+        width: 100vw;
+        overflow-x: hidden;
+    }
+    .hero-bar, .tab-menu, .nav-bar {
+        width: 100vw;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 1.1rem;
+        word-break: break-word;
+    }
+    .tab-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem 0.2rem;
+    }
+    .nav-bar {
+        font-size: 1rem;
+        padding: 0.5rem 0.2rem;
+    }
+    .hero-bar {
+        padding: 0.7rem 0.2rem;
+        font-size: 1.2rem;
+    }
+}
 
 
     /* Typography */

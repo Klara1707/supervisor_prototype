@@ -1,5 +1,6 @@
+
 import UserListSection from "../components/UserListSection";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import HeroBar from "../components/HeroBar";
 import NavBar from "../components/NavBar";
 import "./AdminDataPage.css";
@@ -20,31 +21,32 @@ function AdminDataPage() {
         const [messageType, setMessageType] = useState(""); // 'success' or 'error'
         const adminToken = localStorage.getItem("token");
 
-                // Helper to refresh user lists
-                const refreshUserLists = () => {
-                        fetch("http://127.0.0.1:8000/api/users-by-site/", {
-                                headers: {
-                                        Authorization: "Bearer " + adminToken,
-                                },
-                        })
-                                .then(res => res.json())
-                                .then(data => {
-                                        setRobeValley(data.robevalley || []);
-                                        setGreaterHopeDowns(data.greaterhopedowns || []);
-                                        setRestOfEast(data.restofeast || []);
-                                        setRestOfWest(data.restofwest || []);
-                                })
-                                .catch(() => {
-                                        setRobeValley([]);
-                                        setGreaterHopeDowns([]);
-                                        setRestOfEast([]);
-                                        setRestOfWest([]);
-                                });
-                };
 
-                useEffect(() => {
-                        refreshUserLists();
-                }, [adminToken]);
+        // Helper to refresh user lists (memoized for useEffect)
+        const refreshUserLists = useCallback(() => {
+                fetch("http://127.0.0.1:8000/api/users-by-site/", {
+                        headers: {
+                                Authorization: "Bearer " + adminToken,
+                        },
+                })
+                        .then(res => res.json())
+                        .then(data => {
+                                setRobeValley(data.robevalley || []);
+                                setGreaterHopeDowns(data.greaterhopedowns || []);
+                                setRestOfEast(data.restofeast || []);
+                                setRestOfWest(data.restofwest || []);
+                        })
+                        .catch(() => {
+                                setRobeValley([]);
+                                setGreaterHopeDowns([]);
+                                setRestOfEast([]);
+                                setRestOfWest([]);
+                        });
+        }, [adminToken]);
+
+        useEffect(() => {
+                refreshUserLists();
+        }, [refreshUserLists]);
 
         // Improved delete user handler
                 const handleDeleteUser = (email, hub) => {
@@ -125,59 +127,67 @@ function AdminDataPage() {
                                 </div>
                         )}
                         <div className="container">
-                                <section className="requirements">
-                                        <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
-                                                <h2 style={{margin: 0, textAlign: 'center'}}>Admin</h2>
-                                        </div>
-                                        <p>Please click the “Delete user” to remove the person from the Supervisor Training Portal</p>
-                                        <div className="navigation-buttons">
-                                                <button onClick={() => robeValleyRef.current?.scrollIntoView({ behavior: "smooth" })}>
-                                                        Robe Valley
-                                                </button>
-                                                <button onClick={() => greaterHopeDownsRef.current?.scrollIntoView({ behavior: "smooth" })}>
-                                                        Greater Hope Downs
-                                                </button>
-                                                <button onClick={() => restOfEastRef.current?.scrollIntoView({ behavior: "smooth" })}>
-                                                        Rest of East
-                                                </button>
-                                                <button onClick={() => restOfWestRef.current?.scrollIntoView({ behavior: "smooth" })}>
-                                                        Rest of West
-                                                </button>
-                                        </div>
-                                </section>
+                                <main role="main">
+                                        <section className="requirements">
+                                                <div className="admin-title-row" style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
+                                                        <h2 id="admin-title" style={{margin: 0, textAlign: 'center'}}>Admin</h2>
+                                                </div>
+                                                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
+                                                        <p style={{textAlign: 'center', marginBottom: '1rem', maxWidth: 500}}>Please click the “Delete user” to remove the person from the Supervisor Training Portal</p>
+                                                        <nav className="navigation-buttons" aria-label="Jump to user section">
+                                                                <button aria-label="Jump to Robe Valley section" onClick={() => robeValleyRef.current?.scrollIntoView({ behavior: "smooth" })}>
+                                                                        Robe Valley
+                                                                </button>
+                                                                <button aria-label="Jump to Greater Hope Downs section" onClick={() => greaterHopeDownsRef.current?.scrollIntoView({ behavior: "smooth" })}>
+                                                                        Greater Hope Downs
+                                                                </button>
+                                                                <button aria-label="Jump to Rest of East section" onClick={() => restOfEastRef.current?.scrollIntoView({ behavior: "smooth" })}>
+                                                                        Rest of East
+                                                                </button>
+                                                                <button aria-label="Jump to Rest of West section" onClick={() => restOfWestRef.current?.scrollIntoView({ behavior: "smooth" })}>
+                                                                        Rest of West
+                                                                </button>
+                                                        </nav>
+                                                </div>
+                                        </section>
 
-                                <UserListSection
-                                        title="Robe Valley"
-                                        users={robevalley}
-                                        deleting={deleting}
-                                        handleDeleteUser={handleDeleteUser}
-                                        hub="robevalley"
-                                        sectionRef={robeValleyRef}
-                                />
-                                <UserListSection
-                                        title="Greater Hope Downs"
-                                        users={greaterhopedowns}
-                                        deleting={deleting}
-                                        handleDeleteUser={handleDeleteUser}
-                                        hub="greaterhopedowns"
-                                        sectionRef={greaterHopeDownsRef}
-                                />
-                                <UserListSection
-                                        title="Rest of East"
-                                        users={restofeast}
-                                        deleting={deleting}
-                                        handleDeleteUser={handleDeleteUser}
-                                        hub="restofeast"
-                                        sectionRef={restOfEastRef}
-                                />
-                                <UserListSection
-                                        title="Rest of West"
-                                        users={restofwest}
-                                        deleting={deleting}
-                                        handleDeleteUser={handleDeleteUser}
-                                        hub="restofwest"
-                                        sectionRef={restOfWestRef}
-                                />
+                                        <UserListSection
+                                                title="Robe Valley"
+                                                users={robevalley}
+                                                deleting={deleting}
+                                                handleDeleteUser={handleDeleteUser}
+                                                hub="robevalley"
+                                                sectionRef={robeValleyRef}
+                                                ariaLabelledby="robe-valley-title"
+                                        />
+                                        <UserListSection
+                                                title="Greater Hope Downs"
+                                                users={greaterhopedowns}
+                                                deleting={deleting}
+                                                handleDeleteUser={handleDeleteUser}
+                                                hub="greaterhopedowns"
+                                                sectionRef={greaterHopeDownsRef}
+                                                ariaLabelledby="greater-hope-downs-title"
+                                        />
+                                        <UserListSection
+                                                title="Rest of East"
+                                                users={restofeast}
+                                                deleting={deleting}
+                                                handleDeleteUser={handleDeleteUser}
+                                                hub="restofeast"
+                                                sectionRef={restOfEastRef}
+                                                ariaLabelledby="rest-of-east-title"
+                                        />
+                                        <UserListSection
+                                                title="Rest of West"
+                                                users={restofwest}
+                                                deleting={deleting}
+                                                handleDeleteUser={handleDeleteUser}
+                                                hub="restofwest"
+                                                sectionRef={restOfWestRef}
+                                                ariaLabelledby="rest-of-west-title"
+                                        />
+                                </main>
 
                                 {showButton && (
                                         <button className="back-to-top" onClick={scrollToTop}>

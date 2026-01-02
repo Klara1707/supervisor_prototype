@@ -187,7 +187,7 @@ function LogInPage() {
                         value={username}
                         onChange={e => setUsername(e.target.value)}
                         className="login-form-input"
-                        style={{border: '1px solid #ccc', marginBottom: '0.3rem'}}
+                        style={{border: '1px solid #ccc'}}
                     />
                     <div aria-live="polite" aria-atomic="true" style={{ minHeight: '1.5em', color: loginMessageType === 'error' ? '#cd2c2c' : '#388e3c', fontWeight: loginMessageType === 'error' ? 'bold' : 'normal', marginBottom: '0.5rem' }}>
                         {loginMessage}
@@ -202,7 +202,7 @@ function LogInPage() {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         className="login-form-input"
-                        style={{border: '1px solid #ccc', marginBottom: '0.3rem'}}
+                        style={{border: '1px solid #ccc'}}
                     />
                     <label htmlFor="role">Select Role</label>
                     <select

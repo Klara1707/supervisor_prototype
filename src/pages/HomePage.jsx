@@ -2,7 +2,7 @@ import "./HomePage.css";
 import HeroBar from "../components/HeroBar";
 import TabMenu from "../components/TabMenu";
 import NavBar from "../components/NavBar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/auth";
 // import TestPop from "../components/TestPop";

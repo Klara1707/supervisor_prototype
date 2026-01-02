@@ -3,7 +3,7 @@
 
 .welcome-container {
     max-width: 900px;
-    margin: 0 auto 0 auto;
+    margin: 0 auto 90px auto; /* Add bottom margin for NavBar */
     padding: 6px 4px 8px 4px;
     background: #f8fafc;
     border-radius: 0;

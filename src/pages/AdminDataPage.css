@@ -1,7 +1,50 @@
+/* Highlight the title row with a light yellow background */
+.admin-title-row {
+  background: #ffe0b2;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+    .admin-title-row {
+      padding: 0.3rem 0;
+      margin-bottom: 6px;
+    }
+  .admin-data-container {
+    max-width: 99vw;
+    padding: 10px;
+    margin: 10px auto;
+  }
+  .requirements h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  .navigation-buttons {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .navigation-buttons button {
+    width: 100%;
+    min-width: unset;
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+  .admin-subject-item {
+    font-size: 1rem;
+    padding: 8px 0;
+  }
+  .back-to-top {
+    width: 100%;
+    padding: 10px 0;
+  }
+}
 
 /* Section titles specific to AdminDataPage */
 .requirements h2 {
-  font-size: 1.8rem;
+  font-size: 2.1rem;
+    font-size: 1.5rem;
   color: var(--brand);
   margin-bottom: 20px;
   text-align: center;

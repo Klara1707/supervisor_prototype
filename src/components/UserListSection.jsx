@@ -1,10 +1,12 @@
 import React from "react";
 
-function UserListSection({ title, users, deleting, handleDeleteUser, hub, sectionRef }) {
+function UserListSection({ title, users, deleting, handleDeleteUser, hub, sectionRef, ariaLabelledby }) {
+    // Generate a unique id for the section title if not provided
+    const sectionId = ariaLabelledby || `${title.toLowerCase().replace(/\s+/g, '-')}-title`;
     return (
-        <div className="" id={title.replace(/\s+/g, "")}> 
+        <section className="userlist-section" id={title.replace(/\s+/g, "")} aria-labelledby={sectionId}> 
             <div ref={sectionRef} />
-            <h3><strong>{title}</strong></h3>
+            <div className="admin-title-row"><h3 id={sectionId} style={{margin: 0}}><strong>{title}</strong></h3></div>
             {users.map((user, idx) => {
                 const key = user.email || user.username;
                 return (
@@ -27,7 +29,7 @@ function UserListSection({ title, users, deleting, handleDeleteUser, hub, sectio
                     </div>
                 );
             })}
-        </div>
+        </section>
     );
 }
 
