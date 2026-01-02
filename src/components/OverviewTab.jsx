@@ -65,44 +65,22 @@ function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user 
                 Your progress for each training area. Click a bar to open the popup and continue your training.
             </p>
             <div className="overview-grid">
-                {/* Mandatory Training Section */}
-                <div className="overview-section">
-                    <h2>Mandatory Training</h2>
-                    <div className="tab-buttons">
-                        <div
-                            className="overview-progress-bar-container"
-                            onClick={() => setActiveTab('Mandatory_Training')}
-                            style={{ cursor: "pointer" }}
-                        >
-                            <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
-                                <span style={{ flex: 1 }}>Mandatory Training</span>
-                                <span className="overview-percentage" style={{ marginLeft: 12, fontWeight: 600 }}>{percentMandatory}%</span>
-                            </div>
-                            <div className="overview-progress-bar-container">
-                                <div
-                                    className="overview-progress-bar-fill"
-                                    style={{ width: `${percentMandatory}%` }}
-                                >
-                                    <span className="overview-percentage">{percentMandatory}%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* End Mandatory Training Section */}
+                {/* Render all cards except Mandatory Training first */}
                 {[
-                    { area: "Drilling", popups: ["drilling1", "drilling2", "drilling3"], labels: ["Drilling Level 1", "Drilling Level 2", "Drilling Level 3"], total: 42 },
-                    { area: "Safety", popups: ["safety1", "safety2", "safety3"], labels: ["Safety Level 1", "Safety Level 2", "Safety Level 3"], total: 42 },
-                    { area: "Leadership", popups: ["leadership1", "leadership2", "leadership3"], labels: ["Leadership Level 1", "Leadership Level 2", "Leadership Level 3"], total: 42 },
-                    { area: "Operations", popups: ["operations1", "operations2", "operations3"], labels: ["Operations Level 1", "Operations Level 2", "Operations Level 3"], total: 42 },
-                    { area: "Earthworks", popups: ["earthworks1", "earthworks2", "earthworks3"], labels: ["Earthworks Level 1", "Earthworks Level 2", "Earthworks Level 3"], total: 42 },
-                    { area: "Cost Reporting", popups: ["cost1", "cost2", "cost3"], labels: ["Cost Reporting Level 1", "Cost Reporting Level 2", "Cost Reporting Level 3"], total: 42 },
-                    { area: "Contractor Management", popups: ["contractor1", "contractor2", "contractor3"], labels: ["Contractor Management Level 1", "Contractor Management Level 2", "Contractor Management Level 3"], total: 42 },
-                    { area: "Field Supervisor", popups: ["field1", "field2", "field3"], labels: ["Field Supervisor Level 1", "Field Supervisor Level 2", "Field Supervisor Level 3"], total: 42 },
-                ].map(({ area, popups, labels, total }) => (
-                    <div className="overview-section" key={area}>
-                        <h2>{area}</h2>
-                        <div className="tab-buttons">
+                    { area: "Drilling", popups: ["drilling1", "drilling2", "drilling3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
+                    { area: "Safety", popups: ["safety1", "safety2", "safety3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
+                    { area: "Leadership", popups: ["leadership1", "leadership2", "leadership3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
+                    { area: "Operations", popups: ["operations1", "operations2", "operations3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
+                    { area: "Earthworks", popups: ["earthworks1", "earthworks2", "earthworks3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
+                    { area: "Cost Reporting", popups: ["cost1", "cost2", "cost3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
+                    { area: "Contractor Management", popups: ["contractor1", "contractor2", "contractor3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
+                    { area: "Field Supervisor", popups: ["field1", "field2", "field3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
+                                ].map(({ area, popups, labels, total }) => (
+                                        <div className="overview-section" key={area}>
+                                                <h2
+                                                    style={area === "Contractor Management" ? { marginTop: '10px', marginBottom: '2px' } : {}}
+                                                >{area}</h2>
+                                                <div className="tab-buttons">
                             {popups.map((popupId, idx) => {
                                 const site = (user && user.site) || 'default';
                                 let checked = [];
@@ -135,15 +113,13 @@ function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user 
                                     >
                                         <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
                                             <span style={{ flex: 1 }}>{labels[idx]}</span>
-                                            <span className="overview-percentage" style={{ marginLeft: 12, fontWeight: 600 }}>{percent}%</span>
                                         </div>
                                         <div className="overview-progress-bar-container">
                                             <div
                                                 className="overview-progress-bar-fill"
                                                 style={{ width: `${percent}%` }}
-                                            >
-                                                <span className="overview-percentage">{percent}%</span>
-                                            </div>
+                                            ></div>
+                                            <span className="overview-percentage-bar-label">{percent}%</span>
                                         </div>
                                     </div>
                                 );
@@ -151,6 +127,30 @@ function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user 
                         </div>
                     </div>
                 ))}
+                {/* Mandatory Training Section LAST */}
+                <div className="overview-section">
+                    <h2>Mandatory Training</h2>
+                    <div className="tab-buttons">
+                        <div
+                            className="overview-progress-bar-container"
+                            onClick={() => setActiveTab('Mandatory_Training')}
+                            style={{ cursor: "pointer" }}
+                        >
+                            <div style={{ display: "flex", alignItems: "center", marginBottom: 4 }}>
+                                <span style={{ flex: 1 }}>Mandatory Training</span>
+                                {/* Removed percentage outside the bar */}
+                            </div>
+                            <div className="overview-progress-bar-container">
+                                <div
+                                    className="overview-progress-bar-fill"
+                                    style={{ width: `${percentMandatory}%` }}
+                                ></div>
+                                <span className="overview-percentage-bar-label">{percentMandatory}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* End Mandatory Training Section */}
             </div>
         </div>
     );
