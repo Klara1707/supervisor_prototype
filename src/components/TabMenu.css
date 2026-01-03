@@ -1,3 +1,21 @@
+/* General tab menu button style (match popup and back-to-top) */
+.tabmenu-button {
+    font-family: var(--font-default);
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    padding: 10px 15px;
+    background-color: #8d99ae;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.tabmenu-button:hover {
+    background-color: orange;
+}
 /* Progress bar container for Overview (match MandatoryList) */
 #myProgress {
     width: 100%;
@@ -191,6 +209,24 @@ h3 {
     top: 50%;
     transform: translateY(-50%);
     right: calc((100% - 800px) / 2.5 - 140px); /* 60px is button width + spacing */
+.button1 {
+     font-family: var(--font-default);
+     font-size: 1rem;
+     font-weight: bold;
+     letter-spacing: 0.5px;
+     padding: 10px 15px;
+     margin: 6px;
+     background-color: #8d99ae;
+     color: white;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+     margin-top: 2px;
+     transition: background 0.2s;
+}
+.button1:hover {
+     background-color: orange;
+}
     z-index: 1000;
     padding: 10px 15px;
     background-color: #8d99ae;;

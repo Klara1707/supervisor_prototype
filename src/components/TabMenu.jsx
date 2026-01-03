@@ -199,32 +199,30 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
 
     const tabContent = {
         Home: (
-        <div className="city welcome-container">
-            <h1>
-                Welcome{user && user.first_name && user.first_name.trim() !== "" ? `, ${user.first_name}` : ""}!
-            </h1>
+        <div id="Home" className="w3-container city">
+            <h2>Welcome{user && user.first_name && user.first_name.trim() !== "" ? `, ${user.first_name}` : ""}!</h2>
             <p className="intro">
-            Congratulations on stepping into your role as a Contractor Supervisor within Res Dev!
-            This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.
+                Congratulations on stepping into your role as a Contractor Supervisor within Res Dev!
+                This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.
             </p>
-            <h2>Our Values</h2>
+            <h2 style={{ color: 'orange' }}>Our Values</h2>
             <ul className="values-list">
-            <li><strong>Care</strong> – We care about the physical and psychological safety of ourselves and others, we care about creating an environment of trust, and we care about the impact we have on our colleagues, communities, and the environment.</li>
-            <li><strong>Courage</strong> – We have the courage to show vulnerability, the courage to speak up and challenge when we can do better, and the courage to take ownership of our actions and outcomes to drive performance.</li>
-            <li><strong>Curiosity</strong> – We have curiosity to learn and grow in our fields of expertise, look for opportunities to solve problems with everyday innovation, and be open to different perspectives</li>
+                <li><strong>Care</strong> – We care about the physical and psychological safety of ourselves and others, we care about creating an environment of trust, and we care about the impact we have on our colleagues, communities, and the environment.</li>
+                <li><strong>Courage</strong> – We have the courage to show vulnerability, the courage to speak up and challenge when we can do better, and the courage to take ownership of our actions and outcomes to drive performance.</li>
+                <li><strong>Curiosity</strong> – We have curiosity to learn and grow in our fields of expertise, look for opportunities to solve problems with everyday innovation, and be open to different perspectives</li>
             </ul>
 
-            <h2>Your Learning Journey</h2>
+            <h2 style={{ color: 'orange' }}>Your Learning Journey</h2>
             <p>This is a self-led training package, guided by the help of mentors with progress reported to your Superintendent. The training package covers...</p>
             <ul className="training-list">
-            <li>Roles Responsibilities/skills - What work skills and abilities you are required to learn</li>
-            <li>Divides each responsibility into levels (1,2,3). This ensures thorough understanding of the responsibilities and provides candidates the opportunity to learn at a pace suited to their experience and aptitude</li>
-            <li>Training process comments - Exposure/Experience/Education</li>
-            <li>Training Material links - How to guides, QRG's and examples to help give context and clear direction on closing out a Responsibility/Skill</li>
-            <li>Progress reporting - percentage slider for easy tracking</li>
+                <li>Roles Responsibilities/skills - What work skills and abilities you are required to learn</li>
+                <li>Divides each responsibility into levels (1,2,3). This ensures thorough understanding of the responsibilities and provides candidates the opportunity to learn at a pace suited to their experience and aptitude</li>
+                <li>Training process comments - Exposure/Experience/Education</li>
+                <li>Training Material links - How to guides, QRG's and examples to help give context and clear direction on closing out a Responsibility/Skill</li>
+                <li>Progress reporting - percentage slider for easy tracking</li>
             </ul>
 
-            <h2>Take Control of Your Development</h2>
+            <h2 style={{ color: 'orange' }}>Take Control of Your Development</h2>
             <p>Grow your skills. Challenge yourself. Become the leader you’re meant to be.</p>
         </div>
         ),

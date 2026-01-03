@@ -58,9 +58,8 @@ function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user 
     //
     // Removed unused openTestLevel and handler
     return (
-        <div className="city welcome-container" key={progressTrigger}>
-            {/* Removed test level buttons */}
-            <h1>Overview</h1>
+        <div id="Overview" className="w3-container city" key={progressTrigger}>
+            <h2>Overview</h2>
             <p className="intro">
                 Your progress for each training area. Click a bar to open the popup and continue your training.
             </p>
@@ -77,10 +76,10 @@ function OverviewTab({ progress, progressTrigger, setActiveTab, openPopup, user 
                     { area: "Field Supervisor", popups: ["field1", "field2", "field3"], labels: ["Level 1", "Level 2", "Level 3"], total: 42 },
                                 ].map(({ area, popups, labels, total }) => (
                                         <div className="overview-section" key={area}>
-                                                <h2
-                                                    style={area === "Contractor Management" ? { marginTop: '10px', marginBottom: '2px' } : {}}
-                                                >{area}</h2>
-                                                <div className="tab-buttons">
+                                            <h2
+                                                style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}
+                                            >{area}</h2>
+                                            <div className="tab-buttons" style={{ marginTop: area === 'Contractor Management' ? '11px' : '30px' }}>
                             {popups.map((popupId, idx) => {
                                 const site = (user && user.site) || 'default';
                                 let checked = [];

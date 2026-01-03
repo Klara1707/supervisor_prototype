@@ -173,10 +173,33 @@ input[type="checkbox"] {
     scroll-behavior: smooth;
     }
 
-    /* Responsive adjustment */
-    @media (max-width: 820px) {
+
+/* Back to Top button style (match TabMenu) */
+.back-to-top {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: calc((100% - 800px) / 2.5 - 140px);
+    z-index: 1000;
+    padding: 10px 15px;
+    background-color: #8d99ae;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font-default);
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.back-to-top:hover {
+    background-color: orange;
+}
+
+@media (max-width: 820px) {
     .back-to-top {
-        right: 10px; /* fallback for small screens */
+        right: 10px;
     }
 }
 

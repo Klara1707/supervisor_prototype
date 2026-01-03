@@ -189,8 +189,10 @@ function LogInPage() {
                         className="login-form-input"
                         style={{border: '1px solid #ccc'}}
                     />
-                    <div aria-live="polite" aria-atomic="true" style={{ minHeight: '1.5em', color: loginMessageType === 'error' ? '#cd2c2c' : '#388e3c', fontWeight: loginMessageType === 'error' ? 'bold' : 'normal', marginBottom: '0.5rem' }}>
-                        {loginMessage}
+                    <div aria-live="polite" aria-atomic="true" style={{ color: loginMessageType === 'error' ? '#cd2c2c' : '#388e3c', fontWeight: loginMessageType === 'error' ? 'bold' : 'normal', marginBottom: '0.5rem' }}>
+                        {loginMessage && (
+                            <span style={{ color: loginMessageType === 'error' ? '#cd2c2c' : '#388e3c', fontWeight: loginMessageType === 'error' ? 'bold' : 'normal' }}>{loginMessage}</span>
+                        )}
                     </div>
                     <label htmlFor="password">Password</label>
                     <input
