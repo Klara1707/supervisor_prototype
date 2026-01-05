@@ -294,7 +294,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
 
         Earthworks: (
         <div id="Earthworks" className="w3-container city">
-            <h2>Earthworks Supervision for Safer, Smarter Operations</h2> 
+            <h2>Earthworks Supervision</h2> 
             <p className="intro">
             Our program equips supervisors with the knowledge and practical skills to manage earthworks programs with precision and confidence. Learn best practices in planning, quality control, safety compliance, data collection, package of works and team coordination to ensure projects are delivered efficiently and to the highest standards.
             </p>
@@ -392,20 +392,23 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
                     </button>
                 ))}
             </div>
-            <div
-                id={`tabpanel-${activeTab}`}
-                role="tabpanel"
-                aria-labelledby={`tab-${activeTab}`}
-                tabIndex={0}
-            >
-                <TrainingTabs
-                    tabContent={tabContent}
-                    activeTab={activeTab}
-                    popupVisible={popupVisible}
-                    closePopup={closePopup}
-                    token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
-                    onProgressUpdate={handleProgressUpdate}
-                />
+            <div>
+                <div
+                    key={activeTab}
+                    id={`tabpanel-${activeTab}`}
+                    role="tabpanel"
+                    aria-labelledby={`tab-${activeTab}`}
+                    tabIndex={0}
+                >
+                    <TrainingTabs
+                        tabContent={tabContent}
+                        activeTab={activeTab}
+                        popupVisible={popupVisible}
+                        closePopup={closePopup}
+                        token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
+                        onProgressUpdate={handleProgressUpdate}
+                    />
+                </div>
             </div>
         </div>
     );

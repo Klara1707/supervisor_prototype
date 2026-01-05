@@ -132,8 +132,8 @@ h3 {
 
 .city {
     border: 1px solid #ccc;
-    animation: fadeEffect 0.3s ease-in-out;
-    min-height: calc(100vh - 60px); /* Adjust 60px to match your navbar height */
+    /* animation: fadeEffect 0.3s ease-in-out; */
+    min-height: 600px; /* Ensures static height, adjust as needed */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -143,6 +143,7 @@ h3 {
     margin: 0 auto 90px auto; /* Add bottom margin for NavBar */
     padding: 2rem;
     background: var(--white);
+    overflow: auto; /* Prevents layout shift if content is taller */
 }
 
 .city h2 {
