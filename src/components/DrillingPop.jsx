@@ -185,6 +185,38 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         // eslint-disable-next-line
     }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken, hasLoaded]);
 
+    // Example: unique text for each box
+    // Texts for each popup level
+    const boxTextsByLevel = {
+        1: [
+            ["L1: Box 1", "L1: Box 2", "L1: Box 3", "L1: Box 4", "L1: Box 5", "L1: Box 6"],
+            ["L1: Box 7", "L1: Box 8", "L1: Box 9", "L1: Box 10", "L1: Box 11", "L1: Box 12"],
+            ["L1: Box 13", "L1: Box 14", "L1: Box 15", "L1: Box 16", "L1: Box 17", "L1: Box 18"],
+            ["L1: Box 19", "L1: Box 20", "L1: Box 21", "L1: Box 22", "L1: Box 23", "L1: Box 24"],
+            ["L1: Box 25", "L1: Box 26", "L1: Box 27", "L1: Box 28", "L1: Box 29", "L1: Box 30"],
+            ["L1: Box 31", "L1: Box 32", "L1: Box 33", "L1: Box 34", "L1: Box 35", "L1: Box 36"],
+            ["L1: Box 37", "L1: Box 38", "L1: Box 39", "L1: Box 40", "L1: Box 41", "L1: Box 42"]
+        ],
+        2: [
+            ["L2: Box 1", "L2: Box 2", "L2: Box 3", "L2: Box 4", "L2: Box 5", "L2: Box 6"],
+            ["L2: Box 7", "L2: Box 8", "L2: Box 9", "L2: Box 10", "L2: Box 11", "L2: Box 12"],
+            ["L2: Box 13", "L2: Box 14", "L2: Box 15", "L2: Box 16", "L2: Box 17", "L2: Box 18"],
+            ["L2: Box 19", "L2: Box 20", "L2: Box 21", "L2: Box 22", "L2: Box 23", "L2: Box 24"],
+            ["L2: Box 25", "L2: Box 26", "L2: Box 27", "L2: Box 28", "L2: Box 29", "L2: Box 30"],
+            ["L2: Box 31", "L2: Box 32", "L2: Box 33", "L2: Box 34", "L2: Box 35", "L2: Box 36"],
+            ["L2: Box 37", "L2: Box 38", "L2: Box 39", "L2: Box 40", "L2: Box 41", "L2: Box 42"]
+        ],
+        3: [
+            ["L3: Box 1", "L3: Box 2", "L3: Box 3", "L3: Box 4", "L3: Box 5", "L3: Box 6"],
+            ["L3: Box 7", "L3: Box 8", "L3: Box 9", "L3: Box 10", "L3: Box 11", "L3: Box 12"],
+            ["L3: Box 13", "L3: Box 14", "L3: Box 15", "L3: Box 16", "L3: Box 17", "L3: Box 18"],
+            ["L3: Box 19", "L3: Box 20", "L3: Box 21", "L3: Box 22", "L3: Box 23", "L3: Box 24"],
+            ["L3: Box 25", "L3: Box 26", "L3: Box 27", "L3: Box 28", "L3: Box 29", "L3: Box 30"],
+            ["L3: Box 31", "L3: Box 32", "L3: Box 33", "L3: Box 34", "L3: Box 35", "L3: Box 36"],
+            ["L3: Box 37", "L3: Box 38", "L3: Box 39", "L3: Box 40", "L3: Box 41", "L3: Box 42"]
+        ]
+    };
+    const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
     // Build table rows for Bootstrap table
     let tableRows = null;
     if (!loading) {
@@ -201,16 +233,16 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         for (let row = 1; row <= 7; row++) {
             tableRows.push(
                 <tr key={row}>
-                    {/* Progress checkboxes */}
+                    {/* Progress checkboxes with unique text */}
                     {[0,1,2,3,4,5].map(col => (
                         <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
                             <input
                                 type="checkbox"
                                 checked={gridProgressChecks[row-1][col]}
                                 onChange={() => {
                                     const updated = gridProgressChecks.map(arr => arr.slice());
                                     updated[row-1][col] = !updated[row-1][col];
-                                    console.log('[DrillingPop] Checkbox changed:', { row: row-1, col, updated, flat: updated.flat() });
                                     setGridProgressChecks(updated);
                                 }}
                                 style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
@@ -237,30 +269,30 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     </td>
                     {/* Comment cell */}
                     <td className="align-middle" style={{ padding: 0 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                                <textarea
-                                    value={comments[row-1]}
-                                    onChange={e => {
-                                        const updated = comments.slice();
-                                        updated[row-1] = e.target.value;
-                                        setComments(updated);
-                                    }}
-                                    placeholder="Enter your comment"
-                                    className="form-control"
-                                    style={{
-                                        minHeight: 140,
-                                        maxHeight: 140,
-                                        width: '100%',
-                                        border: '1px solid #ced4da',
-                                        borderRadius: 4,
-                                        resize: 'none',
-                                        boxShadow: 'none',
-                                        padding: 8,
-                                        margin: 0,
-                                        display: 'block',
-                                    }}
-                                />
-                            </div>
+                        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                            <textarea
+                                value={comments[row-1]}
+                                onChange={e => {
+                                    const updated = comments.slice();
+                                    updated[row-1] = e.target.value;
+                                    setComments(updated);
+                                }}
+                                placeholder="Enter your comment"
+                                className="form-control"
+                                style={{
+                                    minHeight: 140,
+                                    maxHeight: 140,
+                                    width: '100%',
+                                    border: '1px solid #ced4da',
+                                    borderRadius: 4,
+                                    resize: 'none',
+                                    boxShadow: 'none',
+                                    padding: 8,
+                                    margin: 0,
+                                    display: 'block',
+                                }}
+                            />
+                        </div>
                     </td>
                 </tr>
             );
