@@ -5,6 +5,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
+            // Texts for each popup level
+            const boxTextsByLevel = {
+                1: [
+                    ["Operations L1: Box 1", "Operations L1: Box 2", "Operations L1: Box 3", "Operations L1: Box 4", "Operations L1: Box 5", "Operations L1: Box 6"],
+                    ["Operations L1: Box 7", "Operations L1: Box 8", "Operations L1: Box 9", "Operations L1: Box 10", "Operations L1: Box 11", "Operations L1: Box 12"],
+                    ["Operations L1: Box 13", "Operations L1: Box 14", "Operations L1: Box 15", "Operations L1: Box 16", "Operations L1: Box 17", "Operations L1: Box 18"],
+                    ["Operations L1: Box 19", "Operations L1: Box 20", "Operations L1: Box 21", "Operations L1: Box 22", "Operations L1: Box 23", "Operations L1: Box 24"],
+                    ["Operations L1: Box 25", "Operations L1: Box 26", "Operations L1: Box 27", "Operations L1: Box 28", "Operations L1: Box 29", "Operations L1: Box 30"],
+                    ["Operations L1: Box 31", "Operations L1: Box 32", "Operations L1: Box 33", "Operations L1: Box 34", "Operations L1: Box 35", "Operations L1: Box 36"],
+                    ["Operations L1: Box 37", "Operations L1: Box 38", "Operations L1: Box 39", "Operations L1: Box 40", "Operations L1: Box 41", "Operations L1: Box 42"]
+                ],
+                2: [
+                    ["Operations L2: Box 1", "Operations L2: Box 2", "Operations L2: Box 3", "Operations L2: Box 4", "Operations L2: Box 5", "Operations L2: Box 6"],
+                    ["Operations L2: Box 7", "Operations L2: Box 8", "Operations L2: Box 9", "Operations L2: Box 10", "Operations L2: Box 11", "Operations L2: Box 12"],
+                    ["Operations L2: Box 13", "Operations L2: Box 14", "Operations L2: Box 15", "Operations L2: Box 16", "Operations L2: Box 17", "Operations L2: Box 18"],
+                    ["Operations L2: Box 19", "Operations L2: Box 20", "Operations L2: Box 21", "Operations L2: Box 22", "Operations L2: Box 23", "Operations L2: Box 24"],
+                    ["Operations L2: Box 25", "Operations L2: Box 26", "Operations L2: Box 27", "Operations L2: Box 28", "Operations L2: Box 29", "Operations L2: Box 30"],
+                    ["Operations L2: Box 31", "Operations L2: Box 32", "Operations L2: Box 33", "Operations L2: Box 34", "Operations L2: Box 35", "Operations L2: Box 36"],
+                    ["Operations L2: Box 37", "Operations L2: Box 38", "Operations L2: Box 39", "Operations L2: Box 40", "Operations L2: Box 41", "Operations L2: Box 42"]
+                ],
+                3: [
+                    ["Operations L3: Box 1", "Operations L3: Box 2", "Operations L3: Box 3", "Operations L3: Box 4", "Operations L3: Box 5", "Operations L3: Box 6"],
+                    ["Operations L3: Box 7", "Operations L3: Box 8", "Operations L3: Box 9", "Operations L3: Box 10", "Operations L3: Box 11", "Operations L3: Box 12"],
+                    ["Operations L3: Box 13", "Operations L3: Box 14", "Operations L3: Box 15", "Operations L3: Box 16", "Operations L3: Box 17", "Operations L3: Box 18"],
+                    ["Operations L3: Box 19", "Operations L3: Box 20", "Operations L3: Box 21", "Operations L3: Box 22", "Operations L3: Box 23", "Operations L3: Box 24"],
+                    ["Operations L3: Box 25", "Operations L3: Box 26", "Operations L3: Box 27", "Operations L3: Box 28", "Operations L3: Box 29", "Operations L3: Box 30"],
+                    ["Operations L3: Box 31", "Operations L3: Box 32", "Operations L3: Box 33", "Operations L3: Box 34", "Operations L3: Box 35", "Operations L3: Box 36"],
+                    ["Operations L3: Box 37", "Operations L3: Box 38", "Operations L3: Box 39", "Operations L3: Box 40", "Operations L3: Box 41", "Operations L3: Box 42"]
+                ]
+            };
+            const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
         // Manual save progress button with success tick
         const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
         const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
@@ -132,9 +163,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     for (let row = 1; row <= 7; row++) {
         tableRows.push(
             <tr key={row}>
-                {/* Progress checkboxes */}
+                {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}

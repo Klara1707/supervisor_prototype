@@ -5,6 +5,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
+            // Texts for each popup level
+            const boxTextsByLevel = {
+                1: [
+                    ["Contractor L1: Box 1", "Contractor L1: Box 2", "Contractor L1: Box 3", "Contractor L1: Box 4", "Contractor L1: Box 5", "Contractor L1: Box 6"],
+                    ["Contractor L1: Box 7", "Contractor L1: Box 8", "Contractor L1: Box 9", "Contractor L1: Box 10", "Contractor L1: Box 11", "Contractor L1: Box 12"],
+                    ["Contractor L1: Box 13", "Contractor L1: Box 14", "Contractor L1: Box 15", "Contractor L1: Box 16", "Contractor L1: Box 17", "Contractor L1: Box 18"],
+                    ["Contractor L1: Box 19", "Contractor L1: Box 20", "Contractor L1: Box 21", "Contractor L1: Box 22", "Contractor L1: Box 23", "Contractor L1: Box 24"],
+                    ["Contractor L1: Box 25", "Contractor L1: Box 26", "Contractor L1: Box 27", "Contractor L1: Box 28", "Contractor L1: Box 29", "Contractor L1: Box 30"],
+                    ["Contractor L1: Box 31", "Contractor L1: Box 32", "Contractor L1: Box 33", "Contractor L1: Box 34", "Contractor L1: Box 35", "Contractor L1: Box 36"],
+                    ["Contractor L1: Box 37", "Contractor L1: Box 38", "Contractor L1: Box 39", "Contractor L1: Box 40", "Contractor L1: Box 41", "Contractor L1: Box 42"]
+                ],
+                2: [
+                    ["Contractor L2: Box 1", "Contractor L2: Box 2", "Contractor L2: Box 3", "Contractor L2: Box 4", "Contractor L2: Box 5", "Contractor L2: Box 6"],
+                    ["Contractor L2: Box 7", "Contractor L2: Box 8", "Contractor L2: Box 9", "Contractor L2: Box 10", "Contractor L2: Box 11", "Contractor L2: Box 12"],
+                    ["Contractor L2: Box 13", "Contractor L2: Box 14", "Contractor L2: Box 15", "Contractor L2: Box 16", "Contractor L2: Box 17", "Contractor L2: Box 18"],
+                    ["Contractor L2: Box 19", "Contractor L2: Box 20", "Contractor L2: Box 21", "Contractor L2: Box 22", "Contractor L2: Box 23", "Contractor L2: Box 24"],
+                    ["Contractor L2: Box 25", "Contractor L2: Box 26", "Contractor L2: Box 27", "Contractor L2: Box 28", "Contractor L2: Box 29", "Contractor L2: Box 30"],
+                    ["Contractor L2: Box 31", "Contractor L2: Box 32", "Contractor L2: Box 33", "Contractor L2: Box 34", "Contractor L2: Box 35", "Contractor L2: Box 36"],
+                    ["Contractor L2: Box 37", "Contractor L2: Box 38", "Contractor L2: Box 39", "Contractor L2: Box 40", "Contractor L2: Box 41", "Contractor L2: Box 42"]
+                ],
+                3: [
+                    ["Contractor L3: Box 1", "Contractor L3: Box 2", "Contractor L3: Box 3", "Contractor L3: Box 4", "Contractor L3: Box 5", "Contractor L3: Box 6"],
+                    ["Contractor L3: Box 7", "Contractor L3: Box 8", "Contractor L3: Box 9", "Contractor L3: Box 10", "Contractor L3: Box 11", "Contractor L3: Box 12"],
+                    ["Contractor L3: Box 13", "Contractor L3: Box 14", "Contractor L3: Box 15", "Contractor L3: Box 16", "Contractor L3: Box 17", "Contractor L3: Box 18"],
+                    ["Contractor L3: Box 19", "Contractor L3: Box 20", "Contractor L3: Box 21", "Contractor L3: Box 22", "Contractor L3: Box 23", "Contractor L3: Box 24"],
+                    ["Contractor L3: Box 25", "Contractor L3: Box 26", "Contractor L3: Box 27", "Contractor L3: Box 28", "Contractor L3: Box 29", "Contractor L3: Box 30"],
+                    ["Contractor L3: Box 31", "Contractor L3: Box 32", "Contractor L3: Box 33", "Contractor L3: Box 34", "Contractor L3: Box 35", "Contractor L3: Box 36"],
+                    ["Contractor L3: Box 37", "Contractor L3: Box 38", "Contractor L3: Box 39", "Contractor L3: Box 40", "Contractor L3: Box 41", "Contractor L3: Box 42"]
+                ]
+            };
+            const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
         // Grid headers
         const headers = [
             "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
@@ -127,9 +158,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     for (let row = 1; row <= 7; row++) {
         tableRows.push(
             <tr key={row}>
-                {/* Progress checkboxes */}
+                {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}

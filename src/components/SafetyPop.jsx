@@ -5,6 +5,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
+        // Texts for each popup level
+        const boxTextsByLevel = {
+            1: [
+                ["Safety L1: Box 1", "Safety L1: Box 2", "Safety L1: Box 3", "Safety L1: Box 4", "Safety L1: Box 5", "Safety L1: Box 6"],
+                ["Safety L1: Box 7", "Safety L1: Box 8", "Safety L1: Box 9", "Safety L1: Box 10", "Safety L1: Box 11", "Safety L1: Box 12"],
+                ["Safety L1: Box 13", "Safety L1: Box 14", "Safety L1: Box 15", "Safety L1: Box 16", "Safety L1: Box 17", "Safety L1: Box 18"],
+                ["Safety L1: Box 19", "Safety L1: Box 20", "Safety L1: Box 21", "Safety L1: Box 22", "Safety L1: Box 23", "Safety L1: Box 24"],
+                ["Safety L1: Box 25", "Safety L1: Box 26", "Safety L1: Box 27", "Safety L1: Box 28", "Safety L1: Box 29", "Safety L1: Box 30"],
+                ["Safety L1: Box 31", "Safety L1: Box 32", "Safety L1: Box 33", "Safety L1: Box 34", "Safety L1: Box 35", "Safety L1: Box 36"],
+                ["Safety L1: Box 37", "Safety L1: Box 38", "Safety L1: Box 39", "Safety L1: Box 40", "Safety L1: Box 41", "Safety L1: Box 42"]
+            ],
+            2: [
+                ["Safety L2: Box 1", "Safety L2: Box 2", "Safety L2: Box 3", "Safety L2: Box 4", "Safety L2: Box 5", "Safety L2: Box 6"],
+                ["Safety L2: Box 7", "Safety L2: Box 8", "Safety L2: Box 9", "Safety L2: Box 10", "Safety L2: Box 11", "Safety L2: Box 12"],
+                ["Safety L2: Box 13", "Safety L2: Box 14", "Safety L2: Box 15", "Safety L2: Box 16", "Safety L2: Box 17", "Safety L2: Box 18"],
+                ["Safety L2: Box 19", "Safety L2: Box 20", "Safety L2: Box 21", "Safety L2: Box 22", "Safety L2: Box 23", "Safety L2: Box 24"],
+                ["Safety L2: Box 25", "Safety L2: Box 26", "Safety L2: Box 27", "Safety L2: Box 28", "Safety L2: Box 29", "Safety L2: Box 30"],
+                ["Safety L2: Box 31", "Safety L2: Box 32", "Safety L2: Box 33", "Safety L2: Box 34", "Safety L2: Box 35", "Safety L2: Box 36"],
+                ["Safety L2: Box 37", "Safety L2: Box 38", "Safety L2: Box 39", "Safety L2: Box 40", "Safety L2: Box 41", "Safety L2: Box 42"]
+            ],
+            3: [
+                ["Safety L3: Box 1", "Safety L3: Box 2", "Safety L3: Box 3", "Safety L3: Box 4", "Safety L3: Box 5", "Safety L3: Box 6"],
+                ["Safety L3: Box 7", "Safety L3: Box 8", "Safety L3: Box 9", "Safety L3: Box 10", "Safety L3: Box 11", "Safety L3: Box 12"],
+                ["Safety L3: Box 13", "Safety L3: Box 14", "Safety L3: Box 15", "Safety L3: Box 16", "Safety L3: Box 17", "Safety L3: Box 18"],
+                ["Safety L3: Box 19", "Safety L3: Box 20", "Safety L3: Box 21", "Safety L3: Box 22", "Safety L3: Box 23", "Safety L3: Box 24"],
+                ["Safety L3: Box 25", "Safety L3: Box 26", "Safety L3: Box 27", "Safety L3: Box 28", "Safety L3: Box 29", "Safety L3: Box 30"],
+                ["Safety L3: Box 31", "Safety L3: Box 32", "Safety L3: Box 33", "Safety L3: Box 34", "Safety L3: Box 35", "Safety L3: Box 36"],
+                ["Safety L3: Box 37", "Safety L3: Box 38", "Safety L3: Box 39", "Safety L3: Box 40", "Safety L3: Box 41", "Safety L3: Box 42"]
+            ]
+        };
+        const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
     // Manual save progress button with success tick
     const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
     const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
@@ -147,9 +178,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     for (let row = 1; row <= 7; row++) {
         tableRows.push(
             <tr key={row}>
-                {/* Progress checkboxes */}
+                {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}

@@ -5,6 +5,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
+            // Texts for each popup level
+            const boxTextsByLevel = {
+                1: [
+                    ["Leadership L1: Box 1", "Leadership L1: Box 2", "Leadership L1: Box 3", "Leadership L1: Box 4", "Leadership L1: Box 5", "Leadership L1: Box 6"],
+                    ["Leadership L1: Box 7", "Leadership L1: Box 8", "Leadership L1: Box 9", "Leadership L1: Box 10", "Leadership L1: Box 11", "Leadership L1: Box 12"],
+                    ["Leadership L1: Box 13", "Leadership L1: Box 14", "Leadership L1: Box 15", "Leadership L1: Box 16", "Leadership L1: Box 17", "Leadership L1: Box 18"],
+                    ["Leadership L1: Box 19", "Leadership L1: Box 20", "Leadership L1: Box 21", "Leadership L1: Box 22", "Leadership L1: Box 23", "Leadership L1: Box 24"],
+                    ["Leadership L1: Box 25", "Leadership L1: Box 26", "Leadership L1: Box 27", "Leadership L1: Box 28", "Leadership L1: Box 29", "Leadership L1: Box 30"],
+                    ["Leadership L1: Box 31", "Leadership L1: Box 32", "Leadership L1: Box 33", "Leadership L1: Box 34", "Leadership L1: Box 35", "Leadership L1: Box 36"],
+                    ["Leadership L1: Box 37", "Leadership L1: Box 38", "Leadership L1: Box 39", "Leadership L1: Box 40", "Leadership L1: Box 41", "Leadership L1: Box 42"]
+                ],
+                2: [
+                    ["Leadership L2: Box 1", "Leadership L2: Box 2", "Leadership L2: Box 3", "Leadership L2: Box 4", "Leadership L2: Box 5", "Leadership L2: Box 6"],
+                    ["Leadership L2: Box 7", "Leadership L2: Box 8", "Leadership L2: Box 9", "Leadership L2: Box 10", "Leadership L2: Box 11", "Leadership L2: Box 12"],
+                    ["Leadership L2: Box 13", "Leadership L2: Box 14", "Leadership L2: Box 15", "Leadership L2: Box 16", "Leadership L2: Box 17", "Leadership L2: Box 18"],
+                    ["Leadership L2: Box 19", "Leadership L2: Box 20", "Leadership L2: Box 21", "Leadership L2: Box 22", "Leadership L2: Box 23", "Leadership L2: Box 24"],
+                    ["Leadership L2: Box 25", "Leadership L2: Box 26", "Leadership L2: Box 27", "Leadership L2: Box 28", "Leadership L2: Box 29", "Leadership L2: Box 30"],
+                    ["Leadership L2: Box 31", "Leadership L2: Box 32", "Leadership L2: Box 33", "Leadership L2: Box 34", "Leadership L2: Box 35", "Leadership L2: Box 36"],
+                    ["Leadership L2: Box 37", "Leadership L2: Box 38", "Leadership L2: Box 39", "Leadership L2: Box 40", "Leadership L2: Box 41", "Leadership L2: Box 42"]
+                ],
+                3: [
+                    ["Leadership L3: Box 1", "Leadership L3: Box 2", "Leadership L3: Box 3", "Leadership L3: Box 4", "Leadership L3: Box 5", "Leadership L3: Box 6"],
+                    ["Leadership L3: Box 7", "Leadership L3: Box 8", "Leadership L3: Box 9", "Leadership L3: Box 10", "Leadership L3: Box 11", "Leadership L3: Box 12"],
+                    ["Leadership L3: Box 13", "Leadership L3: Box 14", "Leadership L3: Box 15", "Leadership L3: Box 16", "Leadership L3: Box 17", "Leadership L3: Box 18"],
+                    ["Leadership L3: Box 19", "Leadership L3: Box 20", "Leadership L3: Box 21", "Leadership L3: Box 22", "Leadership L3: Box 23", "Leadership L3: Box 24"],
+                    ["Leadership L3: Box 25", "Leadership L3: Box 26", "Leadership L3: Box 27", "Leadership L3: Box 28", "Leadership L3: Box 29", "Leadership L3: Box 30"],
+                    ["Leadership L3: Box 31", "Leadership L3: Box 32", "Leadership L3: Box 33", "Leadership L3: Box 34", "Leadership L3: Box 35", "Leadership L3: Box 36"],
+                    ["Leadership L3: Box 37", "Leadership L3: Box 38", "Leadership L3: Box 39", "Leadership L3: Box 40", "Leadership L3: Box 41", "Leadership L3: Box 42"]
+                ]
+            };
+            const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
         // Manual save progress button with success tick
         const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
         const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
@@ -132,9 +163,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     for (let row = 1; row <= 7; row++) {
         tableRows.push(
             <tr key={row}>
-                {/* Progress checkboxes */}
+                {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}

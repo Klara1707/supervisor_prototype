@@ -5,6 +5,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
+            // Texts for each popup level
+            const boxTextsByLevel = {
+                1: [
+                    ["Earthworks L1: Box 1", "Earthworks L1: Box 2", "Earthworks L1: Box 3", "Earthworks L1: Box 4", "Earthworks L1: Box 5", "Earthworks L1: Box 6"],
+                    ["Earthworks L1: Box 7", "Earthworks L1: Box 8", "Earthworks L1: Box 9", "Earthworks L1: Box 10", "Earthworks L1: Box 11", "Earthworks L1: Box 12"],
+                    ["Earthworks L1: Box 13", "Earthworks L1: Box 14", "Earthworks L1: Box 15", "Earthworks L1: Box 16", "Earthworks L1: Box 17", "Earthworks L1: Box 18"],
+                    ["Earthworks L1: Box 19", "Earthworks L1: Box 20", "Earthworks L1: Box 21", "Earthworks L1: Box 22", "Earthworks L1: Box 23", "Earthworks L1: Box 24"],
+                    ["Earthworks L1: Box 25", "Earthworks L1: Box 26", "Earthworks L1: Box 27", "Earthworks L1: Box 28", "Earthworks L1: Box 29", "Earthworks L1: Box 30"],
+                    ["Earthworks L1: Box 31", "Earthworks L1: Box 32", "Earthworks L1: Box 33", "Earthworks L1: Box 34", "Earthworks L1: Box 35", "Earthworks L1: Box 36"],
+                    ["Earthworks L1: Box 37", "Earthworks L1: Box 38", "Earthworks L1: Box 39", "Earthworks L1: Box 40", "Earthworks L1: Box 41", "Earthworks L1: Box 42"]
+                ],
+                2: [
+                    ["Earthworks L2: Box 1", "Earthworks L2: Box 2", "Earthworks L2: Box 3", "Earthworks L2: Box 4", "Earthworks L2: Box 5", "Earthworks L2: Box 6"],
+                    ["Earthworks L2: Box 7", "Earthworks L2: Box 8", "Earthworks L2: Box 9", "Earthworks L2: Box 10", "Earthworks L2: Box 11", "Earthworks L2: Box 12"],
+                    ["Earthworks L2: Box 13", "Earthworks L2: Box 14", "Earthworks L2: Box 15", "Earthworks L2: Box 16", "Earthworks L2: Box 17", "Earthworks L2: Box 18"],
+                    ["Earthworks L2: Box 19", "Earthworks L2: Box 20", "Earthworks L2: Box 21", "Earthworks L2: Box 22", "Earthworks L2: Box 23", "Earthworks L2: Box 24"],
+                    ["Earthworks L2: Box 25", "Earthworks L2: Box 26", "Earthworks L2: Box 27", "Earthworks L2: Box 28", "Earthworks L2: Box 29", "Earthworks L2: Box 30"],
+                    ["Earthworks L2: Box 31", "Earthworks L2: Box 32", "Earthworks L2: Box 33", "Earthworks L2: Box 34", "Earthworks L2: Box 35", "Earthworks L2: Box 36"],
+                    ["Earthworks L2: Box 37", "Earthworks L2: Box 38", "Earthworks L2: Box 39", "Earthworks L2: Box 40", "Earthworks L2: Box 41", "Earthworks L2: Box 42"]
+                ],
+                3: [
+                    ["Earthworks L3: Box 1", "Earthworks L3: Box 2", "Earthworks L3: Box 3", "Earthworks L3: Box 4", "Earthworks L3: Box 5", "Earthworks L3: Box 6"],
+                    ["Earthworks L3: Box 7", "Earthworks L3: Box 8", "Earthworks L3: Box 9", "Earthworks L3: Box 10", "Earthworks L3: Box 11", "Earthworks L3: Box 12"],
+                    ["Earthworks L3: Box 13", "Earthworks L3: Box 14", "Earthworks L3: Box 15", "Earthworks L3: Box 16", "Earthworks L3: Box 17", "Earthworks L3: Box 18"],
+                    ["Earthworks L3: Box 19", "Earthworks L3: Box 20", "Earthworks L3: Box 21", "Earthworks L3: Box 22", "Earthworks L3: Box 23", "Earthworks L3: Box 24"],
+                    ["Earthworks L3: Box 25", "Earthworks L3: Box 26", "Earthworks L3: Box 27", "Earthworks L3: Box 28", "Earthworks L3: Box 29", "Earthworks L3: Box 30"],
+                    ["Earthworks L3: Box 31", "Earthworks L3: Box 32", "Earthworks L3: Box 33", "Earthworks L3: Box 34", "Earthworks L3: Box 35", "Earthworks L3: Box 36"],
+                    ["Earthworks L3: Box 37", "Earthworks L3: Box 38", "Earthworks L3: Box 39", "Earthworks L3: Box 40", "Earthworks L3: Box 41", "Earthworks L3: Box 42"]
+                ]
+            };
+            const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
         // Manual save progress button with success tick
         const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
         const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
@@ -132,9 +163,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     for (let row = 1; row <= 7; row++) {
         tableRows.push(
             <tr key={row}>
-                {/* Progress checkboxes */}
+                {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}

@@ -6,6 +6,37 @@ import SignOffForm from "./SignOffForm";
 
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
+        // Texts for each popup level
+        const boxTextsByLevel = {
+            1: [
+                ["Cost L1: Box 1", "Cost L1: Box 2", "Cost L1: Box 3", "Cost L1: Box 4", "Cost L1: Box 5", "Cost L1: Box 6"],
+                ["Cost L1: Box 7", "Cost L1: Box 8", "Cost L1: Box 9", "Cost L1: Box 10", "Cost L1: Box 11", "Cost L1: Box 12"],
+                ["Cost L1: Box 13", "Cost L1: Box 14", "Cost L1: Box 15", "Cost L1: Box 16", "Cost L1: Box 17", "Cost L1: Box 18"],
+                ["Cost L1: Box 19", "Cost L1: Box 20", "Cost L1: Box 21", "Cost L1: Box 22", "Cost L1: Box 23", "Cost L1: Box 24"],
+                ["Cost L1: Box 25", "Cost L1: Box 26", "Cost L1: Box 27", "Cost L1: Box 28", "Cost L1: Box 29", "Cost L1: Box 30"],
+                ["Cost L1: Box 31", "Cost L1: Box 32", "Cost L1: Box 33", "Cost L1: Box 34", "Cost L1: Box 35", "Cost L1: Box 36"],
+                ["Cost L1: Box 37", "Cost L1: Box 38", "Cost L1: Box 39", "Cost L1: Box 40", "Cost L1: Box 41", "Cost L1: Box 42"]
+            ],
+            2: [
+                ["Cost L2: Box 1", "Cost L2: Box 2", "Cost L2: Box 3", "Cost L2: Box 4", "Cost L2: Box 5", "Cost L2: Box 6"],
+                ["Cost L2: Box 7", "Cost L2: Box 8", "Cost L2: Box 9", "Cost L2: Box 10", "Cost L2: Box 11", "Cost L2: Box 12"],
+                ["Cost L2: Box 13", "Cost L2: Box 14", "Cost L2: Box 15", "Cost L2: Box 16", "Cost L2: Box 17", "Cost L2: Box 18"],
+                ["Cost L2: Box 19", "Cost L2: Box 20", "Cost L2: Box 21", "Cost L2: Box 22", "Cost L2: Box 23", "Cost L2: Box 24"],
+                ["Cost L2: Box 25", "Cost L2: Box 26", "Cost L2: Box 27", "Cost L2: Box 28", "Cost L2: Box 29", "Cost L2: Box 30"],
+                ["Cost L2: Box 31", "Cost L2: Box 32", "Cost L2: Box 33", "Cost L2: Box 34", "Cost L2: Box 35", "Cost L2: Box 36"],
+                ["Cost L2: Box 37", "Cost L2: Box 38", "Cost L2: Box 39", "Cost L2: Box 40", "Cost L2: Box 41", "Cost L2: Box 42"]
+            ],
+            3: [
+                ["Cost L3: Box 1", "Cost L3: Box 2", "Cost L3: Box 3", "Cost L3: Box 4", "Cost L3: Box 5", "Cost L3: Box 6"],
+                ["Cost L3: Box 7", "Cost L3: Box 8", "Cost L3: Box 9", "Cost L3: Box 10", "Cost L3: Box 11", "Cost L3: Box 12"],
+                ["Cost L3: Box 13", "Cost L3: Box 14", "Cost L3: Box 15", "Cost L3: Box 16", "Cost L3: Box 17", "Cost L3: Box 18"],
+                ["Cost L3: Box 19", "Cost L3: Box 20", "Cost L3: Box 21", "Cost L3: Box 22", "Cost L3: Box 23", "Cost L3: Box 24"],
+                ["Cost L3: Box 25", "Cost L3: Box 26", "Cost L3: Box 27", "Cost L3: Box 28", "Cost L3: Box 29", "Cost L3: Box 30"],
+                ["Cost L3: Box 31", "Cost L3: Box 32", "Cost L3: Box 33", "Cost L3: Box 34", "Cost L3: Box 35", "Cost L3: Box 36"],
+                ["Cost L3: Box 37", "Cost L3: Box 38", "Cost L3: Box 39", "Cost L3: Box 40", "Cost L3: Box 41", "Cost L3: Box 42"]
+            ]
+        };
+        const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
     // State must be declared before any code that uses it
     // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
     // Must have 7 rows for rows 1-7 (index 0-6)
@@ -133,9 +164,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     for (let row = 1; row <= 7; row++) {
         tableRows.push(
             <tr key={row}>
-                {/* Progress checkboxes */}
+                {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}

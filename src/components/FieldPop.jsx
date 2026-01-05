@@ -5,75 +5,106 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
-        // Manual save progress button with success tick
-        const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
-        const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
-        // Extracted fetch logic for re-use
-        const fetchProgress = async () => {
-            if (!popupId || !userToken) return;
-            try {
-                const res = await fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${userToken}`,
-                        "Content-Type": "application/json"
-                    }
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    // Support both new ({ popupId: {...} }) and legacy ({...}) formats
-                    const entry = data && (data[popupId] || data);
-                    if (entry) {
-                        setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
-                        setComments(entry.comments || Array(7).fill(""));
-                        setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
-                        setHasLoaded(true); // Mark as loaded so auto-save can start
-                    }
+    // Texts for each popup level
+    const boxTextsByLevel = {
+        1: [
+            ["Field L1: Box 1", "Field L1: Box 2", "Field L1: Box 3", "Field L1: Box 4", "Field L1: Box 5", "Field L1: Box 6"],
+            ["Field L1: Box 7", "Field L1: Box 8", "Field L1: Box 9", "Field L1: Box 10", "Field L1: Box 11", "Field L1: Box 12"],
+            ["Field L1: Box 13", "Field L1: Box 14", "Field L1: Box 15", "Field L1: Box 16", "Field L1: Box 17", "Field L1: Box 18"],
+            ["Field L1: Box 19", "Field L1: Box 20", "Field L1: Box 21", "Field L1: Box 22", "Field L1: Box 23", "Field L1: Box 24"],
+            ["Field L1: Box 25", "Field L1: Box 26", "Field L1: Box 27", "Field L1: Box 28", "Field L1: Box 29", "Field L1: Box 30"],
+            ["Field L1: Box 31", "Field L1: Box 32", "Field L1: Box 33", "Field L1: Box 34", "Field L1: Box 35", "Field L1: Box 36"],
+            ["Field L1: Box 37", "Field L1: Box 38", "Field L1: Box 39", "Field L1: Box 40", "Field L1: Box 41", "Field L1: Box 42"]
+        ],
+        2: [
+            ["Field L2: Box 1", "Field L2: Box 2", "Field L2: Box 3", "Field L2: Box 4", "Field L2: Box 5", "Field L2: Box 6"],
+            ["Field L2: Box 7", "Field L2: Box 8", "Field L2: Box 9", "Field L2: Box 10", "Field L2: Box 11", "Field L2: Box 12"],
+            ["Field L2: Box 13", "Field L2: Box 14", "Field L2: Box 15", "Field L2: Box 16", "Field L2: Box 17", "Field L2: Box 18"],
+            ["Field L2: Box 19", "Field L2: Box 20", "Field L2: Box 21", "Field L2: Box 22", "Field L2: Box 23", "Field L2: Box 24"],
+            ["Field L2: Box 25", "Field L2: Box 26", "Field L2: Box 27", "Field L2: Box 28", "Field L2: Box 29", "Field L2: Box 30"],
+            ["Field L2: Box 31", "Field L2: Box 32", "Field L2: Box 33", "Field L2: Box 34", "Field L2: Box 35", "Field L2: Box 36"],
+            ["Field L2: Box 37", "Field L2: Box 38", "Field L2: Box 39", "Field L2: Box 40", "Field L2: Box 41", "Field L2: Box 42"]
+        ],
+        3: [
+            ["Field L3: Box 1", "Field L3: Box 2", "Field L3: Box 3", "Field L3: Box 4", "Field L3: Box 5", "Field L3: Box 6"],
+            ["Field L3: Box 7", "Field L3: Box 8", "Field L3: Box 9", "Field L3: Box 10", "Field L3: Box 11", "Field L3: Box 12"],
+            ["Field L3: Box 13", "Field L3: Box 14", "Field L3: Box 15", "Field L3: Box 16", "Field L3: Box 17", "Field L3: Box 18"],
+            ["Field L3: Box 19", "Field L3: Box 20", "Field L3: Box 21", "Field L3: Box 22", "Field L3: Box 23", "Field L3: Box 24"],
+            ["Field L3: Box 25", "Field L3: Box 26", "Field L3: Box 27", "Field L3: Box 28", "Field L3: Box 29", "Field L3: Box 30"],
+            ["Field L3: Box 31", "Field L3: Box 32", "Field L3: Box 33", "Field L3: Box 34", "Field L3: Box 35", "Field L3: Box 36"],
+            ["Field L3: Box 37", "Field L3: Box 38", "Field L3: Box 39", "Field L3: Box 40", "Field L3: Box 41", "Field L3: Box 42"]
+        ]
+    };
+    const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
+    // Manual save progress button with success tick
+    const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
+    const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
+    // Extracted fetch logic for re-use
+    const fetchProgress = async () => {
+        if (!popupId || !userToken) return;
+        try {
+            const res = await fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${userToken}`,
+                    "Content-Type": "application/json"
                 }
-            } catch (err) {}
-        };
+            });
+            if (res.ok) {
+                const data = await res.json();
+                // Support both new ({ popupId: {...} }) and legacy ({...}) formats
+                const entry = data && (data[popupId] || data);
+                if (entry) {
+                    setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
+                    setComments(entry.comments || Array(7).fill(""));
+                    setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                    setHasLoaded(true); // Mark as loaded so auto-save can start
+                }
+            }
+        } catch (err) {}
+    };
 
-        const handleManualSave = async () => {
-            if (!popupId || !userToken) {
+    const handleManualSave = async () => {
+        if (!popupId || !userToken) {
+            setSaveStatus('error');
+            setTimeout(() => setSaveStatus('idle'), 2000);
+            alert("Cannot save: missing user session or popup ID.");
+            return;
+        }
+        const payload = {
+            popupId,
+            gridProgressChecks,
+            comments,
+            signOffs,
+            progressPercentage: percentage
+        };
+        try {
+            const res = await fetch("/api/training-progress/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${userToken}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
                 setSaveStatus('error');
                 setTimeout(() => setSaveStatus('idle'), 2000);
-                alert("Cannot save: missing user session or popup ID.");
+                alert("Save failed: " + res.status);
                 return;
             }
-            const payload = {
-                popupId,
-                gridProgressChecks,
-                comments,
-                signOffs,
-                progressPercentage: percentage
-            };
-            try {
-                const res = await fetch("/api/training-progress/", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${userToken}`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload)
-                });
-                if (!res.ok) {
-                    setSaveStatus('error');
-                    setTimeout(() => setSaveStatus('idle'), 2000);
-                    alert("Save failed: " + res.status);
-                    return;
-                }
-                setSaveStatus('success');
-                if (onProgressUpdate) await onProgressUpdate();
-                // Re-fetch latest progress after save
-                await fetchProgress();
-                setTimeout(() => setSaveStatus('idle'), 1200);
-            } catch (err) {
-                setSaveStatus('error');
-                setTimeout(() => setSaveStatus('idle'), 2000);
-                alert("Save failed: network error");
-                console.error("Save Progress error:", err);
-            }
-        };
+            setSaveStatus('success');
+            if (onProgressUpdate) await onProgressUpdate();
+            // Re-fetch latest progress after save
+            await fetchProgress();
+            setTimeout(() => setSaveStatus('idle'), 1200);
+        } catch (err) {
+            setSaveStatus('error');
+            setTimeout(() => setSaveStatus('idle'), 2000);
+            alert("Save failed: network error");
+            console.error("Save Progress error:", err);
+        }
+    };
     // Grid headers
     const headers = [
         "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
@@ -159,9 +190,10 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     for (let row = 1; row <= 7; row++) {
         tableRows.push(
             <tr key={row}>
-                {/* Progress checkboxes */}
+                {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}
