@@ -8,32 +8,118 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     // Texts for each popup level
     const boxTextsByLevel = {
         1: [
-            ["Field L1: Box 1", "Field L1: Box 2", "Field L1: Box 3", "Field L1: Box 4", "Field L1: Box 5", "Field L1: Box 6"],
-            ["Field L1: Box 7", "Field L1: Box 8", "Field L1: Box 9", "Field L1: Box 10", "Field L1: Box 11", "Field L1: Box 12"],
-            ["Field L1: Box 13", "Field L1: Box 14", "Field L1: Box 15", "Field L1: Box 16", "Field L1: Box 17", "Field L1: Box 18"],
-            ["Field L1: Box 19", "Field L1: Box 20", "Field L1: Box 21", "Field L1: Box 22", "Field L1: Box 23", "Field L1: Box 24"],
-            ["Field L1: Box 25", "Field L1: Box 26", "Field L1: Box 27", "Field L1: Box 28", "Field L1: Box 29", "Field L1: Box 30"],
-            ["Field L1: Box 31", "Field L1: Box 32", "Field L1: Box 33", "Field L1: Box 34", "Field L1: Box 35", "Field L1: Box 36"],
-            ["Field L1: Box 37", "Field L1: Box 38", "Field L1: Box 39", "Field L1: Box 40", "Field L1: Box 41", "Field L1: Box 42"]
+            ["Possesses detailed knowledge of the roles and responsibilities of Field Assistants, Survey Assistants, and Hydro Technicians, including their contributions to drilling operations, data collection, and site safety", 
+                "Possesses comprehensive knowledge of all tasks associated with the role and is capable of providing mentorship and subject matter expertise across all responsibilities", 
+                "Demonstrates the ability to effectively plan and schedule daily tasks and movements, ensuring timely follow-up and completion within expected timeframes", 
+                "", 
+                "Education: Review and understand the role description, including key accountabilities, safety responsibilities, and performance expectations. Gain clarity on role-specific responsibilities through discussion with supervisors and reference to relevant procedures and standards. Exposure: Receive hands-on training from a Subject Matter Expert (SME) or Supervisor with experience in field operations, hydro-tech, or survey. Understand work priorities and field expectations through guided instruction and real-time feedback. Shadow an experienced Field Supervisor to observe best practices in task planning, team coordination, and field execution.", 
+                "Field L1: Box 6"]
         ],
         2: [
-            ["Field L2: Box 1", "Field L2: Box 2", "Field L2: Box 3", "Field L2: Box 4", "Field L2: Box 5", "Field L2: Box 6"],
-            ["Field L2: Box 7", "Field L2: Box 8", "Field L2: Box 9", "Field L2: Box 10", "Field L2: Box 11", "Field L2: Box 12"],
-            ["Field L2: Box 13", "Field L2: Box 14", "Field L2: Box 15", "Field L2: Box 16", "Field L2: Box 17", "Field L2: Box 18"],
-            ["Field L2: Box 19", "Field L2: Box 20", "Field L2: Box 21", "Field L2: Box 22", "Field L2: Box 23", "Field L2: Box 24"],
-            ["Field L2: Box 25", "Field L2: Box 26", "Field L2: Box 27", "Field L2: Box 28", "Field L2: Box 29", "Field L2: Box 30"],
-            ["Field L2: Box 31", "Field L2: Box 32", "Field L2: Box 33", "Field L2: Box 34", "Field L2: Box 35", "Field L2: Box 36"],
-            ["Field L2: Box 37", "Field L2: Box 38", "Field L2: Box 39", "Field L2: Box 40", "Field L2: Box 41", "Field L2: Box 42"]
+            ["Understanding High-Risk Work Licence Requirements and Application. Familiar with the requirements and practical application of High-Risk Work Licences relevant to Field Assistants, Survey Assistants, and Hydro Technicians, ensuring compliance with task-specific safety and regulatory standards", 
+                "Monitor licence expiry for all personnel under your supervision. Maintain a current register of licence details to ensure compliance. Provide SME guidance on licence requirements, usage protocols, and site-specific VOC (Verification of Competency) processes. Support field readiness by ensuring all high-risk tasks are performed by qualified and verified individuals", 
+                "", 
+                "", 
+                "Training: Receive guidance from SMEs or Superintendents on high-risk licence requirements and site protocols. Document Management: Develop a method for tracking and securely storing licence and VOC documentation. Compliance Monitoring: Learn how to report and monitor VOC completion to ensure ongoing compliance with site standards.", 
+                "Field L2: Box 6"],
+            ["Sets and reviews development goals with team members to support growth and performance", 
+                "Sets SMART objectives aligned with role duties and achievable within a realistic timeframe", 
+                "Follows up on development goals during check-ins, encouraging team members to own their growth", 
+                "", 
+                "Education: Understands role expectations by reviewing the role description. Exposure: Collaborates with Superintendent in meetings to define clear, measurable development actions and check-in plans aligned to the role.", 
+                "Field L2: Box 12"],
+            ["Regularly assess performance during check-ins, providing constructive feedback", 
+                "Sets clear, achievable objectives aligned with business needs and role responsibilities", 
+                "Challenges team members to own their development, offers constructive feedback (EBI), and encourages evidence of progress toward objectives", 
+                "", 
+                "Education:Reads the role description to understand responsibilities and expectations. Exposure: Meets with Superintendent to discuss P6 and define specific, measurable check-in actions aligned to the role description", 
+                "Field L2: Box 18"],
+            ["Coaches and mentors team members to support growth and success in their role", 
+                "Mentors field assistants in task prioritization, use of RTIO safety tools, operational discipline, and reporting compliance issues", 
+                "", 
+                "", 
+                "Education: Reads the role description and relevant SWPs to understand responsibilities and task requirements. Exposure: Shadows a Field Supervisor to learn task prioritization; receives coaching from SME/Superintendent on LIF activities.", 
+                "Field L2: Box 24"],
+            ["Ensures weekly consumable orders are necessary and reasonable, and manages stock levels to meet operational requirements", 
+                "Encourages use of a stocktake template for critical orders, assesses order validity and excess, and approves orders based on operational need", 
+                "Mentors field assistants on reconciling and tracking stores orders to ensure accuracy and accountability", 
+                "", 
+                "Exposure: Shadows an experienced Field Supervisor to learn stocktake, ordering, and reconciliation of stores orders, including how to track orders in SAP", 
+                "Field L2: Box 30"]
         ],
         3: [
-            ["Field L3: Box 1", "Field L3: Box 2", "Field L3: Box 3", "Field L3: Box 4", "Field L3: Box 5", "Field L3: Box 6"],
-            ["Field L3: Box 7", "Field L3: Box 8", "Field L3: Box 9", "Field L3: Box 10", "Field L3: Box 11", "Field L3: Box 12"],
-            ["Field L3: Box 13", "Field L3: Box 14", "Field L3: Box 15", "Field L3: Box 16", "Field L3: Box 17", "Field L3: Box 18"],
-            ["Field L3: Box 19", "Field L3: Box 20", "Field L3: Box 21", "Field L3: Box 22", "Field L3: Box 23", "Field L3: Box 24"],
-            ["Field L3: Box 25", "Field L3: Box 26", "Field L3: Box 27", "Field L3: Box 28", "Field L3: Box 29", "Field L3: Box 30"],
-            ["Field L3: Box 31", "Field L3: Box 32", "Field L3: Box 33", "Field L3: Box 34", "Field L3: Box 35", "Field L3: Box 36"],
-            ["Field L3: Box 37", "Field L3: Box 38", "Field L3: Box 39", "Field L3: Box 40", "Field L3: Box 41", "Field L3: Box 42"]
-        ]
+            ["Manage and reconcile timesheets for Cat1 Field Assistants, Survey Assistants, and Hydro Technicians", 
+                "Assess dates and times, and approve timesheets in the WorkPac portal",
+                "", 
+                "", 
+                "Exposure: SME/Supervisor-led session to demonstrate timesheet reconciliation and processing, ensuring correct cost code allocation", 
+                "Field L3: Box 6"],
+            ["Ensure WHS compliance through testing and tagging, and managing registers for fire extinguishers, lifting gear, and chemical storage", 
+                "Performs required monthly and quarterly compliance checks", 
+                "Conducts laydown inspections and field verifications to ensure compliance with safety and operational standards", 
+                "", 
+                "Education – Dogging, Fire Extinguisher Test & Tag, and ChemAlert training (not mandatory but beneficial). Exposure – Mentorship from SME or Field Supervisor during field audits and compliance checks", 
+                "Field L3: Box 12"],
+            ["Manages team performance and development through quality quarterly Check-Ins and oversight of Development Plans", 
+                "Conduct check ins quarterly, suing the correct template, correct detail, in the right app - Workday", "Follow up on Development Plan actions by requesting progress updates, challenging improvements, and actively supporting growth", 
+                "", 
+                "Superintendent sets expectations for Check-Ins and Development Plans, follows up on actions and challenges, verifies progress, and guides staff in setting purposeful targets to improve performance", 
+                "Field L3: Box 18"],
+            ["Manages IVMS and DSS reporting, addressing poor behaviours as required; includes DSS line item reviews and corrective actions", 
+                "Manages IVMS and DSS reporting, reviews DSS line items, and addresses poor behaviours through corrective actions as required", 
+                "Has full knowledge of IVMS and DSS actions and penalties; challenges the team to improve driving behaviours", 
+                "", 
+                "Education: Has read the IVMS and DSS Leader Guidance Notes. Exposure: Superintendent provides guidance to ensure clear understanding of IVMS and DSS rules, manages inappropriate behaviour, and ensures rules are upheld", 
+                "Field L3: Box 24"],
+            ["Leads, uses, and mentors team members in RTIO and Department Safety Systems, including PTHA, CRM, and Project Risk Reviews", 
+                "Has read and understands the guidance notes on tool use, and completed CCFV online training and videos", 
+                "Demonstrates comprehensive understanding of RTIO safety systems and provides mentoring and advice to others on their use", 
+                "", 
+                "Education: Has reviewed all training videos, understands Rio Tools usage, and holds CCFV VOC qualification. Exposure: Mentored by SME/Supervisor to a level where the Supervisor can provide direct guidance on RTIO safety tool usage.", 
+                "Field L3: Box 30"],
+            ["Ensures appropriate water source and transfer system are in place for the project and can organise installation as required", 
+                "Participates in drilling program planning, including desktop review of bore locations and field verification of access", 
+                "Provides SME-level advice on water bore setup using Bore Boss/Bladder systems; manages inspections and maintenance of the water setup", 
+                "", 
+                "Mentored by SME/Field Supervisor in the safe and effective setup of water sources, including scoping and selecting bores for installation", 
+                "Field L3: Box 36"],
+            ["Manages chemicals and consumables using the CHEMALERT system", 
+                "Access and use ChemAlert proficiently. Maintain chemical inventory on site. Perform chemical compatibility checks", 
+                "", 
+                "", 
+                "Completed all ChemAlert training videos. Understands system functionality and usage", 
+                "Field L3: Box 42"],
+            ["Is capable of raising Vehicle Maintenance Notifications. Is capable of managing Hub LV fleet operations", 
+                "Manages vehicle maintenance scheduling effectively. Ensures zero no-shows for scheduled services", 
+                "Capable of training and coaching Field Assistants in raising notifications", 
+                "", 
+                "SME or Field Supervisor demonstrates how to raise a notification in SAP, including detailed steps and supporting photos", 
+                ""],
+            ["Schedule electrical testing and tagging of equipment", 
+                "Get quote, schedule contractor, raise PO, manage site activities", 
+                "", 
+                "", 
+                "SME/Field Supervisor to demonstrate: request quote, raise PO, engage contractor, provide maps and documentation", 
+                ""],
+            ["Assist and provide recommendations during the recruitment of new staff",
+                "Provide feedback on candidates based on your experience level. Assist in assessing resume quality", 
+                "Provide feedback on candidates based on your experience level. Assist in assessing resume quality", 
+                "", 
+                "Exposure: Request to join interview panel for upcoming vacanciess ", 
+                ""],
+            ["Oversee sample collection, dispatch, and drill collar rehabilitation", 
+                "Use Protrak to identify outstanding items, liaise with Geoscience on available samples, and generate cutting lists", 
+                "", 
+                "", 
+                "Gain SME/Field Supervisor mentoring on sample dispatch and Protrak use. Guide field assistants in generating sample and collar cutting sheet", 
+                ""],
+            ["Manage rental of required equipment (gensets, telehandler, vehicles, water points, etc.)", 
+                "Assess project needs, confirm required equipment, get quotes, raise PO, and arrange delivery to site", 
+                "Track costs, approve invoices, and reassess project needs", 
+                "", 
+                "Gain exposure through SME/Field Supervisor mentoring on project needs, engaging hire companies, quoting, raising POs, and sharing knowledge with others", 
+                ""]
+        ],
     };
     const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
     // Manual save progress button with success tick
@@ -187,13 +273,40 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         </tr>
     );
     // Data rows
-    for (let row = 1; row <= 7; row++) {
+    // Ensure boxTexts has enough rows for rendering (avoid undefined errors)
+    let safeBoxTexts = boxTexts;
+    if (level === 1 && boxTexts.length < 1) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(1 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    } else if (level === 2 && boxTexts.length < 5) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(5 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    } else if (level === 3 && boxTexts.length < 12) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(12 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    }
+
+    let numRows = 7;
+    if (level === 1) {
+        numRows = 1;
+    } else if (level === 2) {
+        numRows = 5;
+    } else if (level === 3) {
+        numRows = 12;
+    }
+    for (let row = 1; row <= numRows; row++) {
         tableRows.push(
             <tr key={row}>
                 {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}

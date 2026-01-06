@@ -189,34 +189,183 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     // Texts for each popup level
     const boxTextsByLevel = {
         1: [
-            ["L1: Box 1", "L1: Box 2", "L1: Box 3", "L1: Box 4", "L1: Box 5", "L1: Box 6"],
-            ["L1: Box 7", "L1: Box 8", "L1: Box 9", "L1: Box 10", "L1: Box 11", "L1: Box 12"],
-            ["L1: Box 13", "L1: Box 14", "L1: Box 15", "L1: Box 16", "L1: Box 17", "L1: Box 18"],
-            ["L1: Box 19", "L1: Box 20", "L1: Box 21", "L1: Box 22", "L1: Box 23", "L1: Box 24"],
-            ["L1: Box 25", "L1: Box 26", "L1: Box 27", "L1: Box 28", "L1: Box 29", "L1: Box 30"],
-            ["L1: Box 31", "L1: Box 32", "L1: Box 33", "L1: Box 34", "L1: Box 35", "L1: Box 36"],
-            ["L1: Box 37", "L1: Box 38", "L1: Box 39", "L1: Box 40", "L1: Box 41", "L1: Box 42"]
+            ["Understands the content and purpose of the Hydro Borehole Planning Document within hydrogeological projects. Can apply this knowledge operationally to execute planned activities and ensure alignment with project objectives", 
+                "Understands the purpose and level of detail within the Borehole Planning Document (BHPD). Recognises the importance of fully reviewing and comprehending the content before sign-off to ensure accountability and alignment with project requirements", 
+                "Understands the purpose and level of detail within the BHPD, Reviews and signs the document daily to ensure alignment with project requirements. Recognises the importance of full comprehension before sign-off to maintain accountability", 
+                "", 
+                "Education – Borehole Planning Document (BHPD) Hydro team provides context on the purpose, structure, and level of detail in the BHPD. Understands operational responsibilities outlined in the document. Exposure – BHPD Review and Sign-Off. Reviews and signs the BHPD daily under guidance from an SME or Supervisor. Gains practical understanding of how to align field activities with project requirements", 
+                "L2: Box 6"],
+            ["Possesses in-depth knowledge of the Fibre Monitoring Management Plan (FMMP) and the Guideline for PF and FA drilling, ensuring compliance and effective application in relevant operational contexts", 
+                "Has reviewed the procedure and demonstrates confidence in applying it effectively when required", 
+                "", 
+                "", 
+                "Engages in educational activities by reading the FMMP document and attending the Geology presentation to deepen understanding of fibre monitoring practices", 
+                "L2: Box 12"],
+            ["Demonstrates a foundational understanding of Reverse Circulation (RC) drilling, including its purpose, process, and application in exploration and production activities", 
+                "Able to identify an RC rig, understand the required drill suite, and recognize the roles and responsibilities of personnel involved in the drilling process", 
+                "Understands the rig setup requirements on a drill pad necessary to safely and effectively execute a drill hole, ensuring alignment with operational standards and safety protocols", 
+                "Familiar with expected sample outputs and adheres to compliant sample management practices, ensuring accuracy, traceability, and alignment with operational standards", 
+                "Education: Conducts independent research by utilizing internet resources and reviewing relevant materials to build foundational knowledge. Exposure: Actively engages in field activities with Drillers, Supervisors, and Drill Advisors, asking questions and observing operations to deepen practical understanding.", 
+                "L2: Box 18"],
+            ["Demonstrates a foundational understanding of diamond drilling, including its purpose, equipment, and application in geological exploration and resource definition", 
+                "Able to identify a diamond (DD) rig, understand the required drill suite, and recognize the roles and responsibilities of personnel involved in diamond drilling operations",
+                "Understands the rig setup requirements on a drill pad necessary to safely and effectively execute a diamond drill hole, ensuring alignment with operational procedures and safety standards", 
+                "Understands the expected sample outputs from diamond drilling and applies appropriate methods for sample handling and management, ensuring accuracy, integrity, and compliance with operational standards", 
+                "Education: Builds foundational knowledge through independent research, including internet searches and reviewing relevant materials. Exposure: Gains practical insight by spending time in the field with Drillers, Supervisors, and Drill Advisors—actively engaging in discussions and observing operations to enhance understanding.",
+                "L2: Box 24"],
+            ["Demonstrates a foundational understanding of hydro drilling, including its purpose, equipment, and application in water exploration and resource development", 
+                "Able to identify a diamond (DD) rig, understand the components of the drill suite, and recognize the roles and responsibilities of personnel involved in diamond drilling operations", 
+                "Understands the rig setup requirements on a drill pad necessary to safely and effectively execute a diamond drill hole, ensuring compliance with operational procedures and safety standards", 
+                "Understands the potential hydrogeological outcomes associated with drilling activities, including impacts on groundwater flow, aquifer integrity, and water quality", 
+                "Education: Builds foundational knowledge through independent research, including internet searches and reviewing relevant documentation. Exposure: Enhances practical understanding by spending time in the field with Drillers, Supervisors, and Drill Advisors—actively asking questions and observing operations.", 
+                "L2: Box 30"]
         ],
+
         2: [
-            ["L2: Box 1", "L2: Box 2", "L2: Box 3", "L2: Box 4", "L2: Box 5", "L2: Box 6"],
-            ["L2: Box 7", "L2: Box 8", "L2: Box 9", "L2: Box 10", "L2: Box 11", "L2: Box 12"],
-            ["L2: Box 13", "L2: Box 14", "L2: Box 15", "L2: Box 16", "L2: Box 17", "L2: Box 18"],
-            ["L2: Box 19", "L2: Box 20", "L2: Box 21", "L2: Box 22", "L2: Box 23", "L2: Box 24"],
-            ["L2: Box 25", "L2: Box 26", "L2: Box 27", "L2: Box 28", "L2: Box 29", "L2: Box 30"],
-            ["L2: Box 31", "L2: Box 32", "L2: Box 33", "L2: Box 34", "L2: Box 35", "L2: Box 36"],
-            ["L2: Box 37", "L2: Box 38", "L2: Box 39", "L2: Box 40", "L2: Box 41", "L2: Box 42"]
+            ["Understands the requirements and restrictions for discharging fluids off the pad, including environmental and operational controls", 
+                "Can access and follow the discharge flowchart to assess feasibility. Able to interpret a DMP and apply its information effectively in the field", 
+                "Has comprehensive knowledge of discharge management. Can independently assess and implement a DMP, and provides guidance to others on its application", 
+                "", 
+                "Reads and applies the discharge flowchart process. Receives SME/Supervisor mentoring and assessment on fluid discharge knowledge", 
+                "L1: Box 6"],
+            ["Understands the process for receiving Hydro materials to site, including checking deliveries, verifying delivery dockets, reviewing materials plods, and updating the casing register", 
+                "Understands the full process for Hydro materials — from ordering and delivery to documentation, laydown checks, Protrak entry, and invoicing", 
+                "Can implement the Hydro materials process, enter data into Protrak, and troubleshoot invoice issues as needed", 
+                "", 
+                "Receives mentoring on Hydro materials handling — checking items on arrival, scanning dockets, entering data into Protrak, and updating the casing register", 
+                "L1: Box 12"],
+            ["Accurately validate meters drilled, hole status, and assess cost implications", 
+                "Sources data for DDM and reviews hole status in Protrak to ensure accuracy", 
+                "Delivers accurate end-of-week reporting with clear comments explaining standby and downtime reasons", 
+                "Understands the importance of accurate data and how it impacts project costs and timelines", 
+                "Exposure: Receives mentoring from SME or Superintendent on data accuracy and processing. Can enter detailed comments into DDM and report data to the Superintendent with appropriate granularity", 
+                "L1: Box 18"],
+            ["Manage hydro drilling material stock levels, including casing register, to prevent loss, wastage, and overstocking", 
+                "Has strong understanding of hydro drilling materials. Can conduct stocktakes and manages stock levels to avoid shortages", 
+                "", 
+                "", 
+                "Exposure: Is shown how to conduct a stocktake by an experienced team member. Can manage stock levels effectively to prevent shortages.", 
+                "L1: Box 24"],
+            ["Competently conducts SWAT and DWI inspections, identifying hazards and ensuring corrective actions are implemented", 
+                "Has comprehensive knowledge of SWAT and DWI processes and can confidently provide guidance to others", 
+                "", 
+                "", 
+                "Education: Reviews the SWAT process chart. Completes SWAT field checks (verified by Superintendent). Completes relevant checks required to issue a SWAT. Exposure: Receives mentoring on DWI from Superintendent, including how to complete the form, assign actions, and close them out.", 
+                "L1: Box 30"],
+            ["Understands procedures and controls for drilling near historic holes. Coordinates with Driller and Rig Geologist to ensure controls are implemented", 
+                "Understands the risk and its controls. Accesses and applies the flow chart in the field", 
+                "Reviews historical holes before each RC and hydro bore drill. Confirms survey work is complete and verifies field controls are in place", 
+                "", 
+                "Education Reads and understands the flow chart and supporting documentation. Exposure SME/Supervisor links historical hole checks to the SWAT process during field discussions", 
+                "L1: Box 36"],
+            ["Demonstrates ability to complete the full SWAT process: physical verification, data collation, communication, and handover", 
+                "Has comprehensive knowledge of the SWAT process and can guide others in conducting it effectively", 
+                "", 
+                "", 
+                "Review: Understand and refer to the SWAT process chart. Field Checks: Conduct SWAT field verifications, confirmed by Supervisor. Issuance: Complete all required checks prior to issuing a SWAT. Mentoring (DWI): Supervisor demonstrates how to complete a DWI, assign actions, and close them out.", 
+                "L1: Box 42"],
+            ["Understands and is competent in processing tyre claims for Drilling Partners", 
+                "Can process and sign off tyre claims, with a clear understanding of invoicing procedures", 
+                "", 
+                "", 
+                "Receives mentoring from SME/Supervisor on processing tyre claims, including guidance on procedures and documentation", 
+                ""],
+            ["Possesses detailed knowledge of the Divisional Drilling Work Practice and applies it effectively in field operations", 
+                "Understands the purpose of the DDWP, has read the document, and can reference it to extract relevant information", 
+                "", 
+                "", 
+                "Has read the DDWP and can relate its practices to field work", 
+                ""],
+            ["Understands the fundamentals of RC (Reverse Circulation) drilling, including its purpose, process, and field application", 
+                "Can identify differences between contractor rigs and understand their respective capabilities", 
+                "Understands the technical reasons for different RC drilling styles, including drill angle and azimuth, and how they impact geological targeting and data quality", 
+                "Understands the sample collection process, analysis methods, and the basics of the geological model used in RC drilling", 
+                "Education Uses internet search and reading to build foundational knowledge. Exposure Engages in industry-based conversations with Supervisors, Drill Advisors, and Technical Leads to deepen understanding.", 
+                ""],
+            ["Understands the principles and process of Diamond (DD) drilling, including its purpose, equipment, and application in geological data collection", 
+                "Can identify differences in contractor rigs and understand their specific capabilities, including rig type, depth capacity, mobility, and suitability for various drilling conditions", 
+                "Understands the technical reasons for different DD core types, drill angles, and azimuths, and how these choices impact geological interpretation and data quality", 
+                "Understands the sample collection process, analysis methods, and the fundamentals of geological, geotechnical, and structural models used in DD drilling", 
+                "Exposure Builds understanding through industry-based conversations with Supervisors, Drill Advisors, and Technical Leads.", 
+                ""],
+            ["Builds understanding through industry-based conversations with Supervisors, Drill Advisors, and Technical Leads", 
+                "Identify differences in what contractor rigs are capable of", 
+                "Understand the technical and operational factors influencing drilling method selection", 
+                "Understand the water sampling process and basic hydrological modelling", 
+                "Education – Review and understand the Scope of Work (SOW). Exposure – Engage in industry-based conversations with Supervisors, Drill Advisors, and Technical Leads.", 
+                ""]
         ],
+        
         3: [
-            ["L3: Box 1", "L3: Box 2", "L3: Box 3", "L3: Box 4", "L3: Box 5", "L3: Box 6"],
-            ["L3: Box 7", "L3: Box 8", "L3: Box 9", "L3: Box 10", "L3: Box 11", "L3: Box 12"],
-            ["L3: Box 13", "L3: Box 14", "L3: Box 15", "L3: Box 16", "L3: Box 17", "L3: Box 18"],
-            ["L3: Box 19", "L3: Box 20", "L3: Box 21", "L3: Box 22", "L3: Box 23", "L3: Box 24"],
-            ["L3: Box 25", "L3: Box 26", "L3: Box 27", "L3: Box 28", "L3: Box 29", "L3: Box 30"],
-            ["L3: Box 31", "L3: Box 32", "L3: Box 33", "L3: Box 34", "L3: Box 35", "L3: Box 36"],
-            ["L3: Box 37", "L3: Box 38", "L3: Box 39", "L3: Box 40", "L3: Box 41", "L3: Box 42"]
+            ["Understand bore test pumping water management requirements, including SRT, CRT, and DMP protocols", 
+                "Demonstrates strong knowledge of DMPs, including field execution, water testing, wetting front checks, and desktop reviews of exclusion and avoidance zones", 
+                "", 
+                "", 
+                "Builds experience through DMP reviews with SMEs/Supervisors, supported by mentoring during desktop and field checks", 
+                "L3: Box 6"],
+            ["Supports discharge management plan implementation in hydro programs, ensuring alignment with field practices and environmental standards", 
+                "Ground truths discharge designs and advises on best practices for safe environmental discharge; conducts desktop topography assessments to support planning and risk mitigation", 
+                "", 
+                "", 
+                "Builds experience by reviewing DMPs with SMEs/Supervisors, with mentoring support during desktop and field checks", 
+                "L3: Box 12"],
+            ["Support Technical Leads in determining the most effective drilling sequence to meet technical and planning objectives", 
+                "Collaborate with Geology, Geotechnical, and Hydrogeology designers to gather technical requirements and effectively plan and implement them in the field", 
+                "", 
+                "", 
+                "Collaborate with Geology, Geotechnical, and Hydrogeology designers to gather technical requirements and effectively plan and implement them in the field", 
+                "L3: Box 18"],
+            ["Demonstrates knowledge of hydrogeological bore construction and manages materials to support efficient field execution", 
+                "Able to receive mentoring from SME/EW Advisor on machine capability, infield direction, and best practice for pad and track construction, with pass-out expected within 12 months", 
+                "Able to monitor material orders for timely site delivery, verify items against order lists, and confirm quantities meet project requirements", 
+                "", 
+                "Education – Able to review materials in Protrak and at the laydown area to understand their purpose and application in hydrogeological programs. Exposure – Able to confirm with SMEs/Supervisors that a materials order can be accurately generated from a hydro design.", 
+                "L3: Box 24"],
+            ["Able to understand and manage the impacts of lost circulation and slow penetration rates, identifying key decision points to support continued drilling operations", 
+                "Provides timely reporting of slow drilling rates, enters relevant comments into DDM, and informs drilling advisors to support prompt resolution and maintain operational efficiency", 
+                "Able to collaborate with drilling advisors and contractors to brainstorm solutions, and take ownership in implementing agreed actions to support drilling continuity and efficiency", 
+                "", 
+                "Exposure – Able to receive mentoring from SMEs (Drill Advisors) to understand factors contributing to lost circulation and slow penetration rates, with Supervisor guidance to actively support solution identification and implementation", 
+                "L3: Box 30"],
+            ["Able to understand and manage the Lost Drill Equipment process, ensuring accurate cost allocation for proper tracking and reporting", 
+                "Able to review the stuck pipe procedure and understand the cost and time implications, supporting informed decision-making during drilling operations", 
+                "Able to collaborate with the contractor to agree on effective pipe abstraction methods, request cost estimates for equipment left in-hole, and provide realistic recovery timeframes to support informed decision-making", 
+                "Able to fully understand the stuck rods procedure, determine appropriate recovery methods and timeframes, and ensure accurate data entry in Protrak and Enablon", 
+                "Education – Able to review the Quick Reference Guide (QRG) to understand its intent and apply the process effectively in the field. Exposure – Able to receive guidance from SMEs/Supervisors on navigating the process, including documentation and reporting steps, and gain insight into decision-making processes and outcomes", 
+                "L3: Box 36"],
+            ["Able to demonstrate knowledge of instrument types and installation methods for hydrogeological and geotechnical purposes, including VWPs, ensuring correct application and integration into field programs", 
+                "Able to understand the scope of work and ensure correct instruments are identified, ordered, and stored onsite prior to Field Personnel engagement, supporting smooth and timely execution of hydrogeological and geotechnical programs", 
+                "", 
+                "", 
+                "Exposure – Able to receive guidance from Hydrogeology SMEs on instrument types, their functions, and installation methods, supporting practical understanding and field readiness", 
+                "L3: Box 42"],
+            ["Able to understand the full VWP installation process, including grouting techniques and procedural steps, ensuring correct setup and data integrity for hydrogeological and geotechnical monitoring", 
+                "Able to fully understand the Fluid Potential work scope, verify tasks in the field, and perform CMS duties to support program execution", 
+                "Able to demonstrate full understanding of the Fluid Potential work scope, verify assigned tasks in the field, and execute CMS responsibilities to ensure compliance and data integrity", 
+                "", 
+                "Exposure – Able to receive guidance from Hydrogeology SMEs on instrument types, their functions, and installation methods, supporting practical understanding and correct field application", 
+                ""],
         ]
     };
     const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
+    // Ensure boxTexts has enough rows for rendering (avoid undefined errors)
+    let safeBoxTexts = boxTexts;
+    if (level === 1 && boxTexts.length < 5) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(5 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    } else if (level === 2 && boxTexts.length < 12) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(12 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    } else if (level === 3 && boxTexts.length < 8) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(8 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    }
     // Build table rows for Bootstrap table
     let tableRows = null;
     if (!loading) {
@@ -230,13 +379,21 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             </tr>
         );
         // Data rows
-        for (let row = 1; row <= 7; row++) {
+        let numRows = 7;
+        if (level === 1) {
+            numRows = 5;
+        } else if (level === 2) {
+            numRows = 12;
+        } else if (level === 3) {
+            numRows = 8;
+        }
+        for (let row = 1; row <= numRows; row++) {
             tableRows.push(
                 <tr key={row}>
                     {/* Progress checkboxes with unique text */}
                     {[0,1,2,3,4,5].map(col => (
                         <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
+                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
                             <input
                                 type="checkbox"
                                 checked={gridProgressChecks[row-1][col]}
@@ -269,30 +426,30 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     </td>
                     {/* Comment cell */}
                     <td className="align-middle" style={{ padding: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                            <textarea
-                                value={comments[row-1]}
-                                onChange={e => {
-                                    const updated = comments.slice();
-                                    updated[row-1] = e.target.value;
-                                    setComments(updated);
-                                }}
-                                placeholder="Enter your comment"
-                                className="form-control"
-                                style={{
-                                    minHeight: 140,
-                                    maxHeight: 140,
-                                    width: '100%',
-                                    border: '1px solid #ced4da',
-                                    borderRadius: 4,
-                                    resize: 'none',
-                                    boxShadow: 'none',
-                                    padding: 8,
-                                    margin: 0,
-                                    display: 'block',
-                                }}
-                            />
-                        </div>
+                            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                                <textarea
+                                    value={comments[row-1]}
+                                    onChange={e => {
+                                        const updated = comments.slice();
+                                        updated[row-1] = e.target.value;
+                                        setComments(updated);
+                                    }}
+                                    placeholder="Enter your comment"
+                                    className="form-control"
+                                    style={{
+                                        minHeight: 140,
+                                        maxHeight: 140,
+                                        width: '100%',
+                                        border: '1px solid #ced4da',
+                                        borderRadius: 4,
+                                        resize: 'none',
+                                        boxShadow: 'none',
+                                        padding: 8,
+                                        margin: 0,
+                                        display: 'block',
+                                    }}
+                                />
+                            </div>
                     </td>
                 </tr>
             );

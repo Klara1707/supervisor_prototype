@@ -1,6 +1,6 @@
 // import { useDebouncedSave } from "../hooks/useDebouncedSave";
 import "./Pop.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
@@ -8,278 +8,267 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             // Texts for each popup level
             const boxTextsByLevel = {
                 1: [
-                    ["Leadership L1: Box 1", "Leadership L1: Box 2", "Leadership L1: Box 3", "Leadership L1: Box 4", "Leadership L1: Box 5", "Leadership L1: Box 6"],
-                    ["Leadership L1: Box 7", "Leadership L1: Box 8", "Leadership L1: Box 9", "Leadership L1: Box 10", "Leadership L1: Box 11", "Leadership L1: Box 12"],
-                    ["Leadership L1: Box 13", "Leadership L1: Box 14", "Leadership L1: Box 15", "Leadership L1: Box 16", "Leadership L1: Box 17", "Leadership L1: Box 18"],
-                    ["Leadership L1: Box 19", "Leadership L1: Box 20", "Leadership L1: Box 21", "Leadership L1: Box 22", "Leadership L1: Box 23", "Leadership L1: Box 24"],
-                    ["Leadership L1: Box 25", "Leadership L1: Box 26", "Leadership L1: Box 27", "Leadership L1: Box 28", "Leadership L1: Box 29", "Leadership L1: Box 30"],
-                    ["Leadership L1: Box 31", "Leadership L1: Box 32", "Leadership L1: Box 33", "Leadership L1: Box 34", "Leadership L1: Box 35", "Leadership L1: Box 36"],
-                    ["Leadership L1: Box 37", "Leadership L1: Box 38", "Leadership L1: Box 39", "Leadership L1: Box 40", "Leadership L1: Box 41", "Leadership L1: Box 42"]
+                    ["Proficient in using RTIO Leadership Coaching (PowerApps) to record all LIF interactions", 
+                        "Skilled in completing LIF interaction forms with detailed input, including clear descriptions of WWW (What Went Well) and EBI (Even Better If), along with thoughtful reflection", 
+                        "", 
+                        "", 
+                        "Tips: The RTIO Leadership Coaching App contains excellent resources to support QSI, coaching, and more. Exposure: SME: Demonstrates where to access PowerApps. Superintendent: Provides mentoring on how to complete forms, including the level of detail required.", 
+                        "Leadership L1: Box 6"],
+                    ["Facilitates effective PSI meetings, ensuring clear communication, engagement, and follow-up on safety and operational actions",
+                        "Can facilitate a PSI by following the PSI board cadence and effectively leading discussions on daily hazards and controls", 
+                        "Can facilitate a PSI by following the PSI board cadence and effectively leading discussions on daily hazards and controls", 
+                        "", 
+                        "Education: Watch how-to videos and learn what makes a strong PSI", 
+                        "Leadership L1: Box 12"],
+                    ["Leads effective meetings and communications across all LIF activities (CRM, PTHA, QSI, SPOTLIGHT)", 
+                        "Understands each activity’s purpose, the LIF playback intent, and communicates their LIF involvement clearly in meetings", 
+                        "Provides effective, positive coaching and feedback during interactions, and confirms controls are in place", 
+                        "Can give coaching and feedback in the interaction effectively and positively. Uses - QSI methods and techniques effectively", 
+                        "Education: Watch how-to videos. Understand effective LIF interactions. Complete QSI training. Exposure: SME/Super/Supt: Provide ongoing coaching on LIF and playback. Verify task controls during LIF activities.", 
+                        "Leadership L1: Box 18"],
+                    ["Competent in accessing and updating Check-Ins through the relevant platform. Able to view and edit personal P6 Objectives to reflect current goals and development focus", 
+                        "Competent in accessing and updating Check-Ins through the relevant platform. Able to view and edit personal P6 Objectives to reflect current goals and development focus", 
+                        "Demonstrates the ability to accurately enter objectives and understands the various types and their intended outcomes. Proactively follows up on assigned actions and ensures they are fully completed and closed out", 
+                        "", 
+                        "Provides mentorship to SMEs and Supervisors on effective objective setting, emphasizing the use of SMART and measurable objectives. Guides others in developing achievable actions and supports them in aligning objectives with desired outcomes", 
+                        "Leadership L1: Box 24"],
+                    ["Demonstrates competence in accessing, creating, and editing their Development Plan using the designated platform",
+                        "Effectively navigates the designated platform to access, create, and update their Development Plan with confidence and accuracy", 
+                        "Takes ownership of personal development by actively driving progress, following up on assigned actions, reporting updates during check-ins, and ensuring objectives are completed ahead of their due dates", 
+                        "", 
+                        "Provides guidance and mentorship to SMEs and Supervisors on effective objective setting, with a focus on developing SMART and measurable objectives. Supports others in creating realistic, achievable actions that align with performance and development goals", 
+                        "Leadership L1: Box 30"]
                 ],
                 2: [
-                    ["Leadership L2: Box 1", "Leadership L2: Box 2", "Leadership L2: Box 3", "Leadership L2: Box 4", "Leadership L2: Box 5", "Leadership L2: Box 6"],
-                    ["Leadership L2: Box 7", "Leadership L2: Box 8", "Leadership L2: Box 9", "Leadership L2: Box 10", "Leadership L2: Box 11", "Leadership L2: Box 12"],
-                    ["Leadership L2: Box 13", "Leadership L2: Box 14", "Leadership L2: Box 15", "Leadership L2: Box 16", "Leadership L2: Box 17", "Leadership L2: Box 18"],
-                    ["Leadership L2: Box 19", "Leadership L2: Box 20", "Leadership L2: Box 21", "Leadership L2: Box 22", "Leadership L2: Box 23", "Leadership L2: Box 24"],
-                    ["Leadership L2: Box 25", "Leadership L2: Box 26", "Leadership L2: Box 27", "Leadership L2: Box 28", "Leadership L2: Box 29", "Leadership L2: Box 30"],
-                    ["Leadership L2: Box 31", "Leadership L2: Box 32", "Leadership L2: Box 33", "Leadership L2: Box 34", "Leadership L2: Box 35", "Leadership L2: Box 36"],
-                    ["Leadership L2: Box 37", "Leadership L2: Box 38", "Leadership L2: Box 39", "Leadership L2: Box 40", "Leadership L2: Box 41", "Leadership L2: Box 42"]
+                    ["Builds effective relationships with site stakeholders and actively participates in key meetings (e.g., PMO, MTS, SusCap)", "Takes ownership of in-pit programs by building key contacts, presenting drilling designs, negotiating pit windows with MTS and Production, and aligning with the 2-week plan", "Can assess the D+B plod, negotiate access with MTS and D+B Supervisor, and review the monthly production plan to forecast pit windows", "", "Tip & Exposure – Request access to MTS 2-week planning meetings and distribution lists. Follow up all MTS discussions with emails to support execution and track agreements. Identify key MTS engineers and their preferred communication style, and commit to regular engagement. Attend meetings prepared, review pre-reads, and align your work with PMO activities. Use the 2-week plan to spot opportunities between production milestones", "Leadership L2: Box 6"],
+                    ["Identifies and supports department recognition initiatives, such as Rockstar", "Identifies potential Rockstar nominees using the Rockstar website, provides detailed justification to the approver, and supports recognition with evidence of achievements", "", "", "Reads and understands the Recognition Guidelines and Tips to support effective nominations", "Leadership L2: Box 12"]
                 ],
                 3: [
-                    ["Leadership L3: Box 1", "Leadership L3: Box 2", "Leadership L3: Box 3", "Leadership L3: Box 4", "Leadership L3: Box 5", "Leadership L3: Box 6"],
-                    ["Leadership L3: Box 7", "Leadership L3: Box 8", "Leadership L3: Box 9", "Leadership L3: Box 10", "Leadership L3: Box 11", "Leadership L3: Box 12"],
-                    ["Leadership L3: Box 13", "Leadership L3: Box 14", "Leadership L3: Box 15", "Leadership L3: Box 16", "Leadership L3: Box 17", "Leadership L3: Box 18"],
-                    ["Leadership L3: Box 19", "Leadership L3: Box 20", "Leadership L3: Box 21", "Leadership L3: Box 22", "Leadership L3: Box 23", "Leadership L3: Box 24"],
-                    ["Leadership L3: Box 25", "Leadership L3: Box 26", "Leadership L3: Box 27", "Leadership L3: Box 28", "Leadership L3: Box 29", "Leadership L3: Box 30"],
-                    ["Leadership L3: Box 31", "Leadership L3: Box 32", "Leadership L3: Box 33", "Leadership L3: Box 34", "Leadership L3: Box 35", "Leadership L3: Box 36"],
-                    ["Leadership L3: Box 37", "Leadership L3: Box 38", "Leadership L3: Box 39", "Leadership L3: Box 40", "Leadership L3: Box 41", "Leadership L3: Box 42"]
+                    ["Provides LIF coaching to Contract Partner Supervisors to support quality safety interactions", "Schedules LIF coaching in meetings, delivers coaching aligned with QSI and LIF training guidelines, and encourages Contract Partners to use LIF prompts when recounting daily activities", "Follows up on coaching EBI and actions, maintaining vigilance over the quality of LIF interactions", "", "Uses the Go Look See function to pre-arrange coaching with peers. Observes multiple interactions and engages in open discussions to understand intent, observations, and communication style. Once confident, seeks permission to provide feedback and uses open questions to encourage honest reflection. Shares observations to support improvement or celebrate success", "Leadership L3: Box 6"],
+                    ["Facilitates effective LiF meetings, ensuring clear communication, issue tracking, and action follow-up", "Full understanding of all DDM/LiF meeting sections. Actively covers each area, drives discussion, takes actions, and follows up on progress", "", "", "Exposure: Facilitate a LiF meeting with your Superintendent. Request feedback to support development", "Leadership L3: Box 12"],
+                    ["Coach and support other Supervisors within your SME area", "Earthworks: Mentor other Supervisors on operating conditions and methods. Field Supervisor: Share SME experience and mentor others in high-risk work. Hydro: Mentor others in CMS processes. RC/Diamond: Mentor others in CMS processes", "", "", "Offer to buddy a new starter Supervisor. Share a process you're confident with during a 2:1 or Sunday Funday meeting. Demonstrate expertise by providing direct, supportive leadership to a peer. Identify a missing How-To video and create it for team sharing.", "Leadership L3: Box 18"],
+                    ["Participate in developing productivity improvements through observation, feedback, and process enhancement", "Identify improvement opportunities within your work scope and systems used", "Assess data to identify improvement opportunities and implement actions to drive results", "", "", "Leadership L3: Box 24"]
                 ]
             };
-            const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
-        // Manual save progress button with success tick
-        const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
-        const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
-        // Extracted fetch logic for re-use
-        const fetchProgress = async () => {
-            if (!popupId || !userToken) return;
-            try {
-                const res = await fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${userToken}`,
-                        "Content-Type": "application/json"
-                    }
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    // Support both new ({ popupId: {...} }) and legacy ({...}) formats
-                    const entry = data && (data[popupId] || data);
-                    if (entry) {
-                        setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
-                        setComments(entry.comments || Array(7).fill(""));
-                        setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
-                        setHasLoaded(true); // Mark as loaded so auto-save can start
-                    }
-                }
-            } catch (err) {}
-        };
 
-        const handleManualSave = async () => {
-            if (!popupId || !userToken) return;
-            const payload = {
-                popupId,
-                gridProgressChecks,
-                comments,
-                signOffs,
-                progressPercentage: percentage
-            };
-            await fetch("/api/training-progress/", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${userToken}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
-            setSaveStatus('success');
-            if (onProgressUpdate) await onProgressUpdate();
-            // Re-fetch latest progress after save
-            await fetchProgress();
-            setTimeout(() => setSaveStatus('idle'), 1200);
-        };
-    // Grid headers
-    const headers = [
-        "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
-        "Training Process", "Training Material", "Reviewer sign off", "Comments"
-    ];
-    // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
-    // Must have 7 rows for rows 1-7 (index 0-6)
-    const [gridProgressChecks, setGridProgressChecks] = useState(
-        Array(7).fill(null).map(() => Array(6).fill(false))
-    );
-    // Per-row comment state
-    const [comments, setComments] = useState(Array(7).fill(""));
-    const [signOffs, setSignOffs] = useState(
-        Array(7).fill(null).map(() => ({ name: "", date: "", signed: false }))
-    );
-    // Robust percentage calculation: support both 2D and flat arrays
-    let flatChecks = Array.isArray(gridProgressChecks[0]) ? gridProgressChecks.flat() : gridProgressChecks;
-    const totalGridChecks = 42; // Always 7x6
-    const completedGridChecks = flatChecks.filter(Boolean).length;
-    const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
+    // --- Dynamic row counts per level ---
+    let numRows = 7;
+    if (level === 1) numRows = 5;
+    else if (level === 2) numRows = 2;
+    else if (level === 3) numRows = 4;
 
-    // Load progress from backend on mount
-    useEffect(() => {
-        fetchProgress();
-        // eslint-disable-next-line
-    }, [popupId, userToken]);
-
-    // Auto-save progress to backend on every change and on unmount (close)
-    useEffect(() => {
-        if (!hasLoaded) return; // Don't auto-save until data is loaded
-        if (!popupId || !userToken) return;
-        const payload = {
-            popupId,
-            gridProgressChecks,
-            comments,
-            signOffs,
-            progressPercentage: percentage
-        };
-        fetch("/api/training-progress/", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${userToken}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
-        if (onProgressUpdate) onProgressUpdate();
-        // Also save on unmount (when popup closes)
-        return () => {
-            fetch("/api/training-progress/", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${userToken}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            });
-            if (onProgressUpdate) onProgressUpdate();
-        };
-        // eslint-disable-next-line
-    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken, hasLoaded]);
-
-    // Build table rows for Bootstrap table
-    const tableRows = [];
-    // Header row
-    tableRows.push(
-        <tr key="header">
-            {headers.map((header, idx) => (
-                <th key={idx} className="text-center align-middle bg-light">{header}</th>
-            ))}
-        </tr>
-    );
-    // Data rows
-    for (let row = 1; row <= 7; row++) {
-        tableRows.push(
-            <tr key={row}>
-                {/* Progress checkboxes with unique text */}
-                {[0,1,2,3,4,5].map(col => (
-                    <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
-                        <input
-                            type="checkbox"
-                            checked={gridProgressChecks[row-1][col]}
-                            onChange={() => {
-                                const updated = gridProgressChecks.map(arr => arr.slice());
-                                updated[row-1][col] = !updated[row-1][col];
-                                setGridProgressChecks(updated);
-                            }}
-                            style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
-                        />
-                    </td>
-                ))}
-                {/* Sign off cell */}
-                <td className="align-middle">
-                    <SignOffForm
-                        name={signOffs[row-1].name}
-                        date={signOffs[row-1].date}
-                        signed={signOffs[row-1].signed}
-                        onChange={(field, value) => {
-                            const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, [field]: value } : s);
-                            setSignOffs(updated);
-                        }}
-                        onSignOff={() => {
-                            if (signOffs[row-1].name && signOffs[row-1].date) {
-                                const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, signed: true } : s);
-                                setSignOffs(updated);
-                            }
-                        }}
-                    />
-                </td>
-                {/* Comment cell */}
-                <td className="align-middle" style={{ padding: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                            <textarea
-                                value={comments[row-1]}
-                                onChange={e => {
-                                    const updated = comments.slice();
-                                    updated[row-1] = e.target.value;
-                                    setComments(updated);
-                                }}
-                                placeholder="Enter your comment"
-                                className="form-control"
-                                style={{
-                                    minHeight: 140,
-                                    maxHeight: 140,
-                                    width: '100%',
-                                    border: '1px solid #ced4da',
-                                    borderRadius: 4,
-                                    resize: 'none',
-                                    boxShadow: 'none',
-                                    padding: 8,
-                                    margin: 0,
-                                    display: 'block',
-                                }}
-                            />
-                        </div>
-                </td>
-            </tr>
-        );
+    // Defensive: pad boxTexts for rendering
+    const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
+    let safeBoxTexts = boxTexts;
+    if (level === 1 && boxTexts.length < 5) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(5 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    } else if (level === 2 && boxTexts.length < 2) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(2 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    } else if (level === 3 && boxTexts.length < 4) {
+        safeBoxTexts = [
+            ...boxTexts,
+            ...Array(4 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
     }
 
-    // Helper component for per-row sign-off form
-    // Move outside the loop
-    // ...existing code...
+    // --- State ---
+    const [gridProgressChecks, setGridProgressChecks] = useState(Array(numRows).fill(null).map(() => Array(6).fill(false)));
+    const [comments, setComments] = useState(Array(numRows).fill(""));
+    const [signOffs, setSignOffs] = useState(Array(numRows).fill(null).map(() => ({ name: "", date: "", signed: false })));
+    const [hasLoaded, setHasLoaded] = useState(false);
 
-    return (
-        <div className="popup-overlay">
-            <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
-                <h2>Leadership Level {level}</h2>
-                <button
-                    className="save-progress-btn"
-                    onClick={handleManualSave}
-                >
-                    {saveStatus === 'success' ? (
-                        <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
-                    ) : null}
-                    Save Progress
-                </button>
-                <div className="progress-bar-container mb-3">
-                    <div
-                        className="progress-bar"
-                        style={{
-                            width: `${percentage}%`,
-                            backgroundColor: completedGridChecks > 0 ? '#4caf50' : '#e0e0e0',
-                            color: completedGridChecks > 0 ? 'white' : '#333',
-                            position: 'relative'
-                        }}
-                    >
-                        {completedGridChecks > 0 && (
-                            <span className="progress-text">{percentage}%</span>
-                        )}
-                    </div>
-                </div>
-                <div className="table-responsive mb-3">
-                    <table className="table table-bordered table-striped table-hover align-middle">
-                        <tbody>
-                            {tableRows}
-                        </tbody>
-                    </table>
-                </div>
-                <button className="close-button" onClick={onClose} aria-label="Close popup">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
-                        <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
-                        <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    );
-    
-}
+                        // --- Fetch logic ---
+                        const fetchProgress = useCallback(async () => {
+                            if (!popupId || !userToken) return;
+                            try {
+                                const res = await fetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
+                                    method: "GET",
+                                    headers: {
+                                        "Authorization": `Bearer ${userToken}`,
+                                        "Content-Type": "application/json"
+                                    }
+                                });
+                                if (res.ok) {
+                                    const data = await res.json();
+                                    const entry = data && (data[popupId] || data);
+                                    if (entry) {
+                                        setGridProgressChecks(entry.gridProgressChecks || Array(numRows).fill(null).map(() => Array(6).fill(false)));
+                                        setComments(entry.comments || Array(numRows).fill(""));
+                                        setSignOffs(entry.signOffs || Array(numRows).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                                        setHasLoaded(true);
+                                    }
+                                }
+                            } catch (err) {}
+                        }, [popupId, userToken, numRows]);
 
+                        useEffect(() => {
+                            fetchProgress();
+                            // eslint-disable-next-line
+                        }, [popupId, userToken, fetchProgress]);
+
+                        // --- Save logic ---
+                        let flatChecks = Array.isArray(gridProgressChecks[0]) ? gridProgressChecks.flat() : gridProgressChecks;
+                        const totalGridChecks = numRows * 6;
+                        const completedGridChecks = flatChecks.filter(Boolean).length;
+                        const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
+
+                        useEffect(() => {
+                            if (!hasLoaded) return;
+                            if (!popupId || !userToken) return;
+                            const payload = {
+                                popupId,
+                                gridProgressChecks,
+                                comments,
+                                signOffs,
+                                progressPercentage: percentage
+                            };
+                            fetch("/api/training-progress/", {
+                                method: "POST",
+                                headers: {
+                                    "Authorization": `Bearer ${userToken}`,
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(payload)
+                            });
+                            if (onProgressUpdate) onProgressUpdate();
+                            return () => {
+                                fetch("/api/training-progress/", {
+                                    method: "POST",
+                                    headers: {
+                                        "Authorization": `Bearer ${userToken}`,
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify(payload)
+                                });
+                                if (onProgressUpdate) onProgressUpdate();
+                            };
+                            // eslint-disable-next-line
+                        }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken, hasLoaded]);
+
+                        // --- Table rendering ---
+                        const headers = [
+                            "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
+                            "Training Process", "Training Material", "Reviewer sign off", "Comments"
+                        ];
+                        const tableRows = [];
+                        tableRows.push(
+                            <tr key="header">
+                                {headers.map((header, idx) => (
+                                    <th key={idx} className="text-center align-middle bg-light">{header}</th>
+                                ))}
+                            </tr>
+                        );
+                        for (let row = 1; row <= numRows; row++) {
+                            tableRows.push(
+                                <tr key={row}>
+                                    {/* Progress checkboxes with unique text */}
+                                    {[0,1,2,3,4,5].map(col => (
+                                        <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
+                                            <input
+                                                type="checkbox"
+                                                checked={gridProgressChecks[row-1][col]}
+                                                onChange={() => {
+                                                    const updated = gridProgressChecks.map(arr => arr.slice());
+                                                    updated[row-1][col] = !updated[row-1][col];
+                                                    setGridProgressChecks(updated);
+                                                }}
+                                                style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                                            />
+                                        </td>
+                                    ))}
+                                    {/* Sign off cell */}
+                                    <td className="align-middle">
+                                        <SignOffForm
+                                            name={signOffs[row-1].name}
+                                            date={signOffs[row-1].date}
+                                            signed={signOffs[row-1].signed}
+                                            onChange={(field, value) => {
+                                                const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, [field]: value } : s);
+                                                setSignOffs(updated);
+                                            }}
+                                            onSignOff={() => {
+                                                if (signOffs[row-1].name && signOffs[row-1].date) {
+                                                    const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, signed: true } : s);
+                                                    setSignOffs(updated);
+                                                }
+                                            }}
+                                        />
+                                    </td>
+                                    {/* Comment cell */}
+                                    <td className="align-middle" style={{ padding: 0 }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                                                <textarea
+                                                    value={comments[row-1]}
+                                                    onChange={e => {
+                                                        const updated = comments.slice();
+                                                        updated[row-1] = e.target.value;
+                                                        setComments(updated);
+                                                    }}
+                                                    placeholder="Enter your comment"
+                                                    className="form-control"
+                                                    style={{
+                                                        minHeight: 140,
+                                                        maxHeight: 140,
+                                                        width: '100%',
+                                                        border: '1px solid #ced4da',
+                                                        borderRadius: 4,
+                                                        resize: 'none',
+                                                        boxShadow: 'none',
+                                                        padding: 8,
+                                                        margin: 0,
+                                                        display: 'block',
+                                                    }}
+                                                />
+                                            </div>
+                                    </td>
+                                </tr>
+                            );
+                        }
+
+                        return (
+                            <div className="popup-overlay">
+                                <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
+                                    <h2>Leadership Level {level}</h2>
+                                    <div className="progress-bar-container mb-3">
+                                        <div
+                                            className="progress-bar"
+                                            style={{
+                                                width: `${percentage}%`,
+                                                backgroundColor: completedGridChecks > 0 ? '#4caf50' : '#e0e0e0',
+                                                color: completedGridChecks > 0 ? 'white' : '#333',
+                                                position: 'relative'
+                                            }}
+                                        >
+                                            {completedGridChecks > 0 && (
+                                                <span className="progress-text">{percentage}%</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="table-responsive mb-3">
+                                        <table className="table table-bordered table-striped table-hover align-middle">
+                                            <tbody>
+                                                {tableRows}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button className="close-button" onClick={onClose} aria-label="Close popup">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
+                                            <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
+                                            <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    } // End of LevelPopup
 
 
 function LeadershipPop({ popupId, closePopup, userToken, onProgressUpdate }) {

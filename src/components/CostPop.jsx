@@ -9,34 +9,37 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         // Texts for each popup level
         const boxTextsByLevel = {
             1: [
-                ["Cost L1: Box 1", "Cost L1: Box 2", "Cost L1: Box 3", "Cost L1: Box 4", "Cost L1: Box 5", "Cost L1: Box 6"],
-                ["Cost L1: Box 7", "Cost L1: Box 8", "Cost L1: Box 9", "Cost L1: Box 10", "Cost L1: Box 11", "Cost L1: Box 12"],
-                ["Cost L1: Box 13", "Cost L1: Box 14", "Cost L1: Box 15", "Cost L1: Box 16", "Cost L1: Box 17", "Cost L1: Box 18"],
-                ["Cost L1: Box 19", "Cost L1: Box 20", "Cost L1: Box 21", "Cost L1: Box 22", "Cost L1: Box 23", "Cost L1: Box 24"],
-                ["Cost L1: Box 25", "Cost L1: Box 26", "Cost L1: Box 27", "Cost L1: Box 28", "Cost L1: Box 29", "Cost L1: Box 30"],
-                ["Cost L1: Box 31", "Cost L1: Box 32", "Cost L1: Box 33", "Cost L1: Box 34", "Cost L1: Box 35", "Cost L1: Box 36"],
-                ["Cost L1: Box 37", "Cost L1: Box 38", "Cost L1: Box 39", "Cost L1: Box 40", "Cost L1: Box 41", "Cost L1: Box 42"]
+                ["Manages Operator/HME PLODs, confidently queries activities, and completes approvals (sign, scan, save)", "Understands the PLOD approval workflow and its role in tracking performance and cost allocation. Can link PLOD data to the DDM board", "Understands EW PLOD work activities, including operator, machine, standby, and non-operating charges", "Can question PLOD charges and provide accurate guidance. Has working knowledge of the contract and its application", "Review & Access: Understand the E/Works PLOD signing process flow. Access Matrix and contract summaries. Exposure: Mentoring from SME/Supervisor on thorough PLOD checks. Engage with CM team and escalate charge queries to Cat 3 Supervisor.", "Contractor L1: Box 6"],
+                ["Manages daily plods submitted by Drilling and Hydro contractors, with the ability to confidently review, query activities, and approve submissions in line with operational requirements", "Understands the process flow for plod approval, including its role in tracking contractor performance and assigning costs. Confidently reviews and signs off on daily plods, ensuring accuracy and accountability", "Understands the various work activities recorded on a drilling plod, including the distinctions between operator charges, machine charges, standby time, and non-operating charges. Applies this knowledge to accurately review and validate contractor submissions", "Confidently queries and validates charges on contractor plods, providing accurate guidance based on operational understanding. Has working knowledge of the contract and how its terms are applied in daily activities", "Review: Understands the end-to-end process flow for signing Drilling and Hydro contractor plods, ensuring accuracy and compliance with operational procedures. Access: Has access to contract summaries to support informed decision-making during plod reviews and approvals. Exposure: Mentored by SMEs and Supervisors on conducting thorough plod checks. Engages in communication with the Contract Management (CM) team and escalates queries on charges to the Category 3 Supervisor as required.", "Contractor L1: Box 12"],
+                ["Accurately enters contractor plod data into Protrak and confidently approves plods in Coreplan or Matrix, ensuring alignment with operational and contractual requirements", "Has system access and login credentials to relevant portals, enabling the approval and processing of contractor plods with accuracy and efficiency", "", "", "System Access: Has access to both Protrak and Matrix systems, enabling efficient data entry and approval of contractor plods. Exposure: Shadowed by SMEs and Supervisors to learn accurate entry and approval processes for Hydro plods in Matrix, ensuring compliance with operational and contractual standards.", "Contractor L1: Box 18"]
             ],
             2: [
-                ["Cost L2: Box 1", "Cost L2: Box 2", "Cost L2: Box 3", "Cost L2: Box 4", "Cost L2: Box 5", "Cost L2: Box 6"],
-                ["Cost L2: Box 7", "Cost L2: Box 8", "Cost L2: Box 9", "Cost L2: Box 10", "Cost L2: Box 11", "Cost L2: Box 12"],
-                ["Cost L2: Box 13", "Cost L2: Box 14", "Cost L2: Box 15", "Cost L2: Box 16", "Cost L2: Box 17", "Cost L2: Box 18"],
-                ["Cost L2: Box 19", "Cost L2: Box 20", "Cost L2: Box 21", "Cost L2: Box 22", "Cost L2: Box 23", "Cost L2: Box 24"],
-                ["Cost L2: Box 25", "Cost L2: Box 26", "Cost L2: Box 27", "Cost L2: Box 28", "Cost L2: Box 29", "Cost L2: Box 30"],
-                ["Cost L2: Box 31", "Cost L2: Box 32", "Cost L2: Box 33", "Cost L2: Box 34", "Cost L2: Box 35", "Cost L2: Box 36"],
-                ["Cost L2: Box 37", "Cost L2: Box 38", "Cost L2: Box 39", "Cost L2: Box 40", "Cost L2: Box 41", "Cost L2: Box 42"]
+                ["Understands the breakdown of the department budget, including the distinction between Opex and Capex", "Understands which cost activities align with Opex and Capex expense buckets, and the rationale behind their classification", "", "", "No formal training is available at Supervisor level—stay curious and ask experienced Supervisors or Superintendents for guidance", "Contractor L2: Box 6"],
+                ["Understands the cost breakdown of activities within their work area and how each contributes to overall budget management", "Can locate and use the current WBS register to support cost tracking and activity alignment", "Can identify and apply the correct Cost Code or Cost Centre for activities, services, and purchases within their work area", "", "No formal training is available at Supervisor level—stay curious, ask questions, and seek guidance from experienced Supervisors or Superintendents", "Contractor L2: Box 12"]
             ],
             3: [
-                ["Cost L3: Box 1", "Cost L3: Box 2", "Cost L3: Box 3", "Cost L3: Box 4", "Cost L3: Box 5", "Cost L3: Box 6"],
-                ["Cost L3: Box 7", "Cost L3: Box 8", "Cost L3: Box 9", "Cost L3: Box 10", "Cost L3: Box 11", "Cost L3: Box 12"],
-                ["Cost L3: Box 13", "Cost L3: Box 14", "Cost L3: Box 15", "Cost L3: Box 16", "Cost L3: Box 17", "Cost L3: Box 18"],
-                ["Cost L3: Box 19", "Cost L3: Box 20", "Cost L3: Box 21", "Cost L3: Box 22", "Cost L3: Box 23", "Cost L3: Box 24"],
-                ["Cost L3: Box 25", "Cost L3: Box 26", "Cost L3: Box 27", "Cost L3: Box 28", "Cost L3: Box 29", "Cost L3: Box 30"],
-                ["Cost L3: Box 31", "Cost L3: Box 32", "Cost L3: Box 33", "Cost L3: Box 34", "Cost L3: Box 35", "Cost L3: Box 36"],
-                ["Cost L3: Box 37", "Cost L3: Box 38", "Cost L3: Box 39", "Cost L3: Box 40", "Cost L3: Box 41", "Cost L3: Box 42"]
+                ["Basic understanding of the ResDev annual budget process, including key timelines, inputs, and approvals", "Understand the basic process flow of how future work packages are requested, approved, forecasted and then budgeted", "Understand the process flow for future work packages: request, approval, forecasting, and budgeting", "", "No formal training at Supervisor level—stay curious and ask questions of experienced Superintendents and Technical Leads", "Contractor L3: Box 6"]
             ]
         };
         const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
+        // Ensure boxTexts has enough rows for rendering (avoid undefined errors)
+        let safeBoxTexts = boxTexts;
+        if (level === 1 && boxTexts.length < 3) {
+            safeBoxTexts = [
+                ...boxTexts,
+                ...Array(3 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+            ];
+        } else if (level === 2 && boxTexts.length < 2) {
+            safeBoxTexts = [
+                ...boxTexts,
+                ...Array(2 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+            ];
+        } else if (level === 3 && boxTexts.length < 1) {
+            safeBoxTexts = [
+                ...boxTexts,
+                ...Array(1 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+            ];
+        }
     // State must be declared before any code that uses it
     // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
     // Must have 7 rows for rows 1-7 (index 0-6)
@@ -161,13 +164,21 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         </tr>
     );
     // Data rows
-    for (let row = 1; row <= 7; row++) {
+    let numRows = 7;
+    if (level === 1) {
+        numRows = 3;
+    } else if (level === 2) {
+        numRows = 2;
+    } else if (level === 3) {
+        numRows = 1;
+    }
+    for (let row = 1; row <= numRows; row++) {
         tableRows.push(
             <tr key={row}>
                 {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}
@@ -213,8 +224,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                                 style={{
                                     minHeight: 140,
                                     maxHeight: 140,
-                                    width: '100%',
-                                    border: '1px solid #ced4da',
+                                    width: '100%','border': '1px solid #ced4da',
                                     borderRadius: 4,
                                     resize: 'none',
                                     boxShadow: 'none',

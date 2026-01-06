@@ -8,34 +8,100 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             // Texts for each popup level
             const boxTextsByLevel = {
                 1: [
-                    ["Contractor L1: Box 1", "Contractor L1: Box 2", "Contractor L1: Box 3", "Contractor L1: Box 4", "Contractor L1: Box 5", "Contractor L1: Box 6"],
-                    ["Contractor L1: Box 7", "Contractor L1: Box 8", "Contractor L1: Box 9", "Contractor L1: Box 10", "Contractor L1: Box 11", "Contractor L1: Box 12"],
-                    ["Contractor L1: Box 13", "Contractor L1: Box 14", "Contractor L1: Box 15", "Contractor L1: Box 16", "Contractor L1: Box 17", "Contractor L1: Box 18"],
-                    ["Contractor L1: Box 19", "Contractor L1: Box 20", "Contractor L1: Box 21", "Contractor L1: Box 22", "Contractor L1: Box 23", "Contractor L1: Box 24"],
-                    ["Contractor L1: Box 25", "Contractor L1: Box 26", "Contractor L1: Box 27", "Contractor L1: Box 28", "Contractor L1: Box 29", "Contractor L1: Box 30"],
-                    ["Contractor L1: Box 31", "Contractor L1: Box 32", "Contractor L1: Box 33", "Contractor L1: Box 34", "Contractor L1: Box 35", "Contractor L1: Box 36"],
-                    ["Contractor L1: Box 37", "Contractor L1: Box 38", "Contractor L1: Box 39", "Contractor L1: Box 40", "Contractor L1: Box 41", "Contractor L1: Box 42"]
+                    // 6 rows for Level 1
+                    ["Understands and manages the Non-Inducted Transport Worker process, ensuring compliance with site access protocols and contractor management procedures", 
+                        "Can locate and use the Non-Inducted Transport Worker (NITW) checklist on Safeday, and is capable of safely conducting NITW activities in accordance with site procedures and safety requirements", 
+                        "", 
+                        "", 
+                        "System Access & Usage: Able to download the Non-Inducted Transport Worker (NITW) checklist to a mobile device using the provided link. Familiar with accessing and navigating Safeday to support NITW activities. Exposure: Has familiarised themselves with the rules and requirements of the NITW process through hands-on experience and guidance from site procedures.", 
+                        "Cost L1: Box 6"],
+                    ["Understands and manages contractor mobilisation, including PTW, inductions, qualifications, and compliance with mySafety and Everyday Respect standards", 
+                        "Manages documentation, background checks, and communication required for contractor mobilisation to site", 
+                        "Understands and manages contractor mobilisation, including PTW, inductions, qualifications, and compliance with mySafety and Everyday Respect standards", 
+                        "", 
+                        "System Access: Has access to CM One, Pegasus, SAP, R3413 for qualifications checks, Protrak for inspections, and Safeday for safety documentation. Exposure: Mentored on-site by SMEs and HSE personnel in conducting documentation reviews, inspections, qualifications checks, and using Safeday and Protrak systems. Also received guidance on the contractor mobilisation process and understanding contract stipulations.", 
+                        "Cost L1: Box 12"],
+                    ["Trained and competent in managing the Permit to Work (PTW) process, ensuring compliance with site safety and operational procedures", 
+                        "Completed CMS qualification and applies its context to daily CMS duties. Understands the difference between general and master PTWs", 
+                        "Completed CMS qualification and applies its context to daily CMS duties. Understands the difference between general and master PTWs", 
+                        "", 
+                        "CMS Qualification & System Access: Nominated by Superintendent/Manager and successfully completed the CMS classroom course. Has access to Pegasus and R3413 for qualifications checks.", 
+                        "Cost L1: Box 18"],
+                    ["Competent in conducting Weekly Contractor Performance Meetings, understanding their purpose, storage requirements, and proactively addressing issues by creating and completing required actions", 
+                        "Understands the link between Contractor Performance Meetings and continuous improvement, recognising the importance of engaging with contractors to identify and address opportunities for enhancement", 
+                        "Follows up on actions raised during Contractor Performance Meetings and engages with the Contract Management team for support or to escalate issues when needed", 
+                        "Cost L1: Box 22", 
+                        "Form Review: Go through the form with an SME/Supervisor. Discuss key data points to present, including: DDM data, Enablon actions, Protrak inspections, Safeday/CRM data", 
+                        "Cost L1: Box 24"],
+                    ["Monitors contractor compliance with Fatigue Management requirements, including: Roster management practices. Understanding and application of the Fatigue Management Policy. Note: This is essential for effective nightshift supervision.", 
+                        "Has read and can apply the Fatigue Management Policy, with a strong focus on nightshift operations", 
+                        "", 
+                        "", 
+                        "Education – Fatigue Management. Read and understand the Fatigue Management Policy. Apply the policy during nightshift operations. Perform relevant checks to ensure compliance.", 
+                        "Cost L1: Box 30"],
+                    ["Demonstrates understanding of the Contract Summary relevant to assigned projects, including key terms, deliverables, and contractor obligations", 
+                        "Has access to and understands the Contract Summaries relevant to assigned projects, including key terms and obligations", 
+                        "Has access to and understands Contract Summaries relevant to assigned projects. Can review and apply contract terms when required, including: Plod signing, Mobilisation, Active vs non-active rates, Standby provisions", 
+                        "",
+                        "Exposure – Contract Management Team: Understand the roles and responsibilities of the Contract Management (CM) team. Engage with CM team members to clarify contract terms when needed. Has access to contract summaries and can extract and apply relevant information to daily tasks. Receives mentoring from an SME or Supervisor to support learning and application.", 
+                        "Cost L1: Box 36"]
                 ],
                 2: [
-                    ["Contractor L2: Box 1", "Contractor L2: Box 2", "Contractor L2: Box 3", "Contractor L2: Box 4", "Contractor L2: Box 5", "Contractor L2: Box 6"],
-                    ["Contractor L2: Box 7", "Contractor L2: Box 8", "Contractor L2: Box 9", "Contractor L2: Box 10", "Contractor L2: Box 11", "Contractor L2: Box 12"],
-                    ["Contractor L2: Box 13", "Contractor L2: Box 14", "Contractor L2: Box 15", "Contractor L2: Box 16", "Contractor L2: Box 17", "Contractor L2: Box 18"],
-                    ["Contractor L2: Box 19", "Contractor L2: Box 20", "Contractor L2: Box 21", "Contractor L2: Box 22", "Contractor L2: Box 23", "Contractor L2: Box 24"],
-                    ["Contractor L2: Box 25", "Contractor L2: Box 26", "Contractor L2: Box 27", "Contractor L2: Box 28", "Contractor L2: Box 29", "Contractor L2: Box 30"],
-                    ["Contractor L2: Box 31", "Contractor L2: Box 32", "Contractor L2: Box 33", "Contractor L2: Box 34", "Contractor L2: Box 35", "Contractor L2: Box 36"],
-                    ["Contractor L2: Box 37", "Contractor L2: Box 38", "Contractor L2: Box 39", "Contractor L2: Box 40", "Contractor L2: Box 41", "Contractor L2: Box 42"]
+                    // 2 rows for Level 2
+                    ["Understands the contractor mechanical inspection process and can perform equipment inspections relevant to site requirements", 
+                        "Understands the 6-monthly inspection process. Can access Protrak Inspections, look up equipment, and is responsible for checking off outstanding items", 
+                        "", 
+                        "", 
+                        "Has access to Protrak Inspections. Receives mentoring from the Mechanical team/Supervisor on the 6-month inspection process, field checks, and data entry into Protrak", 
+                        "Cost L2: Box 6"],
+                    ["Contributes to quarterly contractor meetings and leads weekly Sunday contractor performance discussions", 
+                        "Conducts contractor meetings, records minutes, and stores documentation in the shared drive", 
+                        "Presents contractor performance data, challenges non-conformance or poor performance, develops meaningful improvement actions, and ensures follow-up and close-out", 
+                        "", 
+                        "Exposure: Receives mentoring on CMS weekly meetings and how they link to monthly meetings. Experience: Provides contractor feedback to the CM team for inclusion in monthly meetings.", 
+                        "Cost L2: Box 12"]
                 ],
                 3: [
-                    ["Contractor L3: Box 1", "Contractor L3: Box 2", "Contractor L3: Box 3", "Contractor L3: Box 4", "Contractor L3: Box 5", "Contractor L3: Box 6"],
-                    ["Contractor L3: Box 7", "Contractor L3: Box 8", "Contractor L3: Box 9", "Contractor L3: Box 10", "Contractor L3: Box 11", "Contractor L3: Box 12"],
-                    ["Contractor L3: Box 13", "Contractor L3: Box 14", "Contractor L3: Box 15", "Contractor L3: Box 16", "Contractor L3: Box 17", "Contractor L3: Box 18"],
-                    ["Contractor L3: Box 19", "Contractor L3: Box 20", "Contractor L3: Box 21", "Contractor L3: Box 22", "Contractor L3: Box 23", "Contractor L3: Box 24"],
-                    ["Contractor L3: Box 25", "Contractor L3: Box 26", "Contractor L3: Box 27", "Contractor L3: Box 28", "Contractor L3: Box 29", "Contractor L3: Box 30"],
-                    ["Contractor L3: Box 31", "Contractor L3: Box 32", "Contractor L3: Box 33", "Contractor L3: Box 34", "Contractor L3: Box 35", "Contractor L3: Box 36"],
-                    ["Contractor L3: Box 37", "Contractor L3: Box 38", "Contractor L3: Box 39", "Contractor L3: Box 40", "Contractor L3: Box 41", "Contractor L3: Box 42"]
+                    // 3 rows for Level 3
+                    ["Complete Radiation Source Notifications as required", 
+                        "Identify local RSO, request Geophysics contractor to compile documents, submit for assessment and register update", 
+                        "Identify local RSO, request Geophysics contractor to compile documents, submit for assessment and register update", 
+                        "", 
+                        "Exposure through mentoring by SME/Supervisor on RSO contacts, required documentation, and managing vehicle movements", 
+                        "Cost L3: Box 6"],
+                    ["Manage entry of personnel and equipment to site (Equipment Authorisation, Registers, Weed & Seed checks)", 
+                        "Conduct RTIO checks with Cat 3 contractor supervisor, set realistic timeframes for fixes, enter into Protrak, and close out", 
+                        "", 
+                        "", 
+                        "Education: Know where to find the Weed & Seed form (Safeday). Exposure: SME mentoring on effective and thorough Weed & Seed checks on site", 
+                        "Cost L3: Box 12"],
+                    ["Understand and manage the ICP inspection process for pressure vessels", 
+                        "Understand inspection requirements for pressure vessels entering mine lease; coordinate with mine or Stat Supervisors to manage process", 
+                        "Manage rig movements and remove from site register as required",
+                        "", 
+                        "Exposure through SME/Supervisor mentoring on ICP contacts, required documentation, managing pressure vessels onsite, field assurance activities, and CCVS checks", 
+                        "Cost L3: Box 18"]
                 ]
             };
             const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
+            // Ensure boxTexts has enough rows for rendering (avoid undefined errors)
+            let safeBoxTexts = boxTexts;
+            if (level === 1 && boxTexts.length < 6) {
+                safeBoxTexts = [
+                    ...boxTexts,
+                    ...Array(6 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+                ];
+            } else if (level === 2 && boxTexts.length < 2) {
+                safeBoxTexts = [
+                    ...boxTexts,
+                    ...Array(2 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+                ];
+            } else if (level === 3 && boxTexts.length < 3) {
+                safeBoxTexts = [
+                    ...boxTexts,
+                    ...Array(3 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+                ];
+            }
         // Grid headers
         const headers = [
             "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
@@ -155,13 +221,21 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         </tr>
     );
     // Data rows
-    for (let row = 1; row <= 7; row++) {
+    let numRows = 7;
+    if (level === 1) {
+        numRows = 6;
+    } else if (level === 2) {
+        numRows = 2;
+    } else if (level === 3) {
+        numRows = 3;
+    }
+    for (let row = 1; row <= numRows; row++) {
         tableRows.push(
             <tr key={row}>
                 {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}

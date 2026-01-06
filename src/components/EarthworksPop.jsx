@@ -8,34 +8,40 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             // Texts for each popup level
             const boxTextsByLevel = {
                 1: [
-                    ["Earthworks L1: Box 1", "Earthworks L1: Box 2", "Earthworks L1: Box 3", "Earthworks L1: Box 4", "Earthworks L1: Box 5", "Earthworks L1: Box 6"],
-                    ["Earthworks L1: Box 7", "Earthworks L1: Box 8", "Earthworks L1: Box 9", "Earthworks L1: Box 10", "Earthworks L1: Box 11", "Earthworks L1: Box 12"],
-                    ["Earthworks L1: Box 13", "Earthworks L1: Box 14", "Earthworks L1: Box 15", "Earthworks L1: Box 16", "Earthworks L1: Box 17", "Earthworks L1: Box 18"],
-                    ["Earthworks L1: Box 19", "Earthworks L1: Box 20", "Earthworks L1: Box 21", "Earthworks L1: Box 22", "Earthworks L1: Box 23", "Earthworks L1: Box 24"],
-                    ["Earthworks L1: Box 25", "Earthworks L1: Box 26", "Earthworks L1: Box 27", "Earthworks L1: Box 28", "Earthworks L1: Box 29", "Earthworks L1: Box 30"],
-                    ["Earthworks L1: Box 31", "Earthworks L1: Box 32", "Earthworks L1: Box 33", "Earthworks L1: Box 34", "Earthworks L1: Box 35", "Earthworks L1: Box 36"],
-                    ["Earthworks L1: Box 37", "Earthworks L1: Box 38", "Earthworks L1: Box 39", "Earthworks L1: Box 40", "Earthworks L1: Box 41", "Earthworks L1: Box 42"]
+                    ["Maintain accurate Daily Log and Pad Tracking Sheets", "Understands the importance of accurate data entry and ensures error-free reporting", "Extracts data from sheets accurately for effective reporting", "", "Mentoring from Earthworks SME on data entry, State of Play usage, how data links to State of Play, and extracting data for reporting", "Earthworks L1: Box 6"],
+                    ["Understands pad and track construction guidelines, including approved designs", "Understands Earthworks guidelines for pad and track creation. Applies construction methods in the field, verifies compliance, and differentiates pad sizes", "Provides accurate guidance on pad and track construction in the field, demonstrating a strong understanding of clearance mechanisms and the implications of non-compliance with established guidelines", "", "Gained exposure through mentoring by SMEs, EW Advisors, and Supervisors on pad creation guidelines, including understanding the appropriate pad sizes for various drilling methods. Received guidance from SMEs on clearance levels for ARs and how these are tracked and managed", "Earthworks L1: Box 12"],
+                    ["Demonstrates an understanding of rehabilitation operations, including the verification of completed work to ensure compliance with environmental and operational standards", "Has read the Earthworks Rehabilitation Manual and is able to apply rehabilitation methods effectively in the field. Verifies that procedures are being followed in accordance with the guidelines", "Provides accurate guidance on rehabilitation activities in the field, with a solid understanding of clearance mechanisms and the consequences of non-compliance with established guidelines", "Verifies that rehabilitation is being conducted in accordance with established guidelines, including performing 10% pad verification checks, capturing photographic evidence, and reporting findings to ensure compliance", "Education: Has read the Earthworks Rehabilitation Manual and understands how rehabilitation methods are applied in the field. Exposure: Received mentoring from Subject Matter Experts (SMEs) on rehabilitation quality standards. Conducts field checks to assess rehabilitation quality and ensures implementation aligns with established guidelines.", "Earthworks L1: Box 18"]
                 ],
                 2: [
-                    ["Earthworks L2: Box 1", "Earthworks L2: Box 2", "Earthworks L2: Box 3", "Earthworks L2: Box 4", "Earthworks L2: Box 5", "Earthworks L2: Box 6"],
-                    ["Earthworks L2: Box 7", "Earthworks L2: Box 8", "Earthworks L2: Box 9", "Earthworks L2: Box 10", "Earthworks L2: Box 11", "Earthworks L2: Box 12"],
-                    ["Earthworks L2: Box 13", "Earthworks L2: Box 14", "Earthworks L2: Box 15", "Earthworks L2: Box 16", "Earthworks L2: Box 17", "Earthworks L2: Box 18"],
-                    ["Earthworks L2: Box 19", "Earthworks L2: Box 20", "Earthworks L2: Box 21", "Earthworks L2: Box 22", "Earthworks L2: Box 23", "Earthworks L2: Box 24"],
-                    ["Earthworks L2: Box 25", "Earthworks L2: Box 26", "Earthworks L2: Box 27", "Earthworks L2: Box 28", "Earthworks L2: Box 29", "Earthworks L2: Box 30"],
-                    ["Earthworks L2: Box 31", "Earthworks L2: Box 32", "Earthworks L2: Box 33", "Earthworks L2: Box 34", "Earthworks L2: Box 35", "Earthworks L2: Box 36"],
-                    ["Earthworks L2: Box 37", "Earthworks L2: Box 38", "Earthworks L2: Box 39", "Earthworks L2: Box 40", "Earthworks L2: Box 41", "Earthworks L2: Box 42"]
+                    ["Understands the ResDev Rehabilitation Standard and its application in field activities", "Reads and understands the Operations Rehabilitation Manual", "Understands rehabilitation obligations and standards, including relevant guidelines and expectations", "", "Education & Exposure – Reads the Rehabilitation Manual and understands its field application. Mentored by SME on rehab quality, conducts field checks, and applies guidelines effectively", "Earthworks L2: Box 6"],
+                    ["Competent in requesting and managing HME float movements, understanding the process and stakeholder coordination involved", "Communicates with float driver/company, completes float requests accurately with pickup/drop-off maps, and assesses site suitability for safe turnaround and travel", "", "", "Exposure – Mentored by SME on completing float requests, reviewing maps, and assessing safe drop-off points", "Earthworks L2: Box 12"],
+                    ["Manages pad and track construction according to approved designs and guidelines, ensuring clearing limits are adhered to within the designated work area", "Assesses pad size and clearance against standards (10% RTIO, 100% Cat 3) and reports any non-compliance with clearing rules", "Tracks clearing allocations in ARs, engages DPC to confirm clearing levels, and monitors progress until pad construction is complete", "", "Exposure: Receives mentoring from SME, EW Advisors, or Superintendent on pad creation guidelines. Ensures 10% of pads are checked in the field for size and quality. Learns how to assess clearance levels in ARs and track them using Power BI", "Earthworks L2: Box 18"],
+                    ["Competent in operating the Trimble SNS machine guidance system, including uploading data to HME and using all system functionalities", "Loads files onto USBs and Gen 3 screens, troubleshoots issues, and provides guidance on system usage", "Uses user guides to perform firmware updates confidently and accurately", "", "Exposure: Receives mentoring from SME/Superintendent on loading files onto Gen 3 screens through demonstration. Firmware updates should only be performed under instruction from EW Advisors", "Earthworks L2: Box 24"],
+                    ["Understands when and how to engage the Survey Team and DPC, using the correct request formats and communication channels", "Understands when and how to engage the Survey Team and DPC, using the correct request formats and communication channels", "Understands when survey work is required and what it involves — including pad set-out, pad and collar pickups, and boundary flagging", "", "Gains exposure through SME mentoring on survey work. Knows how to use the DPC online form to request survey tasks and understands the earthworks checks required before requesting — e.g., confirming pad readiness", "Earthworks L2: Box 30"]
                 ],
                 3: [
-                    ["Earthworks L3: Box 1", "Earthworks L3: Box 2", "Earthworks L3: Box 3", "Earthworks L3: Box 4", "Earthworks L3: Box 5", "Earthworks L3: Box 6"],
-                    ["Earthworks L3: Box 7", "Earthworks L3: Box 8", "Earthworks L3: Box 9", "Earthworks L3: Box 10", "Earthworks L3: Box 11", "Earthworks L3: Box 12"],
-                    ["Earthworks L3: Box 13", "Earthworks L3: Box 14", "Earthworks L3: Box 15", "Earthworks L3: Box 16", "Earthworks L3: Box 17", "Earthworks L3: Box 18"],
-                    ["Earthworks L3: Box 19", "Earthworks L3: Box 20", "Earthworks L3: Box 21", "Earthworks L3: Box 22", "Earthworks L3: Box 23", "Earthworks L3: Box 24"],
-                    ["Earthworks L3: Box 25", "Earthworks L3: Box 26", "Earthworks L3: Box 27", "Earthworks L3: Box 28", "Earthworks L3: Box 29", "Earthworks L3: Box 30"],
-                    ["Earthworks L3: Box 31", "Earthworks L3: Box 32", "Earthworks L3: Box 33", "Earthworks L3: Box 34", "Earthworks L3: Box 35", "Earthworks L3: Box 36"],
-                    ["Earthworks L3: Box 37", "Earthworks L3: Box 38", "Earthworks L3: Box 39", "Earthworks L3: Box 40", "Earthworks L3: Box 41", "Earthworks L3: Box 42"]
+                    ["Understand earthwork machinery capabilities and limitations. Plan and manage tasks using SME knowledge", "Provide guidance on machine allocation and assess ground conditions to inform planning", "Instruct operators on pad and track building methods. Use machinery effectively to achieve optimal results", "", "Receive mentoring from SME/EW Advisor on machine capability, infield direction, and best practices for pad and track construction. Pass-out expected within 12 months", "Earthworks L3: Box 6"]
                 ]
             };
             const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
+            // Ensure boxTexts has enough rows for rendering (avoid undefined errors)
+            let safeBoxTexts = boxTexts;
+            if (level === 1 && boxTexts.length < 3) {
+                safeBoxTexts = [
+                    ...boxTexts,
+                    ...Array(3 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+                ];
+            } else if (level === 2 && boxTexts.length < 5) {
+                safeBoxTexts = [
+                    ...boxTexts,
+                    ...Array(5 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+                ];
+            } else if (level === 3 && boxTexts.length < 1) {
+                safeBoxTexts = [
+                    ...boxTexts,
+                    ...Array(1 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+                ];
+            }
         // Manual save progress button with success tick
         const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
         const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
@@ -160,13 +166,21 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         </tr>
     );
     // Data rows
-    for (let row = 1; row <= 7; row++) {
+    let numRows = 7;
+    if (level === 1) {
+        numRows = 3;
+    } else if (level === 2) {
+        numRows = 5;
+    } else if (level === 3) {
+        numRows = 1;
+    }
+    for (let row = 1; row <= numRows; row++) {
         tableRows.push(
             <tr key={row}>
                 {/* Progress checkboxes with unique text */}
                 {[0,1,2,3,4,5].map(col => (
                     <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{boxTexts[row-1][col]}</span>
+                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
                         <input
                             type="checkbox"
                             checked={gridProgressChecks[row-1][col]}
