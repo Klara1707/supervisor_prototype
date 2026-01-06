@@ -35,8 +35,8 @@ function NavBar() {
                     className={`nav-links${menuOpen ? " open" : ""}`}
                     id="nav-links"
                 >
-                    <a href ="https://prospect.riotinto.org/irj/portal" className="nav-button" target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>Prospect</a>
-                    <a href="https://riotinto.csod.com/ui/lms-learner-home/home" className="nav-button" target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>LMS Learning</a>
+                    <a href ="https://riotinto.service-now.com/esc" className="nav-button" target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>ServiceNow</a>
+                    <a href="https://wd3.myworkday.com/riotinto/d/home.htmld" className="nav-button" target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>Workday</a>
                     <a href="https://riotinto.sharepoint.com/sites/ResourceDevelopmentIronOreHub" className="nav-button" target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>Res Dev Hub (Share Point)</a>
                     <a href="https://riotinto.sharepoint.com/sites/5062437/SitePages/Home.aspx" className="nav-button" target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>Contractor Portal</a>
                     <a href="https://element.riotinto.com/#/sitepages/acronyms.aspx" className="nav-button" target="_blank" rel="noopener noreferrer" onClick={handleLinkClick}>Acronym Finder</a>
