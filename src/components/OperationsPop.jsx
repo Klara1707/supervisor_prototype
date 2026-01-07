@@ -3,6 +3,7 @@ import "./Pop.css";
 import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
+import { renderLinkButton } from "./linkButtons";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
             // Texts for each popup level
@@ -13,55 +14,55 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "Understands the importance of reporting standby and downtime, and actively contributes to identifying solutions to reduce it", 
                         "Delivers Monday updates to leader, covering weekly target achievement, current priorities, and the two-week forward plan", 
                         "Exposure: Mentored by SME/Supervisor in accessing key data sources (plods, tracking sheets, Protrak, State of Play). Developed accuracy in data entry, detailed standby/downtime comments, and confidence in presenting weekly data to Superintendent in Monday review meetings", 
-                        "Operations L1: Box 6"],
+                        "DDM"],
                     ["Manages own flight and accommodation bookings; supports contractor travel arrangements as needed", 
                         "Proficient in PALMS", 
                         "", 
                         "", 
                         "Exposure: Guided in setting rosters and using the ad hoc change form. Has access to the WBS register for cost codes and PDAs", 
-                        "Operations L1: Box 12"],
+                        "Palms"],
                     ["Competent in using State of Play to manage projects and understands how data is captured and reported", 
                         "Uses State of Play data to report on drilling and earthworks progress, and to forecast production rates for work completion", 
                         "", 
                         "", 
                         "Exposure: Supported by SME/Supervisor to gain access and receive guidance on using State of Play, including how to interpret and assess data effectively", 
-                        "Operations L1: Box 18"],
+                        "ArcGIS"],
                     ["Competent in using Weatherguard to monitor weather events, with a clear understanding of the lightning procedure and associated responsibilities", 
                         "Monitors Weatherguard during lightning activity and promptly reports to the Project Leader for shutdown recommendations",
                         "", 
                         "", 
                         "Exposure: Shown how to log in and use Weatherguard to track lightning and receive weather alerts", 
-                        "Operations L1: Box 24"],
+                        "Weatherzone"],
                     ["Competent in the SWAT process, including creation, completion, and handover of tasks", 
                         "Understands the pad approval process: pads are constructed, checked by Cat 3 and Drilling Supervisors, rework is flagged if needed, and once signed off by all parties, the pad is handed over to Geos for Protrak status update", 
                         "Able to gather all required data for a SWAT, including drill designs, MMPK maps, survey confirmations, water and fuel sources, radio channels, and heritage delineation", 
                         "Completes SWAT by ensuring all pads are checked, paperwork is signed, rework is organised, data is verified, and all stakeholders are informed via email", 
                         "Exposure: Mentored by SME/Supervisor on compiling all relevant pad data for SWATs, including field-based guidance on pad checks. Shadowed during stakeholder communications to ensure accuracy of checks and completeness of data before submission", 
-                        "Operations L1: Box 30"],
+                        "SWAT"],
                     ["Has detailed knowledge of the RTIO Fitness for Work Policy and can confidently apply it in day-to-day operations", 
                         "Has read and understands the RTIO Fitness for Work Policy, and applies it to ensure their own safety and wellbeing, particularly during high-risk activities such as nightshift work", 
                         "", 
                         "", 
                         "Has read, understands, and applies the RTIO Fitness for Work Policy", 
-                        "Operations L1: Box 36"],
+                        "FMWP"],
                     ["Has detailed knowledge of the RTIO AOD Policy and applies it appropriately to ensure personal safety and compliance with site requirements", 
                         "Has read and understands the RTIO AOD Policy, and applies it to support their own safety and wellbeing", 
                         "Understands and can apply the correct process for managing a non-negative Alcohol and Other Drugs (AOD) result, including adherence to confidentiality protocols", 
                         "", 
                         "Education: AOD Policy. Has read, understands, and applies the RTIO Alcohol and Other Drugs (AOD) Policy. Applies the policy to support personal safety and wellbeing. Exposure: AOD Policy Application. Shadowed by an SME or Supervisor to ensure correct application of the policy. Understands and follows the process for managing non-negative results. Maintains confidentiality in line with policy protocols", 
-                        "Operations L1: Box 42"],
+                        "AOD"],
                     ["Competent in maintaining the currency of own qualifications, including proactively booking and managing both internal and external training courses", 
                         "Competent in maintaining the currency of own qualifications. Proactively books internal and external training courses. Can access and navigate their training and qualification profile in Prospect", 
                         "Understands the minimum training requirements for their role. Recognises the importance of maintaining current qualifications. Understands how individual compliance contributes to the department’s collective Licence to Operate", 
                         "", 
                         "Exposure: My Learning in Prospect. Shown how to access My Learning in Prospect. Understands the importance of keeping qualifications current. Learns how to search for and book internal courses using the My Learning platform. Guided by an SME or Supervisor during the process", 
-                        ""],
+                        "Prospect"],
                     ["Exposure: My Learning in Prospect.Shown how to access My Learning in Prospect. Understands the importance of keeping qualifications current. Learns how to search for and book internal courses using the My Learning platform. Guided by an SME or Supervisor during the process", 
                         "Can access the Res Dev Roster and Workday systems. Able to enter and manage leave requests independently", 
                         "Has a good understanding of the different types of leave available and how each is applied in line with company policies and procedures", 
                         "", 
                         "Has access to Workday and the Res Dev Roster. Shown how to enter leave and navigate the Workday system. All leave types and their applications are explained. Guided by an SME or Supervisor during the process", 
-                        ""],
+                        "Roster, Workday"],
                 ],
                 2: [
                     ["Understand demand forecasting and optimisation requirements specific to your project, including roster patterns and travel lead times. Be aware of accommodation constraints, such as room availability, site capacity, and booking windows. Know how PDA (Project Delivery Allocation) impacts travel and accommodation planning, and ensure alignment with project schedules and personnel movements", 
@@ -69,61 +70,61 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "Able to accurately report personnel presence on site using validated data sources. Proficient in navigating and extracting relevant information from the F+A SharePoint page. Can assist with the coordination of personnel movements between sites, ensuring alignment with operational requirements. Supports the review and assessment of accommodation lists, identifying constraints and ensuring compliance with site capacity and policy guidelines", 
                         "", 
                         "Has access to the Travel and Logistics web page and understands how to navigate its key features. Receives an overview of the Quality Procurement Process (QPP) and Project Delivery Agreements (PDAs), as explained by a Subject Matter Expert (SME) or Supervisor. Is shown where to locate essential information related to bus schedules, flight details, and accommodation data, supporting informed decision-making and operational coordination.", 
-                        "Operations L2: Box 6"],
+                        "TravelLogistics"],
                     ["Proficient in using ServiceNow to raise, modify, or cancel project-related tickets", 
                         "Able to use ServiceNow to request a wide range of services and ticket types", 
                         "", 
                         "", 
                         "Has access to ServiceNow and can use quick links and search functions to locate relevant tickets and service requests", 
-                        "Operations L2: Box 12"],
+                        "ServiceNow"],
                     ["Competent in using GIS applications including ArcGIS Pro, ArcPortal, MMPK, and Field Maps", 
                         "Has access to ArcPortal and can upload project files and use mapping tools to ground-truth drilling designs from desktop", 
                         "Proficient in ArcGIS; can create MMPKs for Field Maps and load them onto iPads and Samsung tablets", 
                         "Operations L2: Box 16", 
                         "Education: Reads and reviews how-to guides for accessing and using ArcGIS tools. Exposure: Receives mentoring from experienced ArcGIS users (e.g., Supervisors, Geos, Hydros, Surveyors) on using the Portal, uploading files, and working with map layers", 
-                        "Operations L2: Box 18"],
+                        "ArcProInstall"],
                     ["Proficient in using Prospect and Workday to manage personal workflow, reports, qualifications, development, and performance", 
                         "Can initiate check-ins and development plans, view qualifications, raise notifications, update personal information, and manage tasks via the worklist", 
                         "", 
                         "", 
                         "Mentored by a Subject Matter Expert (SME) or Supervisor on using Prospect and Workday. Supervisors provide examples of development plans and check-in templates to support learning", 
-                        "Operations L2: Box 24"],
+                        "Roster, Workday"],
                     ["Understands the Operations Request (OR) process, its key components, and the use of the OR Tracking App as managed by the Planning Team",
                         "Understands how Operations Requests relate to team activities; can navigate the OR Tracking App to access and interpret relevant data and information", 
                         "Regularly checks the OR Tracking App each swing for outstanding ground-truthing tasks. Can cross-reference Operations Requests with the two-week plan, Plan-to-Plan, and P6 Gantt to ensure alignment", 
                         "", 
                         "Mentored by SME or Supervisor to ensure proficient use of the Operations Request App. Understands how to locate drilling designs and extract key information from Operations Request forms. Has access to the P6 Gantt and can filter relevant information", 
-                        "Operations L2: Box 30"],
+                        "PlanningApp, P6Gantt"],
                     ["Able to conduct quality ground-truthing activities and accurately record data relevant to Operations Requests", 
                         "Mentored by a Subject Matter Expert (SME) to conduct thorough and effective ground-truthing activities, ensuring accurate data collection for Operations Requests", 
                         "Know how to use the app to identify GT, initial desk top review on ArcGIS, able to  manage data for field verification, able to identify issues with design (Pads off AR, too close to heritage, access issues, ground conditions, etc)", 
                         "Has full knowledge of ground-truthing processes. Can independently gather required tools and data, conduct both desktop and field checks, provide feedback via the Operations Request App, and communicate directly with designers to suggest design changes", 
                         "Mentored by SME or Supervisor on conducting ground-truthing activities. Training includes performing desktop reviews in ArcGIS, identifying design issues (e.g. access, heritage, ground conditions), and using Field Maps and ServiceNow to support field checks", 
-                        "Operations L2: Box 36"],
+                        ""],
                     ["Understands the AR process, including how to search for and locate requests. Can identify package-specific conditions and requirements within the AR system", 
                         "Understands which stakeholders are involved in approving ARs. Has access to ARCs and knows how to search for ARs. Demonstrates general knowledge of AR conditions and can identify package-specific requirements", 
                         "Able to assess Approval Request (AR) conditions and implement them effectively. Provides guidance to other stakeholders on condition requirements and ensures compliance through collaboration and communication", 
                         "", 
                         "Has access to ARCs and is able to search for Approval Requests (ARs). Can extract relevant information from ARs. Receives mentoring from a SME or Supervisor to build proficiency in navigating and interpreting AR documentation", 
-                        "Operations L2: Box 42"],
+                        "LAMS"],
                     ["Understands the different clearing mechanisms—POW, NVCP, and Part IV—and how their specific conditions impact operational activities and project planning", 
                         "Understands the differences between clearing mechanisms—POW, NVCP, and Part IV—and the specific conditions associated with each. Recognizes how these conditions influence operational planning and execution", 
                         "Confidently provides advice and instruction on POW, NVCP, and Part IV clearing mechanisms. Understands their differences, associated conditions, and how they impact operational planning and execution", 
                         "Able to implement required controls in the field and verify clearing methods to ensure compliance with conditions outlined in POW, NVCP, and Part IV mechanisms", 
                         "Education: Understands the Land Disturbance Work Practice and its relevance to operational activities. Exposure: Has access to ARCs and can search for and extract information from Approval Requests (ARs). Receives mentoring from a SME or Supervisor to build proficiency in interpreting ARs and applying relevant conditions.", 
-                        ""],
+                        "LDWP"],
                     ["Demonstrates detailed understanding of the Laydown Management Guidelines, including principles, requirements, and practical application in field and planning activities", 
                         "Has read and understands the Laydown Management Guidelines, including their application in planning and field activities", 
                         "Able to apply WPI guidelines, identify non-compliances, and address them in Safeday", 
                         "", 
                         "Education: Read, understand, and apply WPI guidelines in the field. Exposure: SME or Supervisor to demonstrate effective application.", 
-                        ""],
+                        "LaydownGuidelines"],
                     ["Understand the Weekly Plan and the Operations Team’s role in executing the Plan within the MOS framework",
                         "Understand the planning flow, including Monthly and 2-Weekly Plans", 
                         "Use the P6 Gantt chart to track progress, assess start and finish times, and provide feedback to the planning team", 
                         "Attends 2-week planning meetings, negotiates drilling and earthworks targets, provides feedback on the plan, takes ownership of actions, and ensures closure", 
                         "Mentored by SME/Supervisor in using the P6 Gantt chart. Attend 2-week planning meetings. Provide feedback to the planning team for Friday meetings. Learn to link the 2-week plan to the Gantt chart. Guided in assessing targets and delivering effective feedback", 
-                        ""],
+                        "ReportDashboard"],
                     ["Has detailed knowledge of the Unisolated Work Process and can perform associated tasks within their area of responsibility", 
                         "Can access the database to search for procedures. Has a solid understanding of tasks permitted under the Unisolated Work Process (UWP)",
                         "Has a comprehensive understanding of tasks permitted under the Unisolated Work Process (UWP), conducts field checks, and integrates UWP into LIF activities", 
@@ -135,7 +136,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "Provides guidance to operators on the Golden Rules. Has comprehensive knowledge of clearing requirements near Heritage and AR boundaries", 
                         "", 
                         "Education: Reads the Start-Up QRG and Golden Rules document, and understands their intent. Exposure: Golden Rules are explained; can apply them in the field and instruct survey teams to check flagging around heritage sites", 
-                        ""],
+                        "ProjectStartUp"],
                     ["Develop and implement Traffic Management Plans specific to project needs", 
                         "Develop and implement Traffic Management Plans tailored to project requirements", 
                         "Ensure the Traffic Management Plan is updated whenever field conditions change", 
@@ -147,13 +148,13 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "", 
                         "", 
                         "Education: Has read and understands the Blue Banner template. Exposure: Can complete relevant information and send it to the correct audience, with mentoring from the Superintendent.", 
-                        ""],
+                        "BannerTemplates"],
                     ["Understands pit permit, training, and AHS (Autonomous Haulage System) requirements relevant to site access and operations", 
                         "Has completed V19 Pit Permit Rules training and understands the requirements for obtaining an AHS pit permit", 
                         "Can provide guidance on the AHS pass-out process and assist in facilitating the VOC (Verification of Competency) with Mine Operations or Resource Development OJT", 
                         "", 
                         "Reads and understands the Pit Permit Rules and completes the online V19 training", 
-                        ""],
+                        "PitPermitRules"],
                 ],
                 3: [
                     ["Competent in using the GAP platform to manage remote workers via SHOUT or SPOT units", 
@@ -161,25 +162,25 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "", 
                         "", 
                         "Exposure – SME-led survey to demonstrate SHOUT unit functionality, including portal sign-in and movement tracking", 
-                        "Operations L3: Box 6"],
+                        "GAP"],
                     ["Understand and execute Operations Requests for assigned Drilling, Hydro, and Earthworks projects as per plan",
                         "Full understanding of Operations Requests. Able to use the app to source design info, troubleshoot issues, and verify data from app and design folders", 
                         "", 
                         "", 
                         "Exposure: Has access to app, SME shows how to navigate the app, is shown how to assess information in the request from, is shown how to track ground truthing in the app", 
-                        "Operations L3: Box 12"],
+                        ""],
                     ["Detailed knowledge of Water Catchment Guidelines for managing water discharge during drilling, including aquifer protection, permit requirements, and environmental impact controls", 
                         "Understand the difference between DMP for hydro drilling, test pumping, and off-pad discharge. No discharge without AR check, water quality testing, and environmental/biodiversity approval", 
                         "Aranage communication between Enviro/Bio team and site to coordinate off-pad water discharge", 
                         "", 
                         "Education: Review QRG and process flow. Understand requirements for safe fluid discharge into the environment", 
-                        "Operations L3: Box 18"],
+                        "SWM"],
                     ["Compile production data for reporting or to support your Leader as required", 
                         "Full understanding and demonstrated use of data sources: Protrak, DDM, Hydro DDM, State of Play, Earthworks tracking sheets", 
                         "Accurately report weekly drilling, hydro, and earthworks data for Week in Review meetings",
                         "", 
                         "Exposure: SME/Supervisor demonstrates how to access and use data sources, check accuracy, understand data linkages, and view presentation formats", 
-                        "Operations L3: Box 24"],
+                        "DDM"],
                     ]
             };
             const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
@@ -369,31 +370,32 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 </td>
                 {/* Comment cell */}
                 <td className="align-middle" style={{ padding: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                            <textarea
-                                value={comments[row-1]}
-                                onChange={e => {
-                                    const updated = comments.slice();
-                                    updated[row-1] = e.target.value;
-                                    setComments(updated);
-                                }}
-                                placeholder="Enter your comment"
-                                className="form-control"
-                                style={{
-                                    minHeight: 140,
-                                    maxHeight: 140,
-                                    width: '100%',
-                                    border: '1px solid #ced4da',
-                                    borderRadius: 4,
-                                    resize: 'none',
-                                    boxShadow: 'none',
-                                    padding: 8,
-                                    margin: 0,
-                                    display: 'block',
-                                }}
-                            />
-                        </div>
+                    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                        <textarea
+                            value={comments[row-1]}
+                            onChange={e => {
+                                const updated = comments.slice();
+                                updated[row-1] = e.target.value;
+                                setComments(updated);
+                            }}
+                            placeholder="Enter your comment"
+                            className="form-control"
+                            style={{
+                                minHeight: 140,
+                                maxHeight: 140,
+                                width: '100%',
+                                border: '1px solid #ced4da',
+                                borderRadius: 4,
+                                resize: 'none',
+                                boxShadow: 'none',
+                                padding: 8,
+                                margin: 0,
+                                display: 'block',
+                            }}
+                        />
+                    </div>
                 </td>
+                // ...removed extra link button cell...
             </tr>
         );
     }

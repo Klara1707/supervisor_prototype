@@ -3,6 +3,7 @@ import "./Pop.css";
 import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
+import { renderLinkButton } from "./linkButtons";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
     // Texts for each popup level
@@ -13,7 +14,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 "Demonstrates the ability to effectively plan and schedule daily tasks and movements, ensuring timely follow-up and completion within expected timeframes", 
                 "", 
                 "Education: Review and understand the role description, including key accountabilities, safety responsibilities, and performance expectations. Gain clarity on role-specific responsibilities through discussion with supervisors and reference to relevant procedures and standards. Exposure: Receive hands-on training from a Subject Matter Expert (SME) or Supervisor with experience in field operations, hydro-tech, or survey. Understand work priorities and field expectations through guided instruction and real-time feedback. Shadow an experienced Field Supervisor to observe best practices in task planning, team coordination, and field execution.", 
-                "Field L1: Box 6"]
+                "FieldAssistant"]
         ],
         2: [
             ["Understanding High-Risk Work Licence Requirements and Application. Familiar with the requirements and practical application of High-Risk Work Licences relevant to Field Assistants, Survey Assistants, and Hydro Technicians, ensuring compliance with task-specific safety and regulatory standards", 
@@ -21,31 +22,31 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 "", 
                 "", 
                 "Training: Receive guidance from SMEs or Superintendents on high-risk licence requirements and site protocols. Document Management: Develop a method for tracking and securely storing licence and VOC documentation. Compliance Monitoring: Learn how to report and monitor VOC completion to ensure ongoing compliance with site standards.", 
-                "Field L2: Box 6"],
+                ""],
             ["Sets and reviews development goals with team members to support growth and performance", 
                 "Sets SMART objectives aligned with role duties and achievable within a realistic timeframe", 
                 "Follows up on development goals during check-ins, encouraging team members to own their growth", 
                 "", 
                 "Education: Understands role expectations by reviewing the role description. Exposure: Collaborates with Superintendent in meetings to define clear, measurable development actions and check-in plans aligned to the role.", 
-                "Field L2: Box 12"],
+                "Workday"],
             ["Regularly assess performance during check-ins, providing constructive feedback", 
                 "Sets clear, achievable objectives aligned with business needs and role responsibilities", 
                 "Challenges team members to own their development, offers constructive feedback (EBI), and encourages evidence of progress toward objectives", 
                 "", 
                 "Education:Reads the role description to understand responsibilities and expectations. Exposure: Meets with Superintendent to discuss P6 and define specific, measurable check-in actions aligned to the role description", 
-                "Field L2: Box 18"],
+                "Workday"],
             ["Coaches and mentors team members to support growth and success in their role", 
                 "Mentors field assistants in task prioritization, use of RTIO safety tools, operational discipline, and reporting compliance issues", 
                 "", 
                 "", 
                 "Education: Reads the role description and relevant SWPs to understand responsibilities and task requirements. Exposure: Shadows a Field Supervisor to learn task prioritization; receives coaching from SME/Superintendent on LIF activities.", 
-                "Field L2: Box 24"],
+                "FieldAssistant"],
             ["Ensures weekly consumable orders are necessary and reasonable, and manages stock levels to meet operational requirements", 
                 "Encourages use of a stocktake template for critical orders, assesses order validity and excess, and approves orders based on operational need", 
                 "Mentors field assistants on reconciling and tracking stores orders to ensure accuracy and accountability", 
                 "", 
                 "Exposure: Shadows an experienced Field Supervisor to learn stocktake, ordering, and reconciliation of stores orders, including how to track orders in SAP", 
-                "Field L2: Box 30"]
+                "OrderingGuide"]
         ],
         3: [
             ["Manage and reconcile timesheets for Cat1 Field Assistants, Survey Assistants, and Hydro Technicians", 
@@ -53,54 +54,54 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 "", 
                 "", 
                 "Exposure: SME/Supervisor-led session to demonstrate timesheet reconciliation and processing, ensuring correct cost code allocation", 
-                "Field L3: Box 6"],
+                "WorkPac"],
             ["Ensure WHS compliance through testing and tagging, and managing registers for fire extinguishers, lifting gear, and chemical storage", 
                 "Performs required monthly and quarterly compliance checks", 
                 "Conducts laydown inspections and field verifications to ensure compliance with safety and operational standards", 
                 "", 
                 "Education – Dogging, Fire Extinguisher Test & Tag, and ChemAlert training (not mandatory but beneficial). Exposure – Mentorship from SME or Field Supervisor during field audits and compliance checks", 
-                "Field L3: Box 12"],
+                "Safeday"],
             ["Manages team performance and development through quality quarterly Check-Ins and oversight of Development Plans", 
                 "Conduct check ins quarterly, suing the correct template, correct detail, in the right app - Workday", "Follow up on Development Plan actions by requesting progress updates, challenging improvements, and actively supporting growth", 
                 "", 
                 "Superintendent sets expectations for Check-Ins and Development Plans, follows up on actions and challenges, verifies progress, and guides staff in setting purposeful targets to improve performance", 
-                "Field L3: Box 18"],
+                "Workday"],
             ["Manages IVMS and DSS reporting, addressing poor behaviours as required; includes DSS line item reviews and corrective actions", 
                 "Manages IVMS and DSS reporting, reviews DSS line items, and addresses poor behaviours through corrective actions as required", 
                 "Has full knowledge of IVMS and DSS actions and penalties; challenges the team to improve driving behaviours", 
                 "", 
                 "Education: Has read the IVMS and DSS Leader Guidance Notes. Exposure: Superintendent provides guidance to ensure clear understanding of IVMS and DSS rules, manages inappropriate behaviour, and ensures rules are upheld", 
-                "Field L3: Box 24"],
+                "IVMS, DSS"],
             ["Leads, uses, and mentors team members in RTIO and Department Safety Systems, including PTHA, CRM, and Project Risk Reviews", 
                 "Has read and understands the guidance notes on tool use, and completed CCFV online training and videos", 
                 "Demonstrates comprehensive understanding of RTIO safety systems and provides mentoring and advice to others on their use", 
                 "", 
                 "Education: Has reviewed all training videos, understands Rio Tools usage, and holds CCFV VOC qualification. Exposure: Mentored by SME/Supervisor to a level where the Supervisor can provide direct guidance on RTIO safety tool usage.", 
-                "Field L3: Box 30"],
+                "Forwoodsafety, CRM"],
             ["Ensures appropriate water source and transfer system are in place for the project and can organise installation as required", 
                 "Participates in drilling program planning, including desktop review of bore locations and field verification of access", 
                 "Provides SME-level advice on water bore setup using Bore Boss/Bladder systems; manages inspections and maintenance of the water setup", 
                 "", 
                 "Mentored by SME/Field Supervisor in the safe and effective setup of water sources, including scoping and selecting bores for installation", 
-                "Field L3: Box 36"],
+                ""],
             ["Manages chemicals and consumables using the CHEMALERT system", 
                 "Access and use ChemAlert proficiently. Maintain chemical inventory on site. Perform chemical compatibility checks", 
                 "", 
                 "", 
                 "Completed all ChemAlert training videos. Understands system functionality and usage", 
-                "Field L3: Box 42"],
+                "ChemAlert"],
             ["Is capable of raising Vehicle Maintenance Notifications. Is capable of managing Hub LV fleet operations", 
                 "Manages vehicle maintenance scheduling effectively. Ensures zero no-shows for scheduled services", 
                 "Capable of training and coaching Field Assistants in raising notifications", 
                 "", 
                 "SME or Field Supervisor demonstrates how to raise a notification in SAP, including detailed steps and supporting photos", 
-                ""],
+                "Prospect"],
             ["Schedule electrical testing and tagging of equipment", 
                 "Get quote, schedule contractor, raise PO, manage site activities", 
                 "", 
                 "", 
                 "SME/Field Supervisor to demonstrate: request quote, raise PO, engage contractor, provide maps and documentation", 
-                ""],
+                "PlanningApp"],
             ["Assist and provide recommendations during the recruitment of new staff",
                 "Provide feedback on candidates based on your experience level. Assist in assessing resume quality", 
                 "Provide feedback on candidates based on your experience level. Assist in assessing resume quality", 
@@ -112,7 +113,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 "", 
                 "", 
                 "Gain SME/Field Supervisor mentoring on sample dispatch and Protrak use. Guide field assistants in generating sample and collar cutting sheet", 
-                ""],
+                "Protrack"],
             ["Manage rental of required equipment (gensets, telehandler, vehicles, water points, etc.)", 
                 "Assess project needs, confirm required equipment, get quotes, raise PO, and arrange delivery to site", 
                 "Track costs, approve invoices, and reassess project needs", 
@@ -339,30 +340,35 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 </td>
                 {/* Comment cell */}
                 <td className="align-middle" style={{ padding: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                            <textarea
-                                value={comments[row-1]}
-                                onChange={e => {
-                                    const updated = comments.slice();
-                                    updated[row-1] = e.target.value;
-                                    setComments(updated);
-                                }}
-                                placeholder="Enter your comment"
-                                className="form-control"
-                                style={{
-                                    minHeight: 140,
-                                    maxHeight: 140,
-                                    width: '100%',
-                                    border: '1px solid #ced4da',
-                                    borderRadius: 4,
-                                    resize: 'none',
-                                    boxShadow: 'none',
-                                    padding: 8,
-                                    margin: 0,
-                                    display: 'block',
-                                }}
-                            />
-                        </div>
+                    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                        <textarea
+                            value={comments[row-1]}
+                            onChange={e => {
+                                const updated = comments.slice();
+                                updated[row-1] = e.target.value;
+                                setComments(updated);
+                            }}
+                            placeholder="Enter your comment"
+                            className="form-control"
+                            style={{
+                                minHeight: 140,
+                                maxHeight: 140,
+                                width: '100%',
+                                border: '1px solid #ced4da',
+                                borderRadius: 4,
+                                resize: 'none',
+                                boxShadow: 'none',
+                                padding: 8,
+                                margin: 0,
+                                display: 'block',
+                            }}
+                        />
+                    </div>
+                </td>
+                {/* LINK_DEFS button cell (optional, add after comments) */}
+                <td className="align-middle">
+                    {/* Example: render a button for a LINK_DEFS key if present in safeBoxTexts */}
+                    {safeBoxTexts[row-1][5] && renderLinkButton(safeBoxTexts[row-1][5])}
                 </td>
             </tr>
         );

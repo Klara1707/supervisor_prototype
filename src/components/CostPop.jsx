@@ -1,6 +1,7 @@
 // import { useDebouncedSave } from "../hooks/useDebouncedSave";
 import "./Pop.css";
 import { useState, useEffect } from "react";
+import { renderLinkButton } from "./linkButtons";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
@@ -9,16 +10,64 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         // Texts for each popup level
         const boxTextsByLevel = {
             1: [
-                ["Manages Operator/HME PLODs, confidently queries activities, and completes approvals (sign, scan, save)", "Understands the PLOD approval workflow and its role in tracking performance and cost allocation. Can link PLOD data to the DDM board", "Understands EW PLOD work activities, including operator, machine, standby, and non-operating charges", "Can question PLOD charges and provide accurate guidance. Has working knowledge of the contract and its application", "Review & Access: Understand the E/Works PLOD signing process flow. Access Matrix and contract summaries. Exposure: Mentoring from SME/Supervisor on thorough PLOD checks. Engage with CM team and escalate charge queries to Cat 3 Supervisor.", "Contractor L1: Box 6"],
-                ["Manages daily plods submitted by Drilling and Hydro contractors, with the ability to confidently review, query activities, and approve submissions in line with operational requirements", "Understands the process flow for plod approval, including its role in tracking contractor performance and assigning costs. Confidently reviews and signs off on daily plods, ensuring accuracy and accountability", "Understands the various work activities recorded on a drilling plod, including the distinctions between operator charges, machine charges, standby time, and non-operating charges. Applies this knowledge to accurately review and validate contractor submissions", "Confidently queries and validates charges on contractor plods, providing accurate guidance based on operational understanding. Has working knowledge of the contract and how its terms are applied in daily activities", "Review: Understands the end-to-end process flow for signing Drilling and Hydro contractor plods, ensuring accuracy and compliance with operational procedures. Access: Has access to contract summaries to support informed decision-making during plod reviews and approvals. Exposure: Mentored by SMEs and Supervisors on conducting thorough plod checks. Engages in communication with the Contract Management (CM) team and escalates queries on charges to the Category 3 Supervisor as required.", "Contractor L1: Box 12"],
-                ["Accurately enters contractor plod data into Protrak and confidently approves plods in Coreplan or Matrix, ensuring alignment with operational and contractual requirements", "Has system access and login credentials to relevant portals, enabling the approval and processing of contractor plods with accuracy and efficiency", "", "", "System Access: Has access to both Protrak and Matrix systems, enabling efficient data entry and approval of contractor plods. Exposure: Shadowed by SMEs and Supervisors to learn accurate entry and approval processes for Hydro plods in Matrix, ensuring compliance with operational and contractual standards.", "Contractor L1: Box 18"]
+                ["Manages Operator/HME PLODs, confidently queries activities, and completes approvals (sign, scan, save)", 
+                    "Understands the PLOD approval workflow and its role in tracking performance and cost allocation. Can link PLOD data to the DDM board", 
+                    "Understands EW PLOD work activities, including operator, machine, standby, and non-operating charges", 
+                    "Can question PLOD charges and provide accurate guidance. Has working knowledge of the contract and its application", 
+                    "Review & Access: Understand the E/Works PLOD signing process flow. Access Matrix and contract summaries. Exposure: Mentoring from SME/Supervisor on thorough PLOD checks. Engage with CM team and escalate charge queries to Cat 3 Supervisor.", 
+                    "Procurement"],
+                ["Manages daily plods submitted by Drilling and Hydro contractors, with the ability to confidently review, query activities, and approve submissions in line with operational requirements", 
+                    "Understands the process flow for plod approval, including its role in tracking contractor performance and assigning costs. Confidently reviews and signs off on daily plods, ensuring accuracy and accountability", 
+                    "Understands the various work activities recorded on a drilling plod, including the distinctions between operator charges, machine charges, standby time, and non-operating charges. Applies this knowledge to accurately review and validate contractor submissions", 
+                    "Confidently queries and validates charges on contractor plods, providing accurate guidance based on operational understanding. Has working knowledge of the contract and how its terms are applied in daily activities", 
+                    "Review: Understands the end-to-end process flow for signing Drilling and Hydro contractor plods, ensuring accuracy and compliance with operational procedures. Access: Has access to contract summaries to support informed decision-making during plod reviews and approvals. Exposure: Mentored by SMEs and Supervisors on conducting thorough plod checks. Engages in communication with the Contract Management (CM) team and escalates queries on charges to the Category 3 Supervisor as required.", 
+                    "Procurement"],
+                ["Accurately enters contractor plod data into Protrak and confidently approves plods in Coreplan or Matrix, ensuring alignment with operational and contractual requirements", 
+                    "Has system access and login credentials to relevant portals, enabling the approval and processing of contractor plods with accuracy and efficiency", 
+                    "",
+                    "", 
+                    "System Access: Has access to both Protrak and Matrix systems, enabling efficient data entry and approval of contractor plods. Exposure: Shadowed by SMEs and Supervisors to learn accurate entry and approval processes for Hydro plods in Matrix, ensuring compliance with operational and contractual standards.", 
+                    "Protrack"]
             ],
             2: [
-                ["Understands the breakdown of the department budget, including the distinction between Opex and Capex", "Understands which cost activities align with Opex and Capex expense buckets, and the rationale behind their classification", "", "", "No formal training is available at Supervisor level—stay curious and ask experienced Supervisors or Superintendents for guidance", "Contractor L2: Box 6"],
-                ["Understands the cost breakdown of activities within their work area and how each contributes to overall budget management", "Can locate and use the current WBS register to support cost tracking and activity alignment", "Can identify and apply the correct Cost Code or Cost Centre for activities, services, and purchases within their work area", "", "No formal training is available at Supervisor level—stay curious, ask questions, and seek guidance from experienced Supervisors or Superintendents", "Contractor L2: Box 12"]
+                ["Understands the breakdown of the department budget, including the distinction between Opex and Capex", 
+                    "Understands which cost activities align with Opex and Capex expense buckets, and the rationale behind their classification", 
+                    "", 
+                    "", 
+                    "No formal training is available at Supervisor level—stay curious and ask experienced Supervisors or Superintendents for guidance", 
+                    ""],
+                ["Understands the cost breakdown of activities within their work area and how each contributes to overall budget management", 
+                    "Can locate and use the current WBS register to support cost tracking and activity alignment", 
+                    "Can identify and apply the correct Cost Code or Cost Centre for activities, services, and purchases within their work area", 
+                    "", 
+                    "No formal training is available at Supervisor level—stay curious, ask questions, and seek guidance from experienced Supervisors or Superintendents", 
+                    "WBS"],
+                ["Understanding of Department budget breakdown Opex V Capex", 
+                    "Understand what cost activites are associated to which expense buckets and why", 
+                    "", 
+                    "", 
+                    "Tip - No formal training available at Supv level, get curious and ask questions experienced Supv/Supt", 
+                    ""],
+                ["Understand the cost breakdown of the activities in your relevant work area", 
+                    "Locate and utilise the current WBS register", 
+                    "Be able to identify the correct Cost Code or Cost Center for work area activities, services and purchases", 
+                    "", 
+                    "Tip - No formal training available at Supv level, get curious and ask questions experienced Supv/Supt", 
+                    "WBS"]
             ],
             3: [
-                ["Basic understanding of the ResDev annual budget process, including key timelines, inputs, and approvals", "Understand the basic process flow of how future work packages are requested, approved, forecasted and then budgeted", "Understand the process flow for future work packages: request, approval, forecasting, and budgeting", "", "No formal training at Supervisor level—stay curious and ask questions of experienced Superintendents and Technical Leads", "Contractor L3: Box 6"]
+                ["Basic understanding of the ResDev annual budget process, including key timelines, inputs, and approvals", 
+                    "Understand the basic process flow of how future work packages are requested, approved, forecasted and then budgeted", 
+                    "Understand the process flow for future work packages: request, approval, forecasting, and budgeting", 
+                    "", 
+                    "No formal training at Supervisor level—stay curious and ask questions of experienced Superintendents and Technical Leads", 
+                    "Contractor L3: Box 6"],
+                ["Basic understanding of the ResDev annual budget process", 
+                    "Understand the basic process flow of how future work packages are requested, approved, forecasted and then budgeted", 
+                    "Expand understanding of Opex and Capex into Suscap, Devcap, Central and Opex", 
+                    "", 
+                    "Tip - No formal training available at Supv level, continue to get curious and ask questions experienced Supt/Technical Leads", 
+                    ""]
             ]
         };
         const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
@@ -29,23 +78,24 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 ...boxTexts,
                 ...Array(3 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
             ];
-        } else if (level === 2 && boxTexts.length < 2) {
+        } else if (level === 2) {
             safeBoxTexts = [
                 ...boxTexts,
-                ...Array(2 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+                ...Array(2 + 2 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
             ];
-        } else if (level === 3 && boxTexts.length < 1) {
+        } else if (level === 3) {
             safeBoxTexts = [
                 ...boxTexts,
-                ...Array(1 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+                ...Array(1 + 1 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
             ];
         }
     // State must be declared before any code that uses it
     // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
     // Must have 7 rows for rows 1-7 (index 0-6)
-    const [gridProgressChecks, setGridProgressChecks] = useState(Array(7).fill(null).map(() => Array(6).fill(false)));
-    const [comments, setComments] = useState(Array(7).fill(""));
-    const [signOffs, setSignOffs] = useState(Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
+    let numRows = safeBoxTexts.length;
+    const [gridProgressChecks, setGridProgressChecks] = useState(Array(numRows).fill(null).map(() => Array(6).fill(false)));
+    const [comments, setComments] = useState(Array(numRows).fill(""));
+    const [signOffs, setSignOffs] = useState(Array(numRows).fill(null).map(() => ({ name: "", date: "", signed: false })));
     // Manual save progress button with success tick
     const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
     const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
@@ -164,33 +214,34 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         </tr>
     );
     // Data rows
-    let numRows = 7;
-    if (level === 1) {
-        numRows = 3;
-    } else if (level === 2) {
-        numRows = 2;
-    } else if (level === 3) {
-        numRows = 1;
-    }
     for (let row = 1; row <= numRows; row++) {
         tableRows.push(
             <tr key={row}>
                 {/* Progress checkboxes with unique text */}
-                {[0,1,2,3,4,5].map(col => (
-                    <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
-                        <input
-                            type="checkbox"
-                            checked={gridProgressChecks[row-1][col]}
-                            onChange={() => {
-                                const updated = gridProgressChecks.map(arr => arr.slice());
-                                updated[row-1][col] = !updated[row-1][col];
-                                setGridProgressChecks(updated);
-                            }}
-                            style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
-                        />
-                    </td>
-                ))}
+                {[0,1,2,3,4,5].map(col => {
+                    const cellText = safeBoxTexts[row-1][col];
+                    let content;
+                    if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                        content = renderLinkButton(cellText);
+                    } else {
+                        content = cellText;
+                    }
+                    return (
+                        <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
+                            <input
+                                type="checkbox"
+                                checked={gridProgressChecks[row-1][col]}
+                                onChange={() => {
+                                    const updated = gridProgressChecks.map(arr => arr.slice());
+                                    updated[row-1][col] = !updated[row-1][col];
+                                    setGridProgressChecks(updated);
+                                }}
+                                style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                            />
+                        </td>
+                    );
+                })}
                 {/* Sign off cell */}
                 <td className="align-middle">
                     <SignOffForm
