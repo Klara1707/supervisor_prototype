@@ -63,6 +63,13 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     "", 
                     "Tip: Speak with your Leader to confirm whether your role requires access to the MiX Telematics and DSSi Portal", 
                     "IVMS, DSS"],
+                // Added row for Level 1
+                ["WHS Qualified", 
+                    "“Eligible” ", 
+                    "Understands the role of the Satutory Supervisor as per the Mines Regulations (S26)", 
+                    "Completes quality DWI/Handovers as per requirement", 
+                    "", 
+                    ""]
             ],
             2: [
                 ["Identify and discuss SMART Safety Focus areas applicable to our project activities — including PSI actions, hazard hunts, and safety spotlights. Focus on specific, measurable, achievable, relevant, and time-bound initiatives that drive continuous improvement and engagement", 
@@ -71,7 +78,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     "", 
                     "", 
                     "SettingGoals"],
-                ["Competent in entering and maintaining incident records in Enablon, ensuring accuracy, completeness, and timely updates in line with reporting requirements", 
+                ["Competent in entering and maintaining incident (AND HAZARDS) records in Enablon, ensuring accuracy, completeness, and timely updates in line with reporting requirements", 
                     "Proficient in assigning incident ratings, initiating investigations, creating actions, and classifying supporting evidence within Enablon, ensuring compliance and traceability throughout the incident management process", 
                     "Capable of managing incidents end-to-end in Enablon, from initial entry through investigation, action tracking, evidence classification, and final close-out, ensuring compliance and data integrity throughout the process", 
                     "", 
@@ -119,6 +126,13 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     "", 
                     "Tip: Level 2 Risk Assessments (L2RAs) are triggered for specific projects or scenarios that fall outside normal operations and involve risks not captured in the Hub Risk Register. Action: Speak with your Superintendent or HSE Advisor to express your interest in attending the next L2RA.", 
                     "PreTaskHazardAssessment"],
+                // Added row for Level 2
+                ["Appointed (via process to Brett or PMO SSE)", 
+                    "Understands responsibility of being appointed “to a place” ", 
+                    "Demonstrates competence to work with Task Supervisors to achieve that", 
+                    "", 
+                    "", 
+                    ""]
             ],
             3: [
                 ["Manage incidents in accordance with the Incident Management Flowchart, including Enablon reporting, 5 Why’s analysis, action creation, assignment, and close-out", 
@@ -132,7 +146,14 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     "", 
                     "", 
                     "Uses provided link to identify outdated SWPs and collaborates with the team performing the work to review, update, or remove practices that are no longer best practice", 
-                    "DocumentCompliance"]
+                    "DocumentCompliance"],
+                // Added row for Level 3
+                ["“on-duty”, is responsible for a place, completes quality DWI/Handovers and ensures task supervisors are doing the same", 
+                    "Ensures that it is communicated to the team that they are on duty for the designated place. Works with HSR’s", 
+                    "", 
+                    "", 
+                    "", 
+                    ""]
             ]
         };
         const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
@@ -281,9 +302,16 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 {/* Progress checkboxes with unique text, always 6 columns */}
                 {[0,1,2,3,4,5].map(col => {
                     const cellText = (boxTexts[row] && boxTexts[row][col]) ? boxTexts[row][col] : "";
+                    let content = cellText;
+                    // Render as link button if matches LINK_DEFS key or comma-separated keys
+                    if (typeof cellText === "string" && cellText.includes(",")) {
+                        content = cellText.split(",").map(key => renderLinkButton(key.trim()));
+                    } else if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                        content = renderLinkButton(cellText);
+                    }
                     return (
                         <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{cellText}</span>
+                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
                             <input
                                 type="checkbox"
                                 checked={gridProgressChecks[row] && gridProgressChecks[row][col] ? gridProgressChecks[row][col] : false}
@@ -331,7 +359,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                             style={{
                                 minHeight: 140,
                                 maxHeight: 140,
-                                width: '100%',
+                                width: '180px',
                                 border: '1px solid #ced4da',
                                 borderRadius: 4,
                                 resize: 'none',

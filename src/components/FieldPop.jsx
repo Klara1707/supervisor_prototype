@@ -276,20 +276,21 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     // Data rows
     // Ensure boxTexts has enough rows for rendering (avoid undefined errors)
     let safeBoxTexts = boxTexts;
-    if (level === 1 && boxTexts.length < 1) {
+    const boxTextsArr = Array.isArray(boxTexts) ? boxTexts : [];
+    if (level === 1 && boxTextsArr.length < 1) {
         safeBoxTexts = [
-            ...boxTexts,
-            ...Array(1 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+            ...boxTextsArr,
+            ...Array(1 - boxTextsArr.length).fill([]).map(() => Array(6).fill(""))
         ];
-    } else if (level === 2 && boxTexts.length < 5) {
+    } else if (level === 2 && boxTextsArr.length < 5) {
         safeBoxTexts = [
-            ...boxTexts,
-            ...Array(5 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+            ...boxTextsArr,
+            ...Array(5 - boxTextsArr.length).fill([]).map(() => Array(6).fill(""))
         ];
-    } else if (level === 3 && boxTexts.length < 12) {
+    } else if (level === 3 && boxTextsArr.length < 12) {
         safeBoxTexts = [
-            ...boxTexts,
-            ...Array(12 - boxTexts.length).fill(null).map(() => Array(6).fill(""))
+            ...boxTextsArr,
+            ...Array(12 - boxTextsArr.length).fill([]).map(() => Array(6).fill(""))
         ];
     }
 
@@ -302,36 +303,52 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         numRows = 12;
     }
     for (let row = 1; row <= numRows; row++) {
+        // Defensive: ensure all row data exists for this row
+        const rowData = Array.isArray(safeBoxTexts[row-1]) ? safeBoxTexts[row-1] : Array(6).fill("");
+        const progressRow = Array.isArray(gridProgressChecks[row-1]) ? gridProgressChecks[row-1] : Array(6).fill(false);
+        const signOffRow = signOffs[row-1] || { name: "", date: "", signed: false };
+        const commentValue = typeof comments[row-1] === "string" ? comments[row-1] : "";
         tableRows.push(
             <tr key={row}>
                 {/* Progress checkboxes with unique text */}
-                {[0,1,2,3,4,5].map(col => (
-                    <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
-                        <input
-                            type="checkbox"
-                            checked={gridProgressChecks[row-1][col]}
-                            onChange={() => {
-                                const updated = gridProgressChecks.map(arr => arr.slice());
-                                updated[row-1][col] = !updated[row-1][col];
-                                setGridProgressChecks(updated);
-                            }}
-                            style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
-                        />
-                    </td>
-                ))}
+                {[0,1,2,3,4,5].map(col => {
+                    const cellText = rowData[col];
+                    let content;
+                    if (typeof cellText === "string" && cellText.includes(",")) {
+                        content = cellText.split(",").map(key => renderLinkButton(key.trim()));
+                    } else if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                        content = renderLinkButton(cellText);
+                    } else {
+                        content = cellText;
+                    }
+                    return (
+                        <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
+                            <input
+                                type="checkbox"
+                                checked={progressRow[col]}
+                                onChange={() => {
+                                    const updated = gridProgressChecks.map(arr => arr.slice());
+                                    updated[row-1][col] = !updated[row-1][col];
+                                    setGridProgressChecks(updated);
+                                }}
+                                style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                            />
+                        </td>
+                    );
+                })}
                 {/* Sign off cell */}
                 <td className="align-middle">
                     <SignOffForm
-                        name={signOffs[row-1].name}
-                        date={signOffs[row-1].date}
-                        signed={signOffs[row-1].signed}
+                        name={signOffRow.name}
+                        date={signOffRow.date}
+                        signed={signOffRow.signed}
                         onChange={(field, value) => {
                             const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, [field]: value } : s);
                             setSignOffs(updated);
                         }}
                         onSignOff={() => {
-                            if (signOffs[row-1].name && signOffs[row-1].date) {
+                            if (signOffRow.name && signOffRow.date) {
                                 const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, signed: true } : s);
                                 setSignOffs(updated);
                             }
@@ -342,7 +359,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 <td className="align-middle" style={{ padding: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                         <textarea
-                            value={comments[row-1]}
+                            value={commentValue}
                             onChange={e => {
                                 const updated = comments.slice();
                                 updated[row-1] = e.target.value;
@@ -353,7 +370,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                             style={{
                                 minHeight: 140,
                                 maxHeight: 140,
-                                width: '100%',
+                                width: '180px',
                                 border: '1px solid #ced4da',
                                 borderRadius: 4,
                                 resize: 'none',
@@ -364,11 +381,6 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                             }}
                         />
                     </div>
-                </td>
-                {/* LINK_DEFS button cell (optional, add after comments) */}
-                <td className="align-middle">
-                    {/* Example: render a button for a LINK_DEFS key if present in safeBoxTexts */}
-                    {safeBoxTexts[row-1][5] && renderLinkButton(safeBoxTexts[row-1][5])}
                 </td>
             </tr>
         );

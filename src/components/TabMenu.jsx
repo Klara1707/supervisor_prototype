@@ -202,7 +202,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
         <div id="Home" className="w3-container city">
             <h2>Welcome{user && user.first_name && user.first_name.trim() !== "" ? `, ${user.first_name}` : ""}!</h2>
             <p className="intro">
-                Congratulations on stepping into your role as a Contractor Supervisor within Res Dev!
+                Congratulations on stepping into your role as a Supervisor within Res Dev!
                 This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.
             </p>
             <h2 style={{ color: 'orange' }}>Our Values</h2>

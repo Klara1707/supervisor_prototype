@@ -1,13 +1,10 @@
-// linkButtons.js
-// Centralized link/button definitions for use in multiple popups
-
-// ...existing code...
-// linkButtons.js
-// Centralized link/button definitions for use in multiple popups
-
 import React from "react";
 
 export const LINK_DEFS = {
+    ContractManagementEmail: {
+        label: "Email Contract Management",
+        href: "mailto:RTIOResDevContractManagement@riotinto.com",
+    },
     Safeday: {
         label: "Safeday",
         href: "https://safeday.app/",
@@ -168,7 +165,7 @@ export const LINK_DEFS = {
         label: "Discharge Management",
         href: "https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2F6002923%2FShared%20Documents%2FSpecialist%2FDischarge%20Management%20%2D%20QRG&viewid=5dc9c4e3%2Da8a9%2D43ff%2D8813%2D7c159d78ea59&clickparams=eyAiWC1BcHBOYW1lIiA6ICJNaWNyb3NvZnQgT3V0bG9vayIsICJYLUFwcFZlcnNpb24iIDogIjE2LjAuMTg5MjUuMjAyMTYiLCAiT1MiIDogIldpbmRvd3MiIH0%3D",
     },
-    Hydro: {
+    Hydroo: {
         label: "Hydro",
         href: "https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=KhCyR2&CID=f79c342b%2D1e44%2D4a96%2Db9b1%2D601354ccfe8a&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FProTrak%2FHydro",
     },
@@ -192,7 +189,7 @@ export const LINK_DEFS = {
         label: "Iron Ore Traffic Management Plan ",
         href: "https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-HSE-0262657.pdf",
     },
-    DDM: {
+    DDMM: {
         label: "DDM data input",
         href: "https://riotinto.sharepoint.com/sites/6002923/_layouts/15/stream.aspx?id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FDaily%20Plod%20%28Co%2Dordinators%20and%20Supervisors%29%2FDDM%20data%20input%20%26%20WIR%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E0f5f2344%2Dcc89%2D4693%2D8470%2D144c37d8b9eb",
     },
@@ -307,7 +304,59 @@ export const LINK_DEFS = {
     Procurement: {
         label: "Procurement Contract - Drilling",
         href: "https://riotinto.sharepoint.com/sites/ResDevCMProcurement/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FResDevCMProcurement%2FShared%20Documents%2FGeneral%2FContract%20Summary%2FPdf%20format%2FDrilling&viewid=337cff9e%2D0979%2D475e%2Daccb%2D51780618938a&csf=1&web=1&e=A6q104&clickparams=eyAiWC1BcHBOYW1lIiA6ICJNaWNyb3NvZnQgT3V0bG9vayIsICJYLUFwcFZlcnNpb24iIDogIjE2LjAuMTgyMjcuMjAyNDAiLCAiT1MiIDogIldpbmRvd3MiIH0%3D&CID=fca789a1%2D8047%2D8000%2D2c2d%2D829a4a429502&cidOR=SPO&FolderCTID=0x012000B13C0CCE7934D84DA7EFE315D3D96105",
-    }
+    },
+    PTHA: {
+        label: "Pre-Task Hazard Assessment",
+        href: "https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Pre-Task-Risk-Assessment-Tools.aspx",
+    },
+    HSEC: {
+        label: "HSEC Banners",
+        href: "https://riotinto.sharepoint.com/sites/RTIOHSECHUB#banners\tHSEC",
+    },
+    IncidentInvestigationProcedure: {
+        label: "Incident Investigation Procedure",
+        href: "https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/Forms/AllItems.aspx?id=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished%2FRTIO%2DHSE%2D0071439%2Epdf&parent=%2Fsites%2FIODMSHSESCommunities%2FControlled%5FPublished",
+    },
+    PowerApps: {
+        label: "Power Apps",
+        href: "https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=0ZX0SA&CID=d2e45908%2D9f30%2D4726%2D85eb%2D14daf54e849d&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2F1%2E%20How%20To%20Project%2FPower%20Apps",
+    },
+    PSI: {
+        label: "Pre-start Information",
+        href: "https://riotinto.sharepoint.com/sites/RTIOHSECHUB#banners\tHSEC",
+    },
+    Palms: {
+        label: "Palms",
+        href: "https://palms.riotinto.org/home-page",
+    },
+    ArcGIS: {
+        label: "ArcGIS Online",
+        href: "https://rtio.maps.arcgis.com/sharing/oauth2/authorize?client_id=dashboards&response_type=code&state=%7B%22portalUrl%22%3A%22https%3A%2F%2Frtio.maps.arcgis.com%22%2C%22uid%22%3A%22-q1bxsbkPdeGVUnC1HHRbDgjjbsYFn0fY0YiL82E2x4%22%7D&expiration=20160&locale=en&redirect_uri=https%3A%2F%2Frtio.maps.arcgis.com%2Fapps%2Fdashboards%2F3c264ff5b63d4738944ea0d47f2ea2ac&redirectToUserOrgUrl=true&code_challenge=Yj6L85j2UDWJKI8Ff7pe0mo-lryQixZq62b-5h2fdng&code_challenge_method=S256",
+    },
+    Weatherzone: {
+        label: "Weatherzone",
+        href: "https://mining.weatherzone.com.au/user/login/",
+    },
+    DataEntery: {
+        label: "Data Entry",
+        href: "https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=29Nx7h&CID=b9624ce5%2D2aa0%2D43f3%2Dac0d%2Dd0fc5a22b1da&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2FBulk%20supervisor%20training%20app%20docs%20and%20links%2F2025%20Data%20Entry%20Sheets",
+    },
+    PadDimensions: {
+        label: "Pad Dimensions",
+        href: "https://riotinto.sharepoint.com/sites/6002923/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=GBPKC2&CID=88dc9279%2Db12e%2D4fbd%2D90b9%2D601590a846ec&FolderCTID=0x01200090C326DA58F64E4F8996D4464F65ADF6&id=%2Fsites%2F6002923%2FShared%20Documents%2FBulk%20supervisor%20training%20app%20docs%20and%20links%2FPad%5FDimensions%5FCraig%5FCosgrove%5F02%2D02%2D2023",
+    },
+    Rehabilitation: {
+        label: "Rehabilitation",
+        href: "https://riotinto.sharepoint.com/sites/IODMSAssetDevelopment/Resource_Development_1/RTIO-0994910.docx",
+    },
+    FATIGUE: {
+        label: "Fatigue Management",
+        href: "https://riotinto.sharepoint.com/sites/IODMSTemporaryPostProcessing3/OT_fnd_hse_BDT_hseq_mana_Managed_2/RTIO-HSE-0228064.pdf",
+    },
+    FibrousMineralsManagementPlan: {
+        label: "Fibrous Minerals Management Plan ",
+        href: "https://riotinto.sharepoint.com/sites/IODMSHSESCommunities/Controlled_Published/RTIO-PDE-0062061.pdf?xsdata=MDV8MDJ8S2xhcmEuVmFuRGVuQnVyZ0ByaW90aW50by5jb218ZGU3OThlMjllOGVjNGQ2ZmFlZmQwOGRlMzllMGNhNjN8NDM0MWRmODBmYmU2NDFiZjg5YjBlNmUyMzc5YzljMjN8MHwwfDYzOTAxMTgzNDc4MzMyMDkzMnxVbmtub3dufFRXRnBiR1pzYjNkOGV5SkZiWEIwZVUxaGNHa2lPblJ5ZFdVc0lsWWlPaUl3TGpBdU1EQXdNQ0lzSWxBaU9pSlhhVzR6TWlJc0lrRk9Jam9pVFdGcGJDSXNJbGRVSWpveWZRPT18MHx8fA%3d%3d&sdata=aTZET2dSSnVxUnVZbHpJQTYweU9ESDZmNmlNcTRMdTdOaS92ZFZ2SGJ5VT0%3d&clickparams=eyAiWC1BcHBOYW1lIiA6ICJNaWNyb3NvZnQgT3V0bG9vayIsICJYLUFwcFZlcnNpb24iIDogIjE2LjAuMTkzMjguMjAyNjYiLCAiT1MiIDogIldpbmRvd3MiIH0%3D",
+    },
 };
 
 export function renderLinkButton(key) {

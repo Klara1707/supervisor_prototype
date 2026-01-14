@@ -97,7 +97,7 @@ function LogInPage() {
         }
         if (role === "visitor") {
             navigate("/");
-        } else if (role === "contractor-supervisor") {
+        } else if (role === "supervisor") {
             if (!site || site === "") {
                 alert("Please select a site before logging in.");
                 return;
@@ -148,8 +148,7 @@ function LogInPage() {
     const [rememberMe, setRememberMe] = useState(false);
     const [showAdminLogin, setShowAdminLogin] = useState(false);
     const [showResetPopup, setShowResetPopup] = useState(false);
-    const [loginMessage, setLoginMessage] = useState("");
-    const [loginMessageType, setLoginMessageType] = useState(""); // "error" or "success"
+    // Removed unused loginMessage and loginMessageType state
 
     const handleCancel = () => {
         setUsername("");
@@ -188,11 +187,7 @@ function LogInPage() {
                             className="login-form-input"
                             style={{border: '1px solid #ccc'}}
                         />
-                        <div aria-live="polite" aria-atomic="true" style={{ color: loginMessageType === 'error' ? '#cd2c2c' : '#388e3c', fontWeight: loginMessageType === 'error' ? 'bold' : 'normal', marginBottom: '0.5rem' }}>
-                            {loginMessage && (
-                                <span style={{ color: loginMessageType === 'error' ? '#cd2c2c' : '#388e3c', fontWeight: loginMessageType === 'error' ? 'bold' : 'normal' }}>{loginMessage}</span>
-                            )}
-                        </div>
+                        {/* Removed loginMessage and loginMessageType display as state is no longer used */}
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
@@ -217,10 +212,10 @@ function LogInPage() {
                             style={{marginBottom: '0.3rem'}}
                         >
                             <option value="">-- Please choose an option --</option>
-                            <option value="contractor-supervisor">Contractor Supervisor</option>
+                            <option value="supervisor">Supervisor</option>
                             <option value="visitor">Visitor</option>
                         </select>
-                        {role === "contractor-supervisor" && (
+                        {role === "supervisor" && (
                             <>
                             <label htmlFor="site">Select Site<span style={{color: 'red'}}>*</span></label>
                             <select

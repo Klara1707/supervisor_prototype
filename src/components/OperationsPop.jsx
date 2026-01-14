@@ -14,7 +14,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "Understands the importance of reporting standby and downtime, and actively contributes to identifying solutions to reduce it", 
                         "Delivers Monday updates to leader, covering weekly target achievement, current priorities, and the two-week forward plan", 
                         "Exposure: Mentored by SME/Supervisor in accessing key data sources (plods, tracking sheets, Protrak, State of Play). Developed accuracy in data entry, detailed standby/downtime comments, and confidence in presenting weekly data to Superintendent in Monday review meetings", 
-                        "DDM"],
+                        "DDMM"],
                     ["Manages own flight and accommodation bookings; supports contractor travel arrangements as needed", 
                         "Proficient in PALMS", 
                         "", 
@@ -180,7 +180,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "Accurately report weekly drilling, hydro, and earthworks data for Week in Review meetings",
                         "", 
                         "Exposure: SME/Supervisor demonstrates how to access and use data sources, check accuracy, understand data linkages, and view presentation formats", 
-                        "DDM"],
+                        "DDMM"],
                     ]
             };
             const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
@@ -334,22 +334,31 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     for (let row = 1; row <= numRows; row++) {
         tableRows.push(
             <tr key={row}>
-                {/* Progress checkboxes with unique text */}
-                {[0,1,2,3,4,5].map(col => (
-                    <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
-                        <input
-                            type="checkbox"
-                            checked={gridProgressChecks[row-1][col]}
-                            onChange={() => {
-                                const updated = gridProgressChecks.map(arr => arr.slice());
-                                updated[row-1][col] = !updated[row-1][col];
-                                setGridProgressChecks(updated);
-                            }}
-                            style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
-                        />
-                    </td>
-                ))}
+                {/* Progress checkboxes with unique text, always 6 columns */}
+                {[0,1,2,3,4,5].map(col => {
+                    const cellText = safeBoxTexts[row-1][col];
+                    let content = cellText;
+                    if (typeof cellText === "string" && cellText.includes(",")) {
+                        content = cellText.split(",").map(key => renderLinkButton(key.trim()));
+                    } else if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                        content = renderLinkButton(cellText);
+                    }
+                    return (
+                        <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
+                            <input
+                                type="checkbox"
+                                checked={gridProgressChecks[row-1][col]}
+                                onChange={() => {
+                                    const updated = gridProgressChecks.map(arr => arr.slice());
+                                    updated[row-1][col] = !updated[row-1][col];
+                                    setGridProgressChecks(updated);
+                                }}
+                                style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                            />
+                        </td>
+                    );
+                })}
                 {/* Sign off cell */}
                 <td className="align-middle">
                     <SignOffForm
@@ -383,7 +392,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                             style={{
                                 minHeight: 140,
                                 maxHeight: 140,
-                                width: '100%',
+                                width: '180px',
                                 border: '1px solid #ced4da',
                                 borderRadius: 4,
                                 resize: 'none',
@@ -395,7 +404,6 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         />
                     </div>
                 </td>
-                // ...removed extra link button cell...
             </tr>
         );
     }

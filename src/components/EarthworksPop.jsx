@@ -224,21 +224,30 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         tableRows.push(
             <tr key={row}>
                 {/* Progress checkboxes with unique text */}
-                {[0,1,2,3,4,5].map(col => (
-                    <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                        <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{safeBoxTexts[row-1][col]}</span>
-                        <input
-                            type="checkbox"
-                            checked={gridProgressChecks[row-1][col]}
-                            onChange={() => {
-                                const updated = gridProgressChecks.map(arr => arr.slice());
-                                updated[row-1][col] = !updated[row-1][col];
-                                setGridProgressChecks(updated);
-                            }}
-                            style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
-                        />
-                    </td>
-                ))}
+                {[0,1,2,3,4,5].map(col => {
+                    const cellText = safeBoxTexts[row-1][col];
+                    let content = cellText;
+                    if (typeof cellText === "string" && cellText.includes(",")) {
+                        content = cellText.split(",").map(key => renderLinkButton(key.trim()));
+                    } else if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                        content = renderLinkButton(cellText);
+                    }
+                    return (
+                        <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
+                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
+                            <input
+                                type="checkbox"
+                                checked={gridProgressChecks[row-1][col]}
+                                onChange={() => {
+                                    const updated = gridProgressChecks.map(arr => arr.slice());
+                                    updated[row-1][col] = !updated[row-1][col];
+                                    setGridProgressChecks(updated);
+                                }}
+                                style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                            />
+                        </td>
+                    );
+                })}
                 {/* Sign off cell */}
                 <td className="align-middle">
                     <SignOffForm
@@ -272,7 +281,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                             style={{
                                 minHeight: 140,
                                 maxHeight: 140,
-                                width: '100%',
+                                width: '180px',
                                 border: '1px solid #ced4da',
                                 borderRadius: 4,
                                 resize: 'none',
@@ -283,15 +292,6 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                             }}
                         />
                     </div>
-                </td>
-                {/* LINK_DEFS button cell (optional, add after comments) */}
-                <td className="align-middle">
-                    {/* Render multiple buttons if comma-separated keys */}
-                    {typeof safeBoxTexts[row-1][5] === "string" && safeBoxTexts[row-1][5].includes(",")
-                        ? safeBoxTexts[row-1][5].split(",").map(key => renderLinkButton(key.trim()))
-                        : (typeof safeBoxTexts[row-1][5] === "string" && safeBoxTexts[row-1][5] in require('./linkButtons').LINK_DEFS
-                            ? renderLinkButton(safeBoxTexts[row-1][5])
-                            : safeBoxTexts[row-1][5])}
                 </td>
             </tr>
         );

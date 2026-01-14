@@ -1,11 +1,14 @@
 import React from "react";
 
 export default function SignOffForm({ name, date, onChange, onSignOff, signed }) {
+    // Always use empty string for undefined/null to keep controlled
+    const safeName = typeof name === 'string' ? name : '';
+    const safeDate = typeof date === 'string' ? date : '';
     if (signed) {
         return (
             <div style={{ padding: '4px 0' }}>
-                <div><strong>Date:</strong> <span style={{ fontWeight: 'bold' }}>{date}</span></div>
-                <div><strong>Name:</strong> <span style={{ fontWeight: 'bold' }}>{name}</span></div>
+                <div><strong>Date:</strong> <span style={{ fontWeight: 'bold' }}>{safeDate}</span></div>
+                <div><strong>Name:</strong> <span style={{ fontWeight: 'bold' }}>{safeName}</span></div>
             </div>
         );
     }
@@ -13,12 +16,12 @@ export default function SignOffForm({ name, date, onChange, onSignOff, signed })
         <>
             <input
                 type="date"
-                value={date}
+                value={safeDate}
                 onChange={e => onChange('date', e.target.value)}
                 className="form-control mb-1"
             />
             <textarea
-                value={name}
+                value={safeName}
                 onChange={e => onChange('name', e.target.value)}
                 placeholder="Name assessor"
                 className="form-control mb-1"

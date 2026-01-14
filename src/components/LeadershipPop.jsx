@@ -20,7 +20,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "", 
                         "Education: Watch how-to videos and learn what makes a strong PSI", 
                         "PSI"],
-                    ["Leads effective meetings and communications across all LIF activities (CRM, PTHA, QSI, SPOTLIGHT)", 
+                    ["Leads effective meetings and communications across all LiF activities", 
                         "Understands each activity’s purpose, the LIF playback intent, and communicates their LIF involvement clearly in meetings", 
                         "Provides effective, positive coaching and feedback during interactions, and confirms controls are in place", 
                         "Can give coaching and feedback in the interaction effectively and positively. Uses - QSI methods and techniques effectively", 
@@ -258,7 +258,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                                                     style={{
                                                         minHeight: 140,
                                                         maxHeight: 140,
-                                                        width: '100%',
+                                                        width: '180px',
                                                         border: '1px solid #ced4da',
                                                         borderRadius: 4,
                                                         resize: 'none',

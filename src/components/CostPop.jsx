@@ -61,7 +61,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     "Understand the process flow for future work packages: request, approval, forecasting, and budgeting", 
                     "", 
                     "No formal training at Supervisor level—stay curious and ask questions of experienced Superintendents and Technical Leads", 
-                    "Contractor L3: Box 6"],
+                    ""],
                 ["Basic understanding of the ResDev annual budget process", 
                     "Understand the basic process flow of how future work packages are requested, approved, forecasted and then budgeted", 
                     "Expand understanding of Opex and Capex into Suscap, Devcap, Central and Opex", 
@@ -275,7 +275,8 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                                 style={{
                                     minHeight: 140,
                                     maxHeight: 140,
-                                    width: '100%','border': '1px solid #ced4da',
+                                    width: '180px',
+                                    border: '1px solid #ced4da',
                                     borderRadius: 4,
                                     resize: 'none',
                                     boxShadow: 'none',

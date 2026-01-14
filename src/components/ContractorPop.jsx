@@ -33,7 +33,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "Follows up on actions raised during Contractor Performance Meetings and engages with the Contract Management team for support or to escalate issues when needed", 
                         "", 
                         "Form Review: Go through the form with an SME/Supervisor. Discuss key data points to present, including: DDM data, Enablon actions, Protrak inspections, Safeday/CRM data", 
-                        "RTIOResDevContractManagement@riotinto.com"],
+                        "ContractManagementEmail"],
                     ["Monitors contractor compliance with Fatigue Management requirements, including: Roster management practices. Understanding and application of the Fatigue Management Policy. Note: This is essential for effective nightshift supervision.", 
                         "Has read and can apply the Fatigue Management Policy, with a strong focus on nightshift operations", 
                         "", 
@@ -49,18 +49,18 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 ],
                 2: [
                     // 2 rows for Level 2
-                    ["Understands the contractor mechanical inspection process and can perform equipment inspections relevant to site requirements", 
-                        "Understands the 6-monthly inspection process. Can access Protrak Inspections, look up equipment, and is responsible for checking off outstanding items", 
+                    ["Understands the contractor equipment mobilisation process (new to site, inter site) and can approve entry to site", 
+                        "Understands the equipment mobilisation process,. Can access Protrak Inspections to confirm equipment is authorized, contractor inspection is complete and monitor any outstanding actions. Audits equipment on site to verify above", 
                         "", 
                         "", 
-                        "Has access to Protrak Inspections. Receives mentoring from the Mechanical team/Supervisor on the 6-month inspection process, field checks, and data entry into Protrak", 
+                        "Has access to Protrak Inspections. Receives mentoring from the Mechanical/Drill Advisor team/Supervisor on the mobilisation process, field checks, and data entry into Protrak", 
                         "Protrack"],
                     ["Contributes to quarterly contractor meetings and leads weekly Sunday contractor performance discussions", 
                         "Conducts contractor meetings, records minutes, and stores documentation in the shared drive", 
                         "Presents contractor performance data, challenges non-conformance or poor performance, develops meaningful improvement actions, and ensures follow-up and close-out", 
                         "", 
                         "Exposure: Receives mentoring on CMS weekly meetings and how they link to monthly meetings. Experience: Provides contractor feedback to the CM team for inclusion in monthly meetings.", 
-                        "RTIOResDevContractManagement@riotinto.com"]
+                        "ContractManagementEmail"]
                 ],
                 3: [
                     // 3 rows for Level 3
@@ -70,11 +70,11 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         "", 
                         "Exposure through mentoring by SME/Supervisor on RSO contacts, required documentation, and managing vehicle movements", 
                         "RadiationManagement"],
-                    ["Manage entry of personnel and equipment to site (Equipment Authorisation, Registers, Weed & Seed checks)", 
-                        "Conduct RTIO checks with Cat 3 contractor supervisor, set realistic timeframes for fixes, enter into Protrak, and close out", 
+                    ["Facilitate mobilisation of equipment to site confirm equipment is authorized, contractor inspection is complete and monitor any outstanding actions. Audits equipment on site to verify above. Weed and seed checks (keep people under PTW?)", 
+                        "Verify authorized to enter with Cat 3 contractor supervisor", 
                         "", 
                         "", 
-                        "Education: Know where to find the Weed & Seed form (Safeday). Exposure: SME mentoring on effective and thorough Weed & Seed checks on site", 
+                        "Education: Know where to find the Weed & Seed form (Safeday). Exposure: SME mentoring on effective and thorough Weed & Seed checks on site. Coaching from Drill Mech Advisor team", 
                         "Safeday"],
                     ["Understand and manage the ICP inspection process for pressure vessels", 
                         "Understand inspection requirements for pressure vessels entering mine lease; coordinate with mine or Stat Supervisors to manage process", 
@@ -275,7 +275,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                                 style={{
                                     minHeight: 140,
                                     maxHeight: 140,
-                                    width: '100%',
+                                    width: '180px',
                                     border: '1px solid #ced4da',
                                     borderRadius: 4,
                                     resize: 'none',
