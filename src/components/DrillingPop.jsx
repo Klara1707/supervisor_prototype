@@ -426,10 +426,19 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     if (!loading) {
         tableRows = [];
         // Header row
+        // Set consistent width for columns 0-4
+        // Set 'Training Process' (index 4) to same width as 'Skills/Responsibilities' (index 0)
+        const colWidths = [180, 140, 140, 140, 180, 140, 160, 180];
         tableRows.push(
             <tr key="header">
                 {headers.map((header, idx) => (
-                    <th key={idx} className="text-center align-middle bg-light">{header}</th>
+                    <th
+                        key={idx}
+                        className="text-center align-middle bg-light"
+                        style={idx < colWidths.length ? { width: colWidths[idx] } : {}}
+                    >
+                        {header}
+                    </th>
                 ))}
             </tr>
         );
@@ -463,8 +472,25 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                             (level === 2 && (row === 10 || row === 11 || row === 12))
                         ));
                         return (
-                            <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                                <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
+                            <td
+                                key={col}
+                                className="align-middle"
+                                style={{
+                                    position: 'relative',
+                                    paddingRight: 0,
+                                    paddingBottom: 0,
+                                    width: col < 6 ? colWidths[col] : undefined
+                                }}
+                            >
+                                <span style={{
+                                    display: 'block',
+                                    marginBottom: 24,
+                                    fontSize: 14,
+                                    color: '#333',
+                                    wordBreak: 'break-word',
+                                    whiteSpace: 'pre-line',
+                                    overflowWrap: 'break-word'
+                                }}>{content}</span>
                                 {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
                                     <input
                                         type="checkbox"

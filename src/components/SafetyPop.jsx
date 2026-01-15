@@ -20,7 +20,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     "Capable of verifying controls for effectiveness and providing constructive feedback during Critical Control Field Verifications (CCFV)", 
                     "Knows the appropriate actions to take when a red is identified—capturing photos, recording the issue, resolving it in the field where possible, assigning actions, setting timelines, and ensuring close-out", 
                     "The RTIO Critical Risk Management Hub provides comprehensive resources explaining the 'why' and 'how' behind critical risk processes", 
-                    "CRM"],
+                    "CRMM"],
                 ["Understands the purpose of Hazard & Risk Assessment—including risk levels, key concepts, and timelines—and performs thorough, high-quality assessments", 
                     "Understands that all activities involving risk must be assessed through a Pre-Task Hazard Assessment (PTHA), with appropriate controls implemented to manage the risk", 
                     "Able to provide guidance to contractors and others on improving the quality of risk assessments", 
@@ -288,13 +288,25 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     // Build table rows for Bootstrap table
     const tableRows = [];
     // Header row
-    tableRows.push(
-        <tr key="header">
-            {headers.map((header, idx) => (
-                <th key={idx} className="text-center align-middle bg-light">{header}</th>
-            ))}
-        </tr>
-    );
+        // Set consistent width for columns 0-4
+        // Align columns: Skills/Responsibilities, Sub Section 1, 2, 3, Training Process
+        // to match DrillingPop: [180, 140, 140, 140, 140]
+        // Set consistent width for columns to match DrillingPop
+        // Set 'Skills/Responsibilities' (0) and 'Training Process' (4) to 180, all Sub Sections (1,2,3) to 140
+        const colWidths = [180, 140, 140, 140, 180, 140, 160, 180];
+        tableRows.push(
+            <tr key="header">
+                {headers.map((header, idx) => (
+                    <th
+                        key={idx}
+                        className="text-center align-middle bg-light"
+                        style={idx < colWidths.length ? { width: colWidths[idx] } : {}}
+                    >
+                        {header}
+                    </th>
+                ))}
+            </tr>
+        );
     // Data rows: only as many as exist in boxTexts
     for (let row = 0; row < boxTexts.length; row++) {
         tableRows.push(
@@ -310,10 +322,32 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         content = renderLinkButton(cellText);
                     }
                     // Remove checkbox in column 6 (index 5) for rows 1-8 and row 9
-                    const removeCheckbox = (col === 5 && ((row >= 0 && row <= 7) || row === 8));
+                        // Remove checkbox in column 6 (index 5) for rows 1-8, row 9, and rows 10-12 for level 2
+                        const removeCheckbox = (col === 5 && (
+                            (row >= 0 && row <= 7) ||
+                            row === 8 ||
+                            (level === 2 && (row === 9 || row === 10 || row === 11))
+                        ));
                     return (
-                        <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
+                        <td
+                            key={col}
+                            className="align-middle"
+                            style={{
+                                position: 'relative',
+                                paddingRight: 0,
+                                paddingBottom: 0,
+                                width: col < 6 ? colWidths[col] : undefined
+                            }}
+                        >
+                            <span style={{
+                                display: 'block',
+                                marginBottom: 24,
+                                fontSize: 14,
+                                color: '#333',
+                                wordBreak: 'break-word',
+                                whiteSpace: 'pre-line',
+                                overflowWrap: 'break-word'
+                            }}>{content}</span>
                             {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
                                 <input
                                     type="checkbox"

@@ -253,7 +253,7 @@ export const LINK_DEFS = {
         label: "Forwoodsafety",
         href: "https://id.riotinto.forwoodsafety.com/",
     },
-    CRM: {
+    CRMM: {
         label: "Critical Risk Management",
         href: "https://riotinto.sharepoint.com/sites/RTIOHSECHUB/SitePages/Critical-Risk-Management-(CRM).aspx",
     },

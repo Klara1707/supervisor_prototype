@@ -77,7 +77,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 "Demonstrates comprehensive understanding of RTIO safety systems and provides mentoring and advice to others on their use", 
                 "", 
                 "Education: Has reviewed all training videos, understands Rio Tools usage, and holds CCFV VOC qualification. Exposure: Mentored by SME/Supervisor to a level where the Supervisor can provide direct guidance on RTIO safety tool usage.", 
-                "Forwoodsafety, CRM"],
+                "Forwoodsafety, CRMM"],
             ["Ensures appropriate water source and transfer system are in place for the project and can organise installation as required", 
                 "Participates in drilling program planning, including desktop review of bore locations and field verification of access", 
                 "Provides SME-level advice on water bore setup using Bore Boss/Bladder systems; manages inspections and maintenance of the water setup", 
@@ -197,6 +197,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
         "Training Process", "Training Material", "Reviewer sign off", "Comments"
     ];
+    const colWidths = [180, 140, 140, 140, 180, 140, 160, 180];
     // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
     // Must have 7 rows for rows 1-7 (index 0-6)
     const [gridProgressChecks, setGridProgressChecks] = useState(
@@ -269,7 +270,13 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     tableRows.push(
         <tr key="header">
             {headers.map((header, idx) => (
-                <th key={idx} className="text-center align-middle bg-light">{header}</th>
+                <th
+                  key={idx}
+                  className="text-center align-middle bg-light"
+                  style={idx < colWidths.length ? { width: colWidths[idx] } : {}}
+                >
+                  {header}
+                </th>
             ))}
         </tr>
     );
@@ -324,9 +331,26 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     // Remove checkbox in column 6 (index 5) for all rows
                     const removeCheckbox = (col === 5);
                     return (
-                        <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
-                            <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
-                            {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
+                        <td
+                          key={col}
+                          className="align-middle"
+                          style={{
+                            position: 'relative',
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            width: col < 6 ? colWidths[col] : undefined
+                          }}
+                        >
+                          <span style={{
+                            display: 'block',
+                            marginBottom: 24,
+                            fontSize: 14,
+                            color: '#333',
+                            wordBreak: 'break-word',
+                            whiteSpace: 'pre-line',
+                            overflowWrap: 'break-word'
+                          }}>{content}</span>
+                          {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
                                 <input
                                     type="checkbox"
                                     checked={progressRow[col]}
