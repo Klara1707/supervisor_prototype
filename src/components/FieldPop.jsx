@@ -321,11 +321,12 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     } else {
                         content = cellText;
                     }
-                    // Remove checkbox if cellText is empty string
+                    // Remove checkbox in column 6 (index 5) for all rows
+                    const removeCheckbox = (col === 5);
                     return (
                         <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
                             <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
-                            {!(typeof cellText === "string" && cellText === "") && (
+                            {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
                                 <input
                                     type="checkbox"
                                     checked={progressRow[col]}

@@ -222,6 +222,8 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     const cellText = safeBoxTexts[row-1][col];
                     // Support multiple links if comma-separated
                     const items = typeof cellText === 'string' ? cellText.split(',').map(s => s.trim()).filter(Boolean) : [];
+                    // Remove checkbox in column 6 (index 5) for all rows
+                    const removeCheckbox = (col === 5);
                     return (
                         <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
                             <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>
@@ -229,7 +231,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                                     ? items.map((item, idx) => <span key={item}>{renderLinkButton(item)}{idx < items.length - 1 ? ' ' : ''}</span>)
                                     : renderLinkButton(cellText)}
                             </span>
-                            {!(typeof cellText === "string" && cellText === "") && (
+                            {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
                                 <input
                                     type="checkbox"
                                     checked={gridProgressChecks[row-1][col]}

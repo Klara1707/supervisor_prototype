@@ -309,11 +309,12 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     } else if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
                         content = renderLinkButton(cellText);
                     }
-                    // Remove checkbox if cellText is empty string
+                    // Remove checkbox in column 6 (index 5) for rows 1-8 and row 9
+                    const removeCheckbox = (col === 5 && ((row >= 0 && row <= 7) || row === 8));
                     return (
                         <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
                             <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
-                            {!(typeof cellText === "string" && cellText === "") && (
+                            {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
                                 <input
                                     type="checkbox"
                                     checked={gridProgressChecks[row] && gridProgressChecks[row][col] ? gridProgressChecks[row][col] : false}
