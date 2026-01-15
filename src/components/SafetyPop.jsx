@@ -462,10 +462,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             </div>
         </div>
     );
-    
 }
-
-
 
 function SafetyPop({ popupId, closePopup, userToken, onProgressUpdate }) {
     if (!popupId) return null;
