@@ -321,19 +321,22 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     } else {
                         content = cellText;
                     }
+                    // Remove checkbox if cellText is empty string
                     return (
                         <td key={col} className="align-middle" style={{ position: 'relative', paddingRight: 0, paddingBottom: 0 }}>
                             <span style={{ display: 'block', marginBottom: 24, fontSize: 14, color: '#333' }}>{content}</span>
-                            <input
-                                type="checkbox"
-                                checked={progressRow[col]}
-                                onChange={() => {
-                                    const updated = gridProgressChecks.map(arr => arr.slice());
-                                    updated[row-1][col] = !updated[row-1][col];
-                                    setGridProgressChecks(updated);
-                                }}
-                                style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
-                            />
+                            {!(typeof cellText === "string" && cellText === "") && (
+                                <input
+                                    type="checkbox"
+                                    checked={progressRow[col]}
+                                    onChange={() => {
+                                        const updated = gridProgressChecks.map(arr => arr.slice());
+                                        updated[row-1][col] = !updated[row-1][col];
+                                        setGridProgressChecks(updated);
+                                    }}
+                                    style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                                />
+                            )}
                         </td>
                     );
                 })}

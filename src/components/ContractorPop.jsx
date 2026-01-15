@@ -229,16 +229,18 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                                     ? items.map((item, idx) => <span key={item}>{renderLinkButton(item)}{idx < items.length - 1 ? ' ' : ''}</span>)
                                     : renderLinkButton(cellText)}
                             </span>
-                            <input
-                                type="checkbox"
-                                checked={gridProgressChecks[row-1][col]}
-                                onChange={() => {
-                                    const updated = gridProgressChecks.map(arr => arr.slice());
-                                    updated[row-1][col] = !updated[row-1][col];
-                                    setGridProgressChecks(updated);
-                                }}
-                                style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
-                            />
+                            {!(typeof cellText === "string" && cellText === "") && (
+                                <input
+                                    type="checkbox"
+                                    checked={gridProgressChecks[row-1][col]}
+                                    onChange={() => {
+                                        const updated = gridProgressChecks.map(arr => arr.slice());
+                                        updated[row-1][col] = !updated[row-1][col];
+                                        setGridProgressChecks(updated);
+                                    }}
+                                    style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                                />
+                            )}
                         </td>
                     );
                 })}
