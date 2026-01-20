@@ -87,7 +87,6 @@ function MandatoryList({ onProgressUpdate, progress, setProgress }) {
 
 
     const [checkedItems, setCheckedItems] = useState(Array(trainingList.length).fill(false));
-    const [debugProgress, setDebugProgress] = useState(null);
     // Fetch saved state on mount
     useEffect(() => {
         if (!token) return;
@@ -107,7 +106,6 @@ function MandatoryList({ onProgressUpdate, progress, setProgress }) {
                 if (!saved && data && typeof data === 'object' && (Array.isArray(data.gridProgressChecks) || Array.isArray(data.checkedItems))) {
                     saved = data;
                 }
-                setDebugProgress(saved); // Save for debug display
                 let restored = Array(trainingList.length).fill(false);
                 if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
                     if (Array.isArray(saved.checkedItems)) {
@@ -131,7 +129,7 @@ function MandatoryList({ onProgressUpdate, progress, setProgress }) {
                 setCheckedItems(restored);
             })
             .catch((e) => { console.log("[MandatoryList] Error fetching progress:", e); });
-    }, [token, trainingList.length]);
+    }, [token]);
     const [showButton, setShowButton] = useState(false);
 
     const handleCheckboxChange = async (index) => {
