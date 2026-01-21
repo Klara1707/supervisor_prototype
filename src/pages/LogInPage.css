@@ -1,0 +1,558 @@
+/* Keep border and shadow for new-user-box and admin-login-box on all states */
+.new-user-box,
+.new-user-box:hover,
+.new-user-box:focus,
+.new-user-box:active,
+.admin-login-box,
+.admin-login-box:hover,
+.admin-login-box:focus,
+.admin-login-box:active {
+    background: var(--white) !important;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08) !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+    .new-user-box button:hover,
+    .new-user-box button:focus,
+    .new-user-box button:active {
+        box-shadow: none !important;
+        background-color: #cd2c2c !important;
+    }
+/* Page-specific styles for LogInPage */
+/* Keep border and shadow for new-user-box and admin-login-box on all states */
+.new-user-box,
+.new-user-box:hover,
+.new-user-box:focus,
+.new-user-box:active,
+.admin-login-box,
+.admin-login-box:hover,
+.admin-login-box:focus,
+.admin-login-box:active {
+    background: var(--white) !important;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08) !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+    .create-account-btn:hover,
+    .create-account-btn:focus,
+    .create-account-btn:active,
+    .create-account-btn:focus-visible,
+    .new-user-box a:hover,
+    .new-user-box a:focus,
+    .new-user-box a:active,
+    .new-user-box a:focus-visible,
+    .new-user-box button:hover,
+    .new-user-box button:focus,
+    .new-user-box button:active,
+    .new-user-box button:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+    button:focus,
+    a:focus {
+        outline: 2px solid #004b87 !important;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 2px #90caf9 !important;
+        /* border-color: transparent !important; */
+    }
+    .new-user-box button:focus,
+    .new-user-box button:active {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+    .create-account-btn:focus,
+    .create-account-btn:active,
+    .create-account-btn:focus-visible,
+    .new-user-box a:focus,
+    .new-user-box a:active,
+    .new-user-box a:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+    /* Remove blue outline from Link wrapping Create Account button */
+    .new-user-box a:focus,
+    .new-user-box a:active,
+    .new-user-box a:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+    .create-account-btn:focus,
+    .create-account-btn:active,
+    .create-account-btn:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+    .password-reset-form {
+        font-family: var(--font-default);
+        font-weight: normal;
+        font-size: 1rem;
+        color: var(--black);
+    }
+    .password-reset-form h2 {
+        font-family: var(--font-default);
+        font-weight: normal;
+        font-size: 1.5rem;
+        color: var(--black);
+        margin-bottom: 1rem;
+    }
+    .password-reset-form label {
+        font-family: var(--font-default);
+        font-weight: bold;
+        font-size: 1rem;
+        color: var(--black);
+        margin-bottom: 4px;
+    }
+    /* Password Reset Form input and button styling to match login form */
+    .login-form-input {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+        margin-bottom: -0.5rem;
+    }
+
+    .login-form label {
+        margin-bottom: 0.4rem;
+        display: block;
+    }
+    .login-form-input:focus {
+        outline: none;
+        border-color: #cd2c2c;
+        box-shadow: 0 0 0 2px rgba(205, 44, 44, 0.2); /* This is the "red/salmon" glow */
+    }
+    .login-form-btn {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #004b87;
+        color: white;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+    .login-form-btn:hover:enabled {
+        background-color: #00345c;
+    }
+    /* Style for the admin login toggle button above the login form */
+    .admin-login-toggle {
+        display: block;
+        margin: 0 auto 1.5rem auto;
+        background-color: #004b87;
+        color: white;
+        font-size: 1rem;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .admin-login-toggle:hover {
+        background-color: #00345c;
+    }
+    .top-row {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        justify-content: center;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+    }
+    .context-inner-box {
+        background: #f8f9fa;
+        border-radius: 6px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        font-size: 1rem;
+    }
+
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-default);
+    font-weight: normal;
+    line-height: 1.2;
+    margin: 0;
+    }
+
+/* Typography */
+body {
+
+    background-color: #f0ead2  ;
+    margin: 0;
+    padding: 0;
+}
+
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+    padding-bottom: 80px; /* Prevent content from being hidden by NavBar */
+}
+
+.login-form {
+    background-color: var(--white);
+    padding: var(--space-large);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px #cd2c2c(0, 0, 0, 0.1);
+    border: 1px solid #ccc; /* Added border */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    gap: var(--space-medium);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-form label {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.login-form input {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #cd2c2c;
+    box-shadow: 0 0 0 2px rgba(205, 44, 44, 0.2); /* This is the "red/salmon" glow */
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.forgot-link {
+    color: #004b87;
+    text-decoration: underline;
+    font-size: 0.85rem;
+    padding: 2px 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+    margin-bottom: 0;
+    display: inline;
+}
+    .admin-login-box {
+        background: var(--white);
+        padding: var(--space-large);
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        margin: 2rem auto;
+        max-width: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-medium);
+    }
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-small);
+}
+
+/* Center the admin login button in the admin-login-box */
+.admin-login-box .form-buttons {
+    justify-content: center;
+}
+
+.login-form button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-form button[type="submit"] {
+    background-color: #004b87;
+    color: white;
+}
+
+.login-form button[type="submit"]:hover {
+    background-color: #00345c;
+}
+
+.cancel-button {
+    background-color: #ccc;
+    color: #333;
+}
+    .admin-login-box,
+    .new-user-box {
+        background: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: var(--space-large);
+        margin: 2rem auto;
+        max-width: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-medium);
+    }
+
+
+.cancel-button:hover {
+    background-color: #999;
+}
+
+.form-select {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 2px rgba(205, 44, 44, 0.2);
+}
+
+
+.form-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.form-header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: var(--black);
+}
+
+.form-header p {
+    font-size: 1rem;
+    color: #555;
+}
+
+
+/* New User Box Styles */
+.new-user-box {
+    background: var(--white);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.0rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #cd2c2c;
+}
+
+.create-account-btn {
+    background-color: #cd2c2c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 400;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    outline: none;
+    box-shadow: none;
+    transition: background 0.2s, color 0.2s;
+}
+.create-account-btn:hover {
+    background-color: #888;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Strongest override: ensure login-form border and shadow never disappear */
+.login-form,
+.login-form:focus,
+.login-form:active,
+.login-form:focus-visible,
+.login-form:hover {
+    border: 1px solid #ccc !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+    background: var(--white) !important;
+}
+
+/* Prevent border from being removed by global rules */
+.login-form:focus,
+.login-form:active,
+.login-form:focus-visible,
+.login-form:hover {
+    border: 1px solid #ccc !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+    background: var(--white) !important;
+}
+
+/* FINAL FIX: Target only direct button and link elements for border removal, never parents */
+.create-account-btn:hover,
+.create-account-btn:focus,
+.create-account-btn:active,
+.create-account-btn:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+.new-user-box button:hover,
+.new-user-box button:focus,
+.new-user-box button:active,
+.new-user-box button:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+/* Remove border-color: transparent !important from all selectors except for .create-account-btn and .new-user-box button directly */
+.create-account-btn:hover,
+.create-account-btn:focus,
+.create-account-btn:active,
+.create-account-btn:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+.new-user-box button:hover,
+.new-user-box button:focus,
+.new-user-box button:active,
+.new-user-box button:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+/* Remove border-color: transparent from all other selectors */
+.new-user-box a:hover,
+.new-user-box a:focus,
+.new-user-box a:active,
+.new-user-box a:focus-visible,
+button:focus,
+a:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    /* border-color: transparent !important; */ /* Ensure this line is removed */
+}
+
+/* Remove border-color: transparent from this group as well */
+.create-account-btn:hover,
+.create-account-btn:focus,
+.create-account-btn:active,
+.create-account-btn:focus-visible,
+.new-user-box a:hover,
+.new-user-box a:focus,
+.new-user-box a:active,
+.new-user-box a:focus-visible,
+.new-user-box button:hover,
+.new-user-box button:focus,
+.new-user-box button:active,
+.new-user-box button:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+    /* border-color: transparent !important; */ /* Ensure this line is removed except for .create-account-btn and .new-user-box button */
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 600px) {
+    .login-container {
+        margin-top: 1rem;
+        padding: 0 1.2rem;
+    }
+    .login-form,
+    .admin-login-box,
+    .new-user-box {
+        max-width: 99vw;
+        width: 100%;
+        padding: 1.1rem 0.7rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        margin: 1.1rem auto;
+        word-break: break-word;
+    }
+    .form-header h1 {
+        font-size: 1.15rem;
+    }
+    .form-header p {
+        font-size: 0.98rem;
+    }
+    .login-form-btn,
+    .admin-login-toggle,
+    .create-account-btn {
+        font-size: 1.08rem;
+        padding: 0.7rem 1.1rem;
+        min-height: 44px;
+    }
+    .login-form-input,
+    .form-select {
+        font-size: 1rem;
+        padding: 0.7rem;
+    }
+    .top-row {
+        flex-direction: column;
+        gap: 1.2rem;
+        margin-bottom: 1.1rem;
+    }
+    .context-inner-box {
+        font-size: 0.98rem;
+        padding: 0.8rem;
+    }
+    .forgot-link {
+        font-size: 0.82rem;
+        padding: 4px 6px;
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .form-buttons {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .login-form label,
+    .login-form input,
+    .login-form-btn,
+    .admin-login-toggle,
+    .create-account-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .login-form input,
+    .form-select {
+        min-height: 44px;
+    }
+    .new-user-box {
+        font-size: 1.08rem;
+    }
+    .admin-login-box {
+        font-size: 1.08rem;
+    }
+    .password-reset-form {
+        font-size: 1rem;
+    }
+    .password-reset-form h2 {
+        font-size: 1.15rem;
+    }
+}
+

@@ -1,0 +1,88 @@
+
+
+    /* Typography */
+
+
+.hero-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    background: linear-gradient(to right, orange, #cd2c2c);
+    min-height: 80px;
+}
+
+.hero-image img {
+    width: 140px;
+    height: auto;
+    margin-right: 24px;
+    border-radius: 6px;
+}
+
+.hero-text {
+    flex: 1;
+    text-align: right;
+    padding-left: 18px;
+}
+
+.hero-text h1 {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: bold;
+    text-align: right;
+    font-family: "Delima SemiBold", sans-serif;
+    color: var(--black);
+}
+
+.hero-text h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    text-align: right;
+    color: var(--black);
+}
+
+.hero-text p {
+    margin-top: 6px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: right;
+    color: #fff;
+}
+
+/* ✅ Mobile-friendly styles */
+@media (max-width: 768px) {
+    .hero-bar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-image img {
+        width: 150px;
+        margin: 0 0 20px 0;
+    }
+
+    .hero-text {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 2.8rem;
+        text-align: center;
+    }
+    .hero-text h2 {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .hero-text p {
+        font-size: 2.1rem;
+        font-weight: bold;
+        text-align: center;
+        color: #fff;
+    }
+}
+
