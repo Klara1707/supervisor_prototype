@@ -20,7 +20,7 @@ function AdminLogin({ onSuccess }) {
     const handleAdminLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${API_BASE}/api/admin-token/`, {
+            const response = await fetch(`${API_BASE}/admin-token/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
