@@ -65,14 +65,41 @@ export function createUser(payload) {
 export function getMe() {
   return apiFetch("/api/me/");
 }
+
 // JWT login helper
 export async function login(username, password) {
-  const data = await apiFetch("/api/token/", {
+  const data = await apiFetch("/token/", {
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
   setToken(data.access);
   return data;
+}
+
+// Admin login helper
+export async function adminLogin(username, password) {
+  const data = await apiFetch("/admin-token/", {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+  });
+  setToken(data.access);
+  return data;
+}
+
+// Update user site helper
+export async function updateSite(siteInfo) {
+  return apiFetch("/api/update-site/", {
+    method: "POST",
+    body: JSON.stringify(siteInfo),
+  });
+}
+
+// Password reset helper
+export async function passwordReset(email) {
+  return apiFetch("/api/password_reset/", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+  });
 }
 
 /* ========== TOKEN HELPERS ========== */

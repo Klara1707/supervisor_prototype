@@ -40,7 +40,11 @@ function CreateAccountPage() {
 			setShowPopup(true);
 			// Optionally handle more success UI here
 		} catch (err) {
-			setMessage(err.message || "Registration failed.");
+			if (err.message === 'Failed to fetch') {
+				setMessage("Could not connect to the server. Please check your internet connection or try again later.");
+			} else {
+				setMessage(err.message || "Registration failed.");
+			}
 		}
 	};
 
