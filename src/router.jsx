@@ -5,6 +5,7 @@ import PasswordResetForm from "./components/PasswordResetForm";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import AdminDataPage from "./pages/AdminDataPage";
 import HomePage from "./pages/HomePage";
+import AdminPage from "./pages/AdminPage";
 
 function AppRouter() {
 	return (
@@ -16,7 +17,7 @@ function AppRouter() {
 				<Route path="/admindatapage" element={<AdminDataPage />} />
 				<Route path="/home" element={<HomePage />} />
 				<Route path="/reset-password" element={<PasswordResetForm />} />
-				{/* <Route path="/admin" element={<AdminPage />} /> */}
+				   <Route path="/admin" element={<AdminPage />} />
 			</Routes>
 		</BrowserRouter>
 	);
