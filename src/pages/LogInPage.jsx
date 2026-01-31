@@ -2,91 +2,12 @@
 
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import AdminLoginForm from "../components/AdminLoginForm";
 import PasswordResetForm from "../components/PasswordResetForm";
 import HeroBar from "../components/HeroBar";
 import "./LogInPage.css";
 
-import API_BASE from "../config";
 
-
-// ...existing code...
-
-function AdminLogin({ onSuccess }) {
-    // Removed undefined variables from console.log to fix ESLint error
-    const [adminUsername, setAdminUsername] = useState("");
-    const [adminPassword, setAdminPassword] = useState("");
-    const navigate = useNavigate();
-
-    const handleAdminLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch(`${API_BASE}/admin-token/`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: adminUsername,
-                    password: adminPassword
-                }),
-            });
-            let data = {};
-            try {
-                data = await response.json();
-            } catch (jsonErr) {
-                data = {};
-            }
-            if (response.ok) {
-                if (data.user && (data.user.is_staff || data.user.is_superuser)) {
-                    localStorage.setItem("token", data.access);
-                    localStorage.setItem("user", JSON.stringify(data.user));
-                    if (onSuccess) onSuccess();
-                    navigate("/admindatapage");
-                    // Force reload to ensure fresh data
-                    window.location.reload();
-                } else {
-                    alert("You are not an admin.");
-                }
-            } else {
-                alert(data.detail || data.error || "Login failed. Please check your username and password.");
-            }
-        } catch (error) {
-            alert("Error logging in. Please check your network or server.");
-        }
-    };
-
-    return (
-        <div className="admin-login-box" style={{marginTop: '-1.5rem'}}>
-            <div className="context-inner-box">
-                <h1>Admin Login</h1>
-                <p>Please log in with Admin credentials</p>
-            </div>
-            <form className="login-form" onSubmit={handleAdminLogin}>
-                <label htmlFor="admin-username">Username</label>
-                <input
-                    type="text"
-                    id="admin-username"
-                    name="admin-username"
-                    placeholder="Enter your username"
-                    autoComplete="username"
-                    value={adminUsername}
-                    onChange={(e) => setAdminUsername(e.target.value)}
-                />
-                <label htmlFor="admin-password">Password</label>
-                <input
-                    type="password"
-                    id="admin-password"
-                    name="admin-password"
-                    placeholder="Enter your password"
-                    autoComplete="current-password"
-                    value={adminPassword}
-                    onChange={(e) => setAdminPassword(e.target.value)}
-                />
-                <div className="form-buttons">
-                    <button type="submit" className="login-btn">Login</button>
-                </div>
-            </form>
-        </div>
-    );
-}
 
 
 function LogInPage() {
@@ -279,7 +200,7 @@ function LogInPage() {
                         </button>
                     </div>
                     {/* Admin Login Box with username and password - toggled */}
-                    {showAdminLogin && <AdminLogin onSuccess={() => setShowAdminLogin(false)} />}
+                    {showAdminLogin && <AdminLoginForm />}
                     {/* Password Reset Popup */}
                     {showResetPopup && (
                         <div style={{
