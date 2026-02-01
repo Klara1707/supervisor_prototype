@@ -1,76 +1,47 @@
+
 import { apiFetch } from "../api";
-// import { useDebouncedSave } from "../hooks/useDebouncedSave";
 import "./Pop.css";
-import { useState, useEffect, useCallback } from "react";
-import { renderLinkButton, LINK_DEFS } from "./linkButtons";
+import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
+import { renderLinkButton, LINK_DEFS } from "./linkButtons";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
-        // Set consistent width for columns 0-4
-        // Set 'Training Process' (index 4) to same width as 'Skills/Responsibilities' (index 0)
-        const colWidths = [180, 140, 140, 140, 180, 140, 160, 180];
-    const [loading, setLoading] = useState(true);
-    const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
-    // Manual save progress button with success tick
-    const [saveStatus, setSaveStatus] = useState('idle'); // idle | success | error
-    const [saveError, setSaveError] = useState("");
-    // Robust token retrieval: prefer prop, fallback to storage (now using 'access_token')
-    const getToken = useCallback(() => {
-        if (userToken) return userToken;
-        const local = window.localStorage.getItem('access_token');
-        const session = window.sessionStorage.getItem('access_token');
-        return local || session || null;
-    }, [userToken]);
-    // Extracted fetch logic for re-use
-    const fetchProgress = useCallback(async () => {
-        const token = getToken();
-        setLoading(true);
-        if (!popupId || !token) {
-            setLoading(false);
-            return;
-        }
+    // --- State ---
+    const numRows = 7;
+    const [gridProgressChecks, setGridProgressChecks] = useState(Array(numRows).fill(null).map(() => Array(6).fill(false)));
+    const [comments, setComments] = useState(Array(numRows).fill(""));
+    const [signOffs, setSignOffs] = useState(Array(numRows).fill(null).map(() => ({ name: "", date: "", signed: false })));
+    const [hasLoaded, setHasLoaded] = useState(false);
+    const [saveStatus, setSaveStatus] = useState('idle');
+
+    // --- Progress calculation ---
+    let flatChecks = Array.isArray(gridProgressChecks[0]) ? gridProgressChecks.flat() : gridProgressChecks;
+    const totalGridChecks = numRows * 6;
+    const completedGridChecks = flatChecks.filter(Boolean).length;
+    const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
+
+    // --- Fetch progress from backend ---
+    const fetchProgress = async () => {
+        if (!popupId || !userToken) return;
         try {
             const data = await apiFetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
                 method: "GET",
-                headers: { "Authorization": `Bearer ${token}` }
+                headers: { "Authorization": `Bearer ${userToken}` }
             });
-            console.log('[DrillingPop] Backend response:', data); // <-- Debug log
-            let entry = null;
-            if (data && data[popupId]) {
-                entry = data[popupId];
-            } else if (data && data.gridProgressChecks) {
-                entry = data;
-            }
+            const entry = data && (data[popupId] || data);
             if (entry) {
-                setGridProgressChecks(entry.gridProgressChecks || Array(7).fill(null).map(() => Array(6).fill(false)));
-                setComments(entry.comments || Array(7).fill(""));
-                setSignOffs(entry.signOffs || Array(7).fill(null).map(() => ({ name: "", date: "", signed: false })));
-                setHasLoaded(true); // Mark as loaded so auto-save can start
-                // Debug: log restored state
-                console.log('[DrillingPop] State set:', {
-                    gridProgressChecks: entry.gridProgressChecks,
-                    comments: entry.comments,
-                    signOffs: entry.signOffs
-                });
-            } else {
-                console.warn(`[DrillingPop] No entry found for popupId '${popupId}' in backend response`, data);
+                setGridProgressChecks(entry.gridProgressChecks || Array(numRows).fill(null).map(() => Array(6).fill(false)));
+                setComments(entry.comments || Array(numRows).fill(""));
+                setSignOffs(entry.signOffs || Array(numRows).fill(null).map(() => ({ name: "", date: "", signed: false })));
+                setHasLoaded(true);
             }
-        } catch (err) {
-            // Optionally handle error
-            console.error('[DrillingPop] Network or parsing error:', err);
-        }
-        setLoading(false);
-    }, [popupId, getToken]);
+        } catch (err) {}
+    };
 
-    const handleManualSave = async () => {
-        const token = getToken();
-        if (!popupId || !token) {
-            setSaveError("Missing popupId or authentication token. Please log in again.");
-            setSaveStatus('error');
-            console.warn("[DrillingPop] Save aborted: missing popupId or token", { popupId, token });
-            return;
-        }
+    // --- Save progress to backend ---
+    const saveProgress = async () => {
+        if (!popupId || !userToken) return;
         const payload = {
             popupId,
             gridProgressChecks,
@@ -81,92 +52,51 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         try {
             await apiFetch("/api/training-progress/", {
                 method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
+                headers: { "Authorization": `Bearer ${userToken}` },
                 body: JSON.stringify(payload)
             });
             setSaveStatus('success');
-            setSaveError("");
-            if (onProgressUpdate) await onProgressUpdate();
-            // Re-fetch latest progress after save
-            await fetchProgress();
-        } catch (e) {
+            setTimeout(() => setSaveStatus('idle'), 1200);
+        } catch (err) {
             setSaveStatus('error');
-            setSaveError(e.message || "Save failed");
-            console.error("[DrillingPop] Save error:", e);
+            setTimeout(() => setSaveStatus('idle'), 1200);
         }
-        setTimeout(() => {
-            setSaveStatus('idle');
-            setSaveError("");
-        }, 3000);
+        if (onProgressUpdate) onProgressUpdate();
     };
-    // ...no manual save button, match EarthworksPop...
-    // Grid headers
+
+    // --- Manual save handler ---
+    const handleManualSave = () => {
+        saveProgress();
+    };
+
+    // --- Auto-save on change ---
+    useEffect(() => {
+        if (hasLoaded) saveProgress();
+        // eslint-disable-next-line
+    }, [gridProgressChecks, comments, signOffs, percentage]);
+
+    // --- Load progress on mount ---
+    useEffect(() => {
+        fetchProgress();
+        // eslint-disable-next-line
+    }, [popupId, userToken]);
+
+    // --- Save on close/unmount ---
+    useEffect(() => {
+        return () => {
+            saveProgress();
+        };
+        // eslint-disable-next-line
+    }, []);
+
+    // --- Table headers and content ---
     const headers = [
         "Skills/Responsibilities", "Sub Section 1", "Sub Section 2", "Sub Section 3",
         "Training Process", "Training Material", "Reviewer sign off", "Comments"
     ];
-    // For grid checkboxes: 6 columns x 6 rows = 36 checkboxes
-    // Must have 7 rows for rows 1-7 (index 0-6)
-    const [gridProgressChecks, setGridProgressChecks] = useState(
-        Array(7).fill(null).map(() => Array(6).fill(false))
-    );
-    // Per-row comment state
-    const [comments, setComments] = useState(Array(7).fill(""));
-    const [signOffs, setSignOffs] = useState(
-        Array(7).fill(null).map(() => ({ name: "", date: "", signed: false }))
-    );
-    // Robust percentage calculation: support both 2D and flat arrays
-    let flatChecks = Array.isArray(gridProgressChecks[0]) ? gridProgressChecks.flat() : gridProgressChecks;
-    const totalGridChecks = 42; // Always 7x6
-    const completedGridChecks = flatChecks.filter(Boolean).length;
-    const percentage = Math.round((completedGridChecks / totalGridChecks) * 100);
+    const colWidths = [180, 140, 140, 140, 180, 140, 160, 180];
 
-    // Load progress from backend on mount
-    useEffect(() => {
-        fetchProgress();
-    }, [popupId, userToken, fetchProgress]);
-
-    // Auto-save progress to backend on every change and on unmount (close)
-    useEffect(() => {
-        if (!hasLoaded) return; // Don't auto-save until data is loaded
-        const token = getToken();
-        if (!popupId || !token) {
-            console.warn("[DrillingPop] Auto-save aborted: missing popupId or token", { popupId, token });
-            return;
-        }
-        const payload = {
-            popupId,
-            gridProgressChecks,
-            comments,
-            signOffs,
-            progressPercentage: percentage
-        };
-        apiFetch("/api/training-progress/", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(payload)
-        });
-        if (onProgressUpdate) onProgressUpdate();
-        // Also save on unmount (when popup closes)
-        return () => {
-            apiFetch("/api/training-progress/", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify(payload)
-            });
-            if (onProgressUpdate) onProgressUpdate();
-        };
-        // eslint-disable-next-line
-    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken, hasLoaded]);
-
-    // Example: unique text for each box
-    // Texts for each popup level
+    // --- Drilling-specific box texts (restored full instructional content) ---
     const boxTextsByLevel = {
         1: [
             ["Understands the content and purpose of the Hydro Borehole Planning Document within hydrogeological projects. Can apply this knowledge operationally to execute planned activities and ensure alignment with project objectives", 
@@ -217,9 +147,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 "Understand the potential hydro outcomes", 
                 "Education - internet search and reading. Exposure - time spent in the field with Drillers/Supv/Drill Advisors being curious", 
                 ""],
-
         ],
-
         2: [
             ["Understands the requirements and restrictions for discharging fluids off the pad, including environmental and operational controls", 
                 "Can access and follow the discharge flowchart to assess feasibility. Able to interpret a DMP and apply its information effectively in the field", 
@@ -313,7 +241,6 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 "Education - review and understand the SOW. Exposure - industry based conversations with Supv/Drill Advisors/Technical Leads", 
                 ""],
         ],
-        
         3: [
             ["Understand bore test pumping water management requirements, including SRT, CRT, and DMP protocols", 
                 "Demonstrates strong knowledge of DMPs, including field execution, water testing, wetting front checks, and desktop reviews of exclusion and avoidance zones", 
@@ -372,197 +299,166 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         ]
     };
     // Defensive: pad boxTexts for rendering
-    const boxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
-    let safeBoxTexts = boxTexts;
-    let numRows = 7;
-    if (level === 1) {
-        numRows = boxTexts.length;
-        if (boxTexts.length < numRows) {
-            safeBoxTexts = [
-                ...boxTexts,
-                ...Array(numRows - boxTexts.length).fill(null).map(() => Array(6).fill(""))
-            ];
-        }
-    } else if (level === 2) {
-        numRows = boxTexts.length;
-        if (boxTexts.length < numRows) {
-            safeBoxTexts = [
-                ...boxTexts,
-                ...Array(numRows - boxTexts.length).fill(null).map(() => Array(6).fill(""))
-            ];
-        }
-    } else if (level === 3) {
-        numRows = boxTexts.length + 1;
-        if (boxTexts.length < numRows) {
-            safeBoxTexts = [
-                ...boxTexts,
-                ...Array(numRows - boxTexts.length).fill(null).map(() => Array(6).fill(""))
-            ];
-        }
-    // Build table rows for Bootstrap table
-    let tableRows = [];
-    if (!loading) {
-        // Header row
-        const colWidths = [180, 140, 140, 140, 180, 140, 160, 180];
+    let safeBoxTexts = boxTextsByLevel[level] || boxTextsByLevel[1];
+    // Always render 7 rows for the grid (as in your new logic)
+    if (safeBoxTexts.length < numRows) {
+        safeBoxTexts = [
+            ...safeBoxTexts,
+            ...Array(numRows - safeBoxTexts.length).fill(null).map(() => Array(6).fill(""))
+        ];
+    }
+
+    // --- Table rows ---
+    const tableRows = [];
+    // Header row
+    tableRows.push(
+        <tr key="header">
+            {headers.map((header, idx) => (
+                <th
+                  key={idx}
+                  className="text-center align-middle bg-light"
+                  style={idx < colWidths.length ? { width: colWidths[idx] } : {}}
+                >
+                  {header}
+                </th>
+            ))}
+        </tr>
+    );
+    // Data rows
+    for (let row = 1; row <= numRows; row++) {
+        const rowData = safeBoxTexts[row-1] || [];
         tableRows.push(
-            <tr key="header">
-                {headers.map((header, idx) => (
-                    <th
-                        key={idx}
-                        className="text-center align-middle bg-light"
-                        style={idx < colWidths.length ? { width: colWidths[idx] } : {}}
-                    >
-                        {header}
-                    </th>
-                ))}
+            <tr key={row}>
+                {/* Progress checkboxes with unique text */}
+                {[0,1,2,3,4,5].map(col => {
+                    const cellText = rowData[col] || "";
+                    let content;
+                    if (typeof cellText === "string" && cellText.includes(",")) {
+                        content = cellText.split(",").map(key => renderLinkButton(key.trim()));
+                    } else if (typeof cellText === "string" && cellText in LINK_DEFS) {
+                        content = renderLinkButton(cellText);
+                    } else {
+                        content = cellText;
+                    }
+                    // Remove checkbox in column 6 (index 5) for all rows
+                    const removeCheckbox = (col === 5);
+                    return (
+                        <td
+                          key={col}
+                          className="align-middle"
+                          style={{
+                            position: 'relative',
+                            paddingRight: 0,
+                            paddingBottom: 0,
+                            width: col < 6 ? colWidths[col] : undefined
+                          }}
+                        >
+                          <span style={{
+                            display: 'block',
+                            marginBottom: 24,
+                            fontSize: 14,
+                            color: '#333',
+                            wordBreak: 'break-word',
+                            whiteSpace: 'pre-line',
+                            overflowWrap: 'break-word'
+                          }}>{content}</span>
+                          {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
+                                <input
+                                    type="checkbox"
+                                    checked={gridProgressChecks[row-1][col]}
+                                    onChange={() => {
+                                        const updated = gridProgressChecks.map(arr => arr.slice());
+                                        updated[row-1][col] = !updated[row-1][col];
+                                        setGridProgressChecks(updated);
+                                    }}
+                                    style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
+                                />
+                            )}
+                        </td>
+                    );
+                })}
+                {/* Sign off cell */}
+                <td className="align-middle">
+                    <SignOffForm
+                        name={signOffs[row-1].name}
+                        date={signOffs[row-1].date}
+                        signed={signOffs[row-1].signed}
+                        onChange={(field, value) => {
+                            const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, [field]: value } : s);
+                            setSignOffs(updated);
+                        }}
+                    />
+                </td>
+                {/* Comment cell */}
+                <td className="align-middle">
+                    <textarea
+                        className="form-control"
+                        value={comments[row-1]}
+                        onChange={e => {
+                            const updated = comments.slice();
+                            updated[row-1] = e.target.value;
+                            setComments(updated);
+                        }}
+                        rows={2}
+                    />
+                </td>
             </tr>
         );
-        // Data rows
-        let numRows = 7;
-        if (level === 1) {
-            numRows = 8;
-        } else if (level === 2) {
-            numRows = 12;
-        } else if (level === 3) {
-            numRows = 9;
-        }
-        for (let row = 1; row <= numRows; row++) {
-            tableRows.push(
-                <tr key={row}>
-                    {/* Progress checkboxes with unique text */}
-                    {[0,1,2,3,4,5].map(col => {
-                        const cellText = safeBoxTexts[row-1]?.[col] ?? "";
-                        let content;
-                        if (typeof cellText === "string" && cellText.includes(",")) {
-                            content = cellText.split(",").map(key => renderLinkButton(key.trim()));
-                        } else if (typeof cellText === "string" && cellText in LINK_DEFS) {
-                            content = renderLinkButton(cellText);
-                        } else {
-                            content = cellText;
-                        }
-                        // Remove checkbox in column 6 (index 5) for rows 1-8, row 9, and rows 10-12 for level 2
-                        const removeCheckbox = (col === 5 && (
-                            (row >= 1 && row <= 8) ||
-                            row === 9 ||
-                            (level === 2 && (row === 10 || row === 11 || row === 12))
-                        ));
-                        const isChecked = !!(gridProgressChecks[row-1]?.[col]);
-                        return (
-                            <td
-                                key={col}
-                                className="align-middle"
-                                style={{
-                                    position: 'relative',
-                                    paddingRight: 0,
-                                    paddingBottom: 0,
-                                    width: col < 6 ? colWidths[col] : undefined
-                                }}
-                            >
-                                <span style={{
-                                    display: 'block',
-                                    marginBottom: 24,
-                                    fontSize: 14,
-                                    color: '#333',
-                                    wordBreak: 'break-word',
-                                    whiteSpace: 'pre-line',
-                                    overflowWrap: 'break-word'
-                                }}>{content}</span>
-                                {!removeCheckbox && !(typeof cellText === "string" && cellText === "") && (
-                                    <input
-                                        type="checkbox"
-                                        checked={isChecked}
-                                        onChange={() => {
-                                            const updated = gridProgressChecks.map(arr => arr ? arr.slice() : Array(6).fill(false));
-                                            if (!updated[row-1]) updated[row-1] = Array(6).fill(false);
-                                            updated[row-1][col] = !updated[row-1][col];
-                                            setGridProgressChecks(updated);
-                                        }}
-                                        style={{ position: 'absolute', bottom: 8, right: 8, margin: 0 }}
-                                    />
-                                )}
-                            </td>
-                        );
-                    })}
-                    {/* Sign off cell */}
-                    <td className="align-middle">
-                        <SignOffForm
-                            name={signOffs[row-1]?.name || ""}
-                            date={signOffs[row-1]?.date || ""}
-                            signed={!!signOffs[row-1]?.signed}
-                            onSignOff={(name, date, signed) => {
-                                const updated = signOffs.map(obj => ({ ...obj }));
-                                if (!updated[row-1]) updated[row-1] = { name: "", date: "", signed: false };
-                                updated[row-1] = { name, date, signed };
-                                setSignOffs(updated);
-                            }}
-                        />
-                    </td>
-                    {/* Comments cell */}
-                    <td className="align-middle">
-                        <textarea
-                            className="form-control"
-                            value={comments[row-1] ?? ""}
-                            onChange={e => {
-                                const updated = comments.slice();
-                                updated[row-1] = e.target.value;
-                                setComments(updated);
-                            }}
-                            rows={2}
-                        />
-                    </td>
-                </tr>
-            );
-                }
-            }
-            // End for loop
+    }
 
-        return (
-            <div className="popup-overlay">
-                <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
-                    <h2>Drilling Level {level}</h2>
-                    <button
-                        className="save-progress-btn"
-                        onClick={handleManualSave}
+    // --- Render ---
+    return (
+        <div className="popup-overlay">
+            <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
+                <button className="close-button" onClick={onClose} aria-label="Close popup">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
+                        <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
+                        <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
+                    </svg>
+                </button>
+                <h2>Drilling Level {level}</h2>
+                <button
+                    className="save-progress-btn"
+                    onClick={handleManualSave}
+                    style={{ marginBottom: 16 }}
+                >
+                    {saveStatus === 'success' ? (
+                        <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
+                    ) : null}
+                    Save Progress
+                </button>
+                <div className="progress-bar-container mb-3">
+                    <div
+                        className="progress-bar"
+                        style={{
+                            width: `${percentage}%`,
+                            backgroundColor: completedGridChecks > 0 ? '#4caf50' : '#e0e0e0',
+                            color: completedGridChecks > 0 ? 'white' : '#333',
+                            position: 'relative'
+                        }}
                     >
-                        {saveStatus === 'success' ? (
-                            <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
-                        ) : null}
-                        Save Progress
-                    </button>
-                    <div className="progress-bar-container mb-3">
-                        <div
-                            className="progress-bar"
-                            style={{
-                                width: `${percentage}%`,
-                                backgroundColor: completedGridChecks > 0 ? '#4caf50' : '#e0e0e0',
-                                color: completedGridChecks > 0 ? 'white' : '#333',
-                                position: 'relative'
-                            }}
-                        >
-                            {completedGridChecks > 0 && (
-                                <span className="progress-text">{percentage}%</span>
-                            )}
-                        </div>
+                        {completedGridChecks > 0 && (
+                            <span className="progress-text">{percentage}%</span>
+                        )}
                     </div>
-                    <div className="table-responsive mb-3">
-                        <table className="table table-bordered table-striped table-hover align-middle">
-                            <tbody>
-                                {tableRows}
-                            </tbody>
-                        </table>
-                    </div>
-                    <button className="close-button" onClick={onClose} aria-label="Close popup">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
-                            <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
-                            <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
-                        </svg>
-                    </button>
+                </div>
+                <div className="table-responsive mb-3">
+                    <table className="table table-bordered table-striped table-hover align-middle">
+                        <tbody>
+                            {tableRows}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        );
-    };
-    };
+        </div>
+    );
+}
+
+// DrillingPop main popup component
+// ...existing code...
+
+
 
 // DrillingPop main popup component
 function DrillingPop({ popupId, closePopup, userToken, onProgressUpdate }) {
