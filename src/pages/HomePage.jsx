@@ -43,9 +43,6 @@ function HomePage() {
     return (
         <>
             <HeroBar />
-            <div style={{ textAlign: "center", margin: "2rem 0 0 0", fontSize: "1.5rem", fontWeight: 500 }}>
-                {"Welcome"} {welcomeName && <span>{welcomeName}</span>}
-            </div>
             <TabMenu />
             <NavBar />
         </>

@@ -390,17 +390,31 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     />
                 </td>
                 {/* Comment cell */}
-                <td className="align-middle">
-                    <textarea
-                        className="form-control"
-                        value={comments[row-1]}
-                        onChange={e => {
-                            const updated = comments.slice();
-                            updated[row-1] = e.target.value;
-                            setComments(updated);
-                        }}
-                        rows={2}
-                    />
+                <td className="align-middle" style={{ padding: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                        <textarea
+                            value={comments[row-1] ? comments[row-1] : ""}
+                            onChange={e => {
+                                const updated = comments.slice();
+                                updated[row-1] = e.target.value;
+                                setComments(updated);
+                            }}
+                            placeholder="Enter your comment"
+                            className="form-control"
+                            style={{
+                                minHeight: 140,
+                                maxHeight: 140,
+                                width: '180px',
+                                border: '1px solid #ced4da',
+                                borderRadius: 4,
+                                resize: 'none',
+                                boxShadow: 'none',
+                                padding: 8,
+                                margin: 0,
+                                display: 'block',
+                            }}
+                        />
+                    </div>
                 </td>
             </tr>
         );
