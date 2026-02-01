@@ -12,8 +12,8 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     const [gridProgressChecks, setGridProgressChecks] = useState(Array(numRows).fill(null).map(() => Array(6).fill(false)));
     const [comments, setComments] = useState(Array(numRows).fill(""));
     const [signOffs, setSignOffs] = useState(Array(numRows).fill(null).map(() => ({ name: "", date: "", signed: false })));
-    const [hasLoaded, setHasLoaded] = useState(false);
-    const [saveStatus, setSaveStatus] = useState('idle');
+    const [hasLoaded, setHasLoaded] = useState(false); // Prevent auto-save before initial load
+    const [saveStatus, setSaveStatus] = useState('idle'); // idle | success
 
     // --- Progress calculation ---
     let flatChecks = Array.isArray(gridProgressChecks[0]) ? gridProgressChecks.flat() : gridProgressChecks;
@@ -25,7 +25,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     const fetchProgress = async () => {
         if (!popupId || !userToken) return;
         try {
-            const data = await apiFetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
+            const data = await apiFetch(`/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
                 method: "GET",
                 headers: { "Authorization": `Bearer ${userToken}` }
             });
@@ -34,7 +34,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 setGridProgressChecks(entry.gridProgressChecks || Array(numRows).fill(null).map(() => Array(6).fill(false)));
                 setComments(entry.comments || Array(numRows).fill(""));
                 setSignOffs(entry.signOffs || Array(numRows).fill(null).map(() => ({ name: "", date: "", signed: false })));
-                setHasLoaded(true);
+                setHasLoaded(true); // Mark as loaded so auto-save can start
             }
         } catch (err) {}
     };
@@ -51,7 +51,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             signOffs,
             progressPercentage: percentage
         };
-        await apiFetch("/api/training-progress/", {
+        await apiFetch("/training-progress/", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${userToken}`
@@ -64,8 +64,38 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         setTimeout(() => setSaveStatus('idle'), 1200);
     };
 
-    // --- Auto-save on change ---
-    // Removed useEffect that referenced saveProgress (not defined). Only manual save is used, matching ContractorPop logic.
+    // --- Auto-save on change (ContractorPop style) ---
+    useEffect(() => {
+        if (!hasLoaded) return; // Don't auto-save until data is loaded
+        if (!popupId || !userToken) return;
+        const payload = {
+            popupId,
+            gridProgressChecks,
+            comments,
+            signOffs,
+            progressPercentage: percentage
+        };
+        apiFetch("/training-progress/", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            },
+            body: JSON.stringify(payload)
+        });
+        if (onProgressUpdate) onProgressUpdate();
+        // Also save on unmount (when popup closes)
+        return () => {
+            apiFetch("/training-progress/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${userToken}`
+                },
+                body: JSON.stringify(payload)
+            });
+            if (onProgressUpdate) onProgressUpdate();
+        };
+        // eslint-disable-next-line
+    }, [gridProgressChecks, comments, signOffs, percentage, popupId, userToken, hasLoaded]);
 
     // --- Load progress on mount ---
     useEffect(() => {

@@ -35,7 +35,7 @@ function LogInPage() {
             }
             try {
                 try {
-                    const res = await fetch(`${API_BASE}/api/token/`, {
+                    const res = await fetch(`${API_BASE}/token/`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json", "Accept": "application/json" },
                         body: JSON.stringify({

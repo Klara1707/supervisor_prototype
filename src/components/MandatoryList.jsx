@@ -90,7 +90,7 @@ function MandatoryList({ onProgressUpdate, progress, setProgress }) {
     // Fetch saved state on mount
     useEffect(() => {
         if (!token) return;
-        authFetch("/api/training-progress/", { method: "GET", redirect: "manual" })
+        authFetch("/training-progress/", { method: "GET", redirect: "manual" })
             .then(res => {
                 if (res.status === 401 || res.status === 302) {
                     alert("Session expired or not authenticated. Please log in again.");
@@ -140,7 +140,7 @@ function MandatoryList({ onProgressUpdate, progress, setProgress }) {
         // Save to backend
         if (token) {
             // Send both checkedItems and gridProgressChecks for compatibility
-            await authFetch("/api/training-progress/", {
+            await authFetch("/training-progress/", {
                 method: "POST",
                 body: JSON.stringify({
                     popupId: popupId,

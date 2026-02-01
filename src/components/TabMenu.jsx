@@ -77,6 +77,16 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
         return userStr ? JSON.parse(userStr) : null;
     };
     const [user, setUser] = useState(getStoredUser);
+
+    // Always force refresh user from storage on mount and after login
+    React.useEffect(() => {
+        const syncUser = () => {
+            setUser(getStoredUser());
+        };
+        window.addEventListener("storage", syncUser);
+        syncUser(); // also on mount
+        return () => window.removeEventListener("storage", syncUser);
+    }, []);
     // Always check both storages for token (now using 'access_token')
     const getTokenFromStorage = () => {
         return localStorage.getItem("access_token") || sessionStorage.getItem("access_token") || "";
@@ -201,7 +211,15 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
     const tabContent = {
         Home: (
         <div id="Home" className="w3-container city">
-            <h2>Welcome{user && user.first_name && user.first_name.trim() !== "" ? `, ${user.first_name}` : ""}!</h2>
+            <h2 style={{ color: 'red' }}>
+                Welcome{user && (user.first_name || user.last_name)
+                    ? `, ${[user.first_name, user.last_name].filter(Boolean).join(' ')}`
+                    : user && user.username
+                        ? `, ${user.username}`
+                        : user && user.email
+                            ? `, ${user.email}`
+                            : ""}!
+            </h2>
             <p className="intro">
                 Congratulations on stepping into your role as a Supervisor within Res Dev!
                 This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.

@@ -25,7 +25,7 @@ export async function registerUser(data) {
 }
 // Token refresh helper
 export async function refreshToken(refresh) {
-  const data = await apiFetch("/api/token/refresh/", {
+  const data = await apiFetch("/token/refresh/", {
     method: "POST",
     body: JSON.stringify({ refresh }),
   });
@@ -39,41 +39,41 @@ export async function refreshToken(refresh) {
 }
 // Admin delete user helper
 export function deleteUser(userId) {
-  return apiFetch("/api/delete-user/", {
+  return apiFetch("/delete-user/", {
     method: "POST",
     body: JSON.stringify({ user_id: userId }),
   });
 }
 // Get training progress helper
 export function getTrainingProgress() {
-  return apiFetch("/api/training-progress/");
+  return apiFetch("/training-progress/");
 }
 // Save training progress helper
 export function saveTrainingProgress(data) {
-  return apiFetch("/api/training-progress/", {
+  return apiFetch("/training-progress/", {
     method: "POST",
     body: JSON.stringify(data),
   });
 }
 // Get users by site helper
 export function getUsersBySite() {
-  return apiFetch("/api/users-by-site/");
+  return apiFetch("/users-by-site/");
 }
 // Create user helper
 export function createUser(payload) {
-  return apiFetch("/api/users/", {
+  return apiFetch("/users/", {
     method: "POST",
     body: JSON.stringify(payload),
   });
 }
 // Get current user helper
 export function getMe() {
-  return apiFetch("/api/me/");
+  return apiFetch("/me/");
 }
 
 // JWT login helper
 export async function login(username, password) {
-  const data = await apiFetch("/api/token/", {
+  const data = await apiFetch("/token/", {
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
@@ -84,7 +84,7 @@ export async function login(username, password) {
 
 // Admin login helper
 export async function adminLogin(username, password) {
-  const data = await apiFetch("/admin-token/", {
+  const data = await apiFetch("/token/", {
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
@@ -94,7 +94,7 @@ export async function adminLogin(username, password) {
 
 // Update user site helper
 export async function updateSite(siteInfo) {
-  return apiFetch("/api/update-site/", {
+  return apiFetch("/update-site/", {
     method: "POST",
     body: JSON.stringify(siteInfo),
   });
@@ -102,7 +102,7 @@ export async function updateSite(siteInfo) {
 
 // Password reset helper
 export async function passwordReset(email) {
-  return apiFetch("/api/password_reset/", {
+  return apiFetch("/password_reset/", {
     method: "POST",
     body: JSON.stringify({ email }),
   });
@@ -146,7 +146,7 @@ export async function apiFetch(path, options = {}) {
     const refresh = localStorage.getItem("refresh_token") || sessionStorage.getItem("refresh_token");
     if (refresh) {
       try {
-        const refreshRes = await fetch(`${API_BASE}/api/token/refresh/`, {
+        const refreshRes = await fetch(`${API_BASE}/token/refresh/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ refresh }),
