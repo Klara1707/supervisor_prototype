@@ -77,9 +77,9 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
         return userStr ? JSON.parse(userStr) : null;
     };
     const [user, setUser] = useState(getStoredUser);
-    // Always check both storages for token
+    // Always check both storages for token (now using 'access_token')
     const getTokenFromStorage = () => {
-        return localStorage.getItem("token") || sessionStorage.getItem("token") || "";
+        return localStorage.getItem("access_token") || sessionStorage.getItem("access_token") || "";
     };
     const [token, setToken] = useState(getTokenFromStorage);
     // Redirect to login if no token is found
@@ -107,7 +107,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
     // Fetch progress from backend using authFetch (same as MandatoryList)
     const fetchProgressFromBackend = async () => {
         try {
-            const res = await authFetch(`${API_BASE}/api/training-progress/`);
+            const res = await authFetch('/api/training-progress/');
             if (!res.ok) return {};
             const data = await res.json();
             return data || {};
@@ -146,9 +146,9 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
         // Listen for login changes (if setUser/setToken called elsewhere)
         const handleStorage = () => {
             refreshUserFromStorage();
-            let tokenStr = localStorage.getItem("token");
+            let tokenStr = localStorage.getItem("access_token");
             if (!tokenStr) {
-                tokenStr = sessionStorage.getItem("token");
+                tokenStr = sessionStorage.getItem("access_token");
             }
             setToken(tokenStr || "");
         };
@@ -162,7 +162,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
         const fetchAndSetProgress = async () => {
             if (token) {
                 try {
-                    const res = await authFetch(`${API_BASE}/api/training-progress/`);
+                    const res = await authFetch('/api/training-progress/');
                     if (res.status === 401 || res.status === 302) {
                         alert("Session expired or not authenticated. Please log in again.");
                         window.location.href = "/login";
@@ -406,7 +406,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
                         activeTab={activeTab}
                         popupVisible={popupVisible}
                         closePopup={closePopup}
-                        token={localStorage.getItem("token") || sessionStorage.getItem("token") || ""}
+                        token={localStorage.getItem("access_token") || sessionStorage.getItem("access_token") || ""}
                         onProgressUpdate={handleProgressUpdate}
                     />
                 </div>

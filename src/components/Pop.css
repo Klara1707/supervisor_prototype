@@ -114,7 +114,7 @@ html, body {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1100;
     backdrop-filter: blur(4px);
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* Popup content fills full screen */
@@ -202,6 +202,12 @@ body.popup-open {
     background: none;
     border: none;
     cursor: pointer;
+    color: #d32f2f;
+    font-size: 2.2rem;
+    font-weight: bold;
+    line-height: 1;
+    padding: 0;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,11 +216,7 @@ body.popup-open {
 
 .close-button:hover {
     transform: scale(1.1);
-}
-
-.close-button svg {
-    width: 100%;
-    height: 100%;
+    color: #ff4d4d;
 }
 
 /* Progress bar */
@@ -405,4 +407,36 @@ button[style*='background: #28a745'] {
 button[style*='background: #28a745']:hover,
 button[style*='background: #28a745;']:hover {
     background: #5cd37e !important;
+}
+
+/* Large, red, modern close button */
+.popup-close-btn {
+    background: #fff;
+    border: 2px solid #d32f2f;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    color: #d32f2f;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.95;
+    line-height: 1;
+    margin-left: 16px;
+    transition: color 0.2s, transform 0.2s, box-shadow 0.2s;
+    padding: 0 12px;
+    outline: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    width: 48px;
+}
+.popup-close-btn:hover, .popup-close-btn:focus {
+    color: #b71c1c;
+    opacity: 1;
+    transform: scale(1.12);
+    box-shadow: 0 4px 16px rgba(211,47,47,0.15);
+    background: #fff3f3;
+    border-color: #b71c1c;
 }

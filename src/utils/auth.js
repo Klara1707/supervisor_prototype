@@ -1,17 +1,17 @@
 import API_BASE from "../config";
 // Safely remove authentication data from both localStorage and sessionStorage
 export function removeAuth() {
-  localStorage.removeItem("token");
+  localStorage.removeItem("access_token");
   localStorage.removeItem("jwt_token");
   localStorage.removeItem("user");
   localStorage.removeItem("site");
-  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("access_token");
   sessionStorage.removeItem("jwt_token");
   sessionStorage.removeItem("user");
   sessionStorage.removeItem("site");
 }
 export function getToken() {
-  return localStorage.getItem("token") || sessionStorage.getItem("token");
+  return localStorage.getItem("access_token") || sessionStorage.getItem("access_token");
 }
 
 export function getUser() {
@@ -29,9 +29,9 @@ export function setUser(user, remember = true) {
 
 export function setToken(token, remember = true) {
   if (remember) {
-    localStorage.setItem("token", token);
+    localStorage.setItem("access_token", token);
   } else {
-    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("access_token", token);
   }
 }
 

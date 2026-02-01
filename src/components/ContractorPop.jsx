@@ -318,15 +318,25 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         <div className="popup-overlay">
             <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
                 <h2>Contractor Management Level {level}</h2>
-                <button
-                    className="save-progress-btn"
-                    onClick={handleManualSave}
-                >
-                    {saveStatus === 'success' ? (
-                        <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
-                    ) : null}
-                    Save Progress
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16, justifyContent: 'space-between' }}>
+                    <button
+                        className="save-progress-btn"
+                        onClick={handleManualSave}
+                    >
+                        {saveStatus === 'success' ? (
+                            <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
+                        ) : null}
+                        Save Progress
+                    </button>
+                    <button
+                        type="button"
+                        className="popup-close-btn"
+                        aria-label="Close"
+                        onClick={onClose}
+                    >
+                        &times;
+                    </button>
+                </div>
                 <div className="progress-bar-container mb-3">
                     <div
                         className="progress-bar"
@@ -349,13 +359,13 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         </tbody>
                     </table>
                 </div>
-                <button className="close-button" onClick={onClose} aria-label="Close popup">
+                {/* <button className="close-button" onClick={onClose} aria-label="Close popup">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
                         <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
                         <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
                     </svg>
-                </button>
+                </button> */}
             </div>
         </div>
     );
@@ -374,8 +384,7 @@ function ContractorPop({ popupId, closePopup, userToken, onProgressUpdate }) {
     return (
         openLevel ? (
             <div className="popup-overlay contractor-popup-fadein">
-                <div className="popup-container contractor-popup-centered">
-                    <button className="close-btn" onClick={closePopup} style={{ float: 'right' }}>Close</button>
+                <div className="popup-container contractor-popup-centered" style={{ position: 'relative', paddingTop: 0, paddingBottom: 0 }}>
                     <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} onProgressUpdate={onProgressUpdate} />
                 </div>
             </div>

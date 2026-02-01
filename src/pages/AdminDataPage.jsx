@@ -21,12 +21,12 @@ function AdminDataPage() {
         const [deleting, setDeleting] = useState({}); // Track which users are being deleted
         const [message, setMessage] = useState("");
         const [messageType, setMessageType] = useState(""); // 'success' or 'error'
-        const adminToken = localStorage.getItem("token");
+        const adminToken = localStorage.getItem("access_token");
 
 
         // Helper to refresh user lists (memoized for useEffect)
         const refreshUserLists = useCallback(() => {
-                fetch(`${API_BASE}/api/users-by-site/`, {
+                fetch(`${API_BASE}/users-by-site/`, {
                         headers: {
                                 Authorization: "Bearer " + adminToken,
                         },
@@ -55,7 +55,7 @@ function AdminDataPage() {
                         setDeleting(prev => ({ ...prev, [email]: true }));
                         setMessage("");
                         setMessageType("");
-        fetch(`${API_BASE}/api/delete-user/`, {
+        fetch(`${API_BASE}/delete-user/`, {
                 method: "POST",
                 headers: {
                         Authorization: "Bearer " + adminToken,

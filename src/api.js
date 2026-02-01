@@ -29,7 +29,12 @@ export async function refreshToken(refresh) {
     method: "POST",
     body: JSON.stringify({ refresh }),
   });
-  setToken(data.access);
+  // Store both access and refresh if present
+  if (data.refresh) {
+    setToken({ access: data.access, refresh: data.refresh });
+  } else {
+    setToken({ access: data.access, refresh });
+  }
   return data;
 }
 // Admin delete user helper
@@ -68,11 +73,12 @@ export function getMe() {
 
 // JWT login helper
 export async function login(username, password) {
-  const data = await apiFetch("/token/", {
+  const data = await apiFetch("/api/token/", {
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
-  setToken(data.access);
+  // Store both access and refresh tokens
+  setToken({ access: data.access, refresh: data.refresh });
   return data;
 }
 
@@ -82,7 +88,7 @@ export async function adminLogin(username, password) {
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
-  setToken(data.access);
+  setToken({ access: data.access, refresh: data.refresh });
   return data;
 }
 
@@ -108,7 +114,12 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  localStorage.setItem("access_token", token);
+  if (typeof token === "object" && token.access && token.refresh) {
+    localStorage.setItem("access_token", token.access);
+    localStorage.setItem("refresh_token", token.refresh);
+  } else {
+    localStorage.setItem("access_token", token);
+  }
 }
 
 export function clearToken() {
@@ -117,18 +128,63 @@ export function clearToken() {
 
 /* ========== REQUEST HELPER ========== */
 export async function apiFetch(path, options = {}) {
-  const token = getToken();
-
+  let token = getToken();
   const headers = {
     "Content-Type": "application/json",
     ...(token && { Authorization: `Bearer ${token}` }),
     ...options.headers,
   };
 
-  const res = await fetch(`${API_BASE}${path}`, {
+  let res = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers,
   });
+
+  // If unauthorized, try to refresh token and retry once
+  if (res.status === 401) {
+    // Try to get refresh token from storage
+    const refresh = localStorage.getItem("refresh_token") || sessionStorage.getItem("refresh_token");
+    if (refresh) {
+      try {
+        const refreshRes = await fetch(`${API_BASE}/api/token/refresh/`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ refresh }),
+        });
+        if (refreshRes.ok) {
+          const refreshData = await refreshRes.json();
+          setToken(refreshData.access);
+          token = refreshData.access;
+          // Retry original request with new token
+          const retryHeaders = {
+            ...headers,
+            Authorization: `Bearer ${token}`,
+          };
+          res = await fetch(`${API_BASE}${path}`, {
+            ...options,
+            headers: retryHeaders,
+          });
+        } else {
+          // Refresh failed, remove tokens and redirect to login
+          localStorage.clear();
+          sessionStorage.clear();
+          window.location.href = "/login";
+          throw new Error("Session expired. Please log in again.");
+        }
+      } catch (err) {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = "/login";
+        throw new Error("Session expired. Please log in again.");
+      }
+    } else {
+      // No refresh token, remove tokens and redirect to login
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "/login";
+      throw new Error("Session expired. Please log in again.");
+    }
+  }
 
   if (!res.ok) {
     const text = await res.text();

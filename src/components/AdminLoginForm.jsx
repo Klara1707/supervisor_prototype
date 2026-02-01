@@ -31,25 +31,38 @@ export default function AdminLoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Admin Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Login</button>
-      {success && <div>Login successful! Redirecting...</div>}
-      {error && <div style={{ color: "red" }}>{error}</div>}
-    </form>
+    <div className="admin-login-box" style={{marginTop: '-1.5rem'}}>
+      <div className="context-inner-box">
+        <h1>Admin Login</h1>
+        <p>Please log in with Admin credentials</p>
+      </div>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <label htmlFor="admin-username">Username</label>
+        <input
+          type="text"
+          id="admin-username"
+          name="admin-username"
+          placeholder="Enter your username"
+          autoComplete="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <label htmlFor="admin-password">Password</label>
+        <input
+          type="password"
+          id="admin-password"
+          name="admin-password"
+          placeholder="Enter your password"
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <div className="form-buttons">
+          <button type="submit" className="login-btn">Login</button>
+        </div>
+        {success && <div>Login successful! Redirecting...</div>}
+        {error && <div style={{ color: "red" }}>{error}</div>}
+      </form>
+    </div>
   );
 }

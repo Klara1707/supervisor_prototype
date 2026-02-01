@@ -1,13 +1,13 @@
 
 import "./HeroBar.css";
-// import benchImage from "../components/res dev bench.jpg"; // Temporarily commented out for debugging
+import benchImage from "../components/res dev bench.jpg";
 
 function HeroBar() {
     return (
         <div className="hero-bar">
-            {/* <div className="hero-image">
+            <div className="hero-image">
                 <img src={benchImage} alt="Resource Development Bench" />
-            </div> */}
+            </div>
             <div className="hero-text">
                 <h1>RTIO Resource Development</h1>
                 <p>Supervisor Training Portal</p>

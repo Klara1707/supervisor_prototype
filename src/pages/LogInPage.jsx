@@ -1,11 +1,12 @@
 
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AdminLoginForm from "../components/AdminLoginForm";
 import PasswordResetForm from "../components/PasswordResetForm";
 import HeroBar from "../components/HeroBar";
-import "./LogInPage.css";
+
+import API_BASE from "../config";
 
 
 
@@ -34,7 +35,7 @@ function LogInPage() {
             }
             try {
                 try {
-                    const res = await fetch(`${API_BASE}/token/`, {
+                    const res = await fetch(`${API_BASE}/api/token/`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json", "Accept": "application/json" },
                         body: JSON.stringify({
@@ -47,12 +48,15 @@ function LogInPage() {
                         throw new Error(`Login failed (${res.status}) ${text}`);
                     }
                     const data = await res.json();
-                    localStorage.clear();
-                    sessionStorage.clear();
+                    // Do not clear all storage, just overwrite relevant keys
                     const storage = rememberMe ? localStorage : sessionStorage;
                     const token = data.access || null;
                     storage.setItem("access_token", token);
                     storage.setItem("site", siteValue);
+                    // Store user info if present
+                    if (data.user) {
+                        storage.setItem("user", JSON.stringify(data.user));
+                    }
                     // Optionally store refresh token
                     if (data.refresh) {
                         storage.setItem("refresh_token", data.refresh);
@@ -73,7 +77,27 @@ function LogInPage() {
     const [site, setSite] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [rememberMe, setRememberMe] = useState(false);
+    // Persist rememberMe state in storage
+    const [rememberMe, setRememberMe] = useState(() => {
+        // Try to restore from storage
+        if (localStorage.getItem("rememberMe") === "true") return true;
+        if (sessionStorage.getItem("rememberMe") === "true") return false;
+        // Fallback to token location
+        if (localStorage.getItem("access_token")) return true;
+        if (sessionStorage.getItem("access_token")) return false;
+        return false;
+    });
+
+    // Keep rememberMe in sync with storage
+    useEffect(() => {
+        if (rememberMe) {
+            localStorage.setItem("rememberMe", "true");
+            sessionStorage.removeItem("rememberMe");
+        } else {
+            sessionStorage.setItem("rememberMe", "true");
+            localStorage.removeItem("rememberMe");
+        }
+    }, [rememberMe]);
     const [showAdminLogin, setShowAdminLogin] = useState(false);
     const [showResetPopup, setShowResetPopup] = useState(false);
     // Removed unused loginMessage and loginMessageType state
@@ -93,14 +117,14 @@ function LogInPage() {
             <div className="login-container">
                 <div className="top-row">
                     {/* New User section at the top of the login form */}
-                    <form className="login-form" onSubmit={handleLogin} style={{marginTop: '-1.0rem', gap: '0.4rem'}}>
-                        <div className="new-user-box" style={{marginBottom: '0.1rem', marginTop: '-1.2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f8f9fa', borderRadius: '6px', padding: '0.5rem 1rem', justifyContent: 'flex-start'}}>
-                            <span style={{color: '#cd2c2c', fontWeight: 'normal', fontSize: '1.2rem', margin: 0}}>New user?</span>
+                    <form className="login-form" onSubmit={handleLogin}>
+                        <div className="new-user-box">
+                            <span className="new-user-label">New user?</span>
                             <Link to="/createaccount">
-                                <button className="create-account-btn" style={{marginLeft: '0.5rem'}}>Create Account</button>
+                                <button className="create-account-btn">Create Account</button>
                             </Link>
                         </div>
-                        <div className="context-inner-box" style={{paddingBottom: '0.1rem'}}>
+                        <div className="context-inner-box">
                             <h1>Welcome Back</h1>
                             <p>Please log in to continue</p>
                         </div>
@@ -114,7 +138,6 @@ function LogInPage() {
                             value={username}
                             onChange={e => setUsername(e.target.value)}
                             className="login-form-input"
-                            style={{border: '1px solid #ccc'}}
                         />
                         {/* Removed loginMessage and loginMessageType display as state is no longer used */}
                         <label htmlFor="password">Password</label>
@@ -127,10 +150,7 @@ function LogInPage() {
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                             className="login-form-input"
-                            style={{border: '1px solid #ccc'}}
                         />
-                        {/* Add some spacing before role selection */}
-                        <div style={{ height: '0.9rem' }} />
                         <label htmlFor="role">Select Role</label>
                         <select
                             id="role"
@@ -138,7 +158,6 @@ function LogInPage() {
                             className="form-select"
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
-                            style={{marginBottom: '0.3rem'}}
                         >
                             <option value="">-- Please choose an option --</option>
                             <option value="supervisor">Supervisor</option>
@@ -146,7 +165,7 @@ function LogInPage() {
                         </select>
                         {role === "supervisor" && (
                             <>
-                            <label htmlFor="site">Select Site<span style={{color: 'red'}}>*</span></label>
+                            <label htmlFor="site">Select Site<span className="required-asterisk">*</span></label>
                             <select
                                 id="site"
                                 name="site"
@@ -154,7 +173,6 @@ function LogInPage() {
                                 value={site}
                                 onChange={(e) => setSite(e.target.value)}
                                 required
-                                style={{ border: site ? '1px solid #ccc' : '2px solid red', marginBottom: '0.3rem' }}
                             >
                                 <option value="">-- Choose a Hub --</option>
                                 <option value="robevalley">Robe Valley</option>
@@ -178,7 +196,6 @@ function LogInPage() {
                             <button
                                 type="button"
                                 className="forgot-link"
-                                style={{marginLeft: '1rem', background: 'none', border: 'none', color: '#004b87', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.9rem'}}
                                 onClick={() => setShowResetPopup(true)}
                             >
                                 Reset Password
