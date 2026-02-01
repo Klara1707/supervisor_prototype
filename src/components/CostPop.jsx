@@ -2,7 +2,7 @@ import { apiFetch } from "../api";
 // import { useDebouncedSave } from "../hooks/useDebouncedSave";
 import "./Pop.css";
 import { useState, useEffect } from "react";
-import { renderLinkButton } from "./linkButtons";
+import { renderLinkButton, LINK_DEFS } from "./linkButtons";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
 
@@ -222,7 +222,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 {[0,1,2,3,4,5].map(col => {
                     const cellText = safeBoxTexts[row-1][col];
                     let content;
-                    if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                    if (typeof cellText === "string" && cellText in LINK_DEFS) {
                         content = renderLinkButton(cellText);
                     } else {
                         content = cellText;
@@ -374,9 +374,8 @@ function CostPop({ popupId, closePopup, userToken, onProgressUpdate }) {
 
     return (
         openLevel ? (
-            <div className="popup-overlay cost-popup-fadein">
-                <div className="popup-container cost-popup-centered">
-                    <button className="close-btn" onClick={closePopup} style={{ float: 'right' }}>Close</button>
+            <div className="popup-overlay contractor-popup-fadein">
+                <div className="popup-container contractor-popup-centered" style={{ position: 'relative', paddingTop: 0, paddingBottom: 0 }}>
                     <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} onProgressUpdate={onProgressUpdate} />
                 </div>
             </div>

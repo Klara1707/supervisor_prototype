@@ -4,7 +4,7 @@ import "./Pop.css";
 import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
-import { renderLinkButton } from "./linkButtons";
+import { renderLinkButton, LINK_DEFS } from "./linkButtons";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
         // Texts for each popup level
@@ -313,7 +313,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     // Render as link button if matches LINK_DEFS key or comma-separated keys
                     if (typeof cellText === "string" && cellText.includes(",")) {
                         content = cellText.split(",").map(key => renderLinkButton(key.trim()));
-                    } else if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                    } else if (typeof cellText === "string" && cellText in LINK_DEFS) {
                         content = renderLinkButton(cellText);
                     }
                     // Remove checkbox in column 6 (index 5) for rows 1-8 and row 9

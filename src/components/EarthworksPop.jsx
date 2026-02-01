@@ -4,7 +4,7 @@ import "./Pop.css";
 import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
-import { renderLinkButton } from "./linkButtons";
+import { renderLinkButton, LINK_DEFS } from "./linkButtons";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
             // Texts for each popup level
@@ -228,7 +228,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     let content = cellText;
                     if (typeof cellText === "string" && cellText.includes(",")) {
                         content = cellText.split(",").map(key => renderLinkButton(key.trim()));
-                    } else if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                    } else if (typeof cellText === "string" && cellText in LINK_DEFS) {
                         content = renderLinkButton(cellText);
                     }
                     // Remove checkbox in column 6 (index 5) for all rows
@@ -325,44 +325,44 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         <div className="popup-overlay">
             <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
                 <h2>Earthworks Level {level}</h2>
-                <button
-                    className="save-progress-btn"
-                    onClick={handleManualSave}
-                >
-                    {saveStatus === 'success' ? (
-                        <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
-                    ) : null}
-                    Save Progress
-                </button>
-                <div className="progress-bar-container mb-3">
-                    <div
-                        className="progress-bar"
-                        style={{
-                            width: `${percentage}%`,
-                            backgroundColor: completedGridChecks > 0 ? '#4caf50' : '#e0e0e0',
-                            color: completedGridChecks > 0 ? 'white' : '#333',
-                            position: 'relative'
-                        }}
+                    <button
+                        className="save-progress-btn"
+                        onClick={handleManualSave}
                     >
-                        {completedGridChecks > 0 && (
-                            <span className="progress-text">{percentage}%</span>
-                        )}
+                        {saveStatus === 'success' ? (
+                            <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
+                        ) : null}
+                        Save Progress
+                    </button>
+                    <div className="progress-bar-container mb-3">
+                        <div
+                            className="progress-bar"
+                            style={{
+                                width: `${percentage}%`,
+                                backgroundColor: completedGridChecks > 0 ? '#4caf50' : '#e0e0e0',
+                                color: completedGridChecks > 0 ? 'white' : '#333',
+                                position: 'relative'
+                            }}
+                        >
+                            {completedGridChecks > 0 && (
+                                <span className="progress-text">{percentage}%</span>
+                            )}
+                        </div>
                     </div>
-                </div>
-                <div className="table-responsive mb-3">
-                    <table className="table table-bordered table-striped table-hover align-middle">
-                        <tbody>
-                            {tableRows}
-                        </tbody>
-                    </table>
-                </div>
-                <button className="close-button" onClick={onClose} aria-label="Close popup">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
-                        <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
-                        <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
-                    </svg>
-                </button>
+                    <div className="table-responsive mb-3">
+                        <table className="table table-bordered table-striped table-hover align-middle">
+                            <tbody>
+                                {tableRows}
+                            </tbody>
+                        </table>
+                    </div>
+                    <button className="close-button" onClick={onClose} aria-label="Close popup">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
+                            <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
+                            <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
+                        </svg>
+                    </button>
             </div>
         </div>
     );

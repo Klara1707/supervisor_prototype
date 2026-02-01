@@ -4,7 +4,7 @@ import "./Pop.css";
 import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
-import { renderLinkButton } from "./linkButtons";
+import { renderLinkButton, LINK_DEFS } from "./linkButtons";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
     // Texts for each popup level
@@ -309,7 +309,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                     let content;
                     if (typeof cellText === "string" && cellText.includes(",")) {
                         content = cellText.split(",").map(key => renderLinkButton(key.trim()));
-                    } else if (typeof cellText === "string" && cellText in require('./linkButtons').LINK_DEFS) {
+                    } else if (typeof cellText === "string" && cellText in LINK_DEFS) {
                         content = renderLinkButton(cellText);
                     } else {
                         content = cellText;
@@ -407,16 +407,13 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     return (
         <div className="popup-overlay">
             <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
-                {/* Removed debug display for production */}
                 <h2>Field Supervisor Level {level}</h2>
                 <button
-                    className={saveStatus === 'error' ? 'save-progress-btn error' : 'save-progress-btn'}
+                    className="save-progress-btn"
                     onClick={handleManualSave}
                 >
                     {saveStatus === 'success' ? (
                         <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
-                    ) : saveStatus === 'error' ? (
-                        <span style={{ fontSize: 20, color: 'white' }}>❌</span>
                     ) : null}
                     Save Progress
                 </button>

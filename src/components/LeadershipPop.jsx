@@ -4,8 +4,37 @@ import "./Pop.css";
 import { useState, useEffect, useCallback } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SignOffForm from "./SignOffForm";
+import { renderLinkButton, LINK_DEFS } from "./linkButtons";
 
 const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) => {
+                // Save Progress button feedback state
+                const [saveStatus, setSaveStatus] = useState('idle');
+
+                // Manual save handler for Save Progress button
+                const handleManualSave = async () => {
+                    if (!popupId || !userToken) return;
+                    const payload = {
+                        popupId,
+                        gridProgressChecks,
+                        comments,
+                        signOffs,
+                        progressPercentage: percentage
+                    };
+                    try {
+                        await apiFetch("/api/training-progress/", {
+                            method: "POST",
+                            headers: {
+                                "Authorization": `Bearer ${userToken}`
+                            },
+                            body: JSON.stringify(payload)
+                        });
+                        setSaveStatus('success');
+                        if (onProgressUpdate) onProgressUpdate();
+                        setTimeout(() => setSaveStatus('idle'), 1200);
+                    } catch (err) {
+                        setSaveStatus('idle');
+                    }
+                };
             // Texts for each popup level
             const boxTextsByLevel = {
                 1: [
@@ -206,9 +235,9 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                                         let content;
                                         if (typeof cellText === "string" && cellText.includes(",")) {
                                             // Multiple keys, render all as buttons
-                                            content = cellText.split(",").map(key => require("./linkButtons").renderLinkButton(key.trim()));
-                                        } else if (typeof cellText === "string" && cellText in require("./linkButtons").LINK_DEFS) {
-                                            content = require("./linkButtons").renderLinkButton(cellText);
+                                            content = cellText.split(",").map(key => renderLinkButton(key.trim()));
+                                        } else if (typeof cellText === "string" && cellText in LINK_DEFS) {
+                                            content = renderLinkButton(cellText);
                                         } else {
                                             content = cellText;
                                         }
@@ -301,7 +330,24 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                         return (
                             <div className="popup-overlay">
                                 <div className="popup-content level-popup" style={{ maxWidth: 900 }}>
+                                    <button className="close-button" onClick={onClose} aria-label="Close popup">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
+                                            <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
+                                            <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
+                                        </svg>
+                                    </button>
                                     <h2>Leadership Level {level}</h2>
+                                    <button
+                                        className="save-progress-btn"
+                                        onClick={handleManualSave}
+                                        style={{ marginBottom: 16 }}
+                                    >
+                                        {saveStatus === 'success' ? (
+                                            <span style={{ fontSize: 20, color: 'white' }}>✔️</span>
+                                        ) : null}
+                                        Save Progress
+                                    </button>
                                     <div className="progress-bar-container mb-3">
                                         <div
                                             className="progress-bar"
@@ -324,13 +370,6 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <button className="close-button" onClick={onClose} aria-label="Close popup">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                            <circle cx="12" cy="12" r="12" fill="#ff4d4d" />
-                                            <line x1="8" y1="8" x2="16" y2="16" stroke="white" strokeWidth="2" />
-                                            <line x1="16" y1="8" x2="8" y2="16" stroke="white" strokeWidth="2" />
-                                        </svg>
-                                    </button>
                                 </div>
                             </div>
                         );
@@ -344,16 +383,15 @@ function LeadershipPop({ popupId, closePopup, userToken, onProgressUpdate }) {
     else if (popupId === "leadership2") openLevel = 2;
     else if (popupId === "leadership3") openLevel = 3;
 
-    return (
-        openLevel ? (
-            <div className="popup-overlay leadership-popup-fadein">
-                <div className="popup-container leadership-popup-centered">
-                    <button className="close-btn" onClick={closePopup} style={{ float: 'right' }}>Close</button>
-                    <LevelPopup level={openLevel} onClose={closePopup} popupId={popupId} userToken={userToken} onProgressUpdate={onProgressUpdate} />
-                </div>
-            </div>
-        ) : null
-    );
+    return openLevel ? (
+        <LevelPopup
+            level={openLevel}
+            onClose={closePopup}
+            popupId={popupId}
+            userToken={userToken}
+            onProgressUpdate={onProgressUpdate}
+        />
+    ) : null;
 }
 
 export default LeadershipPop;
