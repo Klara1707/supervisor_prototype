@@ -12,12 +12,8 @@ function HomePage() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const token = getToken();
-        if (!token) {
-            navigate("/login");
-        }
-        // Try to get user info from storage
+    // Helper to load user from storage
+    const loadUserFromStorage = () => {
         let userStr = localStorage.getItem("user") || sessionStorage.getItem("user");
         if (userStr) {
             try {
@@ -25,7 +21,20 @@ function HomePage() {
             } catch {
                 setUser(null);
             }
+        } else {
+            setUser(null);
         }
+    };
+
+    useEffect(() => {
+        const token = getToken();
+        if (!token) {
+            navigate("/login");
+        }
+        loadUserFromStorage();
+        // Listen for storage changes (e.g., after login)
+        window.addEventListener("storage", loadUserFromStorage);
+        return () => window.removeEventListener("storage", loadUserFromStorage);
     }, [navigate]);
 
     // Compose welcome message

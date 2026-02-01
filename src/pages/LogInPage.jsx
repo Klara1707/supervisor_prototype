@@ -51,11 +51,14 @@ function LogInPage() {
                     // Do not clear all storage, just overwrite relevant keys
                     const storage = rememberMe ? localStorage : sessionStorage;
                     const token = data.access || null;
+                    console.log("[DEBUG] Access token after login:", token); // Debug output
                     storage.setItem("access_token", token);
                     storage.setItem("site", siteValue);
-                    // Store user info if present
+                    // Store user info if present (always write to both localStorage and sessionStorage)
                     if (data.user) {
-                        storage.setItem("user", JSON.stringify(data.user));
+                        console.log("[DEBUG] User object received after login:", data.user); // Debug output
+                        localStorage.setItem("user", JSON.stringify(data.user));
+                        sessionStorage.setItem("user", JSON.stringify(data.user));
                     }
                     // Optionally store refresh token
                     if (data.refresh) {

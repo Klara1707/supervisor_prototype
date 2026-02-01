@@ -80,12 +80,24 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
 
     // Always force refresh user from storage on mount and after login
     React.useEffect(() => {
+        let lastUserStr = JSON.stringify(getStoredUser());
         const syncUser = () => {
             setUser(getStoredUser());
         };
         window.addEventListener("storage", syncUser);
         syncUser(); // also on mount
-        return () => window.removeEventListener("storage", syncUser);
+        // Poll for user changes every 1s (fixes same-tab login update)
+        const interval = setInterval(() => {
+            const currentUserStr = JSON.stringify(getStoredUser());
+            if (currentUserStr !== lastUserStr) {
+                lastUserStr = currentUserStr;
+                setUser(getStoredUser());
+            }
+        }, 1000);
+        return () => {
+            window.removeEventListener("storage", syncUser);
+            clearInterval(interval);
+        };
     }, []);
     // Always check both storages for token (now using 'access_token')
     const getTokenFromStorage = () => {
@@ -117,7 +129,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
     // Fetch progress from backend using authFetch (same as MandatoryList)
     const fetchProgressFromBackend = async () => {
         try {
-            const res = await authFetch('/api/training-progress/');
+            const res = await authFetch('/training-progress/');
             if (!res.ok) return {};
             const data = await res.json();
             return data || {};
@@ -172,7 +184,7 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
         const fetchAndSetProgress = async () => {
             if (token) {
                 try {
-                    const res = await authFetch('/api/training-progress/');
+                    const res = await authFetch('/training-progress/');
                     if (res.status === 401 || res.status === 302) {
                         alert("Session expired or not authenticated. Please log in again.");
                         window.location.href = "/login";
@@ -209,42 +221,45 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
 
 
     const tabContent = {
-        Home: (
-        <div id="Home" className="w3-container city">
-            <h2 style={{ color: 'red' }}>
-                Welcome{user && (user.first_name || user.last_name)
-                    ? `, ${[user.first_name, user.last_name].filter(Boolean).join(' ')}`
-                    : user && user.username
-                        ? `, ${user.username}`
-                        : user && user.email
-                            ? `, ${user.email}`
-                            : ""}!
-            </h2>
-            <p className="intro">
-                Congratulations on stepping into your role as a Supervisor within Res Dev!
-                This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.
-            </p>
-            <h2 style={{ color: 'orange' }}>Our Values</h2>
-            <ul className="values-list">
-                <li><strong>Care</strong> – We care about the physical and psychological safety of ourselves and others, we care about creating an environment of trust, and we care about the impact we have on our colleagues, communities, and the environment.</li>
-                <li><strong>Courage</strong> – We have the courage to show vulnerability, the courage to speak up and challenge when we can do better, and the courage to take ownership of our actions and outcomes to drive performance.</li>
-                <li><strong>Curiosity</strong> – We have curiosity to learn and grow in our fields of expertise, look for opportunities to solve problems with everyday innovation, and be open to different perspectives</li>
-            </ul>
-
-            <h2 style={{ color: 'orange' }}>Your Learning Journey</h2>
-            <p>This is a self-led training package, guided by the help of mentors with progress reported to your Superintendent. The training package covers...</p>
-            <ul className="training-list">
-                <li>Roles Responsibilities/skills - What work skills and abilities you are required to learn</li>
-                <li>Divides each responsibility into levels (1,2,3). This ensures thorough understanding of the responsibilities and provides candidates the opportunity to learn at a pace suited to their experience and aptitude</li>
-                <li>Training process comments - Exposure/Experience/Education</li>
-                <li>Training Material links - How to guides, QRG's and examples to help give context and clear direction on closing out a Responsibility/Skill</li>
-                <li>Progress reporting - percentage slider for easy tracking</li>
-            </ul>
-
-            <h2 style={{ color: 'orange' }}>Take Control of Your Development</h2>
-            <p>Grow your skills. Challenge yourself. Become the leader you’re meant to be.</p>
-        </div>
-        ),
+        Home: (() => {
+            // Use the user state variable so the Home tab updates on login
+            const latestUser = user;
+            return (
+                <div id="Home" className="w3-container city">
+                    {console.log('[DEBUG] TabMenu Home user:', latestUser)}
+                    <h2 style={{ color: 'red' }}>
+                        Welcome{latestUser && (latestUser.first_name || latestUser.last_name)
+                            ? `, ${[latestUser.first_name, latestUser.last_name].filter(Boolean).join(' ')}`
+                            : latestUser && latestUser.username
+                                ? `, ${latestUser.username}`
+                                : latestUser && latestUser.email
+                                    ? `, ${latestUser.email}`
+                                    : ""}!
+                    </h2>
+                    <p className="intro">
+                        Congratulations on stepping into your role as a Supervisor within Res Dev!
+                        This portal is your personal guide to becoming the best supervisor you can be — an online training package that covers all the responsibilities of an Operations Supervisor and supports you in building the skills and confidence to thrive in your new role.
+                    </p>
+                    <h2 style={{ color: 'orange' }}>Our Values</h2>
+                    <ul className="values-list">
+                        <li><strong>Care</strong> – We care about the physical and psychological safety of ourselves and others, we care about creating an environment of trust, and we care about the impact we have on our colleagues, communities, and the environment.</li>
+                        <li><strong>Courage</strong> – We have the courage to show vulnerability, the courage to speak up and challenge when we can do better, and the courage to take ownership of our actions and outcomes to drive performance.</li>
+                        <li><strong>Curiosity</strong> – We have curiosity to learn and grow in our fields of expertise, look for opportunities to solve problems with everyday innovation, and be open to different perspectives</li>
+                    </ul>
+                    <h2 style={{ color: 'orange' }}>Your Learning Journey</h2>
+                    <p>This is a self-led training package, guided by the help of mentors with progress reported to your Superintendent. The training package covers...</p>
+                    <ul className="training-list">
+                        <li>Roles Responsibilities/skills - What work skills and abilities you are required to learn</li>
+                        <li>Divides each responsibility into levels (1,2,3). This ensures thorough understanding of the responsibilities and provides candidates the opportunity to learn at a pace suited to their experience and aptitude</li>
+                        <li>Training process comments - Exposure/Experience/Education</li>
+                        <li>Training Material links - How to guides, QRG's and examples to help give context and clear direction on closing out a Responsibility/Skill</li>
+                        <li>Progress reporting - percentage slider for easy tracking</li>
+                    </ul>
+                    <h2 style={{ color: 'orange' }}>Take Control of Your Development</h2>
+                    <p>Grow your skills. Challenge yourself. Become the leader you’re meant to be.</p>
+                </div>
+            );
+        })(),
         
     Overview: (
         <OverviewTab

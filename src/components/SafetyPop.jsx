@@ -165,7 +165,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     const fetchProgress = async () => {
         if (!popupId || !userToken) return;
         try {
-            const data = await apiFetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
+            const data = await apiFetch(`/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
                 method: "GET",
                 headers: { "Authorization": `Bearer ${userToken}` }
             });
@@ -190,11 +190,9 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                 console.warn(`[SafetyPop] No entry found for popupId '${popupId}' in backend response`, data);
             }
         } catch (err) {
-            if (err.message && err.message.includes('404')) {
-                alert("No saved progress found for this popup. You can start fresh.");
-            } else {
+            if (!(err.message && err.message.includes('404'))) {
                 alert("Network error while loading progress. Please try again.");
-                console.error("GET /api/training-progress/ error:", err);
+                console.error("GET /training-progress/ error:", err);
             }
         }
     };
@@ -209,7 +207,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             progressPercentage: percentage
         };
         console.log('[SafetyPop] POST payload:', payload);
-        await apiFetch("/api/training-progress/", {
+        await apiFetch("/training-progress/", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${userToken}`
@@ -257,7 +255,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             progressPercentage: percentage
         };
         console.log('[SafetyPop] Auto-save POST payload:', payload);
-        apiFetch("/api/training-progress/", {
+        apiFetch("/training-progress/", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${userToken}`
@@ -268,7 +266,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         // Also save on unmount (when popup closes)
         return () => {
             console.log('[SafetyPop] Unmount POST payload:', payload);
-            apiFetch("/api/training-progress/", {
+            apiFetch("/training-progress/", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${userToken}`
