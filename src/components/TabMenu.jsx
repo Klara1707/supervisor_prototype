@@ -298,7 +298,7 @@ const TabMenu = ({ initialTab = "Home" }) => {
             tabContent = {
                 Home: (
                     <div id="Home" className="w3-container city">
-                        <h2 style={{ color: 'red' }}>Welcome, Visitor!</h2>
+                        <h2 style={{ color: 'red' }}>Welcome!</h2>
                         <p className="intro">You are viewing the portal as a visitor. No data is shown in this mode.</p>
                     </div>
                 )
@@ -308,17 +308,21 @@ const TabMenu = ({ initialTab = "Home" }) => {
             Home: (() => {
                 // Use the user state variable so the Home tab updates on login
                 const latestUser = user;
+                let name = "";
+                if (latestUser && latestUser.role === "supervisor") {
+                    if (latestUser.first_name || latestUser.last_name) {
+                        name = [latestUser.first_name, latestUser.last_name].filter(Boolean).join(" ");
+                    } else if (latestUser.username) {
+                        name = latestUser.username;
+                    } else if (latestUser.email) {
+                        name = latestUser.email;
+                    }
+                }
                 return (
                     <div id="Home" className="w3-container city">
                         {console.log('[DEBUG] TabMenu Home user:', latestUser)}
                         <h2 style={{ color: 'red' }}>
-                            Welcome{latestUser && (latestUser.first_name || latestUser.last_name)
-                                ? `, ${[latestUser.first_name, latestUser.last_name].filter(Boolean).join(' ')}`
-                                : latestUser && latestUser.username
-                                    ? `, ${latestUser.username}`
-                                    : latestUser && latestUser.email
-                                        ? `, ${latestUser.email}`
-                                        : ""}!
+                            Welcome{(latestUser && latestUser.role === "supervisor" && name) ? `, ${name}` : ""}!
                         </h2>
                         <p className="intro">
                             Congratulations on stepping into your role as a Supervisor within Res Dev!

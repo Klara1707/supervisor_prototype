@@ -409,6 +409,12 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
                             const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, [field]: value } : s);
                             setSignOffs(updated);
                         }}
+                        onSignOff={() => {
+                            if (signOffs[row-1].name && signOffs[row-1].date) {
+                                const updated = signOffs.map((s, idx) => idx === row-1 ? { ...s, signed: true } : s);
+                                setSignOffs(updated);
+                            }
+                        }}
                     />
                 </td>
                 {/* Comment cell */}
