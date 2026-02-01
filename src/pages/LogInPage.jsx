@@ -21,7 +21,9 @@ function LogInPage() {
             return;
         }
         if (role === "visitor") {
-            navigate("/");
+            // Do not store any user or token data for visitor
+            navigate("/home");
+            return;
         } else if (role === "supervisor") {
             if (!site || site === "") {
                 alert("Please select a site before logging in.");

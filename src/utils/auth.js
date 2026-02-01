@@ -45,6 +45,8 @@ export function authFetch(url, options = {}) {
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
+  // Debug: log outgoing request
+  console.log("[authFetch] URL:", url, "Token:", token, "Headers:", headers);
   // Prepend API_BASE if url is relative (does not start with http)
   const fullUrl = url.startsWith("http") ? url : `${API_BASE.replace(/\/$/, "")}${url.startsWith("/") ? url : "/" + url}`;
   return fetch(fullUrl, { ...options, headers });
