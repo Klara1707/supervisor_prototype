@@ -112,20 +112,18 @@ function LogInPage() {
     // ...existing code...
     return (
         <div>
-            {/* Removed TEST LOGIN PAGE banner */}
             <HeroBar />
-            <div className="login-container">
-                <div className="top-row">
-                    {/* New User section at the top of the login form */}
-                    <form className="login-form" onSubmit={handleLogin}>
+            <div className="signup-container">
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: 0, width: 'auto', padding: 0, margin: 0 }}>
+                    <form className="signup-form login-form" onSubmit={handleLogin} style={{ maxWidth: 400, width: '100%', borderRadius: 8, boxShadow: '0 8px 16px rgba(0,0,0,0.1)', border: '1px solid #ccc', background: '#fff', margin: '2rem auto' }}>
                         <div className="new-user-box">
-                            <span className="new-user-label">New user?</span>
+                            <span className="new-user-label" style={{ fontSize: '2.0rem', fontWeight: 'bold', color: '#cd2c2c' }}>New user?</span>
                             <Link to="/createaccount">
-                                <button className="create-account-btn">Create Account</button>
+                                <button className="create-account-btn" style={{ backgroundColor: '#004b87', color: 'white', fontWeight: 'bold', fontSize: '1rem', padding: '0.5rem 0.8rem', border: 'none', borderRadius: '4px', width: '100%', marginTop: '0.5rem', transition: 'background-color 0.3s ease' }}>Create Account</button>
                             </Link>
                         </div>
                         <div className="context-inner-box">
-                            <h1>Welcome Back</h1>
+                            <h1 style={{ fontSize: '2.0rem', fontWeight: 'bold', color: '#cd2c2c' }}>Welcome Back</h1>
                             <p>Please log in to continue</p>
                         </div>
                         <label htmlFor="username">Email address</label>
@@ -139,7 +137,6 @@ function LogInPage() {
                             onChange={e => setUsername(e.target.value)}
                             className="login-form-input"
                         />
-                        {/* Removed loginMessage and loginMessageType display as state is no longer used */}
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
@@ -197,57 +194,63 @@ function LogInPage() {
                                 type="button"
                                 className="forgot-link"
                                 onClick={() => setShowResetPopup(true)}
+                                style={{ background: 'none', border: 'none', color: '#004b87', textDecoration: 'underline', fontSize: '0.95rem', padding: 0, marginLeft: 8, cursor: 'pointer' }}
                             >
                                 Reset Password
                             </button>
                         </div>
-                        <div className="form-buttons">
-                            <button type="submit">Login</button>
-                            <button type="button" onClick={handleCancel} className="cancel-button">Cancel</button>
+                        <div className="form-buttons" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                            <button type="submit" className="login-form-btn" style={{ backgroundColor: '#004b87', color: 'white', fontWeight: 'bold', fontSize: '1rem', padding: '0.5rem 0.8rem', border: 'none', borderRadius: '4px', width: '100%', marginTop: '1rem', transition: 'background-color 0.3s ease' }}>Login</button>
+                            <button type="button" onClick={handleCancel} className="cancel-button" style={{ fontSize: '0.92rem', padding: '0.35rem 0.7rem', borderRadius: '4px', margin: '1rem auto 0 auto', display: 'block', minWidth: 90 }}>Cancel</button>
                         </div>
                     </form>
-                    {/* Admin Login Toggle Button below login form */}
-                    <div style={{marginTop: '2rem', textAlign: 'center'}}>
+                    {/* Admin Login Box with username and password - toggled */}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', justifyContent: 'flex-start', marginLeft: '1rem', height: 400, padding: 0, marginTop: '2.2rem' }}>
                         <button
                             className="admin-login-toggle"
                             onClick={() => setShowAdminLogin(v => !v)}
                             type="button"
+                            style={{ backgroundColor: '#004b87', color: 'white', fontWeight: 'bold', fontSize: '1rem', padding: '0.5rem 0.8rem', border: 'none', borderRadius: '4px', transition: 'background-color 0.3s ease', marginBottom: '1rem', minWidth: 120 }}
                         >
                             {showAdminLogin ? "Hide Admin Login" : "Admin Login"}
                         </button>
-                    </div>
-                    {/* Admin Login Box with username and password - toggled */}
-                    {showAdminLogin && <AdminLoginForm />}
-                    {/* Password Reset Popup */}
-                    {showResetPopup && (
-                        <div style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100vw',
-                            height: '100vh',
-                            background: 'rgba(0,0,0,0.3)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            zIndex: 1000
-                        }}>
-                            <div className="admin-login-box" style={{position: 'relative', maxWidth: '400px', width: '100%'}}>
-                                <div className="context-inner-box" style={{marginBottom: '1rem'}}>
-                                    <h1 style={{margin: 0}}>Reset Password</h1>
-                                </div>
-                                <button
-                                    style={{position: 'absolute', top: 8, right: 8, background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer'}}
-                                    onClick={() => setShowResetPopup(false)}
-                                    aria-label="Close"
-                                >
-                                    &times;
-                                </button>
-                                <PasswordResetForm />
+                        {/* Admin Login Box with username and password - toggled */}
+                        {showAdminLogin && (
+                            <div style={{ minWidth: 400, maxWidth: 420, width: '100%' }}>
+                                <AdminLoginForm />
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
+                {/* Password Reset Popup */}
+                {showResetPopup && (
+                    <div style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100vw',
+                        height: '100vh',
+                        background: 'rgba(0,0,0,0.3)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 1000
+                    }}>
+                        <div className="admin-login-box" style={{position: 'relative', maxWidth: '400px', width: '100%'}}>
+                            <div className="context-inner-box" style={{marginBottom: '1rem'}}>
+                                <h1 style={{margin: 0}}>Reset Password</h1>
+                            </div>
+                            <button
+                                style={{position: 'absolute', top: 8, right: 8, background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer'}}
+                                onClick={() => setShowResetPopup(false)}
+                                aria-label="Close"
+                            >
+                                &times;
+                            </button>
+                            <PasswordResetForm />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

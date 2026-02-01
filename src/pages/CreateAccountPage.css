@@ -111,12 +111,12 @@ button:focus, a:focus, input:focus, select:focus {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    background-color: #004b87;
+    background-color: #cd2c2c;
     color: white;
 }
 
 .signup-form button[type="submit"]:hover {
-    background-color: #00345c;
+    background-color: #a32020;
 }
 
 .back-to-login {

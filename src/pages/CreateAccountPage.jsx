@@ -59,7 +59,7 @@ function CreateAccountPage() {
 			<div className="signup-container">
 				<form className="signup-form" onSubmit={handleSubmit} aria-labelledby="signup-form-header">
 					<div className="form-header">
-						<h1 id="signup-form-header" style={{ fontSize: '2.0rem', fontWeight: 'bold' }}>Create Account</h1>
+						   <h1 id="signup-form-header" style={{ fontSize: '2.0rem', fontWeight: 'bold', color: '#cd2c2c' }}>Create Account</h1>
 					</div>
 					<div aria-live="polite" aria-atomic="true" style={{ minHeight: '1.5em', color: message === 'Registration successful!' ? '#388e3c' : '#cd2c2c', fontWeight: message === 'Registration successful!' ? 'normal' : 'bold', marginBottom: '0.5rem' }}>
 						{message}
