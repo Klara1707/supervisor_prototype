@@ -40,7 +40,9 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     };
 
     // --- Save progress to backend ---
-    const saveProgress = async () => {
+
+    // --- Manual save handler (ContractorPop style) ---
+    const handleManualSave = async () => {
         if (!popupId || !userToken) return;
         const payload = {
             popupId,
@@ -49,31 +51,21 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             signOffs,
             progressPercentage: percentage
         };
-        try {
-            await apiFetch("/api/training-progress/", {
-                method: "POST",
-                headers: { "Authorization": `Bearer ${userToken}` },
-                body: JSON.stringify(payload)
-            });
-            setSaveStatus('success');
-            setTimeout(() => setSaveStatus('idle'), 1200);
-        } catch (err) {
-            setSaveStatus('error');
-            setTimeout(() => setSaveStatus('idle'), 1200);
-        }
-        if (onProgressUpdate) onProgressUpdate();
-    };
-
-    // --- Manual save handler ---
-    const handleManualSave = () => {
-        saveProgress();
+        await apiFetch("/api/training-progress/", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${userToken}`
+            },
+            body: JSON.stringify(payload)
+        });
+        setSaveStatus('success');
+        if (onProgressUpdate) await onProgressUpdate();
+        await fetchProgress();
+        setTimeout(() => setSaveStatus('idle'), 1200);
     };
 
     // --- Auto-save on change ---
-    useEffect(() => {
-        if (hasLoaded) saveProgress();
-        // eslint-disable-next-line
-    }, [gridProgressChecks, comments, signOffs, percentage]);
+    // Removed useEffect that referenced saveProgress (not defined). Only manual save is used, matching ContractorPop logic.
 
     // --- Load progress on mount ---
     useEffect(() => {
@@ -81,13 +73,13 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         // eslint-disable-next-line
     }, [popupId, userToken]);
 
-    // --- Save on close/unmount ---
-    useEffect(() => {
-        return () => {
-            saveProgress();
-        };
-        // eslint-disable-next-line
-    }, []);
+    // --- Save on close/unmount (optional, use handleManualSave if needed) ---
+    // useEffect(() => {
+    //     return () => {
+    //         handleManualSave();
+    //     };
+    //     // eslint-disable-next-line
+    // }, []);
 
     // --- Table headers and content ---
     const headers = [

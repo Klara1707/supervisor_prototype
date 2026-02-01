@@ -139,11 +139,12 @@ function MandatoryList({ onProgressUpdate, progress, setProgress }) {
         setCheckedItems(updatedItems);
         // Save to backend
         if (token) {
-            // Send as flat array for gridProgressChecks
+            // Send both checkedItems and gridProgressChecks for compatibility
             await authFetch("/api/training-progress/", {
                 method: "POST",
                 body: JSON.stringify({
                     popupId: popupId,
+                    checkedItems: updatedItems,
                     gridProgressChecks: updatedItems
                 })
             });

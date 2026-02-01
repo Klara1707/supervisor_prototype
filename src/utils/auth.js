@@ -45,5 +45,7 @@ export function authFetch(url, options = {}) {
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
-  return fetch(url, { ...options, headers });
+  // Prepend API_BASE if url is relative (does not start with http)
+  const fullUrl = url.startsWith("http") ? url : `${API_BASE.replace(/\/$/, "")}${url.startsWith("/") ? url : "/" + url}`;
+  return fetch(fullUrl, { ...options, headers });
 }
