@@ -17,9 +17,44 @@ import OverviewTab from "./OverviewTab"; // Ensure we are using the imported Ove
 
 
 const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, onProgressUpdate }) => {
-    const showBackToTop = ["Home", "Overview", "Mandatory_Training"].includes(activeTab);
+    const showBackToTopTab = ["Home", "Overview", "Mandatory_Training"].includes(activeTab);
+    const [showBackToTop, setShowBackToTop] = React.useState(false);
+    const contentRef = React.useRef(null);
+
+    React.useEffect(() => {
+        if (!showBackToTopTab) {
+            setShowBackToTop(false);
+            return;
+        }
+        const container = contentRef.current || window;
+        const getScrollTop = () => {
+            if (contentRef.current) return contentRef.current.scrollTop;
+            return window.scrollY;
+        };
+        const handleScroll = () => {
+            setShowBackToTop(getScrollTop() > 200);
+        };
+        if (contentRef.current) {
+            contentRef.current.addEventListener("scroll", handleScroll);
+            handleScroll();
+            return () => contentRef.current && contentRef.current.removeEventListener("scroll", handleScroll);
+        } else {
+            window.addEventListener("scroll", handleScroll);
+            handleScroll();
+            return () => window.removeEventListener("scroll", handleScroll);
+        }
+    }, [showBackToTopTab]);
+
+    const handleBackToTop = () => {
+        if (contentRef.current) {
+            contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
     return (
-        <div>
+        <div ref={contentRef} style={{ height: '100%', overflowY: 'auto' }}>
             <div className="city">{tabContent[activeTab]}</div>
 
             {popupVisible?.startsWith("drilling") && token && (
@@ -52,11 +87,11 @@ const TrainingTabs = ({ tabContent, activeTab, popupVisible, closePopup, token, 
             {popupVisible?.startsWith("field") && token && (
                 <FieldPop key={popupVisible} popupId={popupVisible} closePopup={closePopup} userToken={token} onProgressUpdate={onProgressUpdate} />
             )}
-            {showBackToTop && (
+            {showBackToTopTab && showBackToTop && (
                 <button
                     className="back-to-top"
                     style={{ margin: '32px auto 0 auto', display: 'block' }}
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    onClick={handleBackToTop}
                 >
                     Back to Top
                 </button>
@@ -436,57 +471,61 @@ const TabMenu = ({ initialTab = "Home" }) => {
 
     return (
         <div className="page-wrapper">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div className="w3-bar" role="tablist" aria-label="Training sections">
-                    {user && user.role === "visitor" ? (
-                        <button
-                            key="Home"
-                            id="tab-Home"
-                            className="tablink w3-red"
-                            role="tab"
-                            aria-selected={true}
-                            aria-controls="tabpanel-Home"
-                            tabIndex={0}
-                            disabled
-                        >
-                            Home
-                        </button>
-                    ) : (
-                        Object.keys(tabContent).map((tab, idx) => (
-                            <button
-                                key={tab}
-                                id={`tab-${tab}`}
-                                className={`tablink ${activeTab === tab ? "w3-red" : ""}`}
-                                role="tab"
-                                aria-selected={activeTab === tab}
-                                aria-controls={`tabpanel-${tab}`}
-                                tabIndex={activeTab === tab ? 0 : -1}
-                                onClick={(e) => openCity(e, tab)}
-                                onKeyDown={e => {
-                                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                                        e.preventDefault();
-                                        const tabs = Object.keys(tabContent);
-                                        const currentIdx = tabs.indexOf(activeTab);
-                                        let nextIdx = e.key === 'ArrowRight' ? currentIdx + 1 : currentIdx - 1;
-                                        if (nextIdx < 0) nextIdx = tabs.length - 1;
-                                        if (nextIdx >= tabs.length) nextIdx = 0;
-                                        setActiveTab(tabs[nextIdx]);
-                                        document.getElementById(`tab-${tabs[nextIdx]}`)?.focus();
-                                    }
-                                }}
-                            >
-                                {tab.replace(/_/g, " ")}
-                            </button>
-                        ))
-                    )}
-                </div>
-                {/* Logout and Refresh buttons only for logged-in supervisors */}
-                {user && user.role === "supervisor" && (
-                    <div style={{ display: 'flex', gap: '0.5rem', marginRight: 8 }}>
-                        <button onClick={handleLogout} style={{ background: '#cd2c2c', color: 'white', border: 'none', borderRadius: 4, padding: '0.4rem 0.8rem', fontWeight: 'bold' }}>Logout</button>
-                        <button onClick={handleRefreshToken} style={{ background: '#004b87', color: 'white', border: 'none', borderRadius: 4, padding: '0.4rem 0.8rem', fontWeight: 'bold' }}>Refresh Session</button>
+            <div className="tabbar-bg" style={{ width: '100%', background: '#f1f1f1', height: '48px', display: 'flex', alignItems: 'center', padding: 0, margin: 0 }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div className="w3-bar" role="tablist" aria-label="Training sections" style={{ display: 'flex', justifyContent: 'center' }}>
+                            {user && user.role === "visitor" ? (
+                                <button
+                                    key="Home"
+                                    id="tab-Home"
+                                    className="tablink w3-red"
+                                    role="tab"
+                                    aria-selected={true}
+                                    aria-controls="tabpanel-Home"
+                                    tabIndex={0}
+                                    disabled
+                                >
+                                    Home
+                                </button>
+                            ) : (
+                                Object.keys(tabContent).map((tab, idx) => (
+                                    <button
+                                        key={tab}
+                                        id={`tab-${tab}`}
+                                        className={`tablink ${activeTab === tab ? "w3-red" : ""}`}
+                                        role="tab"
+                                        aria-selected={activeTab === tab}
+                                        aria-controls={`tabpanel-${tab}`}
+                                        tabIndex={activeTab === tab ? 0 : -1}
+                                        onClick={(e) => openCity(e, tab)}
+                                        onKeyDown={e => {
+                                            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                                                e.preventDefault();
+                                                const tabs = Object.keys(tabContent);
+                                                const currentIdx = tabs.indexOf(activeTab);
+                                                let nextIdx = e.key === 'ArrowRight' ? currentIdx + 1 : currentIdx - 1;
+                                                if (nextIdx < 0) nextIdx = tabs.length - 1;
+                                                if (nextIdx >= tabs.length) nextIdx = 0;
+                                                setActiveTab(tabs[nextIdx]);
+                                                document.getElementById(`tab-${tabs[nextIdx]}`)?.focus();
+                                            }
+                                        }}
+                                    >
+                                        {tab.replace(/_/g, " ")}
+                                    </button>
+                                ))
+                            )}
+                        </div>
+                        {/* Logout and Refresh buttons only for logged-in supervisors */}
+                        {user && user.role === "supervisor" && (
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                <button onClick={handleLogout} style={{ background: '#cd2c2c', color: 'white', border: 'none', borderRadius: 4, padding: '0.4rem 0.8rem', fontWeight: 'bold' }}>Logout</button>
+                                <button onClick={handleRefreshToken} style={{ background: '#004b87', color: 'white', border: 'none', borderRadius: 4, padding: '0.4rem 0.8rem', fontWeight: 'bold' }}>Refresh Session</button>
+                            </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
             <div>
                 <div
