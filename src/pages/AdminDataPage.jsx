@@ -26,7 +26,7 @@ function AdminDataPage() {
 
         // Helper to refresh user lists (memoized for useEffect)
         const refreshUserLists = useCallback(() => {
-                fetch(`${API_BASE}/users-by-site/`, {
+                fetch(`${API_BASE}/api/users-by-site/`, {
                         headers: {
                                 Authorization: "Bearer " + adminToken,
                         },
@@ -55,7 +55,7 @@ function AdminDataPage() {
                         setDeleting(prev => ({ ...prev, [email]: true }));
                         setMessage("");
                         setMessageType("");
-        fetch(`${API_BASE}/delete-user/`, {
+        fetch(`${API_BASE}/api/delete-user/`, {
                 method: "POST",
                 headers: {
                         Authorization: "Bearer " + adminToken,

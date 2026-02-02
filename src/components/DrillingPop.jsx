@@ -25,7 +25,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
     const fetchProgress = async () => {
         if (!popupId || !userToken) return;
         try {
-            const data = await apiFetch(`/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
+            const data = await apiFetch(`/api/training-progress/?popupId=${encodeURIComponent(popupId)}`, {
                 method: "GET",
                 headers: { "Authorization": `Bearer ${userToken}` }
             });
@@ -51,7 +51,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             signOffs,
             progressPercentage: percentage
         };
-        await apiFetch("/training-progress/", {
+        await apiFetch("/api/training-progress/", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${userToken}`
@@ -75,7 +75,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
             signOffs,
             progressPercentage: percentage
         };
-        apiFetch("/training-progress/", {
+        apiFetch("/api/training-progress/", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${userToken}`
@@ -85,7 +85,7 @@ const LevelPopup = ({ level, onClose, popupId, userToken, onProgressUpdate }) =>
         if (onProgressUpdate) onProgressUpdate();
         // Also save on unmount (when popup closes)
         return () => {
-            apiFetch("/training-progress/", {
+            apiFetch("/api/training-progress/", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${userToken}`

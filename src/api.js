@@ -12,7 +12,7 @@ export async function registerUser(data) {
     console.error('API_BASE is undefined. Set VITE_API_BASE_URL in Netlify and redeploy.');
     throw new Error('API not configured');
   }
-  const res = await fetch(`${API_BASE}/register/`, {
+  const res = await fetch(`${API_BASE}/api/register/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -25,7 +25,7 @@ export async function registerUser(data) {
 }
 // Token refresh helper
 export async function refreshToken(refresh) {
-  const data = await apiFetch("/token/refresh/", {
+  const data = await apiFetch("/api/token/refresh/", {
     method: "POST",
     body: JSON.stringify({ refresh }),
   });
@@ -46,18 +46,18 @@ export function deleteUser(userId) {
 }
 // Get training progress helper
 export function getTrainingProgress() {
-  return apiFetch("/training-progress/");
+  return apiFetch("/api/training-progress/");
 }
 // Save training progress helper
 export function saveTrainingProgress(data) {
-  return apiFetch("/training-progress/", {
+  return apiFetch("/api/training-progress/", {
     method: "POST",
     body: JSON.stringify(data),
   });
 }
 // Get users by site helper
 export function getUsersBySite() {
-  return apiFetch("/users-by-site/");
+  return apiFetch("/api/users-by-site/");
 }
 // Create user helper
 export function createUser(payload) {
@@ -73,7 +73,7 @@ export function getMe() {
 
 // JWT login helper
 export async function login(username, password) {
-  const data = await apiFetch("/token/", {
+  const data = await apiFetch("/api/token/", {
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
@@ -84,7 +84,7 @@ export async function login(username, password) {
 
 // Admin login helper
 export async function adminLogin(username, password) {
-  const data = await apiFetch("/token/", {
+  const data = await apiFetch("/api/token/", {
     method: "POST",
     body: JSON.stringify({ username, password }),
   });
@@ -94,7 +94,7 @@ export async function adminLogin(username, password) {
 
 // Update user site helper
 export async function updateSite(siteInfo) {
-  return apiFetch("/update-site/", {
+  return apiFetch("/api/update-site/", {
     method: "POST",
     body: JSON.stringify(siteInfo),
   });
@@ -146,7 +146,7 @@ export async function apiFetch(path, options = {}) {
     const refresh = localStorage.getItem("refresh_token") || sessionStorage.getItem("refresh_token");
     if (refresh) {
       try {
-        const refreshRes = await fetch(`${API_BASE}/token/refresh/`, {
+        const refreshRes = await fetch(`${API_BASE}/api/token/refresh/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ refresh }),

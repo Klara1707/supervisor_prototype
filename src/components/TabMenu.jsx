@@ -142,7 +142,7 @@ const TabMenu = ({ initialTab = "Home" }) => {
     // Fetch progress from backend using authFetch (same as MandatoryList)
     const fetchProgressFromBackend = async () => {
         try {
-            const res = await authFetch('/training-progress/');
+            const res = await authFetch('/api/training-progress/');
             if (!res.ok) return {};
             const data = await res.json();
             return data || {};
@@ -185,7 +185,7 @@ const TabMenu = ({ initialTab = "Home" }) => {
             return;
         }
         try {
-            const res = await fetch(`${API_BASE}/token/refresh/`, {
+            const res = await fetch(`${API_BASE}/api/token/refresh/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ refresh }),
@@ -257,7 +257,7 @@ const TabMenu = ({ initialTab = "Home" }) => {
         }
         const fetchAndSetProgress = async () => {
             try {
-                const res = await authFetch('/training-progress/');
+                const res = await authFetch('/api/training-progress/');
                 if (res.status === 401 || res.status === 302) {
                     alert("Session expired or not authenticated. Please log in again.");
                     window.location.href = "/login";
